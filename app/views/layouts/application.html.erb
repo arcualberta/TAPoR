@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html ng-app="taporApp">
+	<head>
+	  <title>Tapor3</title>
+	  <base href="<%=root_url%>" target="_self">
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body>
+		<div ng-view></div> 
+	</body>
+</html>

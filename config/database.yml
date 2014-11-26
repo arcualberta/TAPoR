@@ -1,0 +1,20 @@
+
+default: &default
+ adapter: mysql2
+ encoding: utf8
+ username: tapor
+ password: 809+3(3:*T;D1*p77gTr@))()
+ pool: 10
+ host: localhost
+
+development:
+ <<: *default
+ database: tapor_dev
+
+test:
+ <<: *default
+ database: tapor_test
+
+production:
+ <<: *default
+ database: tapor
