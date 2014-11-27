@@ -10,8 +10,50 @@ app.config(['$routeProvider', '$locationProvider',
     $routeProvider
       .when('/', {
         templateUrl: "<%= asset_path('tapor/index.html') %>",
-        controller: 'TaporIndexCtrl'
-      });
+        controller: 'TaporIndexCtrl',
+        redirectTo: function(current, path, query){
+          if(query.goto){
+          // if we were passed in a query param, and it has a path
+          // to redirect to, then redirect to that path
+            return "/" + query.goto;
+          }
+        }
+      })
+      .when('/signin', {
+        templateUrl: "<%= asset_path('tapor/signin.html') %>",
+        // controller: 'SigninIndexCtrl'
+      })
+      .when('/sign_out', {
+        templateUrl: "<%= asset_path('tapor/index.html') %>",
+        controller: 'TaporIndexCtrl',
+        redirectTo: function(current, path, query) {
+          window.location= '/sign_out';
+        }
+      })
+      .when('/users/auth/google_oauth2', {
+        // Change to loading
+        templateUrl: "<%= asset_path('tapor/loading.html') %>",
+        // controller: 'TaporIndexCtrl',
+        redirectTo: function(current, path, query) {
+          window.location= '/users/auth/google_oauth2';
+        }
+      })
+      .when('/users/auth/twitter', {
+        // Change to loading
+        templateUrl: "<%= asset_path('tapor/loading.html') %>",
+        // controller: 'TaporIndexCtrl',
+        redirectTo: function(current, path, query) {
+          window.location= '/users/auth/twitter';
+        }
+      })
+      .when('/users/auth/yahoo', {
+        // Change to loading
+        templateUrl: "<%= asset_path('tapor/loading.html') %>",
+        // controller: 'TaporIndexCtrl',
+        redirectTo: function(current, path, query) {
+          window.location= '/users/auth/yahoo';
+        }
+      })
     // //   // when('/tools', {
     //   //   templateUrl: '<%= asset_path("templates/tapor/index.html") %>',
     //   //   controller: 'ToolsIndexCtrl'

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html ng-app="taporApp">
 	<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 	  <title>Tapor3</title>
 	  <base href="<%=root_url%>" target="_self">
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
@@ -8,6 +11,65 @@
 	  <%= csrf_meta_tags %>
 	</head>
 	<body>
-		<div ng-view></div> 
+		<div class="container">
+
+			<!-- nav -->
+			<div class="row" id="nav">
+				<div class="col-md-12 text-right">
+					<ul class="list-inline">
+						<li>About</li>
+						<li>Tour</li>
+						<li>Tutorials</li>
+						<li>Useful links</li>
+						<li>Contact</li>
+						<li>
+							<a href="signin">Sign in</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row" id="header">
+				<div class="col-md-1">
+					<a href="<%=root_url%>">TAPoR 3</a>
+				</div>
+				<div class="col-md-8">
+					Discover research tools for studying texts.
+				</div>
+
+				<div class="col-md-3">
+					<form class="form-inline" role="form">
+						<div class="form-group">
+							<div class="input-group">					
+			      		<input type="search" class="form-control" id="searchQuery" placeholder="Search">
+									<span class="input-group-btn">
+										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+									</span>
+			      	</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- end of nav -->
+
+			<div ng-view></div> 
+
+			<!-- footer -->
+
+			<div class='row' id='footer'>
+				<div class="col-md-12">
+					TAPoR 3 Copyright 2014, University of Alberta Version | About | Privacy
+				</div>
+			</div>
+
+
+			<!-- end of fotter -->
+
+			<%= link_to "Sign in with google", user_omniauth_authorize_path(:google_oauth2) %>
+
+<%= link_to "Sign in with twitter", user_omniauth_authorize_path(:twitter) %>
+
+<%= link_to 'Sign out', destroy_user_session_path %>
+
+		</div>
 	</body>
 </html>

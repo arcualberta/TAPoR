@@ -1,0 +1,32 @@
+body {
+	background: #DEDEDE;
+}
+
+#nav {
+	background: #707070;
+	color: #F3F3F3;
+	height: 32px;
+	line-height: 32px;
+}
+
+#header {
+	background: #030303;
+	color: #F3F3F3;
+	height: 75px;	
+	
+}
+
+#current {
+	background: #C3C3C3;
+	height: 500px;
+}
+
+#spheres {
+	background: #040404;
+	height:280px;
+}
+
+#footer {
+	background: #030303;
+	color: #F3F3F3;
+}

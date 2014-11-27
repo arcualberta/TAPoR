@@ -7,9 +7,17 @@ Rails.application.routes.draw do
     resources :users
   end
 
+
+  devise_for :users, skip: [:sessions], :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  
+  devise_scope :user do
+    get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
+    get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
+  end
+
   match "api" => proc { [404, {}, ['Invalid API endpoint']] }, via: [:get, :post]
   match "api/*path" => proc { [404, {}, ['Invalid API endpoint']] }, via: [:get, :post]
-  # match "/*path" => redirect("/?goto=%{path}"), via: [:get, :post]
+  match "/*path" => redirect("/?goto=%{path}"), via: [:get, :post]
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
@@ -63,11 +71,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  devise_for :users, skip: [:sessions], :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
   
-  devise_scope :user do
-    get 'sign_in', :to => 'devise/sessions#new', :as => :new_user_session
-    get 'sign_out', :to => 'devise/sessions#destroy', :as => :destroy_user_session
-  end
 
 end
