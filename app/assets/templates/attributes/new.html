@@ -1,0 +1,54 @@
+<div ng-controller='AttributesNewCtrl'>
+	  <div class='row'>
+	  	<form class="form-horizontal" role="form">
+	  		  <!-- name -->
+	  		  <div class="form-group">
+						<label for="inputName" class="col-sm-2 control-label">Name</label>
+						<div class="col-sm-5">
+					  	<input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="data.name">
+						</div>
+					</div>
+
+					<!-- possible values -->					
+
+					<div class="form-group">
+						<label for="inputPossible" class="col-sm-2 control-label">Possible values</label>
+						<div class="col-sm-5">
+					  	<!-- <input type="text" class="form-control" id="inputPossible" placeholder="Name" ng-model="data.name"> -->
+							
+					  	
+					  	<span ng-repeat='value in data.possible_values track by $index' >
+					  		<div class='row'>
+					  		<div class="col-sm-10">
+									<input type="text" class="form-control" id="inputPossible$index" placeholder="Value" ng-model="data.possible_values[$index]">
+								</div>
+								<div class="col-sm-2">
+									<button type="button" class="btn btn-danger" ng-click='removeValueAt($index)'>	
+										<i class= "fa fa-times" > </i>
+									</button>
+								</div>
+								</div>
+							</span>
+
+							<div class='row'>							
+								<div class="col-md-offset-10 col-sm-2">
+						  		<button type="button" class="btn btn-primary" ng-click='addPossibleValue()' >
+						  			<i class= "fa fa-plus" > </i>
+						  		</button>
+								</div>
+					  	</div>
+						</div>
+					</div>
+
+			    <!-- approved -->
+
+					<div class="form-group">
+						<label for="inputIsMultiple" class="col-sm-2 control-label">Is multiple</label>
+						<div class="col-sm-5  ">
+							<input type="checkbox" name="multiple" value="multiple" id="inputIsMultiple" ng-model="data.is_multiple">
+						</div>
+					</div>
+    
+	  	</form>
+	  </div>
+</div>

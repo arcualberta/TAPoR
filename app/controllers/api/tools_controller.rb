@@ -12,19 +12,6 @@ class Api::ToolsController < ApplicationController
 	end
 
 	def create		
-	
-		# @tool = Tool.new(safe_params)
-		
-		# @tool[:user_id] = current_user[:id]
-		
-		# respond_to do |format|
-		# 	if @tool.save
-		# 		format.json { render json: @tool, status: :created }
-		# 	else 
-		# 		format.json { render json: @tool.errors, status: :unprocessable_entity }
-		# 	end
-		# end
-
 
 		respond_to do |format|
 			Tool.transaction do

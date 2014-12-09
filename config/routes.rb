@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     # get 'users/get_current', :to => 'users#get_current'
     resources :tools
     resources :users
+    resources :attribute_types
   end
 
 

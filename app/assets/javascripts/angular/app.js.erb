@@ -68,6 +68,15 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('tools/new.html') %>",
         controller: 'ToolsNewCtrl',
       })
+      // Attributes
+      .when('/attributes', {
+        templateUrl: "<%= asset_path('attributes/index.html') %>",
+        controller: 'AttributesIndexCtrl',
+      })
+      .when('/attributes/new', {
+        templateUrl: "<%= asset_path('attributes/new.html') %>",
+        controller: 'AttributesNewCtrl',
+      })
   }]);
 
 
