@@ -1,4 +1,10 @@
 
+app.controller('ToolsIndexCtrl', ['$scope', function($scope) {
+  $scope.greeting = 'Hola desde tools!';
+}]);
+
+
+
 app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   
 	$scope.data = {};

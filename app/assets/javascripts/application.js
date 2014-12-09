@@ -19,7 +19,6 @@
 //= require angular/app
 //= require angular/controllers/NavCtrl
 //= require angular/controllers/TaporIndexCtrl
-//= require angular/controllers/ToolsIndexCtrl
-//= require angular/controllers/ToolsNewCtrl
+//= require angular/controllers/ToolsController
 //= require angular/controllers/SigninIndexCtrl
 
