@@ -39,7 +39,9 @@ body {
 
 .rating {
   margin: 0;
-  display: inline-block; }
+  display: inline-block; 
+}
+
 .rating li {
 	padding: 1px;
 	color: #a9a9a9;
@@ -53,6 +55,11 @@ body {
 .rating li.filled {
 	color: #FF0; 
 }
+
 .rating li.clear {
 	color: #A00; 
+}
+
+.possible-value {
+	padding:0px 0px 10px 0px;	
 }

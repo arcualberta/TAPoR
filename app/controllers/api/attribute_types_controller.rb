@@ -19,6 +19,7 @@ class Api::AttributeTypesController < ApplicationController
 						possible_values: safe_params[:possible_values],
 						is_multiple: safe_params[:is_multiple]
 					})
+					@attribute.save
 					format.json { render json: @attribute, status: :created }
 				rescue ActiveRecord::RecordInvalid
 					format.json { render json: @tool.errors, status: :unprocessable_entity }
@@ -40,6 +41,6 @@ class Api::AttributeTypesController < ApplicationController
 	private
 
 		def safe_params
-			params.require(:attribute_types).permit(:name, :possible_values, :is_multiple)
+			params.require(:attribute_type).permit(:name, :possible_values, :is_multiple)
 		end
 end
