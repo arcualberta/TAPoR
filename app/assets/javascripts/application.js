@@ -17,6 +17,7 @@
 //= require angular-route/angular-route
 //= require turbolinks
 //= require angular/app
+//= require angular/directives/StarDirective
 //= require angular/controllers/NavCtrl
 //= require angular/controllers/TaporIndexCtrl
 //= require angular/controllers/ToolsController

@@ -26,18 +26,18 @@
     <!-- stars -->
 
     <div class="form-group">
-      <label for="inputStars" class="col-sm-2 control-label">Stars</label>
-      <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputStars" placeholder="Stars" ng-model="data.tool_ratings.stars">
+      <label for="inputStars" class="col-sm-2 control-label">Rating</label>
+      <div class="col-sm-5 rating">
+        <div star-rating rating-value="data.tool_ratings.stars" on-rating-selected="rateFunction(data.tool_ratings.stars)" max="5"></div>
       </div>
-    </div>
+    </div>   
 
     <!-- tags -->
 
     <div class="form-group">
       <label for="inputTags" class="col-sm-2 control-label">Tags</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputTags" placeholder="Tags" ng-model="data.tags">
+        <input type="text" class="form-control" id="inputTags" placeholder="Tags" ng-model="data.tool_tags.tags">
       </div>
     </div>
 

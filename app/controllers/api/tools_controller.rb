@@ -51,14 +51,36 @@ class Api::ToolsController < ApplicationController
 					# tags
 					if params[:tool_tags] and params[:tool_tags][:tags] #and params[:tool_ratings][:tags] != 0			
 						
+						tags = params[:tool_tags][:tags];
+						new_tag_ids = []
+
 						# check if tags exists otherwise create
+						tags.each do |tag|
+							currentTag = Tag.find_by tag: tag
+							if currentTag
+								new_tag_ids.push(currentTag.id)
+							else
+								@tag = Tag.new({
+									tag: tag
+								})
+								@tag.save
+								new_tag_ids.push(@tag.id)
+							end
+						end
 
-						# @tool_tags = @tool.tool_tags.create({
+						new_tag_ids.each do |ids|
+							@tool_tag = @tool.tool_tags.create({
+								tag_id: ids,
+								user_id: current_user[:id]
+							})
+							@tool_tag.save
 
-						# });
+						end
+
+
+
 					end
 
-					# categories
 
 					# comment
 

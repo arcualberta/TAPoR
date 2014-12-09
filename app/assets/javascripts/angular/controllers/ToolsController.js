@@ -16,10 +16,7 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
  	$scope.data.tool_ratings.stars = 0;
   
   $scope.data.tool_tags = {};
-  $scope.data.tool_tags.tags = [];
-  
-  $scope.data.categories = {};
-  $scope.data.categories.names = [];
+  $scope.data.tool_tags.tags = "";
   
   $scope.data.comments = {}
   $scope.data.comments.content = "";
@@ -30,6 +27,11 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
 
   $scope.createTool = function() {
  	
+		$scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
+		$.each($scope.data.tool_tags.tags, function( i, value ) {
+  		$scope.data.tool_tags.tags[i] = value.trim()
+		});
+
 		$http.post("/api/tools#create", $scope.data)
 		.success(function(data, status, headers, config) {
 			console.log("success")
