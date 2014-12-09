@@ -53,3 +53,6 @@ body {
 .rating li.filled {
 	color: #FF0; 
 }
+.rating li.clear {
+	color: #A00; 
+}

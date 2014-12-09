@@ -5,6 +5,9 @@ app.directive("starRating", function() {
                "  <li ng-repeat='star in stars' ng-class='star' ng-click='toggle($index)'>" +
                "    <i class='fa fa-star'></i>" + //&#9733
                "  </li>" +
+               "  <li ng-click='clear()' class='clear'>"+
+               "    <i class='fa fa-times'></i>" + //&#9733
+               "  </li>"+
                "</ul>",
     scope : {
       ratingValue : "=",
@@ -26,6 +29,12 @@ app.directive("starRating", function() {
           rating : index + 1
         });
       };
+      scope.clear = function(){
+        scope.ratingValue = 0;
+        scope.onRatingSelected({
+          rating : 0
+        });
+      }
       scope.$watch("ratingValue", function(oldVal, newVal) {
         updateStars();
       });

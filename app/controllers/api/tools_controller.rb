@@ -1,11 +1,10 @@
 class Api::ToolsController < ApplicationController
-	attr_accessor :tool_ratings
+	
 
 	# load_and_authorize_resource
 	before_action :set_tool, only: [:edit, :update, :destroy]
 	
 	def index
-		puts current_user
 		@tools = Tool.all
 		respond_to do |format|			
 			format.json {render json: @tools}
@@ -56,15 +55,17 @@ class Api::ToolsController < ApplicationController
 
 						# check if tags exists otherwise create
 						tags.each do |tag|
-							currentTag = Tag.find_by tag: tag
-							if currentTag
-								new_tag_ids.push(currentTag.id)
-							else
-								@tag = Tag.new({
-									tag: tag
-								})
-								@tag.save
-								new_tag_ids.push(@tag.id)
+							if tag != ""
+								currentTag = Tag.find_by tag: tag
+								if currentTag
+									new_tag_ids.push(currentTag.id)
+								else
+									@tag = Tag.new({
+										tag: tag
+									})
+									@tag.save
+									new_tag_ids.push(@tag.id)
+								end
 							end
 						end
 

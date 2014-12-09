@@ -13,6 +13,14 @@
 
 ActiveRecord::Schema.define(version: 20141125172213) do
 
+  create_table "attribute_types", force: true do |t|
+    t.string   "name"
+    t.string   "possible_values"
+    t.boolean  "is_multiple",     default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -51,6 +59,17 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "tool_attributes", force: true do |t|
+    t.integer  "tool_id"
+    t.integer  "attribute_type_id"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tool_attributes", ["attribute_type_id"], name: "index_tool_attributes_on_attribute_type_id", using: :btree
+  add_index "tool_attributes", ["tool_id"], name: "index_tool_attributes_on_tool_id", using: :btree
 
   create_table "tool_categories", force: true do |t|
     t.integer  "tool_id"
