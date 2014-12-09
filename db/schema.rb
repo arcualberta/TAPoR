@@ -11,17 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141125175323) do
+ActiveRecord::Schema.define(version: 20141125172213) do
 
-  create_table "abilities", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "attribute_types", force: true do |t|
+  create_table "categories", force: true do |t|
     t.string   "name"
-    t.string   "possible_values"
-    t.boolean  "is_multiple",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -59,16 +52,12 @@ ActiveRecord::Schema.define(version: 20141125175323) do
     t.datetime "updated_at"
   end
 
-  create_table "tool_attributes", force: true do |t|
+  create_table "tool_categories", force: true do |t|
     t.integer  "tool_id"
-    t.integer  "attribute_type_id"
-    t.string   "value"
+    t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "tool_attributes", ["attribute_type_id"], name: "index_tool_attributes_on_attribute_type_id", using: :btree
-  add_index "tool_attributes", ["tool_id"], name: "index_tool_attributes_on_tool_id", using: :btree
 
   create_table "tool_list_items", force: true do |t|
     t.integer  "tool_list_id"
@@ -138,7 +127,7 @@ ActiveRecord::Schema.define(version: 20141125175323) do
     t.integer  "user_id"
     t.string   "name"
     t.text     "description"
-    t.boolean  "is_approved", default: true
+    t.boolean  "is_approved", default: false
     t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"

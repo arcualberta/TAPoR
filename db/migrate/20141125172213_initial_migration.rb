@@ -27,12 +27,23 @@ class InitialMigration < ActiveRecord::Migration
   		t.belongs_to :user
   		t.string :name
   		t.text :description
-  		t.boolean :is_approved, default: true
+  		t.boolean :is_approved, default: false
   		t.string :image_url
   		t.timestamps
   	end
 
   	add_index :tools, :user_id
+
+    create_table :categories do |t|
+      t.string :name
+      t.timestamps
+    end
+
+    create_table :tool_categories do |t|
+      t.belongs_to :tool
+      t.belongs_to :category
+      t.timestamps
+    end
 
   	create_table :tool_ratings do |t|
   		t.belongs_to :user
@@ -117,22 +128,22 @@ class InitialMigration < ActiveRecord::Migration
 
   	add_index :featured_tools, :tool_id
 
-  	create_table :attribute_types do |t|
-  		t.string :name
-  		t.string :possible_values
-  		t.boolean :is_multiple, default: false
-  		t.timestamps
-  	end
+  	# create_table :attribute_types do |t|
+  	# 	t.string :name
+  	# 	t.string :possible_values
+  	# 	t.boolean :is_multiple, default: false
+  	# 	t.timestamps
+  	# end
 
-  	create_table :tool_attributes do |t|
-  		t.belongs_to :tool
-  		t.belongs_to :attribute_type
-  		t.string :value
-  		t.timestamps
-  	end
+  	# create_table :tool_attributes do |t|
+  	# 	t.belongs_to :tool
+  	# 	t.belongs_to :attribute_type
+  	# 	t.string :value
+  	# 	t.timestamps
+  	# end
 
-  	add_index :tool_attributes, :tool_id
-  	add_index :tool_attributes, :attribute_type_id
+  	# add_index :tool_attributes, :tool_id
+  	# add_index :tool_attributes, :attribute_type_id
 
   end
 end

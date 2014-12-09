@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   namespace :api, defaults: {format: :json} do
+    # get 'users/get_current', :to => 'users#get_current'
     resources :tools
     resources :users
   end

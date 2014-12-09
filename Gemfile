@@ -49,6 +49,7 @@ gem 'omniauth-yahoo', '~> 0.0.5'
 gem 'omniauth-twitter', '~> 1.1.0'
 gem 'cancancan', '~> 1.9'
 gem 'active_model_serializers', '~> 0.9.0'
+gem 'request_store', '~> 1.1.0'
 gem 'will_paginate', '~> 3.0.7'
 gem 'byebug', '~> 3.5.1', group: [:development, :test]
 

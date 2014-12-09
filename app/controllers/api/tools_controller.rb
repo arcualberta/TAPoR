@@ -1,26 +1,83 @@
 class Api::ToolsController < ApplicationController
+	attr_accessor :tool_ratings
+
 	# load_and_authorize_resource
 	before_action :set_tool, only: [:edit, :update, :destroy]
 	
 	def index
+		puts current_user
 		@tools = Tool.all
 		respond_to do |format|			
 			format.json {render json: @tools}
 		end
 	end
 
-	def show
-	end
+	def create		
+	
+		# @tool = Tool.new(safe_params)
+		
+		# @tool[:user_id] = current_user[:id]
+		
+		# respond_to do |format|
+		# 	if @tool.save
+		# 		format.json { render json: @tool, status: :created }
+		# 	else 
+		# 		format.json { render json: @tool.errors, status: :unprocessable_entity }
+		# 	end
+		# end
 
-	def create
-		@tool = Tool.new(safe_params)
+
 		respond_to do |format|
-			if @tool.save
-				format.json { render :show, status: :created, location: @tool }
-			else 
-				format.json { render json: @tool.errors, status: :unprocessable_entity }
+			Tool.transaction do
+				begin
+
+					@tool = Tool.new({
+						name: safe_params[:name], 
+						description: safe_params[:description],
+						user_id: current_user[:id]
+					})								
+					@tool.save
+					
+					# stars
+					if params[:tool_ratings] and params[:tool_ratings][:stars] and params[:tool_ratings][:stars] != 0
+						
+						@tool_ratings = @tool.tool_ratings.create({
+							stars: params[:tool_ratings][:stars], 
+							user_id: current_user[:id]
+						});
+						@tool_ratings.save
+					end
+					
+					# tags
+					if params[:tool_tags] and params[:tool_tags][:tags] #and params[:tool_ratings][:tags] != 0			
+						
+						# check if tags exists otherwise create
+
+						# @tool_tags = @tool.tool_tags.create({
+
+						# });
+					end
+
+					# categories
+
+					# comment
+
+					if params[:comments] and params[:comments][:content] and params[:comments][:content] != ""
+						@comment = @tool.comments.create({
+							content: params[:comments][:content], 
+							user_id: current_user[:id]
+						});
+						@comment.save
+					end
+										
+					format.json { render json: @tool, status: :created }
+				rescue ActiveRecord::RecordInvalid
+					format.json { render json: @tool.errors, status: :unprocessable_entity }
+					raise ActiveRecord::Rollback
+				end
 			end
 		end
+	
 	end
 
 	def edit
@@ -50,6 +107,8 @@ class Api::ToolsController < ApplicationController
 		end
 
 		def safe_params
-			params[:tool]
+			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
+			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
+			 params.require(:tool).permit(:name, :description);
 		end
 end

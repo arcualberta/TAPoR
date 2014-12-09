@@ -5,6 +5,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def login_behaviour
 	  # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.find_or_create_by_uid_provider(request.env["omniauth.auth"], current_user)
+
     if @user and @user.persisted?
       # flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
       sign_in_and_redirect @user, :event => :authentication

@@ -8,11 +8,13 @@
 	  <base href="<%=root_url%>" target="_self">
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
 	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-	  <%= csrf_meta_tags %>
+	  <%= csrf_meta_tags %>	
 	</head>
 	<body>
 		<div class="container">
-
+		<% if user_signed_in? %>
+		SIGNED IN
+		<% end %>
 			<!-- nav -->
 			<div class="row" id="nav">
 				<div class="col-md-12 text-right">
@@ -63,11 +65,6 @@
 
 
 			<!-- end of fotter -->
-
-			<%= link_to "Sign in with google", user_omniauth_authorize_path(:google_oauth2) %>
-
-<%= link_to "Sign in with twitter", user_omniauth_authorize_path(:twitter) %>
-
 <%= link_to 'Sign out', destroy_user_session_path %>
 
 		</div>

@@ -30,3 +30,7 @@ body {
 	background: #030303;
 	color: #F3F3F3;
 }
+
+.vertical-text-area {
+	resize: vertical;
+}
