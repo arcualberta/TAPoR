@@ -11,6 +11,10 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   
   $scope.data.name = "";
   $scope.data.description = "";
+  $scope.data.is_approved = false;
+  $scope.data.creators_name = "";
+  $scope.data.creators_email = "";
+  $scope.data.creators_url = "";
 
 	$scope.data.tool_ratings = {};  
  	$scope.data.tool_ratings.stars = 0;
@@ -23,14 +27,41 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   
   $scope.data.approved = false;
 
-  
+  // get attribute types
+
+  $scope.data.attribute_types = [];
+
+	$http.get("/api/attribute_types")
+	.success(function(data, status, headers, config){
+		$.each(data.attribute_types, function(i,val){
+			val.possible_values = val.possible_values.split(',');			
+			if (val.is_multiple) {
+				val.model = [];
+				$.each(val.possible_values, function(i, v){
+					val.model.push(false);
+				})
+				
+			} else {
+				val.model = null;
+			}
+			
+			
+			$scope.data.attribute_types.push(val);
+		});
+
+	});
 
   $scope.createTool = function() {
- 	
+ 		
+ 		// clean up tags
 		$scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
-		$.each($scope.data.tool_tags.tags, function( i, value ) {
-  		$scope.data.tool_tags.tags[i] = value.trim()
+		$.each($scope.data.tool_tags.tags, function( i, v ) {
+  		$scope.data.tool_tags.tags[i] = v.trim()
 		});
+
+		// clean up attribute values
+
+
 
 		$http.post("/api/tools#create", $scope.data)
 		.success(function(data, status, headers, config) {

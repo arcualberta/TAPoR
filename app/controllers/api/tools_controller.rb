@@ -20,6 +20,9 @@ class Api::ToolsController < ApplicationController
 					@tool = Tool.new({
 						name: safe_params[:name], 
 						description: safe_params[:description],
+						creators_name: safe_params[:creators_name],
+						creators_email: safe_params[:creators_email],
+						creators_url: safe_params[:creators_url],
 						user_id: current_user[:id]
 					})								
 					@tool.save
@@ -119,6 +122,6 @@ class Api::ToolsController < ApplicationController
 		def safe_params
 			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
 			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
-			 params.require(:tool).permit(:name, :description);
+			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url);
 		end
 end

@@ -29,6 +29,9 @@ class InitialMigration < ActiveRecord::Migration
   		t.text :description
   		t.boolean :is_approved, default: false
   		t.string :image_url
+      t.string :creators_name
+      t.string :creators_email
+      t.string :creators_url
 
   		t.timestamps
   	end

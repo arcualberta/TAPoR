@@ -50,15 +50,57 @@
       </div>
     </div>
 
+    <!-- creator name -->
+
+    <div class="form-group">
+      <label for="inputCreatorsName" class="col-sm-2 control-label">Creator's name</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputCreatorsName" placeholder="Name" ng-model="data.creators_name">
+      </div>
+    </div>
+
+    <!-- creator email -->
+
+    <div class="form-group">
+      <label for="inputCreatorsEmail" class="col-sm-2 control-label">Creator's email</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputCreatorsEmail" placeholder="Email" ng-model="data.creators_email">
+      </div>
+    </div>
+
+    <!-- creator url -->
+
+    <div class="form-group">
+      <label for="inputCreatorsURL" class="col-sm-2 control-label">Creator's URL</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputCreatorsURL" placeholder="URL" ng-model="data.creators_url">
+      </div>
+    </div>
+
     <!-- approved -->
 
     <div class="form-group">
       <label for="inputApproved" class="col-sm-2 control-label">Approved</label>
       <div class="col-sm-5  ">
-        <input type="checkbox" name="approved" value="approved" id="inputApproved" ng-model="data.approved">
+        <ul>
+          <li class="checkbox">
+            <label>
+              <input type="checkbox" name="approved" value="approved" id="inputApproved" ng-model="data.approved">
+            </label>
+          </li>
+        </ul>
       </div>
     </div>
 
+    <!-- attributes -->
+
+    <div class="form-group" ng-repeat='attribute in data.attribute_types track by $index' >
+      <label for="inputName" class="col-sm-2 control-label">{{attribute.name}}</label>
+      <div class="col-sm-5">
+         <div multselect is-multiple="attribute.is_multiple" model="attribute.model" name="attribute.name" values="attribute.possible_values"> </div>
+      </div>
+    </div>
+   
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
