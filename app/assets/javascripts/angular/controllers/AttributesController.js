@@ -21,7 +21,7 @@ app.controller('AttributesNewCtrl', ['$scope', '$http' , function($scope, $http)
 	}
 
   $scope.createAttribute = function() {
- 		$scope.data.possible_values = $scope.possible_values.join(',');
+ 		$scope.data.possible_values = $scope.possible_values.join('|');
 		$http.post("/api/attribute_types#create", $scope.data)
 		.success(function(data, status, headers, config) {
 			console.log("success")

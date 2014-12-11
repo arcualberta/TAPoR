@@ -23,6 +23,7 @@ class Api::ToolsController < ApplicationController
 						creators_name: safe_params[:creators_name],
 						creators_email: safe_params[:creators_email],
 						creators_url: safe_params[:creators_url],
+						is_approved: safe_params[:is_approved],
 						user_id: current_user[:id]
 					})								
 					@tool.save
@@ -82,7 +83,51 @@ class Api::ToolsController < ApplicationController
 						});
 						@comment.save
 					end
-										
+
+					# attributes
+
+					if params[:attribute_types]
+						attributes = params[:attribute_types]
+						attributes.each do |attribute|
+							# get attribute from database
+							savedType = AttributeType.find(attribute[:id])
+							valuesToSave = []
+							if savedType
+								# if exists check is multiple								
+								if savedType.is_multiple?									
+									if attribute[:model].length == attribute[:possible_values].length
+										attribute[:model].each_index do |i|
+											if attribute[:model][i]												
+												valuesToSave.push(attribute[:possible_values][i])
+											end
+										end
+									end
+								else					
+									valuesToSave.push(attribute[:model])
+								end
+								
+								possible = savedType.possible_values.split("|");
+								should_save = true								
+								valuesToSave.each do |newValue|								
+									unless possible.include?(newValue)
+										should_save = false										
+										break
+									end
+								end	
+								
+								if should_save
+									
+									@tool_attribute = @tool.tool_attributes.create({
+										attribute_type_id: savedType.id,
+										value: valuesToSave.join("|")
+									});
+									@tool_attribute.save()
+								end
+
+							end
+						end 
+					end
+
 					format.json { render json: @tool, status: :created }
 				rescue ActiveRecord::RecordInvalid
 					format.json { render json: @tool.errors, status: :unprocessable_entity }

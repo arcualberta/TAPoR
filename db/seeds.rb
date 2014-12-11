@@ -5,5 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-AttributeType.create(name: "Background processing", possible_values: "Doesn't run in background,Not applicable,Runs in background", is_multiple: false);
-AttributeType.create(name: "Warning", possible_values: "Complex and difficult,Limited uses,Prototype,Still in development,Time consuming", is_multiple: true);
+AttributeType.create(name: "Background processing", possible_values: "Doesn't run in background|Not applicable|Runs in background", is_multiple: false);
+AttributeType.create(name: "Warning", possible_values: "Complex and difficult|Limited uses|Prototype|Still in development|Time consuming", is_multiple: true);

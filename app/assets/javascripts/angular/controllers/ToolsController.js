@@ -34,7 +34,7 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
 	$http.get("/api/attribute_types")
 	.success(function(data, status, headers, config){
 		$.each(data.attribute_types, function(i,val){
-			val.possible_values = val.possible_values.split(',');			
+			val.possible_values = val.possible_values.split('|');			
 			if (val.is_multiple) {
 				val.model = [];
 				$.each(val.possible_values, function(i, v){
