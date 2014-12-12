@@ -9,10 +9,7 @@ class ToolSerializer < ActiveModel::Serializer
   end
 
  	def tags
-
- 		object.tags.joins(:tool_tags).where(tool_tags: {user_id: current_user})
-		# object.tool_tags.where(:user_id => current_user)
-		# object.tool_tags.joins(:tag).where(:user_id => current_user)
+ 		object.tags.joins(:tool_tags).where(tool_tags: {user_id: current_user})		
 	end
 
 	def comments

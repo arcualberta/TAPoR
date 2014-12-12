@@ -15,20 +15,9 @@ class Api::ToolsController < ApplicationController
 	def show 
 		respond_to do |format|
 			@tool = Tool.find(params[:id]);			
-			format.json { render json: @tool }
-			# format.json { render json: @tool, user_id: current_user[:id] }
-			# format.json { render json: @tool.to_json(include: :tool_attributes )}
+			format.json { render json: @tool }			
 		end
 	end
-
-	# def new 
-	# 	respond_to do |format|
-	# 		@tool = Tool.find(2);
-			
-
-	# 		format.json { render json: @tool, user_id: current_user[:id] }
-	# 	end
-	# end
 
 	def create		
 
@@ -157,9 +146,6 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 	
-	end
-
-	def edit
 	end
 
 	def update
