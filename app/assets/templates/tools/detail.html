@@ -1,0 +1,41 @@
+<div ng-controller='ToolsDetailCtrl' class='tapor-container'>
+  <div class='row'>
+	  <form class="form-horizontal" role="form">
+
+	  	<!-- stars -->
+
+			<div class="form-group">
+	      <label for="inputStars" class="col-sm-2 control-label">Rating</label>
+	      <div class="col-sm-5 rating">
+	        <div star-rating rating-value="data.tool_ratings.stars" on-rating-selected="rateFunction(data.tool_ratings.stars)" max="5"></div>
+	      </div>
+	    </div>  
+
+    <!-- tags -->
+
+    <div class="form-group">
+      <label for="inputTags" class="col-sm-2 control-label">Tags</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputTags" placeholder="Tags" ng-model="data.tool_tags.tags">
+      </div>
+    </div>
+
+    <!-- comment -->
+
+    <div class="form-group">
+      <label for="inputComment" class="col-sm-2 control-label">Comment</label>
+      <div class="col-sm-5  ">
+        <textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.comments.content"></textarea>
+      </div>
+    </div>
+
+		<div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button ng-click="saveTool()" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+
+	  </form>
+  </div>
+
+</div>

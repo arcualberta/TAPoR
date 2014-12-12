@@ -14,10 +14,9 @@ class Api::ToolsController < ApplicationController
 
 	def show 
 		respond_to do |format|
-			@tool = Tool.find(2);
-			
-
-			format.json { render json: @tool, user_id: current_user[:id] }
+			@tool = Tool.find(params[:id]);			
+			format.json { render json: @tool }
+			# format.json { render json: @tool, user_id: current_user[:id] }
 			# format.json { render json: @tool.to_json(include: :tool_attributes )}
 		end
 	end
@@ -67,16 +66,18 @@ class Api::ToolsController < ApplicationController
 						# check if tags exists otherwise create
 						tags.each do |tag|
 							if tag != ""
-								currentTag = Tag.find_by tag: tag
-								if currentTag
-									new_tag_ids.push(currentTag.id)
-								else
-									@tag = Tag.new({
-										tag: tag
-									})
-									@tag.save
-									new_tag_ids.push(@tag.id)
-								end
+								currentTag = Tag.find_or_create_by tag: tag;
+								new_tag_ids.push(currentTag.id);
+								# currentTag = Tag.find_by tag: tag
+								# if currentTag
+								# 	new_tag_ids.push(currentTag.id)
+								# else
+								# 	@tag = Tag.new({
+								# 		tag: tag
+								# 	})
+								# 	@tag.save
+								# 	new_tag_ids.push(@tag.id)
+								# end
 							end
 						end
 
