@@ -1,1 +1,6 @@
-index.html
+<div ng-controller='ToolsIndexCtrl' class='tapor-container'>
+	<div class='row' ng-repeat="tool in tools track by $index">
+	<label><a href='tools/{{tool.id}}'>{{tool.name}}</a></label>
+	{{tool.description}}
+	</div>
+</div>

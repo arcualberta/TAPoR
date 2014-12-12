@@ -1,9 +1,30 @@
 
-app.controller('ToolsIndexCtrl', ['$scope', function($scope) {
-  $scope.greeting = 'Hola desde tools!';
+app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
+
+	$http.get("/api/tools")
+	.success(function(data, status, headers, config){			
+		$scope.tools = data;
+	});
+
 }]);
 
+app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+	// alert($routeParams.toolId)
+	
+	$http.get('/api/tools/' + $routeParams.toolId)
+	.success(function(data, status, headers, config){
+		console.log(data);
+	});
 
+	// ratin
+
+	// tags
+
+	// comment
+
+
+
+}]);
 
 app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   
@@ -33,7 +54,7 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
 
 	$http.get("/api/attribute_types")
 	.success(function(data, status, headers, config){
-		$.each(data.attribute_types, function(i,val){
+		$.each(data, function(i,val){
 			val.possible_values = val.possible_values.split('|');			
 			if (val.is_multiple) {
 				val.model = [];

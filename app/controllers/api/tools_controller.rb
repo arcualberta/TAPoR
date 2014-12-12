@@ -5,11 +5,31 @@ class Api::ToolsController < ApplicationController
 	before_action :set_tool, only: [:edit, :update, :destroy]
 	
 	def index
-		@tools = Tool.all
+		# @tools = Tool.all
+		@tools = Tool.paginate(:page => params[:page])
 		respond_to do |format|			
 			format.json {render json: @tools}
 		end
 	end
+
+	def show 
+		respond_to do |format|
+			@tool = Tool.find(2);
+			
+
+			format.json { render json: @tool, user_id: current_user[:id] }
+			# format.json { render json: @tool.to_json(include: :tool_attributes )}
+		end
+	end
+
+	# def new 
+	# 	respond_to do |format|
+	# 		@tool = Tool.find(2);
+			
+
+	# 		format.json { render json: @tool, user_id: current_user[:id] }
+	# 	end
+	# end
 
 	def create		
 

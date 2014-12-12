@@ -7,7 +7,7 @@ class Tool < ActiveRecord::Base
 	has_many :tool_ratings
 	# has_many :users, through: :tool_ratings
 	has_many :tool_tags
-	# has_many :tags, through: :tool_tags
+	has_many :tags, through: :tool_tags
 	# has_many :users, through: :tool_tags
 	has_many :tool_attributes
 	# has_many :attribute_types, through: :tool_attributes
