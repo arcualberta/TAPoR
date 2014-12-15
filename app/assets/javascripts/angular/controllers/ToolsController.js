@@ -58,15 +58,11 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 			$scope.data.comments.content = data.comments[0].content;
 		}
 
-
 	});
 
-	// ratin
-
-	// tags
-
-	// comment
-
+	$scope.updateToolUserDetails = function() {
+		
+	}
 
 
 }]);
