@@ -11,8 +11,9 @@ app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
 app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 	// alert($routeParams.toolId)
 	
-	$scope.data = {};
-  
+	$scope.tool_id = $routeParams.toolId;
+
+	$scope.data = {};  
   $scope.data.name = "";
   $scope.data.description = "";
   // $scope.data.creators_name = "";
@@ -61,7 +62,11 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 	});
 
 	$scope.updateToolUserDetails = function() {
-		
+		$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
+		.success(function(data, status, headers, config){
+			console.log("success updating")
+		});
+
 	}
 
 

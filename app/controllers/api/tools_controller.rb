@@ -2,7 +2,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_user]
 	
 	def index
 		# @tools = Tool.all
@@ -148,14 +148,67 @@ class Api::ToolsController < ApplicationController
 	
 	end
 
+	# def update_user 
+	# 	puts @tool.id
+	# end
+
 	def update
+
+
 		respond_to do |format|
-			if @tool.update(safe_params)
-				format.json { render :show, status: :ok, location: @tool }
-			else 
-				format.json { render json: @tool.errors, status: :unprocessable_entity}
+			Tool.transaction do
+				begin
+					
+					# stars
+					if params[:tool_ratings] and params[:tool_ratings][:stars] 
+
+						if params[:tool_ratings][:stars] == 0
+							@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user
+ 							if @user_tool_rating
+								@user_tool_rating.destroy()
+							end
+						else 
+							@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user
+							puts params[:tool_ratings][:stars]
+							@tool_ratings.stars = params[:tool_ratings][:stars]
+							@tool_ratings.save()
+						end
+
+					end
+
+					# tags
+
+					# comment
+
+					if params[:comments] and params[:comments][:content]
+						if params[:comments][:content] == ""
+							@user_tool_comment = @tool.comments.find_by user_id: current_user
+							if @user_tool_comment
+								@user_tool_comment.destroy()
+							end							
+						else
+							@comment = @tool.comments.find_or_create_by user_id: current_user
+							@comment.content = params[:comments][:content]
+							@comment.save
+						end
+					end
+
+
+					format.json { render json: @tool, status: :created }
+
+				rescue ActiveRecord::RecordInvalid
+					format.json { render json: @tool.errors, status: :unprocessable_entity }
+					raise ActiveRecord::Rollback
+				end
 			end
 		end
+		# respond_to do |format|
+		# 	if @tool.update(safe_params)							
+		# 		format.json { render :show, status: :ok, location: @tool }			
+		# 	else 
+		# 		format.json { render json: @tool.errors, status: :unprocessable_entity}
+		# 	end
+		# end
 	end
 
 	def destroy
