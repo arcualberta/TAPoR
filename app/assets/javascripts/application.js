@@ -22,6 +22,7 @@
 //= require angular/controllers/NavCtrl
 //= require angular/controllers/TaporIndexCtrl
 //= require angular/controllers/ToolsController
+//= require angular/controllers/UsersController
 //= require angular/controllers/AttributesController
 //= require angular/controllers/SigninIndexCtrl
 

@@ -1,0 +1,61 @@
+<div ng-controller='UsersIndexCtrl' class='tapor-container'>
+	<div class="row">
+		<div class="col-md-12">
+			<table class="table table-striped">
+			<tr>
+				<th>
+					&nbsp;
+				</th>
+				<th>
+					Name
+				</th>
+				<th>
+					Email
+				</th>
+				<th>
+					Site
+				</th>
+				<th>
+					Affiliation
+				</th>
+				<th>
+					Blocked
+				</th>
+				<th>
+					Admin
+				</th>
+			</tr>
+			<tr ng-repeat="user in users track by $index">
+				<td>
+				</td>
+				<td>
+					{{user.name}}
+				</td>
+				<td>
+					{{user.email}}
+				</td>
+				<td>
+					{{user.site}}
+				</td>
+				<td>
+					{{user.affiliation}}
+				</td>
+				<td>
+					<span class="checkbox">
+						<label>
+	          	<input type="checkbox" name="is_blocked" value="is_blocked" id="inputIsBlocked" ng-model="user.is_blocked" ng-change="updateIsBlocked(user.id, user.is_blocked)"> Is Blocked
+	          </label>
+					</span>
+				</td>
+				<td>
+					<span class="checkbox">
+						<label>
+	          	<input type="checkbox" name="is_admin" value="is_admin" id="inputIsAdmin" ng-model="user.is_admin" ng-change="updateIsAdmin(user.id, user.is_admin)"> Is Admin
+	          </label>
+					</span>
+				</td>
+			</tr>
+			</table>
+		</div>
+	</div>
+</div>

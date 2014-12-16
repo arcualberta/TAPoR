@@ -8,8 +8,8 @@ class User < ActiveRecord::Base
 	has_many :tool_use_metrics
 	has_many :tools, through: :tool_use_metrics
 	has_many :tools
-
-	enum role: [ :administrator, :user] unless instance_methods.include? :role
+	
+	# enum role: [ :administrator, :user] unless instance_methods.include? :role
 	validates_presence_of :uid, :provider
   validates_uniqueness_of :uid, :scope => :provider
 

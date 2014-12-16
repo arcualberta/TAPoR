@@ -4,6 +4,10 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     # get 'users/get_current', :to => 'users#get_current'
+
+    # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
+    # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'
+
     resources :tools
     resources :users
     resources :attribute_types

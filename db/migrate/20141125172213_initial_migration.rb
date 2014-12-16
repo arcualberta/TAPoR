@@ -19,7 +19,8 @@ class InitialMigration < ActiveRecord::Migration
   		t.string :description
   		t.string :image_url
   		t.boolean :is_blocked, default: false
-  		t.integer :role, default: 1
+      t.boolean :is_admin, default: false
+  		# t.integer :role, default: 1
   		t.timestamps
   	end
 

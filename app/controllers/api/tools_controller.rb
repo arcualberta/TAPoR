@@ -224,7 +224,7 @@ class Api::ToolsController < ApplicationController
 					end
 
 
-					format.json { render json: @tool, status: :created }
+					format.json { render json: @tool, status: :accepted }
 
 				rescue ActiveRecord::RecordInvalid
 					format.json { render json: @tool.errors, status: :unprocessable_entity }

@@ -169,7 +169,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "description"
     t.string   "image_url"
     t.boolean  "is_blocked",    default: false
-    t.integer  "role",          default: 1
+    t.boolean  "is_admin",      default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
