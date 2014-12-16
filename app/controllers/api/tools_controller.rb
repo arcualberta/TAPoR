@@ -2,7 +2,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_user]
+	before_action :set_tool, only: [:edit, :update, :destroy]
 	
 	def index
 		# @tools = Tool.all
@@ -14,7 +14,7 @@ class Api::ToolsController < ApplicationController
 
 	def show 
 		respond_to do |format|
-			@tool = Tool.find(params[:id]);			
+			@tool = Tool.find(params[:id]);
 			format.json { render json: @tool }			
 		end
 	end
@@ -57,16 +57,6 @@ class Api::ToolsController < ApplicationController
 							if tag != ""
 								currentTag = Tag.find_or_create_by tag: tag;
 								new_tag_ids.push(currentTag.id);
-								# currentTag = Tag.find_by tag: tag
-								# if currentTag
-								# 	new_tag_ids.push(currentTag.id)
-								# else
-								# 	@tag = Tag.new({
-								# 		tag: tag
-								# 	})
-								# 	@tag.save
-								# 	new_tag_ids.push(@tag.id)
-								# end
 							end
 						end
 
@@ -148,16 +138,13 @@ class Api::ToolsController < ApplicationController
 	
 	end
 
-	# def update_user 
-	# 	puts @tool.id
-	# end
-
 	def update
-
 
 		respond_to do |format|
 			Tool.transaction do
 				begin
+
+					# main tool content
 					
 					# stars
 					if params[:tool_ratings] and params[:tool_ratings][:stars] 
@@ -177,6 +164,49 @@ class Api::ToolsController < ApplicationController
 					end
 
 					# tags
+
+					tags = params[:tool_tags][:tags];
+					tag_ids = []
+					tags.each do |tag|
+						@currentTag = Tag.find_or_create_by tag: tag
+						tag_ids.push(@currentTag)
+					end	
+					
+					@tool_tags = @tool.tool_tags.where( user_id: current_user)
+
+
+					# adding new tags
+					tag_ids.each do |tag_id|
+						found = false;
+						@tool_tags.each do |tool_tag|
+							puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
+							if tool_tag.tag_id == tag_id.id
+								found = true;
+								break;
+							end
+						end
+						if !found
+							@test = @tool.tool_tags.create({
+								tag_id: tag_id.id,
+								user_id: current_user[:id]
+							});
+							@test.save
+						end
+					end
+
+					@tool_tags.each do |tool_tag|
+						found = false;
+						tag_ids.each do |tag_id|
+							if tool_tag.tag_id == tag_id.id
+								found = true
+								break					
+							end							
+						end
+						if !found
+							tool_tag.destroy()
+						end
+					end
+
 
 					# comment
 

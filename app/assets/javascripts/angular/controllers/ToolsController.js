@@ -62,6 +62,11 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 	});
 
 	$scope.updateToolUserDetails = function() {
+		// clean up tags
+		$scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
+		$.each($scope.data.tool_tags.tags, function( i, v ) {
+  		$scope.data.tool_tags.tags[i] = v.trim()
+		});
 		$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 		.success(function(data, status, headers, config){
 			console.log("success updating")
