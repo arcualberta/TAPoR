@@ -25,6 +25,26 @@ app.controller('UsersIndexCtrl', ['$scope', '$http', function($scope, $http){
 		$scope.users = data;
 	});
 
+}]);
 
+app.controller("UsersDetailCtrl", ['$scope', '$http', function($scope, $http){
+
+
+	$scope.data = {};
+
+	$http.get('/api/users/current')
+	.success(function(data, status, headers, config){
+		$scope.data = data;
+
+		console.log(data	)
+	});
+
+
+	$scope.saveProfile = function() {
+		$http.patch('/api/users/' + $scope.data.id, $scope.data)
+		.success(function(data, status, headers, config){
+			console.log('success')
+		});
+	}
 
 }]);

@@ -11,12 +11,12 @@ class InitialMigration < ActiveRecord::Migration
   		t.string :uid
   		t.string :provider
   		t.string :name
-  		t.string :email
-  		t.boolean :publish_email, default: false
-  		t.string :site
-  		t.string :affiliation
-  		t.string :position
-  		t.string :description
+  		t.string :email # user provided
+  		t.boolean :is_email_publishable, default: false # user provided
+  		t.string :site # user provided
+  		t.string :affiliation # user provided
+  		t.string :position # user provided
+  		t.string :description # user provided
   		t.string :image_url
   		t.boolean :is_blocked, default: false
       t.boolean :is_admin, default: false

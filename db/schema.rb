@@ -162,14 +162,14 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "provider"
     t.string   "name"
     t.string   "email"
-    t.boolean  "publish_email", default: false
+    t.boolean  "is_email_publishable", default: false
     t.string   "site"
     t.string   "affiliation"
     t.string   "position"
     t.string   "description"
     t.string   "image_url"
-    t.boolean  "is_blocked",    default: false
-    t.boolean  "is_admin",      default: false
+    t.boolean  "is_blocked",           default: false
+    t.boolean  "is_admin",             default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

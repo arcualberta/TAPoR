@@ -1,0 +1,86 @@
+<div ng-controller='UsersDetailCtrl' class='tapor-container'>
+	<div class='row'>
+		<form class="form-horizontal" role="form">
+		<!-- image -->
+		<div class="form-group">
+      <label class="col-sm-2 control-label"></label>
+      <div class="col-sm-5">
+      	<img src="{{data.image_url}}" class="img-circle">        
+      </div>
+    </div>
+
+
+
+		<!-- name -->
+		<div class="form-group">
+      <label class="col-sm-2 control-label"></label>
+      <div class="col-sm-5">
+        <label>{{data.name}}</label>
+      </div>
+    </div>
+
+		<!-- email -->
+		<div class="form-group">
+      <label class="col-sm-2 control-label">Email</label>
+      <div class="col-sm-5">       
+
+				<div class="input-group">
+					
+					<input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="data.email">
+					<span class="input-group-addon">
+						Publish <input type="checkbox" name="is_email_publishable" value="is_email_publishable" id="inputIsEmailPublishable" ng-model="data.is_email_publishable">
+					</span>
+				</div><!-- /input-group -->				
+
+				<!-- <input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="data.email">
+        <ul>
+          <li class="checkbox">
+            <label>
+              <input type="checkbox" name="is_email_publishable" value="is_email_publishable" id="inputIsEmailPublishable" ng-model="data.is_email_publishable">Publish 
+            </label>
+          </li>
+        </ul>  -->
+
+      </div>
+    </div>
+		<!-- publish ? -->
+		<!-- site -->
+		<div class="form-group">
+      <label for="inputSite" class="col-sm-2 control-label">Site</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputSite" placeholder="URL" ng-model="data.site">
+      </div>
+    </div>
+		<!-- affiliation -->
+		<div class="form-group">
+      <label for="inputAffiliation" class="col-sm-2 control-label">Affiliation</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputAffiliation" placeholder="Affiliation" ng-model="data.affiliation">
+      </div>
+    </div>
+		<!-- position -->
+		<div class="form-group">
+      <label for="inputPosition" class="col-sm-2 control-label">Position</label>
+      <div class="col-sm-5">
+        <input type="text" class="form-control" id="inputPosition" placeholder="Position" ng-model="data.position">
+      </div>
+    </div>
+		<!-- description -->
+    <div class="form-group">
+      <label for="inputDescription" class="col-sm-2 control-label">Description</label>
+      <div class="col-sm-5	">
+        <textarea class="form-control vertical-text-area" rows="3" id="inputDescription" ng-model="data.description"></textarea>
+      </div>
+    </div>
+
+
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+				<button ng-click="saveProfile()" class="btn btn-primary">Save</button>
+			</div>
+		</div>
+
+    </div>
+		</form>
+	</div>
+</div>

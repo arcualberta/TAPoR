@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   namespace :api, defaults: {format: :json} do
-    # get 'users/get_current', :to => 'users#get_current'
+    get 'users/current', :to => 'users#current'
 
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
     # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'

@@ -6,6 +6,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	  # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.find_or_create_by_uid_provider(request.env["omniauth.auth"], current_user)
 
+    @user.name = request.env["omniauth.auth"][:info][:name];
+    @user.image_url = request.env["omniauth.auth"][:info][:image];
+    @user.save
+    
     if @user and @user.persisted?
       # flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
       sign_in_and_redirect @user, :event => :authentication

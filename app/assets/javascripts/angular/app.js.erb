@@ -77,6 +77,10 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('users/index.html') %>",
         controller: 'UsersIndexCtrl',
       })
+      .when('/users/:id', {
+        templateUrl: "<%= asset_path('users/detail.html') %>",
+        controller: 'UsersDetailCtrl',
+      })
       // Attributes
       .when('/attributes', {
         templateUrl: "<%= asset_path('attributes/index.html') %>",
