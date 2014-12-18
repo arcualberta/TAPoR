@@ -15,6 +15,10 @@
 //= require angular/angular
 //= require angular-resource/angular-resource
 //= require angular-route/angular-route
+//= require microplugin/src/microplugin
+//= require sifter/sifter
+//= require selectize/dist/js/selectize
+//= require angular-selectize2/dist/selectize
 //= require turbolinks
 //= require angular/app
 //= require angular/directives/StarDirective

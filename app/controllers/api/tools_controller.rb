@@ -195,12 +195,12 @@ class Api::ToolsController < ApplicationController
 					if params[:tool_ratings] and params[:tool_ratings][:stars] 
 
 						if params[:tool_ratings][:stars] == 0
-							@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user
+							@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
  							if @user_tool_rating
 								@user_tool_rating.destroy()
 							end
 						else 
-							@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user
+							@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
 							puts params[:tool_ratings][:stars]
 							@tool_ratings.stars = params[:tool_ratings][:stars]
 							@tool_ratings.save()
@@ -217,7 +217,7 @@ class Api::ToolsController < ApplicationController
 						tag_ids.push(@currentTag)
 					end	
 					
-					@tool_tags = @tool.tool_tags.where( user_id: current_user)
+					@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
 
 
 					# adding new tags
@@ -257,12 +257,12 @@ class Api::ToolsController < ApplicationController
 
 					if params[:comments] and params[:comments][:content]
 						if params[:comments][:content] == ""
-							@user_tool_comment = @tool.comments.find_by user_id: current_user
+							@user_tool_comment = @tool.comments.find_by user_id: current_user[:id]
 							if @user_tool_comment
 								@user_tool_comment.destroy()
 							end							
 						else
-							@comment = @tool.comments.find_or_create_by user_id: current_user
+							@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
 							@comment.content = params[:comments][:content]
 							@comment.save
 						end

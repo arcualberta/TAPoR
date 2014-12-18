@@ -30,6 +30,21 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
   $scope.data.comments.content = "";
 
 
+	$scope.tag_options = [];
+  $scope.tag_config = {
+    create: true,
+    valueField: 'id',
+    labelField: 'value',
+    searchField: 'value',
+    sortField: 'id',
+    delimiter: ',',
+    // placeholder: 'Pick at least 1..',
+    preload: true,
+    // required: true,
+    // hideSelected: false
+    // maxItems: 1
+  };
+
 	$http.get('/api/tools/' + $routeParams.toolId)
 	.success(function(data, status, headers, config){
 		console.log(data);
@@ -50,7 +65,8 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 			$.each(data.tags, function(i, v){
 				tags.push(v.tag);
 			});
-			$scope.data.tool_tags.tags = tags.join(", ");
+			// $scope.data.tool_tags.tags = tags.join(", ");
+			$scope.data.tool_tags.tags = tags;
 		}
 
 		$scope.data.comments = {};
@@ -63,10 +79,10 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 
 		$scope.updateToolUserDetails = function() {
 		// clean up tags
-		$scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
-		$.each($scope.data.tool_tags.tags, function( i, v ) {
-  		$scope.data.tool_tags.tags[i] = v.trim()
-		});
+		// $scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
+		// $.each($scope.data.tool_tags.tags, function( i, v ) {
+  // 		$scope.data.tool_tags.tags[i] = v.trim()
+		// });
 		$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 		.success(function(data, status, headers, config){
 			console.log("success updating")
@@ -99,6 +115,22 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   
   $scope.data.approved = false;
   $scope.data.image = "";
+
+
+  $scope.tag_options = [];
+  $scope.tag_config = {
+    create: true,
+    valueField: 'id',
+    labelField: 'value',
+    searchField: 'value',
+    sortField: 'id',
+    delimiter: ',',
+    // placeholder: 'Pick at least 1..',
+    preload: true,
+    // required: true,
+    // hideSelected: false
+    // maxItems: 1
+  };
 
   // get attribute types
 
