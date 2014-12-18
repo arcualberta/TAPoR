@@ -1,3 +1,8 @@
+require 'fileutils'
+require 'base64'
+require 'RMagick'
+include Magick
+
 class Api::ToolsController < ApplicationController
 	
 
@@ -127,6 +132,46 @@ class Api::ToolsController < ApplicationController
 							end
 						end 
 					end
+
+					# image
+
+					time = Time.new
+					name = @tool.id.to_s + ".png"
+					directory = "tools/" + time.year.to_s + "/" + time.month.to_s + "/" + time.day.to_s + "/";
+					FileUtils::mkdir_p File.join("public", "images", directory)
+					path = File.join("public", "images", directory, name)
+					decoded = Base64.urlsafe_decode64( params[:image].split(",")[1] )
+					File.open(path, "wb") { |file| file.write( decoded ) }
+
+					image = ImageList.new(path.to_s);
+					image.format = "PNG";
+					
+					# resize
+					finalWidth = 1170;
+					finalHeight = 500;
+					image.resize_to_fill!(finalWidth);
+
+					# crop
+					# image.crop!(0, 0, finalWidth, finalHeight);
+					image = image.extent(finalWidth, finalHeight);
+					image.write(path.to_s);
+
+					# image.change_geometry!('550x440') { |cols, rows, img|
+ 					# 	img.resize!(cols, rows)
+ 					# }
+
+ 					# image.write(path.to_s);
+ 					
+
+					# thumb
+					thumbnail = image.thumbnail(image.columns*0.2, image.rows*0.2);
+					thumbnailPath = File.join("public", "images", directory, @tool.id.to_s + "-thumb.png");
+					thumbnail.write(thumbnailPath.to_s);
+
+
+					@tool.image_url = path.to_s
+					@tool.save
+
 
 					format.json { render json: @tool, status: :created }
 				rescue ActiveRecord::RecordInvalid

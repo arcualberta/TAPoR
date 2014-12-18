@@ -15,3 +15,4 @@
 /log/*.log
 /tmp
 /vendor/assets/components
+public/images/tools/

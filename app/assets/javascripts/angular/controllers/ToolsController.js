@@ -61,7 +61,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 
 	});
 
-	$scope.updateToolUserDetails = function() {
+		$scope.updateToolUserDetails = function() {
 		// clean up tags
 		$scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
 		$.each($scope.data.tool_tags.tags, function( i, v ) {
@@ -98,6 +98,7 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   $scope.data.comments.content = "";
   
   $scope.data.approved = false;
+  $scope.data.image = "";
 
   // get attribute types
 
@@ -131,9 +132,18 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   		$scope.data.tool_tags.tags[i] = v.trim()
 		});
 
-		// clean up attribute values
+		var fd = new FormData();
 
+		for (var i in $scope.data) {
+			if ($scope.data.hasOwnProperty(i)) {
+				console.log("appending " + i)
+				fd.append(i, $scope.data[i])
+			}
+		}
 
+		// var xhr=new XMLHttpRequest();
+		// xhr.open("POST", "/api/tools#create", true);
+		// xhr.send(fd);
 
 		$http.post("/api/tools#create", $scope.data)
 		.success(function(data, status, headers, config) {
