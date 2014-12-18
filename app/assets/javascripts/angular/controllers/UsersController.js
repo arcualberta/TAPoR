@@ -35,8 +35,6 @@ app.controller("UsersDetailCtrl", ['$scope', '$http', function($scope, $http){
 	$http.get('/api/users/current')
 	.success(function(data, status, headers, config){
 		$scope.data = data;
-
-		console.log(data	)
 	});
 
 

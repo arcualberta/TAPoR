@@ -14,6 +14,28 @@
     
     <!-- image XXX missing -->
 
+    <div class="form-group">
+      <label for="inputImage" class="col-sm-2 control-label">Image</label>
+      <div class="col-sm-5">
+        
+        <!-- <div class="input-group"> -->
+
+
+        <span class="btn btn-default btn-file">
+          <!-- Browse <input id='inputImage' type="file" ng-model='data.image_path' ng-change='updateImage'> -->
+          Browse <input type="file" fileread="data.image"/>
+        </span>
+        
+        <img src="{{data.image}}" id="imageContainer" width="450" alt="Image preview...">
+        <!-- <input type="text" class="form-control" id="inputEmail" placeholder="Image" ng-model="data.email"> -->
+          
+        
+        
+        <!-- </div> -->
+      </div>
+    </div>
+
+
     <!-- description -->
 
     <div class="form-group">
@@ -64,7 +86,7 @@
     <div class="form-group">
       <label for="inputCreatorsEmail" class="col-sm-2 control-label">Creator's email</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputCreatorsEmail" placeholder="Email" ng-model="data.creators_email">
+        <input type="email" class="form-control" id="inputCreatorsEmail" placeholder="Email" ng-model="data.creators_email">
       </div>
     </div>
 
@@ -73,7 +95,7 @@
     <div class="form-group">
       <label for="inputCreatorsURL" class="col-sm-2 control-label">Creator's URL</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputCreatorsURL" placeholder="URL" ng-model="data.creators_url">
+        <input type="url" class="form-control" id="inputCreatorsURL" placeholder="URL" ng-model="data.creators_url">
       </div>
     </div>
 
