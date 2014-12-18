@@ -16,7 +16,9 @@
     <div class="form-group">
       <label for="inputTags" class="col-sm-2 control-label">Tags</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputTags" placeholder="Tags" ng-model="data.tool_tags.tags">
+        <!-- <input type="text" class="form-control" id="inputTags" placeholder="Tags" ng-model="data.tool_tags.
+        tags"> -->
+        <div selectize="tag_config" options='tag_options' id="inputTags" ng-model="data.tool_tags.tags"></div>
       </div>
     </div>
 
