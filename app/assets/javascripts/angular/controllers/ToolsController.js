@@ -30,19 +30,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
   $scope.data.comments.content = "";
 
 
-  var renderOption = function(data, escape) {
-  	// console.log(data)
-  }
-
 	var tagLoad = function(query, callback) {
-		// $scope.tag_options.push({id: 2,
-		// 													tag: "prueba adentro"})
-		// callback($scope.tag_options)
-  	// console.log(callback)
-
-  	
-  	
-
   	if (query != "") {
 	  	$http.get("/api/tags/search?query="+query)
 	  	.success(function(data, status, headers, config){
@@ -62,12 +50,9 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
     sortField: 'tag',
     delimiter: ',',
     allowEmptyOption: false,
-    // placeholder: 'Pick at least 1..',
     preload: true,
     load: tagLoad,
-    // required: true,
     hideSelected: true
-    // maxItems: 1
   };
 
 
