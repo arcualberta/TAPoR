@@ -44,10 +44,10 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
-    valueField: 'tag',
-    labelField: 'tag',
-    searchField: 'tag',
-    sortField: 'tag',
+    valueField: 'value',
+    labelField: 'value',
+    searchField: 'value',
+    sortField: 'value',
     delimiter: ',',
     allowEmptyOption: false,
     preload: true,
@@ -81,7 +81,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 		if (data.tags && data.tags.length > 0) {
 			var tags = [];
 			$.each(data.tags, function(i, v){
-				tags.push(v.tag);
+				tags.push(v.value);
 			});
 			// $scope.data.tool_tags.tags = tags.join(", ");
 			$scope.data.tool_tags.tags = tags;
@@ -134,27 +134,30 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   $scope.data.approved = false;
   $scope.data.image = "";
 
-  loadMoreTags = function(query, callback) {
 
+	var tagLoad = function(query, callback) {
+  	if (query != "") {
+	  	$http.get("/api/tags/search?query="+query)
+	  	.success(function(data, status, headers, config){
+	  		$scope.tag_options = data;
+	  		callback($scope.tag_options);
+	  	})	
+  	}
+  	
   }
 
-
-
-  $scope.tag_options = [];
+	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
-    valueField: 'id',
+    valueField: 'value',
     labelField: 'value',
     searchField: 'value',
-    sortField: 'id',
+    sortField: 'value',
     delimiter: ',',
     allowEmptyOption: false,
-    // placeholder: 'Pick at least 1..',
     preload: true,
-    // required: true,
-    // hideSelected: false
-    // maxItems: 1
-    // load: loadMoreTags
+    load: tagLoad,
+    hideSelected: true
   };
 
   // get attribute types
@@ -184,10 +187,10 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   $scope.createTool = function() {
  		
  		// clean up tags
-		$scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
-		$.each($scope.data.tool_tags.tags, function( i, v ) {
-  		$scope.data.tool_tags.tags[i] = v.trim()
-		});
+		// $scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
+		// $.each($scope.data.tool_tags.tags, function( i, v ) {
+  // 		$scope.data.tool_tags.tags[i] = v.trim()
+		// });
 
 		var fd = new FormData();
 

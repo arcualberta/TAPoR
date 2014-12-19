@@ -60,7 +60,7 @@ class Api::ToolsController < ApplicationController
 						# check if tags exists otherwise create
 						tags.each do |tag|
 							if tag != ""
-								currentTag = Tag.find_or_create_by tag: tag;
+								currentTag = Tag.find_or_create_by value: tag;
 								new_tag_ids.push(currentTag.id);
 							end
 						end
@@ -213,7 +213,7 @@ class Api::ToolsController < ApplicationController
 					tags = params[:tool_tags][:tags];
 					tag_ids = []
 					tags.each do |tag|
-						@currentTag = Tag.find_or_create_by tag: tag
+						@currentTag = Tag.find_or_create_by value: tag
 						tag_ids.push(@currentTag)
 					end	
 					

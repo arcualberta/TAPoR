@@ -110,7 +110,7 @@ class InitialMigration < ActiveRecord::Migration
 
 
   	create_table :tags do |t|
-  		t.string :tag
+  		t.string :value
   		t.timestamps
   	end
 
