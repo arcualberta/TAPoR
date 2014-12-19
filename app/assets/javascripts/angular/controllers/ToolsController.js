@@ -30,20 +30,53 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
   $scope.data.comments.content = "";
 
 
+  var renderOption = function(data, escape) {
+  	// console.log(data)
+  }
+
+	var tagLoad = function(query, callback) {
+		// $scope.tag_options.push({id: 2,
+		// 													tag: "prueba adentro"})
+		// callback($scope.tag_options)
+  	// console.log(callback)
+
+  	
+  	
+
+  	if (query != "") {
+	  	$http.get("/api/tags/search?query="+query)
+	  	.success(function(data, status, headers, config){
+	  		$scope.tag_options = data;
+	  		callback($scope.tag_options);
+	  	})	
+  	}
+  	
+  }
+
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
-    valueField: 'id',
-    labelField: 'value',
-    searchField: 'value',
-    sortField: 'id',
+    valueField: 'tag',
+    labelField: 'tag',
+    searchField: 'tag',
+    sortField: 'tag',
     delimiter: ',',
+    allowEmptyOption: false,
     // placeholder: 'Pick at least 1..',
     preload: true,
+    load: tagLoad,
     // required: true,
-    // hideSelected: false
+    hideSelected: true
     // maxItems: 1
   };
+
+
+
+
+
+  // $scope.tagLoad = function(query, callback) {
+  // 	alert("test")
+  // }
 
 	$http.get('/api/tools/' + $routeParams.toolId)
 	.success(function(data, status, headers, config){
@@ -116,6 +149,11 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
   $scope.data.approved = false;
   $scope.data.image = "";
 
+  loadMoreTags = function(query, callback) {
+
+  }
+
+
 
   $scope.tag_options = [];
   $scope.tag_config = {
@@ -125,11 +163,13 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
     searchField: 'value',
     sortField: 'id',
     delimiter: ',',
+    allowEmptyOption: false,
     // placeholder: 'Pick at least 1..',
     preload: true,
     // required: true,
     // hideSelected: false
     // maxItems: 1
+    // load: loadMoreTags
   };
 
   // get attribute types
@@ -172,10 +212,6 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
 				fd.append(i, $scope.data[i])
 			}
 		}
-
-		// var xhr=new XMLHttpRequest();
-		// xhr.open("POST", "/api/tools#create", true);
-		// xhr.send(fd);
 
 		$http.post("/api/tools#create", $scope.data)
 		.success(function(data, status, headers, config) {
