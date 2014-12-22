@@ -16,3 +16,5 @@
 /tmp
 /vendor/assets/components
 public/images/tools/
+config/application.yml
+config/database.yml

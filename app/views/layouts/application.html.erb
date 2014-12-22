@@ -15,57 +15,58 @@
 		<% if user_signed_in? %>
 		SIGNED IN
 		<% end %>
-			<!-- nav -->
-			<div class="row" id="nav">
-				<div class="col-md-12 text-right">
-					<ul class="list-inline">
-						<li>About</li>
-						<li>Tour</li>
-						<li>Tutorials</li>
-						<li>Useful links</li>
-						<li>Contact</li>
-						<li>
-							<a href="signin">Sign in</a>
-						</li>
-					</ul>
+			<div ng-controller="TaporMainCtrl"> 
+				<!-- nav -->
+				<div class="row" id="nav">
+					<div class="col-md-12 text-right">
+						<ul class="list-inline">
+							<li>About</li>
+							<li>Tour</li>
+							<li>Tutorials</li>
+							<li>Useful links</li>
+							<li>Contact</li>
+							<li>
+								<a href="signin">Sign in</a>
+							</li>
+						</ul>
+					</div>
 				</div>
+				<div class="row" id="header">
+					<div class="col-md-1">
+						<a href="<%=root_url%>">TAPoR 3</a>
+					</div>
+					<div class="col-md-8">
+						Discover research tools for studying texts.
+					</div>
+
+					<div class="col-md-3">
+						<form class="form-inline" role="form">
+							<div class="form-group">
+								<div class="input-group">					
+				      		<input type="search" class="form-control" id="searchQuery" placeholder="Search">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+										</span>
+				      	</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- end of nav -->
+
+				<div ng-init="checkUser()" ng-view id="main-view"></div> 
+
+				<!-- footer -->
+
+				<div class='row' id='footer'>
+					<div class="col-md-12">
+						TAPoR 3 Copyright 2014, University of Alberta Version | About | Privacy
+					</div>
+				</div>
+
+
+				<!-- end of fotter -->
 			</div>
-			<div class="row" id="header">
-				<div class="col-md-1">
-					<a href="<%=root_url%>">TAPoR 3</a>
-				</div>
-				<div class="col-md-8">
-					Discover research tools for studying texts.
-				</div>
-
-				<div class="col-md-3">
-					<form class="form-inline" role="form">
-						<div class="form-group">
-							<div class="input-group">					
-			      		<input type="search" class="form-control" id="searchQuery" placeholder="Search">
-									<span class="input-group-btn">
-										<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
-									</span>
-			      	</div>
-						</div>
-					</form>
-				</div>
-			</div>
-			<!-- end of nav -->
-
-			<div ng-view id="main-view"></div> 
-
-			<!-- footer -->
-
-			<div class='row' id='footer'>
-				<div class="col-md-12">
-					TAPoR 3 Copyright 2014, University of Alberta Version | About | Privacy
-				</div>
-			</div>
-
-
-			<!-- end of fotter -->
-
 		</div>
 	</body>
 </html>

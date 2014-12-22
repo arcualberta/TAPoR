@@ -1,5 +1,5 @@
 app.controller('UsersIndexCtrl', ['$scope', '$http', function($scope, $http){
-	
+	// $scope.checkUser();
 	$scope.updateIsAdmin = function(id, is_admin) {
 		var data = {}
 		data.is_admin = is_admin;
@@ -28,15 +28,8 @@ app.controller('UsersIndexCtrl', ['$scope', '$http', function($scope, $http){
 }]);
 
 app.controller("UsersDetailCtrl", ['$scope', '$http', function($scope, $http){
-
-
-	$scope.data = {};
-
-	$http.get('/api/users/current')
-	.success(function(data, status, headers, config){
-		$scope.data = data;
-	});
-
+	
+	$scope.data = $scope.current_user
 
 	$scope.saveProfile = function() {
 		$http.patch('/api/users/' + $scope.data.id, $scope.data)

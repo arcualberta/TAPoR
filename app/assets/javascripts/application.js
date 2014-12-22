@@ -25,7 +25,7 @@
 //= require angular/directives/MultSelectDirective
 //= require angular/directives/FileReadDirective
 //= require angular/controllers/NavCtrl
-//= require angular/controllers/TaporIndexCtrl
+//= require angular/controllers/TaporCtrl
 //= require angular/controllers/ToolsController
 //= require angular/controllers/UsersController
 //= require angular/controllers/AttributesController
