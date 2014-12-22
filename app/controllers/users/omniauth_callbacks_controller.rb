@@ -6,19 +6,22 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 	  # You need to implement the method below in your model (e.g. app/models/user.rb)
     @user = User.find_or_create_by_uid_provider(request.env["omniauth.auth"], current_user)
 
-    @user.name = request.env["omniauth.auth"][:info][:name];
-    @user.image_url = request.env["omniauth.auth"][:info][:image];
-    @user.save
+
     
     if @user and @user.persisted?
       # flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
+      update_user()     
       sign_in_and_redirect @user, :event => :authentication
     else
+      puts "NOT persisted"
       # session["devise.google_data"] = request.env["omniauth.auth"]
       # # redirect_to new_user_registration_url
       # flash[:notice] = "User is not registered for this application";
       # redirect_to root_path
-      sign_in_and_redirect @user, :event => :authentication
+      # sign_in_and_redirect @user, :event => :authentication
+      update_user()
+      sign_in @user
+      redirect_to '/users/profile'
     end
 	end
 
@@ -33,5 +36,13 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def yahoo
   	login_behaviour
   end
+
+  private
+
+    def update_user
+      @user.name = request.env["omniauth.auth"][:info][:name];
+      @user.image_url = request.env["omniauth.auth"][:info][:image];
+      @user.save
+    end
 
 end

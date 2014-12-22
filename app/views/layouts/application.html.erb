@@ -12,9 +12,6 @@
 	</head>
 	<body>
 		<div class="container">
-		<% if user_signed_in? %>
-		SIGNED IN
-		<% end %>
 			<div ng-controller="TaporMainCtrl"> 
 				<!-- nav -->
 				<div class="row" id="nav">
@@ -26,7 +23,24 @@
 							<li>Useful links</li>
 							<li>Contact</li>
 							<li>
-								<a href="signin">Sign in</a>
+
+								<span ng-switch="current_user">
+									
+									<span ng-switch-when="null">
+										<a href="signin">Sign in</a>
+									</span>
+									
+									<span ng-switch-default>
+										<img src='{{current_user.image_url}}' class="img-circle nav-bar-profile"> 
+										<a href='users/profile'>
+											{{current_user.name}}
+										</a> 
+										<a href="sign_out">
+											Sign out
+										</a>
+									</span>
+
+								</span>
 							</li>
 						</ul>
 					</div>

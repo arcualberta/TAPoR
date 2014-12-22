@@ -4,6 +4,10 @@ app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
 	$http.get("/api/tools")
 	.success(function(data, status, headers, config){			
 		$scope.tools = data;
+
+		$.map($scope.tools, function(val, i){
+			val.thumb_url =  val.image_url ? val.image_url.replace(/.png$/, "-thumb.png") : "";
+		});
 	});
 
 }]);
@@ -16,6 +20,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 	$scope.data = {};  
   $scope.data.name = "";
   $scope.data.description = "";
+  $scope.data.image_url = "";
   // $scope.data.creators_name = "";
   // $scope.data.creators_email = "";
   // $scope.data.creators_url = "";
@@ -68,6 +73,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 		console.log(data);
 		$scope.data.name = data.name;
 		$scope.data.description = data.description
+		$scope.data.image_url = data.image_url;
 
 		$scope.data.tool_ratings = {};		
 		$scope.data.tool_ratings.stars = 0;

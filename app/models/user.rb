@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 	# end
 
 	def self.find_or_create_by_uid_provider(access_token, signed_in_resource = nil)
-		return User.find_or_create_by(uid: access_token.uid, provider: access_token.provider)
+		return User.find_or_initialize_by(uid: access_token.uid, provider: access_token.provider)
 	end
 
 end

@@ -40,8 +40,12 @@ class Api::UsersController < ApplicationController
 	end
 
 	def current
-		respond_to do |format|						
-			format.json { render json: current_user, status: :ok }
+		respond_to do |format|
+			if current_user						
+				format.json { render json: current_user, status: :ok }
+			else
+				format.json { render json: nil, status: :ok } 
+			end
 		end
 	end
 

@@ -7,17 +7,14 @@
 		<li>
 			<a href='tools'>Tools</a>
 		</li>		
-		<li>
+		<li ng-if="current_user">
 			<a href='tools/new'>New tool</a>
 		</li>
-		<li>
+		<li ng-if="current_user.is_admin">
 			<a href='attributes/new'>New attribute</a>
 		</li>
-		<li>
+		<li ng-if="current_user.is_admin">
 			<a href='users'>Users</a>
-		</li>
-		<li>
-			<a href='users/profile'>Profile</a>
 		</li>
 	</ul>
 	</div>
