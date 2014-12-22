@@ -9,16 +9,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     
     if @user and @user.persisted?
-      # flash[:notice] = I18n.t "devise.omniauth_callbacks.success", :kind => "Google"
       update_user()     
       sign_in_and_redirect @user, :event => :authentication
     else
-      puts "NOT persisted"
-      # session["devise.google_data"] = request.env["omniauth.auth"]
-      # # redirect_to new_user_registration_url
-      # flash[:notice] = "User is not registered for this application";
-      # redirect_to root_path
-      # sign_in_and_redirect @user, :event => :authentication
+      puts "NOT persisted"      
       update_user()
       sign_in @user
       redirect_to '/users/profile'
