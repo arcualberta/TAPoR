@@ -12,7 +12,7 @@ app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
 
 }]);
 
-app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
 	// alert($routeParams.toolId)
 	
 	$scope.tool_id = $routeParams.toolId;
@@ -21,6 +21,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
   $scope.data.name = "";
   $scope.data.description = "";
   $scope.data.image_url = "";
+  $scope.data.id = "";
   // $scope.data.creators_name = "";
   // $scope.data.creators_email = "";
   // $scope.data.creators_url = "";
@@ -72,7 +73,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 	.success(function(data, status, headers, config){
 		
 		$scope.is_editable = $scope.current_user.is_admin || $scope.current_user.id == data.user_id;
-		console.log($scope.is_editable)
+		$scope.data.id = data.id;
 		$scope.data.name = data.name;
 		$scope.data.description = data.description
 		$scope.data.image_url = data.image_url;
@@ -102,18 +103,19 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 
 	});
 
-		$scope.updateToolUserDetails = function() {
+	$scope.updateToolUserDetails = function() {
 		// clean up tags
 		// $scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
 		// $.each($scope.data.tool_tags.tags, function( i, v ) {
   // 		$scope.data.tool_tags.tags[i] = v.trim()
 		// });
-		$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
-		.success(function(data, status, headers, config){
-			console.log("success updating")
-		});
+	$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
+	.success(function(data, status, headers, config){
+		console.log("success updating")
+	});
 
-	}
+}
+
 
 
 }]);
@@ -203,24 +205,20 @@ app.controller('ToolsNewCtrl', ['$scope', '$http', '$location' , function($scope
 
 		$http.post("/api/tools#create", $scope.data)
 		.success(function(data, status, headers, config) {
-			// console.log("success redirecting")
-			// console.log(data)
-			// console.log(status)
-			// console.log(headers)
-			// console.log(config)
-			// after saving redirect to tool view page
 			$location.path('/tools/' + data.id);
 		})
 		.error(function(data, status, headers, config) {
-			// console.log("error")
-			// console.log(data)
-			// console.log(status)
-			// console.log(headers)
-			// console.log(config)
+			console.log("error")
 		});
 
   }
 
+}]);
 
+
+app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+	// get tool details
+
+	
 
 }]);

@@ -1,27 +1,31 @@
 <div ng-controller='ToolsDetailCtrl' class='tapor-container'>
   <div class='row'>
 	  <form class="form-horizontal" role="form">
-    
-    <!-- name -->
 
-      <div class="form-group">
-        <label for="inputStars" class="col-sm-2 control-label"></label>
-        <div class="col-sm-5 rating">
-          <label> 
-            {{data.name}}
-          </label>
-        </div>
-      </div>  
 
-    <!-- description -->
-
-    <!-- image -->
+      <!-- image -->
 
       <div class="form-group">
         <div class='class="col-sm-7'>
           <img src='{{data.image_url}}'>
         </div>
       </div>
+
+
+    <!-- name -->
+
+      <div class="form-group">
+        <label for="inputStars" class="col-sm-2 control-label"></label>
+        <div class="col-sm-5">
+          <label> 
+            {{data.name}}
+          </label>
+        </div>        
+      </div>  
+
+    <!-- description -->
+
+
 
 	  	<!-- stars -->
 
@@ -51,10 +55,10 @@
         <textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.comments.content"></textarea>
       </div>
     </div>
-
 		<div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
         <button ng-click="updateToolUserDetails()" class="btn btn-primary">Save</button>
+        <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.id}}" role="button">Edit</a>
       </div>
     </div>
 
