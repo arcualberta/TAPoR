@@ -70,11 +70,12 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 
 	$http.get('/api/tools/' + $routeParams.toolId)
 	.success(function(data, status, headers, config){
-		console.log(data);
+		
+		$scope.is_editable = $scope.current_user.is_admin || $scope.current_user.id == data.user_id;
+		console.log($scope.is_editable)
 		$scope.data.name = data.name;
 		$scope.data.description = data.description
 		$scope.data.image_url = data.image_url;
-
 		$scope.data.tool_ratings = {};		
 		$scope.data.tool_ratings.stars = 0;
 		if (data.tool_ratings && data.tool_ratings.length > 0) {
@@ -117,7 +118,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 
 }]);
 
-app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
+app.controller('ToolsNewCtrl', ['$scope', '$http', '$location' , function($scope, $http, $location) {
   
 	$scope.data = {};
   
@@ -191,37 +192,31 @@ app.controller('ToolsNewCtrl', ['$scope', '$http' , function($scope, $http) {
 	});
 
   $scope.createTool = function() {
- 		
- 		// clean up tags
-		// $scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
-		// $.each($scope.data.tool_tags.tags, function( i, v ) {
-  // 		$scope.data.tool_tags.tags[i] = v.trim()
-		// });
 
 		var fd = new FormData();
 
 		for (var i in $scope.data) {
-			if ($scope.data.hasOwnProperty(i)) {
-				console.log("appending " + i)
+			if ($scope.data.hasOwnProperty(i)) {				
 				fd.append(i, $scope.data[i])
 			}
 		}
 
 		$http.post("/api/tools#create", $scope.data)
 		.success(function(data, status, headers, config) {
-			console.log("success")
-			console.log(data)
-			console.log(status)
-			console.log(headers)
-			console.log(config)
+			// console.log("success redirecting")
+			// console.log(data)
+			// console.log(status)
+			// console.log(headers)
+			// console.log(config)
 			// after saving redirect to tool view page
+			$location.path('/tools/' + data.id);
 		})
 		.error(function(data, status, headers, config) {
-			console.log("error")
-			console.log(data)
-			console.log(status)
-			console.log(headers)
-			console.log(config)
+			// console.log("error")
+			// console.log(data)
+			// console.log(status)
+			// console.log(headers)
+			// console.log(config)
 		});
 
   }

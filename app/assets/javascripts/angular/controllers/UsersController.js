@@ -27,14 +27,14 @@ app.controller('UsersIndexCtrl', ['$scope', '$http', function($scope, $http){
 
 }]);
 
-app.controller("UsersDetailCtrl", ['$scope', '$http', function($scope, $http){
+app.controller("UsersDetailCtrl", ['$scope', '$http', '$location', function($scope, $http, $location){
 	
 	$scope.data = $scope.current_user
 
 	$scope.saveProfile = function() {
 		$http.patch('/api/users/' + $scope.data.id, $scope.data)
 		.success(function(data, status, headers, config){
-			console.log('success')
+			$location.path('/')
 		});
 	}
 
