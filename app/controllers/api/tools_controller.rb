@@ -134,7 +134,8 @@ class Api::ToolsController < ApplicationController
 					end
 
 					# image
-					if params[:image] and params[:image] != ""
+
+					if params[:image] and params[:image] != "" and params[:image].include? "base64"
 						puts params[:image]
 						time = Time.new
 						name = @tool.id.to_s + ".png"

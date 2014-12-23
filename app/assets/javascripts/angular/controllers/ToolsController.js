@@ -138,7 +138,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.data.approved = false;
   $scope.data.image = "";
 
-  
+  var editingTool = false;
 
 
 	var tagLoad = function(query, callback) {
@@ -189,7 +189,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 		});
 
 	var path = $location.path();
-  var editingTool = path.indexOf("edit") != -1;
+  editingTool = path.indexOf("edit") != -1;
 
   if (editingTool) {
   	// get values
@@ -257,13 +257,28 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			}
 		}
 
-		$http.post("/api/tools#create", $scope.data)
-		.success(function(data, status, headers, config) {
-			$location.path('/tools/' + data.id);
-		})
-		.error(function(data, status, headers, config) {
-			console.log("error")
-		});
+
+		if (editingTool) {
+			$http.patch('/api/tools/' + $scope.id, $scope.data)
+			.success(function(data, status, headers, config){
+				console.log("success updating")
+			});
+		} else {
+			$http.post("/api/tools#create", $scope.data)
+			.success(function(data, status, headers, config) {
+				$location.path('/tools/' + data.id);
+			})
+			.error(function(data, status, headers, config) {
+				console.log("error")
+			});	
+		}
+		
+
+		
+
+
+			
+
 
   }
 
