@@ -1,9 +1,8 @@
 
-<div ng-controller='ToolsNewCtrl' class='tapor-container'>
+<div ng-controller='ToolsEditCtrl' class='tapor-container'>
   <div class='row'>
   <form class="form-horizontal" role="form">
     
-
     <!-- name -->
     <div class="form-group">
       <label for="inputName" class="col-sm-2 control-label">Name</label>
@@ -12,7 +11,7 @@
       </div>
     </div>
     
-    <!-- image XXX missing -->
+    <!-- image -->
 
     <div class="form-group">
       <label for="inputImage" class="col-sm-2 control-label">Image</label>
@@ -103,7 +102,7 @@
 
     <!-- approved -->
 
-    <div class="form-group">
+    <div class="form-group" nf-if="current_user.is_admin">
       <label for="inputApproved" class="col-sm-2 control-label">Approved</label>
       <div class="col-sm-5  ">
         <ul>
@@ -128,7 +127,7 @@
 
     <div class="form-group">
       <div class="col-sm-offset-2 col-sm-10">
-        <button ng-click="createTool()" class="btn btn-primary">Create</button>
+        <button ng-click="createorUpdateTool()" class="btn btn-primary">Create</button>
       </div>
     </div>
 

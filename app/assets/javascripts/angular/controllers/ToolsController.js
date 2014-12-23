@@ -91,8 +91,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 			$.each(data.tags, function(i, v){
 				tags.push(v.value);
 			});
-			// $scope.data.tool_tags.tags = tags.join(", ");
-			$scope.data.tool_tags.tags = tags;
+			$scope.data.tool_tags.tags = tags;			
 		}
 
 		$scope.data.comments = {};
@@ -104,11 +103,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 	});
 
 	$scope.updateToolUserDetails = function() {
-		// clean up tags
-		// $scope.data.tool_tags.tags =  $scope.data.tool_tags.tags.split(",");
-		// $.each($scope.data.tool_tags.tags, function( i, v ) {
-  // 		$scope.data.tool_tags.tags[i] = v.trim()
-		// });
+
 	$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 	.success(function(data, status, headers, config){
 		console.log("success updating")
@@ -120,7 +115,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 }]);
 
-app.controller('ToolsNewCtrl', ['$scope', '$http', '$location' , function($scope, $http, $location) {
+app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
   
 	$scope.data = {};
   
@@ -142,6 +137,8 @@ app.controller('ToolsNewCtrl', ['$scope', '$http', '$location' , function($scope
   
   $scope.data.approved = false;
   $scope.data.image = "";
+
+  
 
 
 	var tagLoad = function(query, callback) {
@@ -191,9 +188,66 @@ app.controller('ToolsNewCtrl', ['$scope', '$http', '$location' , function($scope
 			$scope.data.attribute_types.push(val);
 		});
 
+	var path = $location.path();
+  var editingTool = path.indexOf("edit") != -1;
+
+  if (editingTool) {
+  	// get values
+		$http.get('/api/tools/' + $routeParams.toolId)
+		.success(function(data, status, headers, config){
+			for (var i in data) {
+				if (data.hasOwnProperty(i)) {
+					$scope.data[i] = data[i];					
+				}
+			}
+
+			// fix tool_ratings
+			$scope.data.tool_ratings = {stars: $scope.data.tool_ratings[0].stars}
+
+			// fix comment
+			$scope.data.comments = {content: $scope.data.comments[0].content}
+			console.log($scope.data)
+
+			// fix tags
+
+			$scope.data.tool_tags.tags = [];
+			$.each($scope.data.tags, function(i, v){				
+				$scope.data.tool_tags.tags.push(v.value)
+			});
+
+			// fix image
+			$scope.data.image = $scope.data.image_url;
+
+			// fix attributes
+			for (var i=0; i < data.tool_attributes.length; ++i) {
+				var thisToolAttribute = data.tool_attributes[i];
+				for (var j=0; j<$scope.data.attribute_types.length; ++j) {
+					var thisAttribute = $scope.data.attribute_types[j];
+					if (thisToolAttribute.attribute_type_id == thisAttribute.id) {
+						if (thisAttribute.is_multiple) {
+							var values = thisToolAttribute.value.split("|");
+							for (var p=0; p<values.length; ++p) {
+								for (var q=0; q<thisAttribute.possible_values.length; ++q) {	
+									if (values[p] == thisAttribute.possible_values[q]) {
+										thisAttribute.model[q] = true;
+										break;
+									}
+								}
+							}
+						} else {
+							thisAttribute.model = thisToolAttribute.value;
+						}
+						break;
+					}
+				}
+			}
+
+		});
+  }
+
 	});
 
-  $scope.createTool = function() {
+  $scope.createorUpdateTool = function() {
 
 		var fd = new FormData();
 
@@ -212,13 +266,5 @@ app.controller('ToolsNewCtrl', ['$scope', '$http', '$location' , function($scope
 		});
 
   }
-
-}]);
-
-
-app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
-	// get tool details
-
-	
 
 }]);

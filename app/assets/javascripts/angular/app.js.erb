@@ -65,8 +65,12 @@ app.config(['$routeProvider', '$locationProvider',
         controller: 'ToolsIndexCtrl',
       })
       .when('/tools/new', {
-        templateUrl: "<%= asset_path('tools/new.html') %>",
-        controller: 'ToolsNewCtrl',
+        templateUrl: "<%= asset_path('tools/edit.html') %>",
+        controller: 'ToolsEditCtrl',
+      })
+      .when('/tools/edit/:toolId', {
+        templateUrl: "<%= asset_path('tools/edit.html') %>",
+        controller: 'ToolsEditCtrl',
       })
       .when('/tools/:toolId', {
         templateUrl: "<%= asset_path('tools/detail.html') %>",
