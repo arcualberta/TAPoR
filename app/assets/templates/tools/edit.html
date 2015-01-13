@@ -1,13 +1,13 @@
 
 <div ng-controller='ToolsEditCtrl' class='tapor-container'>
   <div class='row'>
-  <form class="form-horizontal" role="form">
+  <form id="tool_form" class="form-horizontal" role="form">
     
     <!-- name -->
     <div class="form-group">
       <label for="inputName" class="col-sm-2 control-label">Name</label>
       <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="data.name">
+        <input type="text" class="form-control" id="inputName" placeholder="Name" ng-model="data.name" required>
       </div>
     </div>
     
@@ -108,7 +108,7 @@
         <ul>
           <li class="checkbox">
             <label>
-              <input type="checkbox" name="approved" value="approved" id="inputApproved" ng-model="data.approved">
+              <input type="checkbox" name="is_approved" value="is_approved" id="inputApproved" ng-model="data.is_approved">
             </label>
           </li>
         </ul>

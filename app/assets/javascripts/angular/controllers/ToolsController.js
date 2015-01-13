@@ -135,7 +135,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.data.comments = {}
   $scope.data.comments.content = "";
   
-  $scope.data.approved = false;
+  $scope.data.is_approved = false;
   $scope.data.image = "";
 
   var editingTool = false;
@@ -249,31 +249,34 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
   $scope.createorUpdateTool = function() {
 
-		var fd = new FormData();
+  	var validator = $("#tool_form").validate();
 
-		for (var i in $scope.data) {
-			if ($scope.data.hasOwnProperty(i)) {				
-				fd.append(i, $scope.data[i])
+  	if (validator.form()) {
+			var fd = new FormData();
+
+			for (var i in $scope.data) {
+				if ($scope.data.hasOwnProperty(i)) {				
+					fd.append(i, $scope.data[i])
+				}
 			}
+
+
+			if (editingTool) {
+				$http.patch('/api/tools/' + $scope.id, $scope.data)
+				.success(function(data, status, headers, config){
+					console.log("success updating")
+				});
+			} else {
+				$http.post("/api/tools#create", $scope.data)
+				.success(function(data, status, headers, config) {
+					$location.path('/tools/' + data.id);
+				})
+				.error(function(data, status, headers, config) {
+					console.log("error")
+				});	
+			}
+			
 		}
-
-
-		if (editingTool) {
-			$http.patch('/api/tools/' + $scope.id, $scope.data)
-			.success(function(data, status, headers, config){
-				console.log("success updating")
-			});
-		} else {
-			$http.post("/api/tools#create", $scope.data)
-			.success(function(data, status, headers, config) {
-				$location.path('/tools/' + data.id);
-			})
-			.error(function(data, status, headers, config) {
-				console.log("error")
-			});	
-		}
-		
-
 		
 
 

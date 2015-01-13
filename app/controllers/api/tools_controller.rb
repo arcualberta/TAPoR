@@ -264,6 +264,9 @@ class Api::ToolsController < ApplicationController
 						end
 					end
 
+					# attributes
+
+					
 
 					format.json { render json: @tool, status: :accepted }
 
@@ -273,13 +276,6 @@ class Api::ToolsController < ApplicationController
 				end
 			end
 		end
-		# respond_to do |format|
-		# 	if @tool.update(safe_params)							
-		# 		format.json { render :show, status: :ok, location: @tool }			
-		# 	else 
-		# 		format.json { render json: @tool.errors, status: :unprocessable_entity}
-		# 	end
-		# end
 	end
 
 	def destroy
