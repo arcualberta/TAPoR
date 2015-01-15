@@ -2,7 +2,9 @@
 	<div class='row tool-list-entry' ng-repeat="tool in tools track by $index">
 		
 		<div class='col-md-3 tool-list-entry-image'>
-			<img src="/{{tool.thumb_url}}">
+			<a href='tools/{{tool.id}}'>
+				<img src="/{{tool.thumb_url}}">
+			</a>
 		</div>
 		
 		<div class='col-md-9'>

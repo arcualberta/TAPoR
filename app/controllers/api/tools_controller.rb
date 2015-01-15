@@ -135,34 +135,8 @@ class Api::ToolsController < ApplicationController
 
 					# image
 
-					if params[:image] and params[:image] != "" and params[:image].include? "base64"
-						puts params[:image]
-						time = Time.new
-						name = @tool.id.to_s + ".png"
-						directory = "tools/" + time.year.to_s + "/" + time.month.to_s + "/" + time.day.to_s + "/";
-						FileUtils::mkdir_p File.join("public", "images", directory)
-						path = File.join("public", "images", directory, name)
-						decoded = Base64.urlsafe_decode64( params[:image].split(",")[1] )
-						File.open(path, "wb") { |file| file.write( decoded ) }
-
-						image = ImageList.new(path.to_s);
-						image.format = "PNG";
-						
-						# resize
-						finalWidth = 1170;
-						finalHeight = 500;
-						image.resize_to_fill!(finalWidth);
-
-						# crop
-						image = image.extent(finalWidth, finalHeight);						
-						image.write(path.to_s);
-
-						# thumb
-						thumbnail = image.thumbnail(image.columns*0.2, image.rows*0.2);
-						thumbnailPath = File.join("public", "images", directory, @tool.id.to_s + "-thumb.png");
-						thumbnail.write(thumbnailPath.to_s);
-						path = File.join("images", directory, name)
-						@tool.image_url = path.to_s
+					if params[:image] and params[:image] != "" and params[:image].include? "base64"						
+						@tool.image_url = save_image(params[:image])
 						@tool.save
 					end
 
@@ -265,8 +239,19 @@ class Api::ToolsController < ApplicationController
 					end
 
 					# attributes
-
+					if params[:attribute_types]
+						
+					end
 					
+					# image
+
+					if params[:image] and params[:image] != "" and params[:image].include? "base64"						
+						# remove old image
+						FileUtils::rm [@tool.image_url]
+						@tool.image_url = save_image(params[:image])
+						@tool.save
+					end
+
 
 					format.json { render json: @tool, status: :accepted }
 
@@ -286,6 +271,37 @@ class Api::ToolsController < ApplicationController
 	end
 
 	private 
+
+		def save_image(base_image)
+			time = Time.new
+			name = @tool.id.to_s + ".png"
+			directory = "tools/" + time.year.to_s + "/" + time.month.to_s + "/" + time.day.to_s + "/";
+			FileUtils::mkdir_p File.join("public", "images", directory)
+			path = File.join("public", "images", directory, name)
+			decoded = Base64.urlsafe_decode64( base_image.split(",")[1] )
+			File.open(path, "wb") { |file| file.write( decoded ) }
+
+			image = ImageList.new(path.to_s);
+			image.format = "PNG";
+
+			# resize
+			finalWidth = 1170;
+			finalHeight = 500;
+			image.resize_to_fill!(finalWidth);
+
+			# crop
+			image = image.extent(finalWidth, finalHeight);						
+			image.write(path.to_s);
+
+			# thumb
+			thumbnail = image.thumbnail(image.columns*0.2, image.rows*0.2);
+			thumbnailPath = File.join("public", "images", directory, @tool.id.to_s + "-thumb.png");
+			thumbnail.write(thumbnailPath.to_s);
+			path = File.join("images", directory, name)
+
+			return path.to_s
+
+		end
 
 		def set_tool
 			@tool = Tool.find(params[:id])

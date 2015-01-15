@@ -5,7 +5,6 @@ app.directive("fileread", [function () {
         },
         link: function (scope, element, attributes) {
             element.bind("change", function (changeEvent) {
-                console.log("RRREAD")
                 var reader = new FileReader();
                 reader.onload = function (loadEvent) {
                     scope.$apply(function () {

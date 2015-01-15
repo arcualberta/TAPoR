@@ -30,4 +30,3 @@
 //= require angular/controllers/UsersController
 //= require angular/controllers/AttributesController
 //= require angular/controllers/SigninIndexCtrl
-

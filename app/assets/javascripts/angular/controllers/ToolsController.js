@@ -139,7 +139,8 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.data.image = "";
 
   var editingTool = false;
-
+  // var form = $("#tool_form");
+  // form.validate();
 
 	var tagLoad = function(query, callback) {
   	if (query != "") {
@@ -202,11 +203,17 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			}
 
 			// fix tool_ratings
-			$scope.data.tool_ratings = {stars: $scope.data.tool_ratings[0].stars}
-
+			$scope.data.tool_ratings = 0;
+			if ($scope.data.tool_ratings && $scope.data.tool_ratings.length) {
+				$scope.data.tool_ratings = {stars: $scope.data.tool_ratings[0].stars}
+			}
 			// fix comment
-			$scope.data.comments = {content: $scope.data.comments[0].content}
-			console.log($scope.data)
+
+			$scope.data.comments = "";
+			if ($scope.data.comments && $scope.data.comments.length) {
+				$scope.data.comments = {content: $scope.data.comments[0].content}	
+			}
+			
 
 			// fix tags
 
@@ -249,9 +256,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
   $scope.createorUpdateTool = function() {
 
-  	var validator = $("#tool_form").validate();
-
-  	if (validator.form()) {
+  	if ($('#tool_form')[0].checkValidity()) {
 			var fd = new FormData();
 
 			for (var i in $scope.data) {
@@ -259,7 +264,6 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 					fd.append(i, $scope.data[i])
 				}
 			}
-
 
 			if (editingTool) {
 				$http.patch('/api/tools/' + $scope.id, $scope.data)
