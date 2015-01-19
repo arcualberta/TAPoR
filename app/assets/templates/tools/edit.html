@@ -125,53 +125,52 @@
     </div>
    
     <!-- comments -->
-
-    <div class="form-group" ng-if'editing_tool'>
+  
+    <div ng-if='editing_tool' class="form-group" >
+    test
       <label for="inputComments" class="col-sm-2 control-label">Comments</label>
-
-
       <div class="col-sm-5">
-      <table class="table table-striped">
-        <tr>
-          <th> 
-            &nbsp;
-          </th>
-          <th> 
-            User
-          </th>
-          <th> 
-            Comment
-          </th>
-          <th> 
-            Pin
-          </th>
-          <th> 
-            Hide
-          </th>
-        </tr>
-        <tr ng-repeat='comment in data.comments track by $index'>
-          <td> 
-            <img src="{{comment.user.image_url}}" class="img-circle">
-          </td>
-          <td> 
-            {{comment.user.name}}
-          </td>
-          <td> 
-            {{comment.content}}
-          </td>
-          <td> 
-            <label>
-              <input type="checkbox" name="is_pinned" value="is_pinned" id="inputIsBlocked" ng-model="comment.is_pinned" ng-change="updateIsPinned(comment.id, comment.is_pinned)"> Is Pinned
-            </label>
-          </td>
-          <td> 
-            <label>
-              <input type="checkbox" name="is_hidden" value="is_hidden" id="inputIsBlocked" ng-model="comment.is_hidden" ng-change="updateIsPinned(comment.id, comment.is_hidden)"> Is Hidden
-            </label>
-          </td>
-        </tr>
-      </table>
-       
+        <table class="table table-striped">
+          <tr>
+            <th> 
+              &nbsp;
+            </th>
+            <th> 
+              User
+            </th>
+            <th> 
+              Comment
+            </th>
+            <th> 
+              Pin
+            </th>
+            <th> 
+              Hide
+            </th>
+          </tr>
+          <tr ng-repeat='comment in data.comments track by $index'>
+            <td> 
+              <img src="{{comment.user.image_url}}" class="img-circle">
+            </td>
+            <td> 
+              {{comment.user.name}}
+            </td>
+            <td> 
+              {{comment.content}}
+            </td>
+            <td> 
+              <label>
+                <input type="checkbox" name="is_pinned" value="is_pinned" id="inputIsBlocked" ng-model="comment.is_pinned" ng-change="updateIsPinned(comment.id, comment.is_pinned)"> Is Pinned
+              </label>
+            </td>
+            <td> 
+              <label>
+                <input type="checkbox" name="is_hidden" value="is_hidden" id="inputIsBlocked" ng-model="comment.is_hidden" ng-change="updateIsPinned(comment.id, comment.is_hidden)"> Is Hidden
+              </label>
+            </td>
+          </tr>
+        </table>
+         
 
        </div>
 
