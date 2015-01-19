@@ -30,17 +30,20 @@ class Api::ToolsController < ApplicationController
 			Tool.transaction do
 				begin
 
-					@tool = Tool.new({
+					@tool = Tool.create({
 						name: safe_params[:name], 
 						description: safe_params[:description],
 						creators_name: safe_params[:creators_name],
 						creators_email: safe_params[:creators_email],
 						creators_url: safe_params[:creators_url],
-						is_approved: safe_params[:is_approved],
+						# is_approved: safe_params[:is_approved],
 						user_id: current_user[:id]
 					})								
-					@tool.save
 					
+					if current_user.is_admin?
+						@tool.update(is_approved: safe_params[:is_approved]);
+					end
+
 					# stars
 					# if params[:tool_ratings] and params[:tool_ratings][:stars] and params[:tool_ratings][:stars] != 0
 					if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
@@ -217,8 +220,8 @@ class Api::ToolsController < ApplicationController
 						if @tool.image_url
 							FileUtils::rm [@tool.image_url]
 						end
-						@tool.image_url = save_image(params[:image])
-						@tool.save
+						new_url_path = save_image(params[:image])
+						@tool.update(image_url: new_url_path)
 					end
 
 
