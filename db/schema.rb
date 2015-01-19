@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.integer  "user_id"
     t.integer  "tool_id"
     t.text     "content"
+    t.boolean  "is_pinned"
+    t.boolean  "is_hidden"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

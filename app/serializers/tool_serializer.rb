@@ -15,7 +15,11 @@ class ToolSerializer < ActiveModel::Serializer
 	end
 
 	def comments
-    object.comments.where(user_id: current_user)
+		if @options[:include_comments]
+    	object.comments
+    else
+    	object.comments.where(user_id: current_user)
+    end
   end
 
 

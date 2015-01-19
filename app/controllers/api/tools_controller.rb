@@ -20,7 +20,8 @@ class Api::ToolsController < ApplicationController
 	def show 
 		respond_to do |format|
 			@tool = Tool.find(params[:id]);
-			format.json { render json: @tool }			
+			# format.json { render json: @tool, include_comments: params[:include_comments] }			
+			format.json { render json: @tool}			
 		end
 	end
 

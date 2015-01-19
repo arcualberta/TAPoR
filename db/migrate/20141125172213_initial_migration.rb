@@ -63,6 +63,8 @@ class InitialMigration < ActiveRecord::Migration
   		t.belongs_to :user
   		t.belongs_to :tool
   		t.text :content
+      t.boolean :is_pinned
+      t.boolean :is_hidden
   		t.timestamps
   	end
 

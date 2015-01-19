@@ -124,9 +124,30 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.data.is_approved = false;
   $scope.data.image = "";
 
-  var editingTool = false;
+  $scope.editing_tool = false;
   // var form = $("#tool_form");
   // form.validate();
+
+  $scope.updateIsPinned = function(id, is_pinned) {
+  	var data = {
+  		'is_pinned': is_pinned
+  	}
+  	$http.patch('/api/comments/' + id, data)
+		.success(function(data, status, headers, config){
+			console.log("success");
+		});
+  }
+
+  $scope.updateIsHidden = function(id, is_hidden) {
+		var data = {
+  		'is_hidden': is_hidden
+  	}
+  	$http.patch('/api/comments/' + id, data)
+		.success(function(data, status, headers, config){
+			console.log("success");
+		});
+  }
+
 
 	var tagLoad = function(query, callback) {
   	if (query != "") {
@@ -176,9 +197,9 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 		});
 
 	var path = $location.path();
-  editingTool = path.indexOf("edit") != -1;
+  $scope.editing_tool = path.indexOf("edit") != -1;
 
-  if (editingTool) {
+  if ($scope.editing_tool) {
   	// get values
 		$http.get('/api/tools/' + $routeParams.toolId)
 		.success(function(data, status, headers, config){
@@ -223,6 +244,14 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			}
 
 		});
+
+		// get comments
+
+		$http.get('/api/comments/?tool_id=' + $routeParams.toolId)
+		.success(function(data, status, headers, config){
+			$scope.data.comments = data;
+		});
+
   }
 
 	});
@@ -239,7 +268,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 				}
 			}
 
-			if (editingTool) {
+			if ($scope.editing_tool) {
 				$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 				.success(function(data, status, headers, config){
 					$location.path('/tools/' + data.id);
@@ -255,12 +284,6 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			}
 			
 		}
-		
-
-
-			
-
-
   }
 
 }]);

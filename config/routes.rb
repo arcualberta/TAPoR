@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :tools
     resources :users
     resources :attribute_types
+    resources :comments
   end
 
 

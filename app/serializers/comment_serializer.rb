@@ -1,3 +1,4 @@
 class CommentSerializer < ActiveModel::Serializer
-  attributes :content
+  attributes :id, :content, :is_pinned, :is_hidden
+  has_one :user  
 end

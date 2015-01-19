@@ -11,9 +11,7 @@ class Api::UsersController < ApplicationController
 	end
 
 
-	def update
-
-		
+	def update	
 
 		respond_to do |format|
 

@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 	has_many :tool_ratings
 	has_many :tools, through: :tool_ratings
 	has_many :comments
-	has_many :tools, through: :comments
+	# has_many :tools, through: :comments
 	has_many :tool_use_metrics
 	has_many :tools, through: :tool_use_metrics
 	has_many :tools
