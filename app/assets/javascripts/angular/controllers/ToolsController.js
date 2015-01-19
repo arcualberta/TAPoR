@@ -22,12 +22,8 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   $scope.data.description = "";
   $scope.data.image_url = "";
   $scope.data.id = "";
-  // $scope.data.creators_name = "";
-  // $scope.data.creators_email = "";
-  // $scope.data.creators_url = "";
   
-  $scope.data.tool_ratings = {};  
- 	$scope.data.tool_ratings.stars = 0;
+  $scope.data.tool_ratings = [{"stars" : 0}];  
   
   $scope.data.tool_tags = {};
   $scope.data.tool_tags.tags = "";
@@ -77,11 +73,8 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 		$scope.data.name = data.name;
 		$scope.data.description = data.description
 		$scope.data.image_url = data.image_url;
-		$scope.data.tool_ratings = {};		
-		$scope.data.tool_ratings.stars = 0;
-		if (data.tool_ratings && data.tool_ratings.length > 0) {
-			$scope.data.tool_ratings.stars = data.tool_ratings[0].stars;
-		}
+		$scope.data.tool_ratings = data.tool_ratings;
+		$scope.data.comments = data.comments;
 		
 
 		$scope.data.tool_tags = {};
@@ -92,12 +85,6 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 				tags.push(v.value);
 			});
 			$scope.data.tool_tags.tags = tags;			
-		}
-
-		$scope.data.comments = {};
-		$scope.data.comments.content = "";
-		if (data.comments && data.comments.length > 0) {
-			$scope.data.comments.content = data.comments[0].content;
 		}
 
 	});
@@ -126,14 +113,13 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.data.creators_email = "";
   $scope.data.creators_url = "";
 
-	$scope.data.tool_ratings = {};  
- 	$scope.data.tool_ratings.stars = 0;
-  
+	$scope.data.tool_ratings = [{"stars" : 0}];  
+   
   $scope.data.tool_tags = {};
   $scope.data.tool_tags.tags = "";
   
-  $scope.data.comments = {}
-  $scope.data.comments.content = "";
+  $scope.data.comments = [{'content':""}];	
+  
   
   $scope.data.is_approved = false;
   $scope.data.image = "";
@@ -200,20 +186,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 				if (data.hasOwnProperty(i)) {
 					$scope.data[i] = data[i];					
 				}
-			}
-
-			// fix tool_ratings
-			$scope.data.tool_ratings = 0;
-			if ($scope.data.tool_ratings && $scope.data.tool_ratings.length) {
-				$scope.data.tool_ratings = {stars: $scope.data.tool_ratings[0].stars}
-			}
-			// fix comment
-
-			$scope.data.comments = "";
-			if ($scope.data.comments && $scope.data.comments.length) {
-				$scope.data.comments = {content: $scope.data.comments[0].content}	
-			}
-			
+			}	
 
 			// fix tags
 
@@ -255,6 +228,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	});
 
   $scope.createorUpdateTool = function() {
+  	$scope.tool_id = $routeParams.toolId;
 
   	if ($('#tool_form')[0].checkValidity()) {
 			var fd = new FormData();
@@ -266,9 +240,9 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			}
 
 			if (editingTool) {
-				$http.patch('/api/tools/' + $scope.id, $scope.data)
+				$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 				.success(function(data, status, headers, config){
-					console.log("success updating")
+					$location.path('/tools/' + data.id);
 				});
 			} else {
 				$http.post("/api/tools#create", $scope.data)

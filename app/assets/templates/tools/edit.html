@@ -49,7 +49,7 @@
     <div class="form-group">
       <label for="inputStars" class="col-sm-2 control-label">Rating</label>
       <div class="col-sm-5 rating">
-        <div star-rating rating-value="data.tool_ratings.stars" on-rating-selected="rateFunction(data.tool_ratings.stars)" max="5"></div>
+        <div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="rateFunction(data.tool_ratings[0].stars)" max="5"></div>
       </div>
     </div>   
 
@@ -69,7 +69,7 @@
     <div class="form-group">
       <label for="inputComment" class="col-sm-2 control-label">Comment</label>
       <div class="col-sm-5  ">
-        <textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.comments.content"></textarea>
+        <textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.comments[0].content"></textarea>
       </div>
     </div>
 

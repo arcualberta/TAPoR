@@ -7,8 +7,7 @@ app.controller('TaporMainCtrl',['$scope', '$http', function($scope, $http){
 
 	$scope.checkUser = function() {
 		$http.get('/api/users/current')
-		.success(function(data, status, headers, config){
-			console.log(data)
+		.success(function(data, status, headers, config){	
 			$scope.current_user = data;
 		})
 		

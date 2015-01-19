@@ -147,10 +147,10 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "name"
     t.text     "description"
     t.boolean  "is_approved",    default: false
-    t.string   "image_url"
     t.string   "creators_name"
     t.string   "creators_email"
     t.string   "creators_url"
+    t.string   "image_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

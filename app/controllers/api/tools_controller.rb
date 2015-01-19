@@ -42,10 +42,11 @@ class Api::ToolsController < ApplicationController
 					@tool.save
 					
 					# stars
-					if params[:tool_ratings] and params[:tool_ratings][:stars] and params[:tool_ratings][:stars] != 0
-						
+					# if params[:tool_ratings] and params[:tool_ratings][:stars] and params[:tool_ratings][:stars] != 0
+					if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
+
 						@tool_ratings = @tool.tool_ratings.create({
-							stars: params[:tool_ratings][:stars], 
+							stars: params[:tool_ratings][0][:stars], 
 							user_id: current_user[:id]
 						});
 						@tool_ratings.save
@@ -80,58 +81,17 @@ class Api::ToolsController < ApplicationController
 
 
 					# comment
-
-					if params[:comments] and params[:comments][:content] and params[:comments][:content] != ""
+					if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
+						 puts params[:comments][0];
 						@comment = @tool.comments.create({
-							content: params[:comments][:content], 
+							content: params[:comments][0][:content], 
 							user_id: current_user[:id]
 						});
 						@comment.save
 					end
 
 					# attributes
-
-					if params[:attribute_types]
-						attributes = params[:attribute_types]
-						attributes.each do |attribute|
-							# get attribute from database
-							savedType = AttributeType.find(attribute[:id])
-							valuesToSave = []
-							if savedType
-								# if exists check is multiple								
-								if savedType.is_multiple?									
-									if attribute[:model].length == attribute[:possible_values].length
-										attribute[:model].each_index do |i|
-											if attribute[:model][i]												
-												valuesToSave.push(attribute[:possible_values][i])
-											end
-										end
-									end
-								else					
-									valuesToSave.push(attribute[:model])
-								end
-								
-								possible = savedType.possible_values.split("|");
-								should_save = true								
-								valuesToSave.each do |newValue|								
-									unless possible.include?(newValue)
-										should_save = false										
-										break
-									end
-								end	
-								
-								if should_save
-									
-									@tool_attribute = @tool.tool_attributes.create({
-										attribute_type_id: savedType.id,
-										value: valuesToSave.join("|")
-									});
-									@tool_attribute.save()
-								end
-
-							end
-						end 
-					end
+					save_parameters(@tool, params[:attribute_types]);
 
 					# image
 
@@ -160,94 +120,103 @@ class Api::ToolsController < ApplicationController
 				begin
 
 					# main tool content
-					
-					# stars
-					if params[:tool_ratings] and params[:tool_ratings][:stars] 
+					@tool.name = safe_params[:name];
+					@tool.description = safe_params[:description];
+					@tool.creators_name = safe_params[:creators_name];
+					@tool.creators_email = safe_params[:creators_email];
+					@tool.creators_url = safe_params[:creators_url];					
+					if current_user.is_admin?
+						@tool.is_approved = safe_params[:is_approved];
+					end
+					@tool.save()
 
-						if params[:tool_ratings][:stars] == 0
+					# stars
+					if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
+
+						if params[:tool_ratings][0][:stars] == 0
 							@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
  							if @user_tool_rating
 								@user_tool_rating.destroy()
 							end
 						else 
 							@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
-							puts params[:tool_ratings][:stars]
-							@tool_ratings.stars = params[:tool_ratings][:stars]
+							puts params[:tool_ratings][0][:stars]
+							@tool_ratings.stars = params[:tool_ratings][0][:stars]
 							@tool_ratings.save()
 						end
 
 					end
 
 					# tags
+					if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""
+						tags = params[:tool_tags][:tags];
+						tag_ids = []
+						tags.each do |tag|
+							@currentTag = Tag.find_or_create_by value: tag
+							tag_ids.push(@currentTag)
+						end	
+						
+						@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
 
-					tags = params[:tool_tags][:tags];
-					tag_ids = []
-					tags.each do |tag|
-						@currentTag = Tag.find_or_create_by value: tag
-						tag_ids.push(@currentTag)
-					end	
-					
-					@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
 
-
-					# adding new tags
-					tag_ids.each do |tag_id|
-						found = false;
-						@tool_tags.each do |tool_tag|
-							puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
-							if tool_tag.tag_id == tag_id.id
-								found = true;
-								break;
+						# adding new tags
+						tag_ids.each do |tag_id|
+							found = false;
+							@tool_tags.each do |tool_tag|
+								puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
+								if tool_tag.tag_id == tag_id.id
+									found = true;
+									break;
+								end
+							end
+							if !found
+								@test = @tool.tool_tags.create({
+									tag_id: tag_id.id,
+									user_id: current_user[:id]
+								});
+								@test.save
 							end
 						end
-						if !found
-							@test = @tool.tool_tags.create({
-								tag_id: tag_id.id,
-								user_id: current_user[:id]
-							});
-							@test.save
+
+						@tool_tags.each do |tool_tag|
+							found = false;
+							tag_ids.each do |tag_id|
+								if tool_tag.tag_id == tag_id.id
+									found = true
+									break					
+								end							
+							end
+							if !found
+								tool_tag.destroy()
+							end
 						end
 					end
-
-					@tool_tags.each do |tool_tag|
-						found = false;
-						tag_ids.each do |tag_id|
-							if tool_tag.tag_id == tag_id.id
-								found = true
-								break					
-							end							
-						end
-						if !found
-							tool_tag.destroy()
-						end
-					end
-
 
 					# comment
 
-					if params[:comments] and params[:comments][:content]
-						if params[:comments][:content] == ""
+					if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
+						if params[:comments][0][:content] == ""
 							@user_tool_comment = @tool.comments.find_by user_id: current_user[:id]
 							if @user_tool_comment
 								@user_tool_comment.destroy()
 							end							
 						else
 							@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
-							@comment.content = params[:comments][:content]
+							@comment.content = params[:comments][0][:content]
 							@comment.save
 						end
 					end
 
 					# attributes
-					if params[:attribute_types]
-						
-					end
+					save_parameters(@tool, params[:attribute_types]);
 					
 					# image
 
 					if params[:image] and params[:image] != "" and params[:image].include? "base64"						
 						# remove old image
-						FileUtils::rm [@tool.image_url]
+						if @tool.image_url
+							FileUtils::rm [@tool.image_url]
+						end
 						@tool.image_url = save_image(params[:image])
 						@tool.save
 					end
@@ -271,6 +240,16 @@ class Api::ToolsController < ApplicationController
 	end
 
 	private 
+
+		def set_tool
+			@tool = Tool.find(params[:id])
+		end
+
+		def safe_params
+			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
+			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
+			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url);
+		end
 
 		def save_image(base_image)
 			time = Time.new
@@ -303,13 +282,46 @@ class Api::ToolsController < ApplicationController
 
 		end
 
-		def set_tool
-			@tool = Tool.find(params[:id])
+		def save_parameters(tool, attribute_types)
+			if attribute_types
+				attributes = attribute_types
+				attributes.each do |attribute|
+					# get attribute from database
+					savedType = AttributeType.find(attribute[:id])
+					valuesToSave = []
+					if savedType
+						# if exists check is multiple								
+						if savedType.is_multiple?									
+							if attribute[:model].length == attribute[:possible_values].length
+								attribute[:model].each_index do |i|
+									if attribute[:model][i]												
+										valuesToSave.push(attribute[:possible_values][i])
+									end
+								end
+							end
+						else					
+							valuesToSave.push(attribute[:model])
+						end
+						
+						possible = savedType.possible_values.split("|");
+						should_save = true								
+						valuesToSave.each do |newValue|								
+							unless possible.include?(newValue)
+								should_save = false										
+								break
+							end
+						end	
+						
+						if should_save									
+							@tool_attribute = tool.tool_attributes.find_or_create_by(
+								attribute_type_id: savedType.id,
+							);
+							@tool_attribute[:value] = valuesToSave.join("|")
+							@tool_attribute.save()
+						end
+					end
+				end 
+			end
 		end
 
-		def safe_params
-			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
-			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url);
-		end
 end
