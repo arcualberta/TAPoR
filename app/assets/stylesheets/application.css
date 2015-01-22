@@ -13,5 +13,7 @@
  *= require bootstrap/dist/css/bootstrap
  *= require font-awesome/css/font-awesome
  *= require selectize/dist/css/selectize.bootstrap3.css
+ *= require ng-sortable/dist/ng-sortable.css
+ *= require ng-sortable/dist/ng-sortable.style.css
  *= require style
  */

@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.text     "content"
     t.boolean  "is_pinned"
     t.boolean  "is_hidden"
+    t.integer  "index"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -153,6 +154,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "creators_email"
     t.string   "creators_url"
     t.string   "image_url"
+    t.float    "star_average",   default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -48,12 +48,16 @@ class Api::ToolsController < ApplicationController
 					# stars
 					# if params[:tool_ratings] and params[:tool_ratings][:stars] and params[:tool_ratings][:stars] != 0
 					if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
+						
 
 						@tool_ratings = @tool.tool_ratings.create({
 							stars: params[:tool_ratings][0][:stars], 
 							user_id: current_user[:id]
 						});
+						
 						@tool_ratings.save
+						@tool.star_average = @tool_ratings.stars;
+						@tool.save()
 					end
 					
 					# tags
@@ -118,122 +122,164 @@ class Api::ToolsController < ApplicationController
 	end
 
 	def update
+			respond_to do |format|
+				Tool.transaction do
+					begin
 
-		respond_to do |format|
-			Tool.transaction do
-				begin
+						# main tool content
+						@tool.name = safe_params[:name];
+						@tool.description = safe_params[:description];
+						@tool.creators_name = safe_params[:creators_name];
+						@tool.creators_email = safe_params[:creators_email];
+						@tool.creators_url = safe_params[:creators_url];					
+						if current_user.is_admin?
+							@tool.is_approved = safe_params[:is_approved];
+						end
+						@tool.save()
 
-					# main tool content
-					@tool.name = safe_params[:name];
-					@tool.description = safe_params[:description];
-					@tool.creators_name = safe_params[:creators_name];
-					@tool.creators_email = safe_params[:creators_email];
-					@tool.creators_url = safe_params[:creators_url];					
-					if current_user.is_admin?
-						@tool.is_approved = safe_params[:is_approved];
-					end
-					@tool.save()
+						# stars
+						if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
 
-					# stars
-					if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
-
-						if params[:tool_ratings][0][:stars] == 0
-							@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
- 							if @user_tool_rating
-								@user_tool_rating.destroy()
+							if params[:tool_ratings][0][:stars] == 0
+								@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
+								tool_rating_count = @user_tool_rating.length
+	 							if @user_tool_rating
+	 								@tool.star_average *= tool_rating_count
+	 								@tool.star_average -= @user_tool_rating.stars
+									@user_tool_rating.destroy()
+									if tool_rating_count != 1
+										@tool.star_average /= tool_rating_count - 1
+									else
+										@tool.star_average = 0;
+									end
+									@tool.save()
+								end
+							else 
+								tool_rating_count = @tool.tool_ratings.count
+								@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
+								puts params[:tool_ratings][0][:stars]
+								@tool_ratings.stars = params[:tool_ratings][0][:stars]
+								@tool_ratings.save()
+								puts "here"
+								puts @tool.star_average
+								puts tool_rating_count
+								@tool.star_average *= tool_rating_count
+								@tool.star_average += @tool_ratings.stars
+								@tool.star_average /= tool_rating_count + 1
+								@tool.save()
 							end
-						else 
-							@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
-							puts params[:tool_ratings][0][:stars]
-							@tool_ratings.stars = params[:tool_ratings][0][:stars]
-							@tool_ratings.save()
+
+
+
 						end
 
-					end
-
-					# tags
-					if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""
-						tags = params[:tool_tags][:tags];
-						tag_ids = []
-						tags.each do |tag|
-							@currentTag = Tag.find_or_create_by value: tag
-							tag_ids.push(@currentTag)
-						end	
-						
-						@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
+						# tags
+						if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""
+							tags = params[:tool_tags][:tags];
+							tag_ids = []
+							tags.each do |tag|
+								@currentTag = Tag.find_or_create_by value: tag
+								tag_ids.push(@currentTag)
+							end	
+							
+							@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
 
 
-						# adding new tags
-						tag_ids.each do |tag_id|
-							found = false;
-							@tool_tags.each do |tool_tag|
-								puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
-								if tool_tag.tag_id == tag_id.id
-									found = true;
-									break;
+							# adding new tags
+							tag_ids.each do |tag_id|
+								found = false;
+								@tool_tags.each do |tool_tag|
+									puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
+									if tool_tag.tag_id == tag_id.id
+										found = true;
+										break;
+									end
+								end
+								if !found
+									@test = @tool.tool_tags.create({
+										tag_id: tag_id.id,
+										user_id: current_user[:id]
+									});
+									@test.save
 								end
 							end
-							if !found
-								@test = @tool.tool_tags.create({
-									tag_id: tag_id.id,
-									user_id: current_user[:id]
-								});
-								@test.save
+
+							@tool_tags.each do |tool_tag|
+								found = false;
+								tag_ids.each do |tag_id|
+									if tool_tag.tag_id == tag_id.id
+										found = true
+										break					
+									end							
+								end
+								if !found
+									tool_tag.destroy()
+								end
 							end
 						end
 
-						@tool_tags.each do |tool_tag|
-							found = false;
-							tag_ids.each do |tag_id|
-								if tool_tag.tag_id == tag_id.id
-									found = true
-									break					
+						# comment
+
+						if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
+							if params[:comments][0][:content] == ""
+								@user_tool_comment = @tool.comments.find_by user_id: current_user[:id]
+								if @user_tool_comment
+									@user_tool_comment.destroy()
 								end							
+							else
+								@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
+								@comment.content = params[:comments][0][:content]
+								@comment.save
 							end
-							if !found
-								tool_tag.destroy()
+						end
+
+						# attributes
+						save_parameters(@tool, params[:attribute_types]);
+						
+						# image
+
+						if params[:image] and params[:image] != "" and params[:image].include? "base64"						
+							# remove old image
+							if @tool.image_url
+								FileUtils::rm [@tool.image_url]
+							end
+							new_url_path = save_image(params[:image])
+							@tool.update(image_url: new_url_path)
+						end
+
+						# managed comments (changing pinned and hidden status)
+
+						if params[:managed_comments] and params[:managed_comments][:pinned]  
+							params[:managed_comments][:pinned].each do |this_comment|
+								puts this_comment
+								@comment = Comment.find_by(id: this_comment[:id])
+								@comment.index = this_comment[:index];
+								@comment.is_pinned = true;
+								@comment.is_hidden = this_comment[:is_hidden];
+								@comment.save()
 							end
 						end
-					end
 
-					# comment
+						if params[:managed_comments] and params[:managed_comments][:not_pinned]
+							params[:managed_comments][:not_pinned].each do |this_comment|
+								@comment = Comment.find_by(id: this_comment[:id])
+								@comment.index = 0;
+								@comment.is_pinned = false;
+								@comment.is_hidden = this_comment[:is_hidden];
+								@comment.save()
+							end
 
-					if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
-						if params[:comments][0][:content] == ""
-							@user_tool_comment = @tool.comments.find_by user_id: current_user[:id]
-							if @user_tool_comment
-								@user_tool_comment.destroy()
-							end							
-						else
-							@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
-							@comment.content = params[:comments][0][:content]
-							@comment.save
 						end
+
+						format.json { render json: @tool, status: :accepted }
+
+					rescue ActiveRecord::RecordInvalid
+						format.json { render json: @tool.errors, status: :unprocessable_entity }
+						raise ActiveRecord::Rollback
 					end
-
-					# attributes
-					save_parameters(@tool, params[:attribute_types]);
-					
-					# image
-
-					if params[:image] and params[:image] != "" and params[:image].include? "base64"						
-						# remove old image
-						if @tool.image_url
-							FileUtils::rm [@tool.image_url]
-						end
-						new_url_path = save_image(params[:image])
-						@tool.update(image_url: new_url_path)
-					end
-
-
-					format.json { render json: @tool, status: :accepted }
-
-				rescue ActiveRecord::RecordInvalid
-					format.json { render json: @tool.errors, status: :unprocessable_entity }
-					raise ActiveRecord::Rollback
 				end
 			end
-		end
+		
 	end
 
 	def destroy

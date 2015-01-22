@@ -101,3 +101,25 @@ body {
 	height : 25px;
 	width : 25px;
 }
+
+.draggable_place {
+	min-height: 10px;
+	list-style-type: none;
+	padding:10px;
+}
+
+.column_sortable {
+	padding:10px;
+}
+
+.noresize-textarea {
+    resize: none;
+}
+
+.list-editing-column {
+	height: 180px;
+}
+
+.list-tool-area {
+	min-height: 190px;
+}

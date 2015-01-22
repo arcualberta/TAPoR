@@ -20,6 +20,7 @@
 //= require selectize/dist/js/selectize
 //= require angular-selectize2/dist/selectize
 //= require turbolinks
+//= require ng-sortable/dist/ng-sortable
 //= require angular/app
 //= require angular/directives/StarDirective
 //= require angular/directives/MultSelectDirective
@@ -30,3 +31,4 @@
 //= require angular/controllers/UsersController
 //= require angular/controllers/AttributesController
 //= require angular/controllers/SigninIndexCtrl
+//= require	angular/controllers/ListsController

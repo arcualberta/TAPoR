@@ -5,9 +5,9 @@ app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
 	.success(function(data, status, headers, config){			
 		$scope.tools = data;
 
-		$.map($scope.tools, function(val, i){
-			val.thumb_url =  val.image_url ? val.image_url.replace(/.png$/, "-thumb.png") : "";
-		});
+		// $.map($scope.tools, function(val, i){
+		// 	val.thumb_url =  val.image_url ? val.image_url.replace(/.png$/, "-thumb.png") : "";
+		// });
 	});
 
 }]);
@@ -29,8 +29,6 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   $scope.data.tool_tags.tags = "";
   
   $scope.data.comments = {}
-  $scope.data.comments.content = "";
-
 
 	var tagLoad = function(query, callback) {
   	if (query != "") {
@@ -58,12 +56,6 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   };
 
 
-
-
-
-  // $scope.tagLoad = function(query, callback) {
-  // 	alert("test")
-  // }
 
 	$http.get('/api/tools/' + $routeParams.toolId)
 	.success(function(data, status, headers, config){
@@ -93,7 +85,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 	$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 	.success(function(data, status, headers, config){
-		console.log("success updating")
+		$location.path('/tools/');
 	});
 
 }
@@ -118,13 +110,19 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.data.tool_tags = {};
   $scope.data.tool_tags.tags = "";
   
-  $scope.data.comments = [{'content':""}];	
-  
+  // $scope.data.comments = {};
+  // $scope.data.comments.pinned = [];
+  // $scope.data.comments.not_pinned = [];
+  $scope.data.comments = [];
+  $scope.data.managed_comments = {
+  	"pinned": [],
+  	"not_pinned": []
+  }
   
   $scope.data.is_approved = false;
   $scope.data.image = "";
 
-  $scope.editing_tool = false;
+  $scope.is_editing = false;
   // var form = $("#tool_form");
   // form.validate();
 
@@ -148,6 +146,44 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 		});
   }
 
+
+  // comment drag manager
+
+  var resetPinnedIndex = function() {
+  	$.each($scope.data.managed_comments.pinned, function(i, v){
+    	v.index = i;
+    });
+  }
+
+  $scope.commentDragListeners = {
+  	accept: function (sourceItemHandleScope, destSortableScope) {return true},
+    itemMoved: function (event) {
+			resetPinnedIndex()
+    },
+    orderChanged: function(event) {},
+    // containment: '#board'//optional param.
+  }
+
+
+  $scope.commentPinnedListener = {
+  	accept: function (sourceItemHandleScope, destSortableScope) {return true},
+    itemMoved: function (event) {
+    	resetPinnedIndex()
+    },
+    orderChanged: function(event) {
+    	resetPinnedIndex()
+    },
+    // containment: '#board'//optional param.
+  }
+
+
+  $scope.templates = {
+  	sortable_comment: {
+  		url: "templates/tools/commasdasent.html",
+  		name: "sortable comment"
+
+  	}
+  }
 
 	var tagLoad = function(query, callback) {
   	if (query != "") {
@@ -196,10 +232,9 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			$scope.data.attribute_types.push(val);
 		});
 
-	var path = $location.path();
-  $scope.editing_tool = path.indexOf("edit") != -1;
+  $scope.is_editing = $location.path().indexOf("edit") != -1;
 
-  if ($scope.editing_tool) {
+  if ($scope.is_editing) {
   	// get values
 		$http.get('/api/tools/' + $routeParams.toolId)
 		.success(function(data, status, headers, config){
@@ -246,10 +281,23 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 		});
 
 		// get comments
+		
+
+		
 
 		$http.get('/api/comments/?tool_id=' + $routeParams.toolId)
 		.success(function(data, status, headers, config){
-			$scope.data.comments = data;
+			var comments = {
+				"pinned" : [],
+				"not_pinned" : [],
+			}
+			$.each(data, function(i, v){
+				if (v.is_pinned) {
+					$scope.data.managed_comments.pinned.push(v);
+				} else {					
+					$scope.data.managed_comments.not_pinned.push(v);
+				}
+			});
 		});
 
   }
@@ -268,7 +316,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 				}
 			}
 
-			if ($scope.editing_tool) {
+			if ($scope.is_editing) {
 				$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 				.success(function(data, status, headers, config){
 					$location.path('/tools/' + data.id);

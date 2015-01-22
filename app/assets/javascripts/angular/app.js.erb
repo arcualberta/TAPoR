@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module("taporApp", ["ngResource", "ngRoute", "selectize"]);
+var app = angular.module("taporApp", ["ngResource", "ngRoute", "selectize", "ui.sortable"]);
 
 app.config(['$httpProvider', function($httpProvider){
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
@@ -93,6 +93,15 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/attributes/new', {
         templateUrl: "<%= asset_path('attributes/new.html') %>",
         controller: 'AttributesNewCtrl',
+      })
+      // Lists
+      .when('/lists/user', {
+        templateUrl: "<%= asset_path('lists/user.html') %>",
+        controller: 'ListsUserCtrl'
+      })
+      .when('/lists/new', {
+        templateUrl: "<%= asset_path('lists/edit.html') %>",
+        controller: 'ListsEditCtrl'
       })
   }]);
 

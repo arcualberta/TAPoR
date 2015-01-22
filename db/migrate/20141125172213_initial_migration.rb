@@ -33,6 +33,7 @@ class InitialMigration < ActiveRecord::Migration
       t.string :creators_email
       t.string :creators_url
       t.string :image_url      
+      t.float :star_average, default: 0
   		t.timestamps
   	end
 
@@ -65,6 +66,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.text :content
       t.boolean :is_pinned
       t.boolean :is_hidden
+      t.integer :index
   		t.timestamps
   	end
 

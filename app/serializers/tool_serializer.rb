@@ -1,5 +1,5 @@
 class ToolSerializer < ActiveModel::Serializer
-	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url
+	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url, :star_average
   has_many :tool_ratings
  	has_many :tags, through: :tool_tags
  	has_many :comments
@@ -22,5 +22,10 @@ class ToolSerializer < ActiveModel::Serializer
     end
   end
 
+  def attributes
+  	data = super
+  	data[:thumb_url] = object.image_url ? object.image_url.gsub(/\.png/, "-thumb.png") : "" ;  	
+  	return data
+  end
 
 end
