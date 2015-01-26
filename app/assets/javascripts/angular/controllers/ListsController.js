@@ -5,10 +5,10 @@ app.controller('ListsUserCtrl', ['$scope', '$http', function($scope, $http) {
 
 app.controller('ListsEditCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
 	
-	$scope.tools = [];
+	$scope.tools = [];	
 	$scope.data = {
-		list_name: "Unamed list",
-		list_description: "",
+		name: "",
+		description: "",
 		is_public: true,
 		current_list: [],
 	};
@@ -26,12 +26,24 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', function($scope
 
 	$scope.listListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
-		itemMoved: function(event){},
+		itemMoved: function(event){						
+			$scope.tools[event.dest.index].notes = "";
+		},
 		orderChanged: function(event){}
 	}
 
-	$scope.saveList = function() {
+	$scope.createOrUpdateList = function() {
+		if ($('#list_form')[0].checkValidity()) {
+			if ($scope.is_editing) {
 
+			} else {
+
+				$http.post("/api/tool_lists#create", 	$scope.data)
+				.success(function(data, status, headers, config) {
+					$location.path('/lists/user');
+				});
+			}
+		}
 	}
 
 	// calls
@@ -42,7 +54,11 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', function($scope
 
 	$http.get("/api/tools")
 	.success(function(data, status, headers, config){
-		$scope.tools = data;
+		$.each(data, function(i, v){
+			v.notes="";
+			$scope.tools.push(v);
+		})
+		
 	});
 
 	

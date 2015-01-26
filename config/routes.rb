@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :users
     resources :attribute_types
     resources :comments
+    resources :tool_lists
   end
 
 

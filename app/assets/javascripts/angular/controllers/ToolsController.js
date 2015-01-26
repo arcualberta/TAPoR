@@ -304,19 +304,20 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 	});
 
-  $scope.createorUpdateTool = function() {
-  	$scope.tool_id = $routeParams.toolId;
+  $scope.createOrUpdateTool = function() {
+  	
 
   	if ($('#tool_form')[0].checkValidity()) {
-			var fd = new FormData();
+			// var fd = new FormData();
 
-			for (var i in $scope.data) {
-				if ($scope.data.hasOwnProperty(i)) {				
-					fd.append(i, $scope.data[i])
-				}
-			}
+			// for (var i in $scope.data) {
+			// 	if ($scope.data.hasOwnProperty(i)) {				
+			// 		fd.append(i, $scope.data[i])
+			// 	}
+			// }
 
 			if ($scope.is_editing) {
+				$scope.tool_id = $routeParams.toolId;
 				$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
 				.success(function(data, status, headers, config){
 					$location.path('/tools/' + data.id);

@@ -1,87 +1,104 @@
-<div class="row">
-	<div class="col-sm-6">
-		<div class="row">
-		<div class="panel panel-default">
-			<div class="panel-heading list-editing-column">
-      	<h1>Filtering & paginating mechanism</h1>
-      </div>
-			<div class="panel-body">
-			<ul class="draggable_place list-tool-area" as-sortable="toolsListener" ng-model="tools">
-        <li class="column_sortable" ng-repeat="tool in tools" as-sortable-item>
-          <div as-sortable-item-handle>
-          	
-          	<div class="row">
-          		<div class="col-sm-6">
-            		<img src="{{tool.thumb_url}}">
+<div ng-controller='ListsEditCtrl' class='tapor-container'>
+  <div class="row">
+  	<div class="col-sm-6">
+  		<div class="row">
+  		<div class="panel panel-default">
+  			<div class="panel-heading list-editing-column">
+        	<h1>Filtering & paginating mechanism</h1>
+        </div>
+  			<div class="panel-body">
+  			<ul class="draggable_place list-tool-area" as-sortable="toolsListener" ng-model="tools">
+          <li class="column_sortable" ng-repeat="tool in tools" as-sortable-item>
+            <div as-sortable-item-handle>
+            	
+            	<div class="row">
+            		<div class="col-sm-6">
+              		<img src="{{tool.thumb_url}}">
+              	</div>
+            		<div class="col-sm-6">
+            			<ul>
+            				<li>
+            					{{tool.name}}
+            				</li>
+            				<li>
+            					{{tool.star_average}}
+            				</li>
+            				<li ng-if="tool.creators_email">
+            					{{tool.creators_email}}
+            				</li>
+            				<li ng-if="tool.creators_url">
+            					{{tool.creators_url}}
+            				</li>
+            			</ul>         
+              	</div>
             	</div>
-          		<div class="col-sm-6">
-          			<ul>
-          				<li>
-          					{{tool.name}}
-          				</li>
-          				<li>
-          					{{tool.star_average}}
-          				</li>
-          				<li ng-if="tool.creators_email">
-          					{{tool.creators_email}}
-          				</li>
-          				<li ng-if="tool.creators_url">
-          					{{tool.creators_url}}
-          				</li>
-          			</ul>         
+
+            	<div class="row">
+            		<div class="col-sm-12">
+            			{{tool.description}}
+            		</div>
             	</div>
-          	</div>
+            
+            </div>
+          </li>
+        </ul>
+        </div>
+        </div>
+  		</div>
+  	</div>
+  	<div class="col-sm-6">
+  		<div class="row">
+  			<div class="panel panel-default">
+  				<div class="panel-heading list-editing-column">				
+          <form id="list_form">
+            <div class="col-sm-6">
 
-          	<div class="row">
-          		<div class="col-sm-12">
-          			{{tool.description}}
-          		</div>
-          	</div>
-          
-          </div>
-        </li>
-      </ul>
-      </div>
-      </div>
-		</div>
-	</div>
-	<div class="col-sm-6">
-		<div class="row">
-			<div class="panel panel-default">
-				<div class="panel-heading list-editing-column">
-					<form class="form-inline">
-						<input type="text" class="form-control" id="listName" placeholder="List name" ng-model="data.list_name">
-	  				<div class="form-group">
-  						<label for="pubicInput">Public</label>
-  						<input type="checkbox" name="is_public" value="is_public" id="inputIsPublic" ng-model="data.is_public"> 
-						</div>
-						<button class="btn btn-success">Save</button> 
-		 				<button class="btn btn-warning">Cancel</button> 
-		 				<button ng-if="is_editing" class="btn btn-danger">Delete</button> 					
-					</form>
-				<div class="row">
-					<div class="col-sm-12">
-						<form>
-							<h5>Description</h5>
-							<textarea class="form-control noresize-textarea" rows="3" id="inputDescription" ng-model="data.list_description"></textarea>
-						</form>
-					</div>
-				</div> 
 
-      </div>
-			<div class="panel-body list-tool-area">
-			<ul class="draggable_place list-tool-area" as-sortable="listListener" ng-model="data.current_list">
-        <li class="column_sortable" ng-repeat="tool in data.current_list" as-sortable-item>
-          <div as-sortable-item-handle>
-          
-            <img src="{{tool.thumb_url}}">
-          	{{tool.name}}
-          
-          </div>
-        </li>
-      </ul>
-      </div>
-      </div>
-		</div>
-	</div>
+              <div class="input-group">
+
+                <input type="text" class="form-control" id="listName" placeholder="Unamed list" ng-model="data.name" required>
+                <span class="input-group-addon">
+                  Publish <input type="checkbox" name="is_public" value="is_public" id="inputIsPublic" ng-model="data.is_public">
+                </span>
+              </div>
+
+
+
+
+            </div>
+            <div class="col-sm-6">
+    					<button ng-click="createOrUpdateList()" class="btn btn-success">Save</button> 
+    	 				<a class="btn btn-warning" href="/lists/user">Cancel</a> 
+    	 				<button ng-if="is_editing" class="btn btn-danger">Delete</button> 										
+            </div>
+  				<div class="row">
+  					<div class="col-sm-12">					
+  						<h5>Description</h5>
+  						<textarea class="form-control noresize-textarea" rows="3" id="inputDescription" ng-model="data.description"></textarea>					
+  					</div>
+  				</div> 
+          </form>
+        </div>
+  			<div class="panel-body list-tool-area">
+  			<ul class="draggable_place list-tool-area" as-sortable="listListener" ng-model="data.current_list">
+          <li class="column_sortable" ng-repeat="tool in data.current_list" as-sortable-item>
+            <div as-sortable-item-handle>
+            
+              <img src="{{tool.thumb_url}}">
+            	{{tool.name}}
+              
+              <form>
+                <h5>Notes</h5>
+                <textarea class="form-control noresize-textarea " rows="3" ng-model="tool.notes"></textarea>
+              </form>
+            </div>
+
+            </div>
+          </li>
+        </ul>
+        </div>
+        </div>
+  		</div>
+  	</div>
+  </div>
 </div>
