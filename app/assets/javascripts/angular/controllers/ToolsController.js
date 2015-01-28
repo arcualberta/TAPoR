@@ -15,7 +15,7 @@ app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
 app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
 	// alert($routeParams.toolId)
 	
-	$scope.tool_id = $routeParams.toolId;
+	$scope.id = $routeParams.id;
 
 	$scope.data = {};  
   $scope.data.name = "";
@@ -57,7 +57,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 
 
-	$http.get('/api/tools/' + $routeParams.toolId)
+	$http.get('/api/tools/' + $routeParams.id)
 	.success(function(data, status, headers, config){
 		
 		$scope.is_editable = $scope.current_user.is_admin || $scope.current_user.id == data.user_id;
@@ -83,7 +83,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 	$scope.updateToolUserDetails = function() {
 
-	$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
+	$http.patch('/api/tools/' + $scope.id, $scope.data)
 	.success(function(data, status, headers, config){
 		$location.path('/tools/');
 	});
@@ -96,8 +96,8 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
   
+  $scope.id = $routeParams.id;
 	$scope.data = {};
-  
   $scope.data.name = "";
   $scope.data.description = "";
   $scope.data.is_approved = false;
@@ -285,7 +285,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 		
 
-		$http.get('/api/comments/?tool_id=' + $routeParams.toolId)
+		$http.get('/api/comments/?id=' + $routeParams.toolId)
 		.success(function(data, status, headers, config){
 			var comments = {
 				"pinned" : [],
@@ -317,14 +317,16 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			// }
 
 			if ($scope.is_editing) {
-				$scope.tool_id = $routeParams.toolId;
-				$http.patch('/api/tools/' + $scope.tool_id, $scope.data)
+				$scope.id = $routeParams.toolId;
+				$http.patch('/api/tools/' + $scope.id, $scope.data)
 				.success(function(data, status, headers, config){
 					$location.path('/tools/' + data.id);
 				});
 			} else {
-				$http.post("/api/tools#create", $scope.data)
+				$http.post("/api/tools", $scope.data)
 				.success(function(data, status, headers, config) {
+					alert("HRER")
+					console.log(data)
 					$location.path('/tools/' + data.id);
 				})
 				.error(function(data, status, headers, config) {

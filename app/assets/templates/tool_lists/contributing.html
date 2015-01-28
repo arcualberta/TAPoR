@@ -14,7 +14,7 @@
 
 
 		<div class="col-sm-2 col-offset-4">
-			<a class="btn btn-primary" href="/lists/new" role="button">New</a>
+			<a class="btn btn-primary" href="/tool_lists/new" role="button">New</a>
 		</div>				
 	</div>
 
@@ -45,7 +45,7 @@
 				<div class="col-sm-2">
 					<div class="row">
 						<h4>
-							{{list.name}}
+							<a href="/tool_lists/{{list.id}}">{{list.name}}</a>
 						</h4>
 					</div>
 					<div class="row">
@@ -61,10 +61,14 @@
 					<td ng-repeat="item in list.tool_list_items | limitTo: 3" >
 						<div class="panel panel-default tool_panel">
 		  				<div class="panel-body">
-		    				<img src="{{item.tool.thumb_url}}">
+		    				<a href="/tools/{{item.tool.id}}">
+		    					<img src="{{item.tool.thumb_url}}">
+		    				</a>
 		  				</div>
 		  				<div class="panel-footer">
-		  					{{item.tool.name}}		
+		  					<a href="/tools/{{item.tool.id}}">
+		  						{{item.tool.name}}		
+		  					</a>
 		  				</div>
 						</div>
 					</td>

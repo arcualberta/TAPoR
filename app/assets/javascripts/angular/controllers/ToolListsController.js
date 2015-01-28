@@ -71,10 +71,14 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	$scope.createOrUpdateList = function() {
 		if ($('#list_form')[0].checkValidity()) {
 			if ($scope.is_editing) {
-
+				$http.patch("/api/tool_lists/" + $scope.data.id, 	$scope.data)
+				.success(function(data, status, headers, config) {
+					$location.path('/tool_lists/contributing');
+				});
+				
 			} else {
-
-				$http.post("/api/tool_lists#create", 	$scope.data)
+				
+				$http.post("/api/tool_lists", 	$scope.data)
 				.success(function(data, status, headers, config) {
 					$location.path('/tool_lists/contributing');
 				});
@@ -87,7 +91,7 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	// if editing get real data
 
 	if ($scope.is_editing) {
-		$http.get('/api/tool_lists/'+ $routeParams.listId)
+		$http.get('/api/tool_lists/'+ $routeParams.id)
 		.success(function(data, status, headers, config){
 			$scope.data = data;
 		})
@@ -106,13 +110,30 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 
 app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
-	var list_id = $routeParams.listId;
+	var list_id = $routeParams.id;
 
 	$scope.data = {};
+	$scope.can_edit = false;
+
 
 	$http.get('/api/tool_lists/' + list_id)
 	.success(function(data, status, headers, config){
 		$scope.data = data;
+		
+		$scope.can_edit = $scope.current_user.is_admin;
+
+		if (! $scope.can_edit) {
+			var roles = data.tool_list_user_roles;
+
+			$.each(roles, function(i,v){
+				if ($scope.current_user.id == v.user_id) {
+					$scope.can_edit = v.is_editor;
+					return false;
+				}
+			});
+		}
+		
+
 	});
 
 

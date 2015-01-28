@@ -31,4 +31,4 @@
 //= require angular/controllers/UsersController
 //= require angular/controllers/AttributesController
 //= require angular/controllers/SigninIndexController
-//= require	angular/controllers/ListsController
+//= require	angular/controllers/ToolListsController

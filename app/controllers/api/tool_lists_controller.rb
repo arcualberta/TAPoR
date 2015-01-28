@@ -1,6 +1,6 @@
 class Api::ToolListsController < ApplicationController
 
-	before_action :set_tool_list, only: [:edit, :update, :destroy]
+	before_action :set_tool_list, only: [:update, :destroy]
 
 	def index
 		puts params[:is_editor].to_boolean
@@ -36,7 +36,54 @@ class Api::ToolListsController < ApplicationController
 			format.json { render json: @tool_list}			
 		end
 	end
+	
+	def update
+		respond_to do |format|
+			ToolList.transaction do
+				begin
+					# find out if user is editor or admin
+					is_editor = current_user.is_admin?;
+					@tool_list = ToolList.find(params[:id])
+					if !is_editor			
+						@tool_list.tool_list_user_roles.each do |role|
+							if current_user[:id] == role.user_id
+								is_editor = role.is_editor;
+							end
+						end
+					end
+					
 
+					if is_editor
+						# save intrinsic info
+						@tool_list.update({
+							name: safe_params[:name],
+							description: safe_params[:description],
+							is_public: safe_params[:is_public],
+						})
+						# delete all items
+						ToolListItem.where(tool_list_id: @tool_list.id).destroy_all;
+		# 				# save items
+
+						if params[:tool_list_items]
+							params[:tool_list_items].each_with_index do |item, index|
+								@tool_list.tool_list_items.create({							
+									tool_id: item[:tool][:id],
+									index: index.to_i,
+									notes: item[:notes]
+								});
+							end
+						end
+					end
+
+					format.json { render json: @tool_list, status: :accepted }
+
+					rescue ActiveRecord::RecordInvalid
+						format.json { render json: @tool_list.errors, status: :unprocessable_entity }
+						raise ActiveRecord::Rollback
+				end
+			end		
+		end		
+	end
 
 	def create
 		respond_to do |format|
@@ -51,15 +98,7 @@ class Api::ToolListsController < ApplicationController
 					})	
 
 					# add items to tool list
-					if params[:tool_list_items]
-						params[:tool_list_items].each_with_index do |item, index|
-							@tool_list.tool_list_items.create({							
-								tool_id: item[:id],
-								index: index.to_i,
-								notes: item[:notes]
-							});
-						end
-					end
+					
 
 					# add tool list editor and follower
 
@@ -79,21 +118,28 @@ class Api::ToolListsController < ApplicationController
 		end
 	end
 
-	def contributing
-		# @tool_lists = ToolList.where is_public: true
-		# respond_to do |format|			
-		# 	format.json {render json: @tool_lists}
-		# end
-	end
 
 
 	private 
 
 		def set_tool_list
-			@tool_list = ToolList.find(Params[:id])
+			@tool_list = ToolList.find(params[:id])
 		end
 
 		def safe_params	
 			params.require(:tool_list).permit(:id, :name, :description, :is_public);
 		end
+
+		def save_tool_items
+			if params[:tool_list_items]
+				params[:tool_list_items].each_with_index do |item, index|
+					@tool_list.tool_list_items.create({							
+						tool_id: item[:tool][:id],
+						index: index.to_i,
+						notes: item[:notes]
+					});
+				end
+			end
+		end
+
 end

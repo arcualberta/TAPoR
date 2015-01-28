@@ -60,10 +60,10 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/tools/new', {
         templateUrl: "<%= asset_path('tools/edit.html') %>",
       })
-      .when('/tools/edit/:toolId', {
+      .when('/tools/edit/:id', {
         templateUrl: "<%= asset_path('tools/edit.html') %>",
       })
-      .when('/tools/:toolId', {
+      .when('/tools/:id', {
         templateUrl: "<%= asset_path('tools/detail.html') %>",
       })
       // Users
@@ -92,10 +92,10 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/tool_lists/new', {
         templateUrl: "<%= asset_path('tool_lists/edit.html') %>",
       })
-      .when('/tool_lists/edit/:listId', {
+      .when('/tool_lists/edit/:id', {
         templateUrl: "<%= asset_path('tool_lists/edit.html') %>",
       })
-      .when('/tool_lists/:listId', {
+      .when('/tool_lists/:id', {
         templateUrl: "<%= asset_path('tool_lists/detail.html') %>",
       })
   }]);
