@@ -53,4 +53,5 @@ gem 'request_store', '~> 1.1.0'
 gem 'will_paginate', '~> 3.0.7'
 gem 'rmagick', '~> 2.13.2'
 gem 'byebug', '~> 3.5.1', group: [:development, :test]
+gem 'to_boolean', '~> 1.0.2'
 

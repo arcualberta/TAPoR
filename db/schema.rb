@@ -96,7 +96,8 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   create_table "tool_list_user_roles", force: true do |t|
     t.integer  "user_id"
     t.integer  "tool_list_id"
-    t.integer  "role",         default: 2
+    t.boolean  "is_follower",  default: false
+    t.boolean  "is_editor",    default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -105,6 +106,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   add_index "tool_list_user_roles", ["user_id"], name: "index_tool_list_user_roles_on_user_id", using: :btree
 
   create_table "tool_lists", force: true do |t|
+    t.integer  "user_id"
     t.string   "name"
     t.text     "description"
     t.boolean  "is_public",   default: true

@@ -314,7 +314,7 @@ class Api::ToolsController < ApplicationController
 			image.format = "PNG";
 
 			# resize
-			finalWidth = 1170;
+			finalWidth = 1170; # 900;
 			finalHeight = 500;
 			image.resize_to_fill!(finalWidth);
 

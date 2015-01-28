@@ -123,3 +123,13 @@ body {
 .list-tool-area {
 	min-height: 190px;
 }
+
+.horizontal_list li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 20px;
+}
+
+.tool_panel {
+	max-width: 300px;
+}

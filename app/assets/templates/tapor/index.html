@@ -10,8 +10,8 @@
 		<li ng-if="current_user">
 			<a href='tools/new'>New tool</a>
 		</li>
-		<li>
-			<a href='lists/user'>My lists</a>
+		<li ng-if="current_user">
+			<a href='lists/contributing'>My lists</a>
 		</li>
 		<li ng-if="current_user.is_admin">
 			<a href='attributes/new'>New attribute</a>

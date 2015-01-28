@@ -1,0 +1,81 @@
+
+
+
+<div ng-controller='ListsContributingCtrl' class='tapor-container'>
+	
+	<div class="row">
+		<div class="col-sm-1">
+			<img class="img-circle" src='{{current_user.image_url}}'>
+		</div>
+		<div class="col-sm-5">
+			{{current_user.name}}
+		</div>
+
+
+
+		<div class="col-sm-2 col-offset-4">
+			<a class="btn btn-primary" href="/lists/new" role="button">New</a>
+		</div>				
+	</div>
+
+	<div role="tabpanel">
+		<ul class="nav nav-tabs nav-justified">
+		  <li role="presentation" class="active">
+		  	<a role="tab" data-toggle="tab" ng-click="set_contributing()">
+		  		Curating
+		  	</a>
+		  </li>
+		  <li role="presentation">
+		  	<a role="tab" data-toggle="tab" ng-click="set_following()">
+		  		Following
+		  	</a>
+		  </li>
+		  <li role="presentation">
+		  	<a role="tab" data-toggle="tab" ng-click="set_all()">
+		  		All
+		  	</a>
+		  </li>  
+		</ul>
+	</div>
+
+	<div class="tab-content">
+	  
+	  <div role="tabpanel" class="tab-pane fade in active">
+			<div class="row" ng-repeat="list in data.tool_lists | limitTo: 3">
+				<div class="col-sm-2">
+					<div class="row">
+						<h4>
+							{{list.name}}
+						</h4>
+					</div>
+					<div class="row">
+						{{list.description}}
+					</div>
+					<div class="row">
+						Showing X of {{list.tool_list_items.length}}
+					</div>
+				</div>
+				<div class="col-sm-10">
+					<table>
+					<tr>
+					<td ng-repeat="item in list.tool_list_items | limitTo: 3" >
+						<div class="panel panel-default tool_panel">
+		  				<div class="panel-body">
+		    				<img src="{{item.tool.thumb_url}}">
+		  				</div>
+		  				<div class="panel-footer">
+		  					{{item.tool.name}}		
+		  				</div>
+						</div>
+					</td>
+					<tr>
+					</table>
+				</div>
+			</div>  	
+		</div>
+  	
+  	
+
+	</div>
+
+</div> 

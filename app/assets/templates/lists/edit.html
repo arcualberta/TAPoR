@@ -68,7 +68,7 @@
             </div>
             <div class="col-sm-6">
     					<button ng-click="createOrUpdateList()" class="btn btn-success">Save</button> 
-    	 				<a class="btn btn-warning" href="/lists/user">Cancel</a> 
+    	 				<a class="btn btn-warning" href="/lists/contributing">Cancel</a> 
     	 				<button ng-if="is_editing" class="btn btn-danger">Delete</button> 										
             </div>
   				<div class="row">
@@ -80,16 +80,16 @@
           </form>
         </div>
   			<div class="panel-body list-tool-area">
-  			<ul class="draggable_place list-tool-area" as-sortable="listListener" ng-model="data.current_list">
-          <li class="column_sortable" ng-repeat="tool in data.current_list" as-sortable-item>
+  			<ul class="draggable_place list-tool-area" as-sortable="listListener" ng-model="data.tool_list_items">
+          <li class="column_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item>
             <div as-sortable-item-handle>
             
-              <img src="{{tool.thumb_url}}">
-            	{{tool.name}}
+              <img src="{{list_item.tool.thumb_url}}">
+            	{{list_item.tool.name}}
               
               <form>
                 <h5>Notes</h5>
-                <textarea class="form-control noresize-textarea " rows="3" ng-model="tool.notes"></textarea>
+                <textarea class="form-control noresize-textarea " rows="3" ng-model="list_item.notes"></textarea>
               </form>
             </div>
 

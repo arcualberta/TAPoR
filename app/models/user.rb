@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
 	has_many :tool_list_user_roles
-	has_many :tool_lists, through: :tool_list_user_roles
+	has_many :tool_lists
+	has_many :tool_list_user_roles
+	# has_many :tool_lists, through: :tool_list_user_roles
 	has_many :tool_ratings
 	has_many :tools, through: :tool_ratings
 	has_many :comments

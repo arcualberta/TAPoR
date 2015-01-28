@@ -14,8 +14,7 @@ app.config(['$routeProvider', '$locationProvider',
 
     $routeProvider
       .when('/', {
-        templateUrl: "<%= asset_path('tapor/index.html') %>",
-        controller: 'TaporIndexCtrl',
+        templateUrl: "<%= asset_path('tapor/index.html') %>",        
         redirectTo: function(current, path, query){
           if(query.goto){
           // if we were passed in a query param, and it has a path
@@ -26,11 +25,9 @@ app.config(['$routeProvider', '$locationProvider',
       })
       .when('/signin', {
         templateUrl: "<%= asset_path('tapor/signin.html') %>",
-        // controller: 'SigninIndexCtrl'
       })
       .when('/sign_out', {
         templateUrl: "<%= asset_path('tapor/index.html') %>",
-        controller: 'TaporIndexCtrl',
         redirectTo: function(current, path, query) {
           window.location= '/sign_out';
         }
@@ -38,7 +35,6 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/users/auth/google_oauth2', {
         // Change to loading
         templateUrl: "<%= asset_path('tapor/loading.html') %>",
-        // controller: 'TaporIndexCtrl',
         redirectTo: function(current, path, query) {
           window.location= '/users/auth/google_oauth2';
         }
@@ -46,7 +42,6 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/users/auth/twitter', {
         // Change to loading
         templateUrl: "<%= asset_path('tapor/loading.html') %>",
-        // controller: 'TaporIndexCtrl',
         redirectTo: function(current, path, query) {
           window.location= '/users/auth/twitter';
         }
@@ -54,7 +49,6 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/users/auth/yahoo', {
         // Change to loading
         templateUrl: "<%= asset_path('tapor/loading.html') %>",
-        // controller: 'TaporIndexCtrl',
         redirectTo: function(current, path, query) {
           window.location= '/users/auth/yahoo';
         }
@@ -62,46 +56,43 @@ app.config(['$routeProvider', '$locationProvider',
       // Tools
       .when('/tools', {
         templateUrl: "<%= asset_path('tools/index.html') %>",
-        controller: 'ToolsIndexCtrl',
       })
       .when('/tools/new', {
         templateUrl: "<%= asset_path('tools/edit.html') %>",
-        controller: 'ToolsEditCtrl',
       })
       .when('/tools/edit/:toolId', {
         templateUrl: "<%= asset_path('tools/edit.html') %>",
-        controller: 'ToolsEditCtrl',
       })
       .when('/tools/:toolId', {
         templateUrl: "<%= asset_path('tools/detail.html') %>",
-        controller: 'ToolsDetailCtrl',
       })
       // Users
       .when('/users', {
         templateUrl: "<%= asset_path('users/index.html') %>",
-        controller: 'UsersIndexCtrl',
       })
       .when('/users/profile', {
         templateUrl: "<%= asset_path('users/detail.html') %>",
-        controller: 'UsersDetailCtrl',
       })
       // Attributes
       .when('/attributes', {
         templateUrl: "<%= asset_path('attributes/index.html') %>",
-        controller: 'AttributesIndexCtrl',
       })
       .when('/attributes/new', {
         templateUrl: "<%= asset_path('attributes/new.html') %>",
-        controller: 'AttributesNewCtrl',
       })
       // Lists
-      .when('/lists/user', {
-        templateUrl: "<%= asset_path('lists/user.html') %>",
-        controller: 'ListsUserCtrl'
+      // .when('/lists', {
+      //   templateUrl: "<%= asset_path('lists/public.html') %>",
+      //   controller: 'ListsPublicCtrl'
+      // })
+      .when('/lists/contributing', {
+        templateUrl: "<%= asset_path('lists/contributing.html') %>",
       })
       .when('/lists/new', {
         templateUrl: "<%= asset_path('lists/edit.html') %>",
-        controller: 'ListsEditCtrl'
+      })
+      .when('/lists/edit/:listId', {
+        templateUrl: "<%= asset_path('lists/edit.html') %>",
       })
   }]);
 

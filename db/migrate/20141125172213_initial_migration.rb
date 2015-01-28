@@ -74,6 +74,7 @@ class InitialMigration < ActiveRecord::Migration
   	add_index :comments, :tool_id
 
   	create_table :tool_lists do |t|
+      t.belongs_to :user
   		t.string :name
   		t.text :description
   		t.boolean :is_public, default: true
@@ -94,7 +95,8 @@ class InitialMigration < ActiveRecord::Migration
   	create_table :tool_list_user_roles do |t|
   		t.belongs_to :user
   		t.belongs_to :tool_list
-  		t.integer :role, default: 2
+  		t.boolean :is_follower, default: false
+      t.boolean :is_editor, default: false
   		t.timestamps
   	end
   	
