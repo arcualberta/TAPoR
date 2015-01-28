@@ -86,17 +86,17 @@ app.config(['$routeProvider', '$locationProvider',
       //   controller: 'ListsPublicCtrl'
       // })
 
-      .when('/lists/contributing', {
-        templateUrl: "<%= asset_path('lists/contributing.html') %>",
+      .when('/tool_lists/contributing', {
+        templateUrl: "<%= asset_path('tool_lists/contributing.html') %>",
       })
-      .when('/lists/new', {
-        templateUrl: "<%= asset_path('lists/edit.html') %>",
+      .when('/tool_lists/new', {
+        templateUrl: "<%= asset_path('tool_lists/edit.html') %>",
       })
-      .when('/lists/edit/:listId', {
-        templateUrl: "<%= asset_path('lists/edit.html') %>",
+      .when('/tool_lists/edit/:listId', {
+        templateUrl: "<%= asset_path('tool_lists/edit.html') %>",
       })
-      .when('/lists/:listId', {
-        templateUrl: "<%= asset_path('lists/detail.html') %>",
+      .when('/tool_lists/:listId', {
+        templateUrl: "<%= asset_path('tool_lists/detail.html') %>",
       })
   }]);
 

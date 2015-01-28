@@ -76,7 +76,7 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 				$http.post("/api/tool_lists#create", 	$scope.data)
 				.success(function(data, status, headers, config) {
-					$location.path('/lists/contributing');
+					$location.path('/tool_lists/contributing');
 				});
 			}
 		}
