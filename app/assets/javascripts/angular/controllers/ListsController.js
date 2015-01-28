@@ -103,3 +103,17 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	
 
 }]);
+
+
+app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+	var list_id = $routeParams.listId;
+
+	$scope.data = {};
+
+	$http.get('/api/tool_lists/' + list_id)
+	.success(function(data, status, headers, config){
+		$scope.data = data;
+	});
+
+
+}]);	

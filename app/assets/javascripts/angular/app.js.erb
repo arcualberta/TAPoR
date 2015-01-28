@@ -85,6 +85,7 @@ app.config(['$routeProvider', '$locationProvider',
       //   templateUrl: "<%= asset_path('lists/public.html') %>",
       //   controller: 'ListsPublicCtrl'
       // })
+
       .when('/lists/contributing', {
         templateUrl: "<%= asset_path('lists/contributing.html') %>",
       })
@@ -93,6 +94,9 @@ app.config(['$routeProvider', '$locationProvider',
       })
       .when('/lists/edit/:listId', {
         templateUrl: "<%= asset_path('lists/edit.html') %>",
+      })
+      .when('/lists/:listId', {
+        templateUrl: "<%= asset_path('lists/detail.html') %>",
       })
   }]);
 

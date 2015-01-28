@@ -25,10 +25,10 @@
 //= require angular/directives/StarDirective
 //= require angular/directives/MultSelectDirective
 //= require angular/directives/FileReadDirective
-//= require angular/controllers/NavCtrl
-//= require angular/controllers/TaporCtrl
+//= require angular/controllers/NavController
+//= require angular/controllers/TaporController
 //= require angular/controllers/ToolsController
 //= require angular/controllers/UsersController
 //= require angular/controllers/AttributesController
-//= require angular/controllers/SigninIndexCtrl
+//= require angular/controllers/SigninIndexController
 //= require	angular/controllers/ListsController
