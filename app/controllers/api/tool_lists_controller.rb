@@ -13,7 +13,7 @@ class Api::ToolListsController < ApplicationController
 			if current_user.is_admin?				
 				@tool_lists = ToolList.where is_hidden: false
 			else				
-				@tool_lists = ToolList.where is_public: true, is_hidden: false
+				@tool_lists = ToolList.where('is_public = ? AND is_hidden = ?', true, false);
 			end
 		end			
 
@@ -57,15 +57,7 @@ class Api::ToolListsController < ApplicationController
 						ToolListItem.where(tool_list_id: @tool_list.id).destroy_all;
 		# 				# save items
 
-						if params[:tool_list_items]
-							params[:tool_list_items].each_with_index do |item, index|
-								@tool_list.tool_list_items.create({							
-									tool_id: item[:tool][:id],
-									index: index.to_i,
-									notes: item[:notes]
-								});
-							end
-						end
+						save_tool_items();
 					end
 
 					format.json { render json: @tool_list, status: :accepted }
@@ -101,12 +93,12 @@ class Api::ToolListsController < ApplicationController
 						user_id: current_user[:id],
 						name: safe_params[:name],
 						description: safe_params[:description],
-						is_public: safe_params[:is_public],
+						is_public: safe_params[:is_public],						
 					})	
 
 					# add items to tool list
 					
-
+					save_tool_items()
 					# add tool list editor and follower
 
 					@tool_list.tool_list_user_roles.create({
