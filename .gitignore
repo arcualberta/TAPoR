@@ -15,6 +15,6 @@
 /log/*.log
 /tmp
 /vendor/assets/components
-public/images/tools/
+public/images/tools/2*
 config/application.yml
 config/database.yml
