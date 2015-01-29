@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   create_table "tool_ratings", force: true do |t|
     t.integer  "user_id"
     t.integer  "tool_id"
+    t.boolean  "is_hidden",  default: false
     t.integer  "stars",      default: 0
     t.datetime "created_at"
     t.datetime "updated_at"

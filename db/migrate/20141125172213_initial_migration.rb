@@ -54,6 +54,7 @@ class InitialMigration < ActiveRecord::Migration
   	create_table :tool_ratings do |t|
   		t.belongs_to :user
   		t.belongs_to :tool
+      t.boolean :is_hidden, default: false
   		t.integer :stars, default: 0
   		t.timestamps
   	end

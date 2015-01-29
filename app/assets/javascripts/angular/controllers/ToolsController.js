@@ -304,12 +304,14 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 	});
 
-	$scope.startDeleteToolProcess = function() {
-		
-	}
 
-	$scope.completeDeleteToolProcess = function() {
-		
+	$scope.deleteTool = function(id) {
+		console.log("deleting " + id)
+		$http.delete("/api/tools/"+id)
+		.success(function(data, status, headers, config){
+			$('#deleteModal').modal('hide');
+			$location.path('/tools/');
+		}); 
 	}
 
   $scope.createOrUpdateTool = function() {
@@ -332,9 +334,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 				});
 			} else {
 				$http.post("/api/tools", $scope.data)
-				.success(function(data, status, headers, config) {
-					alert("HRER")
-					console.log(data)
+				.success(function(data, status, headers, config) {									
 					$location.path('/tools/' + data.id);
 				})
 				.error(function(data, status, headers, config) {

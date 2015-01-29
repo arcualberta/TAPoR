@@ -11,7 +11,7 @@ class Api::ToolsController < ApplicationController
 	
 	def index
 		# @tools = Tool.all
-		@tools = Tool.paginate(:page => params[:page])
+		@tools = Tool.where(is_hidden: false)
 		respond_to do |format|			
 			format.json {render json: @tools}
 		end
@@ -29,9 +29,14 @@ class Api::ToolsController < ApplicationController
 		respond_to do |format|
 			Tool.transaction do
 				begin
-					@tool.update(is_hidden: true);
-					@tool.tool_ratings.update_all(is_hidden: true)			
-					format.json { render json: @tool, status: :ok }
+					if current_user.is_admin? or current_user[:id] == @tool[:user_id]
+						@tool.update(is_hidden: true);
+						@tool.tool_ratings.update_all(is_hidden: true)			
+						@tool.tool_tags.update_all(is_hidden: true)			
+						format.json { render json: @tool, status: :ok }
+					else
+						format.json { render json: @tool, status: :unauthorized }
+					end
 				rescue ActiveRecord::RecordInvalid
 					format.json { render json: @tool.errors, status: :unprocessable_entity }
 					raise ActiveRecord::Rollback
@@ -298,12 +303,12 @@ class Api::ToolsController < ApplicationController
 		
 	end
 
-	def destroy
-		@tool.destroy
-		respond_to do |format|
-			forman.json {head :no_content}
-		end
-	end
+	# def destroy
+	# 	@tool.destroy
+	# 	respond_to do |format|
+	# 		format.json {head :no_content}
+	# 	end
+	# end
 
 	private 
 
