@@ -1,4 +1,7 @@
+require 'active_record'
+
 class Tool < ActiveRecord::Base
+	
 	belongs_to :user, inverse_of: :tools
 	has_many :tool_use_metrics
 	# has_many :users, through: :tool_use_metrics

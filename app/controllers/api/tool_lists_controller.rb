@@ -3,23 +3,16 @@ class Api::ToolListsController < ApplicationController
 	before_action :set_tool_list, only: [:update, :destroy]
 
 	def index
-		puts params[:is_editor].to_boolean
-		puts params[:is_follower].to_boolean
 		params[:is_editor] = params[:is_editor].to_boolean
 		params[:is_follower] = params[:is_follower].to_boolean
-
-		if params[:is_editor] and params[:is_follower]			
-			puts "1"
+		if params[:is_editor] and params[:is_follower]						
 			@tool_lists = ToolList.joins(:tool_list_user_roles).where('tool_lists.user_id = ? AND tool_list_user_roles.is_editor = ? AND tool_list_user_roles.is_follower = ?', current_user[:id], params[:is_editor], params[:is_follower])
-		elsif params[:is_editor] or params[:is_follower]		
-			puts "2"
+		elsif params[:is_editor] or params[:is_follower]					
 			@tool_lists = ToolList.joins(:tool_list_user_roles).where('tool_lists.user_id = ? AND (tool_list_user_roles.is_editor = ? OR tool_list_user_roles.is_follower = ?)', current_user[:id], params[:is_editor], params[:is_follower])
 		else
-			if current_user.is_admin?
-				puts "all"
+			if current_user.is_admin?				
 				@tool_lists = ToolList.all
-			else
-				puts "punlic"
+			else				
 				@tool_lists = ToolList.where is_public: true
 			end
 		end			
@@ -41,7 +34,7 @@ class Api::ToolListsController < ApplicationController
 		respond_to do |format|
 			ToolList.transaction do
 				begin
-					# find out if user is editor or admin
+					# find out if user is 	editor or admin
 					is_editor = current_user.is_admin?;
 					@tool_list = ToolList.find(params[:id])
 					if !is_editor			
@@ -95,6 +88,7 @@ class Api::ToolListsController < ApplicationController
 					format.json { render json: @tool_list.errors, status: :unprocessable_entity }
 					raise ActiveRecord::Rollback
 				end
+			end
 		end
 	end
 
