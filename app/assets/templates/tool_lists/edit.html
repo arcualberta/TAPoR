@@ -69,7 +69,7 @@
             <div class="col-sm-6">
     					<button ng-click="createOrUpdateList()" class="btn btn-success">Save</button> 
     	 				<a class="btn btn-warning" href="/tool_lists/contributing">Cancel</a> 
-    	 				<button ng-if="is_editing" class="btn btn-danger">Delete</button> 										
+    	 				<button ng-if="is_editing" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">Delete</button> 										
             </div>
   				<div class="row">
   					<div class="col-sm-12">					
@@ -100,5 +100,26 @@
         </div>
   		</div>
   	</div>
-  </div>
+  
+
+<!-- modal -->
+  <div class="modal fade" id="deleteModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Delete tool list {{data.name}}</h4>
+        </div>
+        <div class="modal-body">
+          <p>After deleting this list only an user with admin privilidges will be able to bring it back into the system.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button ng-if="is_editing" type="button" class="btn btn-primary" ng-click="deleteToolList(data.id)">Confirm</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+</div>
 </div>

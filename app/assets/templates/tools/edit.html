@@ -208,19 +208,20 @@
   </form>
   </div>
 
+  <!-- modal -->
   <div class="modal fade" id="deleteModal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Deleting tool </h4>
+          <h4 class="modal-title">Delete tool {{data.name}}</h4>
         </div>
         <div class="modal-body">
           <p>After deleting this tool only an user with admin privilidges will be able to bring it back into the system.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button ng-if="is_editing" type="button" class="btn btn-primary" ng-click="deleteTool(data.id)">Delete</button>
+          <button ng-if="is_editing" type="button" class="btn btn-primary" ng-click="deleteTool(data.id)">Confirm</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
