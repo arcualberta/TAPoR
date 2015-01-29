@@ -85,6 +85,19 @@ class Api::ToolListsController < ApplicationController
 		end		
 	end
 
+	def destroy
+		respond_to do |format|
+			ToolList.transaction do
+				begin
+					@tool_list.update(is_hidden: true);
+					format.json { render json: @tool_list, status: :ok }
+				rescue ActiveRecord::RecordInvalid
+					format.json { render json: @tool_list.errors, status: :unprocessable_entity }
+					raise ActiveRecord::Rollback
+				end
+		end
+	end
+
 	def create
 		respond_to do |format|
 			ToolList.transaction do

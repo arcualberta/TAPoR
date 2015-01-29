@@ -34,6 +34,7 @@ class InitialMigration < ActiveRecord::Migration
       t.string :creators_url
       t.string :image_url      
       t.float :star_average, default: 0
+      t.boolean :is_hidden, default: false
   		t.timestamps
   	end
 
@@ -78,6 +79,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.string :name
   		t.text :description
   		t.boolean :is_public, default: true
+      t.boolean :is_hidden, default: false
   		t.timestamps
   	end
 
@@ -123,6 +125,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.belongs_to :user
   		t.belongs_to :tool
   		t.belongs_to :tag
+      t.boolean :is_hidden, default: false
   		t.timestamps
   	end
 

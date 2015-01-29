@@ -177,13 +177,13 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   }
 
 
-  $scope.templates = {
-  	sortable_comment: {
-  		url: "templates/tools/commasdasent.html",
-  		name: "sortable comment"
+  // $scope.templates = {
+  // 	sortable_comment: {
+  // 		url: "templates/tools/commasdasent.html",
+  // 		name: "sortable comment"
 
-  	}
-  }
+  // 	}
+  // }
 
 	var tagLoad = function(query, callback) {
   	if (query != "") {
@@ -236,7 +236,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
   if ($scope.is_editing) {
   	// get values
-		$http.get('/api/tools/' + $routeParams.toolId)
+		$http.get('/api/tools/' + $routeParams.id)
 		.success(function(data, status, headers, config){
 			for (var i in data) {
 				if (data.hasOwnProperty(i)) {
@@ -303,6 +303,14 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   }
 
 	});
+
+	$scope.startDeleteToolProcess = function() {
+		
+	}
+
+	$scope.completeDeleteToolProcess = function() {
+		
+	}
 
   $scope.createOrUpdateTool = function() {
   	
