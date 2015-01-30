@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   namespace :api, defaults: {format: :json} do
     get 'users/current', to: 'users#current'
     get 'tags/search', to: 'tags#search'
+    post 'tools/featured', to: 'tools#featured_edit'
+    get 'tools/featured', to: 'tools#featured'
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
     # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'
 

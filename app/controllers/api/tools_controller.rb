@@ -25,6 +25,37 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
+	def featured
+		@featured_tools = FeaturedTool.order(index: :asc)
+
+		tools = []
+		@featured_tools.each do |featured|
+			tools.push(featured.tool)			
+		end
+
+
+		respond_to do |format|
+			format.json {render json: tools}
+		end
+	end
+
+	def featured_edit
+		respond_to do |format|
+			
+			if current_user.is_admin?
+				FeaturedTool.destroy_all()
+				params[:featured].each_with_index do |tool, index|
+					FeaturedTool.create({
+						tool_id: tool[:id],
+						index: index
+					});
+				end
+			end
+			format.json { render json: {status: "OK"}, status: :ok }
+			
+		end
+	end
+
 	def destroy
 		respond_to do |format|
 			Tool.transaction do
@@ -394,5 +425,4 @@ class Api::ToolsController < ApplicationController
 				end 
 			end
 		end
-
 end

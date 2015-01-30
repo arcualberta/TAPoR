@@ -7,6 +7,9 @@
 		<li>
 			<a href='tools'>Tools</a>
 		</li>		
+		<li>
+			<a ng-if="current_user.is_admin" href='tools/featured'>Featured</a>
+		</li>		
 		<li ng-if="current_user">
 			<a href='tools/new'>New tool</a>
 		</li>

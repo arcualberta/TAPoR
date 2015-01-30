@@ -63,6 +63,9 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/tools/edit/:id', {
         templateUrl: "<%= asset_path('tools/edit.html') %>",
       })
+      .when('/tools/featured', {
+        templateUrl: "<%= asset_path('tools/featured.html') %>",
+      })
       .when('/tools/:id', {
         templateUrl: "<%= asset_path('tools/detail.html') %>",
       })

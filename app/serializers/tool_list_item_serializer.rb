@@ -1,4 +1,8 @@
 class ToolListItemSerializer < ActiveModel::Serializer
-  attributes :id, :notes
-  has_one :tool
+  attributes :id, :notes, :tool
+  
+
+  def tool
+  	return object.tool
+  end
 end

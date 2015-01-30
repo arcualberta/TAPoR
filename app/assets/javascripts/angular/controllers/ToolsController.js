@@ -82,13 +82,16 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 	});
 
 	$scope.updateToolUserDetails = function() {
+		$http.patch('/api/tools/' + $scope.id, $scope.data)
+		.success(function(data, status, headers, config){
+			$location.path('/tools/');
+		});
+	}
 
-	$http.patch('/api/tools/' + $scope.id, $scope.data)
-	.success(function(data, status, headers, config){
-		$location.path('/tools/');
-	});
-
-}
+	$scope.addToList = function(id) {
+	
+		console.log(id)
+	}
 
 
 
@@ -306,7 +309,6 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 
 	$scope.deleteTool = function(id) {
-		console.log("deleting " + id)
 		$http.delete("/api/tools/"+id)
 		.success(function(data, status, headers, config){
 			$('#deleteModal').modal('hide');
@@ -344,5 +346,45 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			
 		}
   }
+
+}]);
+
+
+
+app.controller('ToolsFeaturedCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+
+	$scope.tools = [];
+
+	$scope.data = {
+		featured : []
+	}
+
+	$http.get("/api/tools")
+	.success(function(data, status, headers, config){
+		$scope.tools = data		
+	});
+
+	$http.get("/api/tools/featured")
+	.success(function(data, status, headers, config){
+		$scope.data.featured = data		
+
+		// $.each(data, function(i,v){
+		// 	console.log(v)
+		// 	$scope.data.featured.push(v.tool);
+		// })
+	});
+
+	$scope.toolsListener = {
+		accept: function(sourceItemHandleScope, destSortableScope) {return true},
+		itemMoved: function(event){},
+		orderChanged: function(event){}
+	}
+
+	$scope.saveFeaturedTools = function() {
+		$http.post('/api/tools/featured', $scope.data)
+		.success(function(data, status, headers, config){
+			$location.path('/');
+		});
+	}
 
 }]);
