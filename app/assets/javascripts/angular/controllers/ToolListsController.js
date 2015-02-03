@@ -7,6 +7,7 @@ app.controller('ListsContributingCtrl', ['$scope', '$http', function($scope, $ht
 	$scope.set_contributing = function() {
 		$http.get('/api/tool_lists?is_editor=true')
 		.success(function(data, status, headers, config){
+			console.log(data)
 			$scope.data.tool_lists = data;		
 		});	
 	}

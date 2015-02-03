@@ -3,6 +3,11 @@ class ToolListItemSerializer < ActiveModel::Serializer
   
 
   def tool
-  	return object.tool
+  	# puts object.tool
+  	# return object.tool
+  	result = {
+  		name: object.tool.name,
+  		thumb_url: object.tool.image_url ? object.tool.image_url.gsub(/\.png/, "-thumb.png") : "" 
+  	}
   end
 end
