@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "uid"
     t.string   "provider"
     t.string   "name"
+    t.string   "login"
     t.string   "email"
     t.boolean  "is_email_publishable", default: false
     t.string   "site"

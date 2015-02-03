@@ -11,6 +11,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.string :uid
   		t.string :provider
   		t.string :name
+      t.string :login
   		t.string :email # user provided
   		t.boolean :is_email_publishable, default: false # user provided
   		t.string :site # user provided
