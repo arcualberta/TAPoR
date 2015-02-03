@@ -288,7 +288,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 		
 
-		$http.get('/api/comments/?id=' + $routeParams.toolId)
+		$http.get('/api/comments/?id=' + $routeParams.id)
 		.success(function(data, status, headers, config){
 			var comments = {
 				"pinned" : [],

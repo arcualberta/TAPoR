@@ -4,7 +4,8 @@ class Api::CommentsController < ApplicationController
 
 	def index
 	# @tools = Tool.all
-		@comments = Comment.where(tool_id: params[:tool_id])
+		
+		@comments = Comment.where(tool_id: params[:id])
 		respond_to do |format|			
 			format.json {render json: @comments}
 		end
@@ -12,7 +13,7 @@ class Api::CommentsController < ApplicationController
 
 	def update
 		respond_to do |format|
-			if current_user[:id] == safe_params[:id] or current_user.is_admin?
+			if current_user[:id] == safe_params[:id] or current_user.is_admin?				
 				clean_params = {}
 				clean_params[:is_pinned] = safe_params[:is_pinned] if safe_params[:is_pinned] != nil
 				clean_params[:is_hidden] = safe_params[:is_hidden] if safe_params[:is_hidden] != nil
