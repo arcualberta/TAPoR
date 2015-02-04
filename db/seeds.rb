@@ -9,7 +9,19 @@ AttributeType.create(name: "Background processing", possible_values: "Doesn't ru
 AttributeType.create(name: "Warning", possible_values: "Complex and difficult|Limited uses|Prototype|Still in development|Time consuming", is_multiple: true);
 
 
-User.create(uid: 0,
+
+User.create(id: 0,
+	uid: 0,
+	provider: "no_provider",
+	name: "TAPoR",
+	is_email_publishable: 0,
+	image_url: "/img/tapor-profile.png",
+	is_blocked: 0,
+	is_admin: 0	
+)
+
+
+User.create(id: 1,
 	uid: "103834776938893478547",
 	provider: "google_oauth2",
 	name: "Omar Rodriguez-Arenas",
@@ -21,7 +33,7 @@ User.create(uid: 0,
 
 
 
-# prev version
+# Users with content
 
 User.create(uid: 1, id: 8, provider: 'google_oauth2', login: 'lgoddard@ualberta.ca', is_admin:1, email:'lgoddard@ualberta.ca', name:'Lisa Goddard', is_email_publishable: 0);
 User.create(uid: 2, id: 9, provider: 'google_oauth2', login: 'amy.dyrbye@gmail.com', is_admin:1, email:'amy.dyrbye@gmail.com', name:'Amy Dyrbye', is_email_publishable: 0);

@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 	validates_presence_of :uid, :provider
   validates_uniqueness_of :uid, :scope => :provider
 
-	devise :omniauthable, :omniauth_providers => [:google_oauth2, :twitter]
+	devise :omniauthable, :omniauth_providers => [:google_oauth2, :twitter, :yahoo]
 	
 
 	# def self.find_for_google_oauth2(access_token, signed_in_resource=nil)
@@ -30,6 +30,30 @@ class User < ActiveRecord::Base
 
 	def self.find_or_initialize_by_uid_provider(access_token, signed_in_resource = nil)
 		return User.find_or_initialize_by(uid: access_token.uid, provider: access_token.provider)
+	end
+
+	def self.find_by_login_provider(access_token, signed_in_resource = nil)
+
+		login = "";
+		case access_token[:provider]
+		when "google_oauth2"
+			login = access_token[:info][:email]
+		when "twitter"
+			login = access_token[:info][:nickname]
+		when "yahoo"
+			login = access_token[:info][:email]
+		end
+			
+		@user = User.find(login: login, provider: access_token.provider)
+
+		if @user
+			@user.update(uid: access_token.uid)
+			return @user
+		end
+
+		return nil
+
+
 	end
 
 end

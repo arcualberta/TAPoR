@@ -4,7 +4,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   
   def login_behaviour
 	  # You need to implement the method below in your model (e.g. app/models/user.rb)
-    @user = User.find_or_initialize_by_uid_provider(request.env["omniauth.auth"], current_user)
+    @user = User.find_or_initialize_by_uid_provider(request.env["omniauth.auth"], current_user) || User.find_by_login_provider(request.env["omniauth.auth"], current_user)
 
     if @user and @user.persisted?
       update_user()     
@@ -32,9 +32,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   private
 
     def update_user
-      @user.name = request.env["omniauth.auth"][:info][:name];
-      @user.image_url = request.env["omniauth.auth"][:info][:image];
-      @user.save
+      @user.update({
+        name: request.env["omniauth.auth"][:info][:name],
+        image_url: request.env["omniauth.auth"][:info][:image]
+      })
     end
 
 end
