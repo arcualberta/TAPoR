@@ -18,6 +18,7 @@ class Api::AttributeTypesController < ApplicationController
 						name: safe_params[:name],
 						possible_values: safe_params[:possible_values],
 						is_multiple: safe_params[:is_multiple]
+						is_required: safe_params[:is_required]
 					})
 					@attribute.save
 					format.json { render json: @attribute, status: :created }
@@ -41,6 +42,6 @@ class Api::AttributeTypesController < ApplicationController
 	private
 
 		def safe_params
-			params.require(:attribute_type).permit(:name, :possible_values, :is_multiple)
+			params.require(:attribute_type).permit(:name, :possible_values, :is_multiple, :is_required)
 		end
 end

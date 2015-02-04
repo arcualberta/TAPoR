@@ -8,6 +8,7 @@ app.controller('AttributesNewCtrl', ['$scope', '$http' , function($scope, $http)
 	$scope.possible_values.push("");
 	$scope.data.possible_values = "";  
 	$scope.data.is_multiple = false;
+	$scope.data.is_required = false;
   
 	$scope.addPossibleValue = function() {
 		$scope.possible_values.push("");

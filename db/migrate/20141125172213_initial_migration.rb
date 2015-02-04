@@ -147,6 +147,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.string :name
   		t.string :possible_values
   		t.boolean :is_multiple, default: false
+      t.boolean :is_required, default: false
   		t.timestamps
   	end
 

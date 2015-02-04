@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "name"
     t.string   "possible_values"
     t.boolean  "is_multiple",     default: false
+    t.boolean  "is_required",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

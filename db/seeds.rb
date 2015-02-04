@@ -5,12 +5,9 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-AttributeType.create(name: "Background processing", possible_values: "Doesn't run in background|Not applicable|Runs in background", is_multiple: false);
-AttributeType.create(name: "Warning", possible_values: "Complex and difficult|Limited uses|Prototype|Still in development|Time consuming", is_multiple: true);
 
-
-
-User.create(id: 0,
+User.create(
+	id: 1,
 	uid: 0,
 	provider: "no_provider",
 	name: "TAPoR",
@@ -21,7 +18,8 @@ User.create(id: 0,
 )
 
 
-User.create(id: 1,
+User.create(
+	id: 2,
 	uid: "103834776938893478547",
 	provider: "google_oauth2",
 	name: "Omar Rodriguez-Arenas",
@@ -66,3 +64,10 @@ User.create(uid: 28, id: 569, provider: 'twitter', login: 'GBKB1', is_admin:0, e
 User.create(uid: 29, id: 646, provider: 'twitter', login: 'CLARIN_ES_LAB', is_admin:0, email:'iulatrl@upf.edu', name:'IULA-UPF CCC', is_email_publishable: 0);
 User.create(uid: 30, id: 698, provider: 'yahoo', login: 'zipzoog@yahoo.com', is_admin:0, email:'zipzoog@yahoo.com', name:'', is_email_publishable: 0);
 User.create(uid: 31, id: 705, provider: 'yahoo', login: 'mis_miz@hotmail.com', is_admin:0, email:'mis_miz@hotmail.com', name:'Shawnaughseey Bea', is_email_publishable: 0);
+
+
+# Attribute types
+
+AttributeType.create(name: "Background processing", possible_values: "Doesn't run in background|Not applicable|Runs in background", is_multiple: false);
+AttributeType.create(name: "Warning", possible_values: "Complex and difficult|Limited uses|Prototype|Still in development|Time consuming", is_multiple: true);
+
