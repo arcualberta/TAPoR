@@ -37,7 +37,7 @@ class ToolSerializer < ActiveModel::Serializer
         if (type[:is_multiple])
           model.push(val[:value].to_boolean)
         else
-          if val[:value] != nil
+          if val[:value] != nil and val[:value] != 0
 
             @attribute_value = AttributeValue.find(val[:value]);
 
