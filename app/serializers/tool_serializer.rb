@@ -38,7 +38,14 @@ class ToolSerializer < ActiveModel::Serializer
           model.push(val[:value].to_boolean)
         else
           if val[:value] != nil
-            model.push(AttributeValue.find(val[:value]))
+
+            @attribute_value = AttributeValue.find(val[:value]);
+
+            model.push({
+              id: @attribute_value[:id],
+              name: @attribute_value[:name],
+              index: @attribute_value[:index],
+            })
           else
             model.push({id: "?", name: ""})
           end
@@ -46,12 +53,23 @@ class ToolSerializer < ActiveModel::Serializer
       end
 
 
+
+      attribute_values = []
+      AttributeValue.where(attribute_type_id: type[:id]).each do |value|
+        attribute_values.push({
+          id: value[:id],
+          attribute_type_id: value[:attribute_type_id],
+          name: value[:name],
+          index: value[:index],
+        })
+      end
+
       current_type = {
         id: type[:id],
         name: type[:name],
         is_multiple: type[:is_multiple],
         is_required: type[:is_required],
-        attribute_values: AttributeValue.where(attribute_type_id: type[:id]).all,
+        attribute_values: attribute_values,
         model: model
       }
       result.push(current_type)
