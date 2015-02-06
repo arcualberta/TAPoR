@@ -25,8 +25,12 @@
           Browse <input type="file" fileread="data.image"/>
         </span>
         
-        <img src="{{data.image}}" id="imageContainer" width="450" alt="Image preview...">
-        <!-- <input type="text" class="form-control" id="inputEmail" placeholder="Image" ng-model="data.email"> -->
+        <div ng-switch="is_editing">
+          <img ng-switch-when="false" src="{{data.image}}" id="imageContainer" width="450" alt="Image preview...">  
+          <img ng-switch-when="true" src="{{data.image_url}}" id="imageContainer" width="450" alt="Image preview...">
+        </div>        
+
+        
           
         
         
