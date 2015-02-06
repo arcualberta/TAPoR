@@ -368,8 +368,8 @@ class Api::ToolsController < ApplicationController
 			image.format = "PNG";
 
 			# resize
-			finalWidth = 1170; # 900;
-			finalHeight = 500;
+			finalWidth = 550; # 900;
+			finalHeight = 440;
 			image.resize_to_fill!(finalWidth);
 
 			# crop
@@ -377,7 +377,8 @@ class Api::ToolsController < ApplicationController
 			image.write(path.to_s);
 
 			# thumb
-			thumbnail = image.thumbnail(image.columns*0.2, image.rows*0.2);
+			ratio = 0.5;
+			thumbnail = image.thumbnail(image.columns*ratio, image.rows*ratio);
 			thumbnailPath = File.join("public", "images", directory, @tool.id.to_s + "-thumb.png");
 			thumbnail.write(thumbnailPath.to_s);
 			path = File.join("images", directory, name)
@@ -409,45 +410,5 @@ class Api::ToolsController < ApplicationController
 					end
 				end
 			end
-
-			# if attribute_types
-				# attributes = attribute_types
-				# attributes.each do |attribute|
-				# 	# get attribute from database
-				# 	savedType = AttributeType.find(attribute[:id])
-				# 	valuesToSave = []
-				# 	if savedType
-				# 		# if exists check is multiple								
-				# 		if savedType.is_multiple?									
-				# 			if attribute[:model].length == attribute[:possible_values].length
-				# 				attribute[:model].each_index do |i|
-				# 					if attribute[:model][i]												
-				# 						valuesToSave.push(attribute[:possible_values][i])
-				# 					end
-				# 				end
-				# 			end
-				# 		else					
-				# 			valuesToSave.push(attribute[:model])
-				# 		end
-						
-				# 		possible = savedType.possible_values.split("|");
-				# 		should_save = true								
-				# 		valuesToSave.each do |newValue|								
-				# 			unless possible.include?(newValue)
-				# 				should_save = false										
-				# 				break
-				# 			end
-				# 		end	
-						
-				# 		if should_save									
-				# 			@tool_attribute = tool.tool_attributes.find_or_create_by(
-				# 				attribute_type_id: savedType.id,
-				# 			);
-				# 			@tool_attribute[:value] = valuesToSave.join("|")
-				# 			@tool_attribute.save()
-				# 		end
-				# 	end
-				# end 
-			# end
 		end
 end

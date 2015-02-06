@@ -112,10 +112,6 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
    
   $scope.data.tool_tags = {};
   $scope.data.tool_tags.tags = "";
-  
-  // $scope.data.comments = {};
-  // $scope.data.comments.pinned = [];
-  // $scope.data.comments.not_pinned = [];
   $scope.data.comments = [];
   $scope.data.managed_comments = {
   	"pinned": [],
@@ -379,18 +375,24 @@ app.controller('ToolsFeaturedCtrl', ['$scope', '$http', '$location', function($s
 
 	$http.get("/api/tools")
 	.success(function(data, status, headers, config){
-		$scope.tools = data		
+		var tools = data	
+		$http.get("/api/tools/featured")
+		.success(function(data, status, headers, config){
+			$scope.data.featured = data		
+
+			for( var i =tools.length - 1; i>=0; i--){
+				for( var j=0; j<$scope.data.featured.length; j++){
+					if(tools[i].id === $scope.data.featured[j].id){
+						tools.splice(i, 1);
+					}
+				}
+			}
+
+			$scope.tools = tools			
+		});
 	});
 
-	$http.get("/api/tools/featured")
-	.success(function(data, status, headers, config){
-		$scope.data.featured = data		
-
-		// $.each(data, function(i,v){
-		// 	console.log(v)
-		// 	$scope.data.featured.push(v.tool);
-		// })
-	});
+	
 
 	$scope.toolsListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
