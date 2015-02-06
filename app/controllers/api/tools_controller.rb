@@ -151,7 +151,8 @@ class Api::ToolsController < ApplicationController
 					end
 
 					# attributes
-					save_parameters(@tool, params[:attribute_types]);
+					# save_parameters(@tool, params[:attribute_types]);
+					save_parameters()
 
 					# image
 
@@ -286,7 +287,8 @@ class Api::ToolsController < ApplicationController
 						end
 
 						# attributes
-						save_parameters(@tool, params[:attribute_types]);
+						# save_parameters(@tool, params[:attribute_types]);
+						save_parameters()
 						
 						# image
 
@@ -384,45 +386,68 @@ class Api::ToolsController < ApplicationController
 
 		end
 
-		def save_parameters(tool, attribute_types)
-			if attribute_types
-				attributes = attribute_types
-				attributes.each do |attribute|
-					# get attribute from database
-					savedType = AttributeType.find(attribute[:id])
-					valuesToSave = []
-					if savedType
-						# if exists check is multiple								
-						if savedType.is_multiple?									
-							if attribute[:model].length == attribute[:possible_values].length
-								attribute[:model].each_index do |i|
-									if attribute[:model][i]												
-										valuesToSave.push(attribute[:possible_values][i])
-									end
-								end
-							end
-						else					
-							valuesToSave.push(attribute[:model])
+		def save_parameters()
+			tool_attributes = params[:tool_attributes]			
+			if tool_attributes
+				@tool.tool_attributes.destroy_all()
+				tool_attributes.each do |attribute|
+					puts ">>>>" + attribute.to_s
+					if attribute[:model] != nil
+						attribute[:model].each do |value|
+							saved_value = attribute[:is_multiple] ? value : value[:id];
+							puts "++++ "  + saved_value.to_s			 
+							@tool.tool_attributes.create({
+								attribute_type_id: attribute[:id],
+								value: saved_value
+							})							
 						end
-						
-						possible = savedType.possible_values.split("|");
-						should_save = true								
-						valuesToSave.each do |newValue|								
-							unless possible.include?(newValue)
-								should_save = false										
-								break
-							end
-						end	
-						
-						if should_save									
-							@tool_attribute = tool.tool_attributes.find_or_create_by(
-								attribute_type_id: savedType.id,
-							);
-							@tool_attribute[:value] = valuesToSave.join("|")
-							@tool_attribute.save()
-						end
+					else
+						@tool.tool_attributes.create({
+							attribute_type_id: attribute[:id],
+							value: nil
+						})							
 					end
-				end 
+				end
 			end
+
+			# if attribute_types
+				# attributes = attribute_types
+				# attributes.each do |attribute|
+				# 	# get attribute from database
+				# 	savedType = AttributeType.find(attribute[:id])
+				# 	valuesToSave = []
+				# 	if savedType
+				# 		# if exists check is multiple								
+				# 		if savedType.is_multiple?									
+				# 			if attribute[:model].length == attribute[:possible_values].length
+				# 				attribute[:model].each_index do |i|
+				# 					if attribute[:model][i]												
+				# 						valuesToSave.push(attribute[:possible_values][i])
+				# 					end
+				# 				end
+				# 			end
+				# 		else					
+				# 			valuesToSave.push(attribute[:model])
+				# 		end
+						
+				# 		possible = savedType.possible_values.split("|");
+				# 		should_save = true								
+				# 		valuesToSave.each do |newValue|								
+				# 			unless possible.include?(newValue)
+				# 				should_save = false										
+				# 				break
+				# 			end
+				# 		end	
+						
+				# 		if should_save									
+				# 			@tool_attribute = tool.tool_attributes.find_or_create_by(
+				# 				attribute_type_id: savedType.id,
+				# 			);
+				# 			@tool_attribute[:value] = valuesToSave.join("|")
+				# 			@tool_attribute.save()
+				# 		end
+				# 	end
+				# end 
+			# end
 		end
 end

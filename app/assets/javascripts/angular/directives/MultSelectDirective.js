@@ -6,27 +6,23 @@ app.directive("multselect", function() {
         				"		<ul>"+
         				"			<li class='checkbox' ng-repeat='value in values track by $index'>"+
         				"				<label>"+
-        				"					<input ng-model='model[$index]' name='name' value='value' type='checkbox'> {{value}}"+
+        				"					<input ng-model='model[$index]' name='name' value='value.id' type='checkbox'> {{value.name}} "+
         				"				</label>"+
         				"			</li>"+
         				"		</ul>"+
       					"	</div>"+
 					      "	<div ng-switch-when='false'>"+
-					      "		<select class='form-control' ng-model='model' ng-change='updateSelect()' ng-options='value for value in values'>"+					      
-					      "			<option selected value=''></option>"+
+					      "		<select ng-required={{isRequired}} class='form-control' ng-model='model[0]' ng-options='value.name for value in values track by value.id'>"+					      
+					      "			<option selected name=''></option>"+
 					      "		</select>"+
 					      "	</div>"+
 					    	"</div>",
 		scope : {
 			model : "=",
 			isMultiple : "=",
+			isRequired : "=",
 			name : "=",
 			values : "="
-		},
-		link : function(scope, elem, attrs) {
-			scope.updateSelect = function() {
-				scope.model = $(elem).find(":selected").text();;
-			}	
 		}
 	};
 })

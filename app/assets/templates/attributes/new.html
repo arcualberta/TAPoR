@@ -17,10 +17,10 @@
 					  	<!-- <input type="text" class="form-control" id="inputPossible" placeholder="Name" ng-model="data.name"> -->
 							
 					  	
-					  	<span ng-repeat='value in possible_values track by $index' >
+					  	<span ng-repeat='value in data.possible_values track by $index' >
 					  		<div class='row possible-value'>
 						  		<div class="col-sm-10">
-										<input type="text" class="form-control" id="inputPossible$index" placeholder="Value" ng-model="possible_values[$index]">
+										<input type="text" class="form-control" id="inputPossible$index" placeholder="Value" ng-model="data.possible_values[$index]">
 									</div>
 									
 									<div class="col-sm-2">

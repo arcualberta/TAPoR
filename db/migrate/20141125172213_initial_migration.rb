@@ -143,18 +143,26 @@ class InitialMigration < ActiveRecord::Migration
 
   	add_index :featured_tools, :tool_id
 
-  	create_table :attribute_types do |t|
+    create_table :attribute_types do |t|
   		t.string :name
-  		t.string :possible_values
+  		# t.string :possible_values
   		t.boolean :is_multiple, default: false
       t.boolean :is_required, default: false
   		t.timestamps
   	end
 
+    create_table :attribute_values do |t|
+      t.belongs_to :attribute_type
+      t.string :name
+      t.integer :index
+      t.timestamps
+    end
+
   	create_table :tool_attributes do |t|
   		t.belongs_to :tool
   		t.belongs_to :attribute_type
-  		t.string :value
+      # t.belongs_to :attribute_value;
+      t.integer :value
   		t.timestamps
   	end
 

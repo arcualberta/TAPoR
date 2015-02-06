@@ -15,9 +15,16 @@ ActiveRecord::Schema.define(version: 20141125172213) do
 
   create_table "attribute_types", force: true do |t|
     t.string   "name"
-    t.string   "possible_values"
-    t.boolean  "is_multiple",     default: false
-    t.boolean  "is_required",     default: false
+    t.boolean  "is_multiple", default: false
+    t.boolean  "is_required", default: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "attribute_values", force: true do |t|
+    t.integer  "attribute_type_id"
+    t.string   "name"
+    t.integer  "index"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -67,7 +74,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   create_table "tool_attributes", force: true do |t|
     t.integer  "tool_id"
     t.integer  "attribute_type_id"
-    t.string   "value"
+    t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

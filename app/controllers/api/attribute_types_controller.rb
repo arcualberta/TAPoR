@@ -9,18 +9,25 @@ class Api::AttributeTypesController < ApplicationController
 			format.json {render json: @attributes}
 		end
 	end
-
+	# XXX NEED TO REWRITE TO TAKE INTO ACCOUT ATTRIBUTE VALUES
 	def create
 		respond_to do |format|
 			AttributeType.transaction do
 				begin
-					@attribute = AttributeType.new({
+					@attribute = AttributeType.create({
 						name: safe_params[:name],
-						possible_values: safe_params[:possible_values],
-						is_multiple: safe_params[:is_multiple]
+						is_multiple: safe_params[:is_multiple],
 						is_required: safe_params[:is_required]
-					})
-					@attribute.save
+					});
+					
+					params[:possible_values].each do |value|
+						puts value;
+						@attribute.attribute_values.create({
+							name: value
+						})
+					end
+
+
 					format.json { render json: @attribute, status: :created }
 				rescue ActiveRecord::RecordInvalid
 					format.json { render json: @tool.errors, status: :unprocessable_entity }
@@ -42,6 +49,6 @@ class Api::AttributeTypesController < ApplicationController
 	private
 
 		def safe_params
-			params.require(:attribute_type).permit(:name, :possible_values, :is_multiple, :is_required)
+			params.require(:attribute_type).permit(:name, :is_multiple, :is_required)
 		end
 end

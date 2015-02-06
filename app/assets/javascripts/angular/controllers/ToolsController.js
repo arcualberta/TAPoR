@@ -123,9 +123,8 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   }
   
   $scope.data.is_approved = false;
-  $scope.data.image = "";
-
-  $scope.is_editing = false;
+  $scope.data.image = "";  
+  $scope.is_editing = $location.path().indexOf("edit") != -1;
   // var form = $("#tool_form");
   // form.validate();
 
@@ -215,73 +214,95 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
   // get attribute types
 
-  $scope.data.attribute_types = [];
-
-	$http.get("/api/attribute_types")
-	.success(function(data, status, headers, config){
-		$.each(data, function(i,val){
-			val.possible_values = val.possible_values.split('|');			
-			if (val.is_multiple) {
-				val.model = [];
-				$.each(val.possible_values, function(i, v){
-					val.model.push(false);
-				})
-				
-			} else {
-				val.model = null;
-			}
-			
-			
-			$scope.data.attribute_types.push(val);
-		});
-
-  $scope.is_editing = $location.path().indexOf("edit") != -1;
-
   if ($scope.is_editing) {
-  	// get values
 		$http.get('/api/tools/' + $routeParams.id)
 		.success(function(data, status, headers, config){
-			for (var i in data) {
-				if (data.hasOwnProperty(i)) {
-					$scope.data[i] = data[i];					
-				}
-			}	
+			console.log(data)
+			$scope.data= data;
+			// add model to each attribute value
 
-			// fix tags
+		});	
 
-			$scope.data.tool_tags.tags = [];
-			$.each($scope.data.tags, function(i, v){				
-				$scope.data.tool_tags.tags.push(v.value)
-			});
 
-			// fix image
-			$scope.data.image = $scope.data.image_url;
+  } else {
+  	// Get empty attributes
+  	$scope.data.attribute_types = [];
+	  $http.get("/api/attribute_types")
+	  .success(function(data, status, headers, config){
+	  	console.log(data);
+	  	$scope.data.tool_attributes = data;
+	  	$.each($scope.data.tool_attributes, function(i, v){
+	  		var len = v.is_multiple ? v.attribute_values.length : 1 ;
+	  		$scope.data.tool_attributes[i].model = [];
 
-			// fix attributes
-			for (var i=0; i < data.tool_attributes.length; ++i) {
-				var thisToolAttribute = data.tool_attributes[i];
-				for (var j=0; j<$scope.data.attribute_types.length; ++j) {
-					var thisAttribute = $scope.data.attribute_types[j];
-					if (thisToolAttribute.attribute_type_id == thisAttribute.id) {
-						if (thisAttribute.is_multiple) {
-							var values = thisToolAttribute.value.split("|");
-							for (var p=0; p<values.length; ++p) {
-								for (var q=0; q<thisAttribute.possible_values.length; ++q) {	
-									if (values[p] == thisAttribute.possible_values[q]) {
-										thisAttribute.model[q] = true;
-										break;
-									}
-								}
-							}
-						} else {
-							thisAttribute.model = thisToolAttribute.value;
-						}
-						break;
-					}
-				}
-			}
+	  		if (v.is_multiple) {
+	  			for (var j=0; j< len; ++j) {
+	  				$scope.data.tool_attributes[i].model.push(false)	
+	  			} 
+	  		} else {
+	  			$scope.data.tool_attributes[i].model.push({id: "", name: ""})	
+	  		}
+	  	})
+	  });
+  }
 
-		});
+
+  
+
+
+
+
+ //  
+
+ //  if ($scope.is_editing) {
+ //  	// get values
+	// 	$http.get('/api/tools/' + $routeParams.id)
+	// 	.success(function(data, status, headers, config){
+	// 		for (var i in data) {
+	// 			if (data.hasOwnProperty(i)) {
+	// 				$scope.data[i] = data[i];					
+	// 			}
+	// 		}	
+
+	// 		// fix tags
+
+	// 		$scope.data.tool_tags.tags = [];
+	// 		$.each($scope.data.tags, function(i, v){				
+	// 			$scope.data.tool_tags.tags.push(v.value)
+	// 		});
+
+	// 		// fix image
+	// 		$scope.data.image = $scope.data.image_url;
+
+	// 		// fix attributes
+	// 		for (var i=0; i < data.tool_attributes.length; ++i) {
+	// 			var thisToolAttribute = data.tool_attributes[i];
+	// 			for (var j=0; j<$scope.data.attribute_types.length; ++j) {
+	// 				var thisAttribute = $scope.data.attribute_types[j];
+	// 				if (thisToolAttribute.attribute_type_id == thisAttribute.id) {
+	// 					if (thisAttribute.is_multiple) {
+	// 						var values = thisToolAttribute.value.split("|");
+	// 						for (var p=0; p<values.length; ++p) {
+	// 							for (var q=0; q<thisAttribute.possible_values.length; ++q) {	
+	// 								if (values[p] == thisAttribute.possible_values[q]) {
+	// 									thisAttribute.model[q] = true;
+	// 									break;
+	// 								}
+	// 							}
+	// 						}
+	// 					} else {
+	// 						thisAttribute.model = thisToolAttribute.value;
+	// 					}
+	// 					break;
+	// 				}
+	// 			}
+	// 		}
+
+	// 	});
+
+
+
+	// });
 
 		// get comments
 		
@@ -303,11 +324,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			});
 		});
 
-  }
-
-	});
-
-
+  
 	$scope.deleteTool = function(id) {
 		$http.delete("/api/tools/"+id)
 		.success(function(data, status, headers, config){
@@ -320,16 +337,17 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   	
 
   	if ($('#tool_form')[0].checkValidity()) {
-			// var fd = new FormData();
+			
 
-			// for (var i in $scope.data) {
-			// 	if ($scope.data.hasOwnProperty(i)) {				
-			// 		fd.append(i, $scope.data[i])
-			// 	}
-			// }
+  		$.each($scope.data.tool_attributes, function(i,v){
+  			if (!v.is_multiple) {
+
+  			}
+  		})
+
 
 			if ($scope.is_editing) {
-				$scope.id = $routeParams.toolId;
+				$scope.id = $routeParams.id;
 				$http.patch('/api/tools/' + $scope.id, $scope.data)
 				.success(function(data, status, headers, config){
 					$location.path('/tools/' + data.id);

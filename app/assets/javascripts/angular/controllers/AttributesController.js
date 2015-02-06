@@ -3,26 +3,25 @@
 app.controller('AttributesNewCtrl', ['$scope', '$http' , function($scope, $http) {
   
 	$scope.data = {};
-	$scope.data.name = "";
-	$scope.possible_values = [];
-	$scope.possible_values.push("");
-	$scope.data.possible_values = "";  
+	$scope.data.name = "";	
+	$scope.data.possible_values = [];  
+	$scope.data.possible_values.push("");
 	$scope.data.is_multiple = false;
 	$scope.data.is_required = false;
   
 	$scope.addPossibleValue = function() {
-		$scope.possible_values.push("");
+		$scope.data.possible_values.push("");
 	}
 
 	$scope.removeValueAt = function(index) {
-		$scope.possible_values.splice(index, 1);
-		if ($scope.possible_values.length == 0) {
+		$scope.data.possible_values.splice(index, 1);
+		if ($scope.data.possible_values.length == 0) {
 			$scope.addPossibleValue();		
 		}
 	}
 
   $scope.createAttribute = function() {
- 		$scope.data.possible_values = $scope.possible_values.join('|');
+ 		// $scope.data.possible_values = $scope.possible_values.join('|');
 		$http.post("/api/attribute_types#create", $scope.data)
 		.success(function(data, status, headers, config) {
 			console.log("success")

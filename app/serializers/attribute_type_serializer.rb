@@ -1,3 +1,4 @@
 class AttributeTypeSerializer < ActiveModel::Serializer
-  attributes :id, :name, :possible_values, :is_multiple
+  attributes :id, :name, :is_multiple, :is_required
+  has_many :attribute_values
 end
