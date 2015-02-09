@@ -368,8 +368,8 @@ class Api::ToolsController < ApplicationController
 			image.format = "PNG";
 
 			# resize
-			finalWidth = 550; # 900;
-			finalHeight = 440;
+			finalWidth = 240;#550; # 900;
+			finalHeight = 190;#440;
 			image.resize_to_fill!(finalWidth);
 
 			# crop

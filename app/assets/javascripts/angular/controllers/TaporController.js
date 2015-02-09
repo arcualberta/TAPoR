@@ -15,5 +15,19 @@ app.controller('TaporMainCtrl',['$scope', '$http', function($scope, $http){
 
 }]);
 
-app.controller('TaporIndexCtrl', ['$scope', function($scope) {
+app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
+
+	$scope.featured = []
+
+	$http.get('/api/tools/featured')
+	.success(function(data, status, headers, config) {
+		var featured = data;
+
+		if (featured.length == 0) {
+			// get random tools
+		}
+
+		$scope.featured = featured;
+	});
+
 }]);

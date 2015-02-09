@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     get 'tags/search', to: 'tags#search'
     post 'tools/featured', to: 'tools#featured_edit'
     get 'tools/featured', to: 'tools#featured'
+    get 'tool_lists/related/:id', to: 'tool_lists#related'
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
     # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'
 

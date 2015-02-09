@@ -1,0 +1,68 @@
+<div ng-controller='ToolsDetailCtrl' class='tapor-container'>
+  <div class='row'>
+	  <form class="form-horizontal" role="form">
+
+      <!-- image -->
+
+      <div class="form-group">
+        <div class='class="col-sm-7'>
+          <img src='{{data.image_url}}'>
+        </div>
+      </div>
+
+
+    <!-- name -->
+
+      <div class="form-group">
+        <label for="inputStars" class="col-sm-2 control-label"></label>
+        <div class="col-sm-5">
+          <label> 
+            {{data.name}}
+          </label>
+        </div>        
+      </div>  
+
+    <!-- description -->
+
+
+
+	  	<!-- stars -->
+
+			<div class="form-group">
+	      <label for="inputStars" class="col-sm-2 control-label">Rating</label>
+	      <div class="col-sm-5 rating">
+	        <div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="rateFunction(data.tool_ratings[0].stars)" max="5"></div>
+	      </div>
+	    </div>  
+
+    <!-- tags -->
+
+    <div class="form-group">
+      <label for="inputTags" class="col-sm-2 control-label">Tags</label>
+      <div class="col-sm-5">
+        <!-- <input type="text" class="form-control" id="inputTags" placeholder="Tags" ng-model="data.tool_tags.
+        tags"> -->
+        <div selectize="tag_config" options='tag_options' id="inputTags" ng-model="data.tool_tags.tags"></div>
+      </div>
+    </div>
+
+    <!-- comment -->
+
+    <div class="form-group">
+      <label for="inputComment" class="col-sm-2 control-label">Comment</label>
+      <div class="col-sm-5  ">
+        <textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.comments[0].content"></textarea>
+      </div>
+    </div>
+		<div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <a ng-click="updateToolUserDetails()" class="btn btn-success">Save</a>
+        <!-- <a ng-click="addToList(data.id)" class="btn btn-info">Add to list</a> -->
+        <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.id}}" role="button">Edit</a>
+      </div>
+    </div>
+
+	  </form>
+  </div>
+
+</div>

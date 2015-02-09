@@ -1,5 +1,5 @@
 class ToolSerializer < ActiveModel::Serializer
-	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url, :star_average, :thumb_url, :tool_attributes
+	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url, :star_average, :thumb_url, :tool_attributes, :global_tags
   has_many :tool_ratings
  	has_many :tags, through: :tool_tags
  	has_many :comments
@@ -14,9 +14,19 @@ class ToolSerializer < ActiveModel::Serializer
  		object.tags.joins(:tool_tags).where(tool_tags: {user_id: current_user})		
 	end
 
+  def global_tags
+    result = [];
+    
+    object.tags.each do |tag|
+      result.push(tag.value)
+    end
+
+    return result
+  end
+
 	def comments
 		if @options[:include_comments]
-    	object.comments
+    	object.comments.where(is_hidden: false)
     else
     	object.comments.where(user_id: current_user)
     end

@@ -30,6 +30,18 @@ class Api::ToolListsController < ApplicationController
 		end
 	end
 	
+	def related
+		respond_to do |format|
+			result = [];
+			params[:limit] ||= 10000; #need to paginate
+			ToolListItem.where(tool_id: params[:id]).limit(params[:limit]).each do |item|
+				tool_list = ToolList.find(item[:tool_list_id]);
+				result.push(tool_list);
+			end
+			format.json { render json: result}			
+		end
+	end
+
 	def update
 		respond_to do |format|
 			ToolList.transaction do

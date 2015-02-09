@@ -41,6 +41,10 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   	
   }
 
+  $scope.rateFunction = function(obj) {
+  	console.log(obj);
+  }
+
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
@@ -61,24 +65,87 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 	.success(function(data, status, headers, config){
 		
 		$scope.is_editable = $scope.current_user.is_admin || $scope.current_user.id == data.user_id;
-		$scope.data.id = data.id;
-		$scope.data.name = data.name;
-		$scope.data.description = data.description
-		$scope.data.image_url = data.image_url;
-		$scope.data.tool_ratings = data.tool_ratings;
-		$scope.data.comments = data.comments;
-		
+		$scope.data = data;
 
-		$scope.data.tool_tags = {};
-		$scope.data.tool_tags.tags = "";
 		if (data.tags && data.tags.length > 0) {
 			var tags = [];
 			$.each(data.tags, function(i, v){
 				tags.push(v.value);
 			});
-			$scope.data.tool_tags.tags = tags;			
+			$scope.data.tags = tags;			
 		}
 
+		// Attributes
+
+		attributes = [];
+		console.log(data.tool_attributes)
+		$.each(data.tool_attributes, function(i, v){
+
+			var need_to_add = false;
+			var current_attribute = {
+				name: v.name,
+				value: "",
+			};			
+			
+			if (v.is_multiple) {
+				if (v.model && v.model.length) {
+					var values = [];
+					$.each(v.model, function(j, att){
+						if (att) {
+							need_to_add = true;
+							values.push(v.attribute_values[j].name)
+						}
+					});
+					if (need_to_add) {
+						current_attribute.value = values.join(",");
+					}
+				}
+			} else {
+				if (v.model && v.model.length) {
+					current_attribute.value = v.model[0].name
+					need_to_add = true;
+				}
+			}
+
+			if (need_to_add) {
+				attributes.push(current_attribute);
+			}
+
+		});
+
+		$scope.data.tool_attributes = attributes;
+
+		// comments
+
+		if (data.comments && data.comments.length) {
+			var new_comments = {
+				pinned: [],
+				not_pinned: []
+			}
+			$.each(data.comments, function(i,v){
+				if (v.is_pinned) {
+					new_comments.pinned.push(v);
+				} else {
+					new_comments.not_pinned.push(v);
+				}
+			});
+
+			// sort comments
+
+			$scope.data.comments = new_comments;
+
+
+
+		}
+
+
+
+	});
+
+	$http.get('/api/tool_lists/related/' + $routeParams.id + '?limit=4')
+	.success(function(data, status, headers, config) {
+		$scope.data.related_lists = data;
+		console.log(data);
 	});
 
 	$scope.updateToolUserDetails = function() {
@@ -335,11 +402,11 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   	if ($('#tool_form')[0].checkValidity()) {
 			
 
-  		$.each($scope.data.tool_attributes, function(i,v){
-  			if (!v.is_multiple) {
+  		// $.each($scope.data.tool_attributes, function(i,v){
+  		// 	if (!v.is_multiple) {
 
-  			}
-  		})
+  		// 	}
+  		// })
 
 
 			if ($scope.is_editing) {

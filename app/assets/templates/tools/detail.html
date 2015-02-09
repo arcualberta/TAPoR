@@ -1,68 +1,237 @@
 <div ng-controller='ToolsDetailCtrl' class='tapor-container'>
-  <div class='row'>
-	  <form class="form-horizontal" role="form">
 
-      <!-- image -->
+	<div class="row">
+		<!-- left content -->
+		<div class="col-md-9">
+			<!-- tool main content -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="media">
+  					<div class="media-left">
+							<img src='{{data.image_url}}'>
+						</div>
+						<div class="media-body">
+							<div class="row">
+							<div class="col-md-10">
+								<h4 class="media-heading">{{data.name}}</h4>	
+							</div>
+							<div class="col-md-1">
+							 <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.id}}" role="button">Edit</a>
+							</div>
 
-      <div class="form-group">
-        <div class='class="col-sm-7'>
-          <img src='{{data.image_url}}'>
-        </div>
-      </div>
+								
+							</div>
+							{{data.description}}
+						</div>
+					</div>									
+				</div>
+			</div>
+			<!-- tool documentation attributes tags -->
+			<div class="row">
+				<div class="col-md-4">
+					
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Documentation</h3>
+						</div>
+						<div class="panel-body">
+							<dl>
+								<dt>
+									Creator
+								</dt>
+								<dd>
+									{{data.creators_name}}
+								</dd>
+								<dt>
+									Creator's site
+								</dt>
+								<dd>
+									{{data.creators_url}}
+								</dd>
+								<dt>
+									Creator's email
+								</dt>
+								<dd>
+									{{data.creators_email}}
+								</dd>
+							</dl>
+						</div>
+					</div>
+				
+				</div>
+				<div class="col-md-4">
+					
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Attributes</h3>
+						</div>
+						<div class="panel-body">
+							<ul>
+								<li ng-repeat="attribute in data.tool_attributes">
+									<label>{{attribute.name}}:</label> {{attribute.value}}
+								</li>									
+							</ul>
+						</div>
+					</div>
+				
+				</div>
+				<div class="col-md-4">
+				
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Tags</h3>
+						</div>
+						<div class="panel-body">
+							<dl>
+								<dt>
+									System wide tags
+								</dt>
+								<dd>
+									<span ng-repeat="tag in data.tags">{{tag}} </span>		
+								</dd>
+								<dt>
+									Your tags
+								</dt>
+								<dd>
+									<div selectize="tag_config" options='tag_options' id="inputTags" ng-model="data.tags"></div>		
+								</dd>
+							</dl>
+							
+							
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<!-- Tool appears on lists -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Lists this tool appears on</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div ng-repeat="related in data.related_lists" class="col-md-3">	
+									<div class="panel panel-default">
+										<div class="panel-heading">	
+											<a href="/tool_lists/{{related.id}}">{{related.name}}</a>
+										</div>
+										<div class="panel-body">
+											{{related.description}}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Comments -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Comments</h3>
+						</div>
+						<div class="panel-body">
+							<!-- pinned -->
+							<div ng-repeat="comment in data.comments.pinned">
+								<div class="media">
+			  					<div class="media-left">
+										<img src="{{comment.user.image_url}}" class="img-circle">
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">{{comment.user.name}}</h4>
+										{{comment.content}}
+									</div>
+								</div>															
+							</div>
+							<!-- chronological -->
+							<div ng-repeat="comment in data.comments.not_pinned">
+								<div class="media">
+			  					<div class="media-left">
+										<img src="{{comment.user.image_url}}" class="img-circle">
+									</div>
+									<div class="media-body">
+										<h4 class="media-heading">{{comment.user.name}}</h4>
+										{{comment.content}}
+									</div>
+								</div>	
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!-- right content -->
+		<div class="col-md-3">
+			<!-- Ratings -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Ratings</h3>
+						</div>
+						<div class="panel-body">
+							<dl>
+								<dt>
+									Overall rating
+								</dt>
+								<dd>								
+								<!-- overall rating -->							
+								Content pending
+								</dd>
+								<dt ng-if="current_user">
+									Your rating
+								</dt>
+								<dd ng-if="current_user">								
+								<!-- user rating -->							
+									<div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="rateFunction(data.tool_ratings[0].stars)" max="5"></div>
+								</dd>
+
+									
+								
+							</dl>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Recommended tools -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Recommended tools</h3>
+						</div>
+						<div class="panel-body">
+							Panel content
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- People also viewed -->
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">People also viewed</h3>
+						</div>
+						<div class="panel-body">
+							Panel content
+						</div>
+					</div>
+				</div>
+			</div>
 
 
-    <!-- name -->
+		</div>
+	</div>
 
-      <div class="form-group">
-        <label for="inputStars" class="col-sm-2 control-label"></label>
-        <div class="col-sm-5">
-          <label> 
-            {{data.name}}
-          </label>
-        </div>        
-      </div>  
-
-    <!-- description -->
-
-
-
-	  	<!-- stars -->
-
-			<div class="form-group">
-	      <label for="inputStars" class="col-sm-2 control-label">Rating</label>
-	      <div class="col-sm-5 rating">
-	        <div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="rateFunction(data.tool_ratings[0].stars)" max="5"></div>
-	      </div>
-	    </div>  
-
-    <!-- tags -->
-
-    <div class="form-group">
-      <label for="inputTags" class="col-sm-2 control-label">Tags</label>
-      <div class="col-sm-5">
-        <!-- <input type="text" class="form-control" id="inputTags" placeholder="Tags" ng-model="data.tool_tags.
-        tags"> -->
-        <div selectize="tag_config" options='tag_options' id="inputTags" ng-model="data.tool_tags.tags"></div>
-      </div>
-    </div>
-
-    <!-- comment -->
-
-    <div class="form-group">
-      <label for="inputComment" class="col-sm-2 control-label">Comment</label>
-      <div class="col-sm-5  ">
-        <textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.comments[0].content"></textarea>
-      </div>
-    </div>
-		<div class="form-group">
-      <div class="col-sm-offset-2 col-sm-10">
-        <a ng-click="updateToolUserDetails()" class="btn btn-success">Save</a>
-        <!-- <a ng-click="addToList(data.id)" class="btn btn-info">Add to list</a> -->
-        <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.id}}" role="button">Edit</a>
-      </div>
-    </div>
-
-	  </form>
-  </div>
 
 </div>
