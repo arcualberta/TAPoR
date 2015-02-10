@@ -25,11 +25,16 @@ app.directive("starRating", function() {
       };
       scope.toggle = function(index) {       
         scope.ratingValue = index + 1;
-        scope.onRatingSelected(scope.ratingValue);
+        if (scope.onRatingSelected) {
+          scope.onRatingSelected(scope.ratingValue);  
+        }
+        
       };
       scope.clear = function(){
         scope.ratingValue = 0;
-        scope.onRatingSelected(scope.ratingValue);
+        if (scope.onRatingSelected) {
+          scope.onRatingSelected(scope.ratingValue);  
+        }
       }
       scope.$watch("ratingValue", function(oldVal, newVal) {
         updateStars();

@@ -70,7 +70,6 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	}
 
 	$scope.deleteToolList = function(id) {
-		console.log("deleting " + id)
 		$http.delete("/api/tool_lists/"+id)
 		.success(function(data, status, headers, config){
 			$('#deleteModal').modal('hide');

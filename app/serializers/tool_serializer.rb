@@ -1,5 +1,5 @@
 class ToolSerializer < ActiveModel::Serializer
-	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url, :star_average, :thumb_url, :tool_attributes, :global_tags
+	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url, :star_average, :thumb_url, :tool_attributes, :global_tags, :star_average, :url, :last_updated
   has_many :tool_ratings
  	has_many :tags, through: :tool_tags
  	has_many :comments
@@ -10,15 +10,25 @@ class ToolSerializer < ActiveModel::Serializer
   	object.tool_ratings.where(user_id: current_user)
   end
 
- 	def tags
- 		object.tags.joins(:tool_tags).where(tool_tags: {user_id: current_user})		
+ 	def tags   
+ 		# object.tags.joins(:tool_tags).where(tool_tags: {user_id: current_user})		
+    result = [];
+    @tool_tags = ToolTag.where(tool_id: object[:id])
+
+    @tool_tags.each do |tool_tag|
+      result.push(Tag.find(tool_tag[:tag_id]))
+    end
+
+    return result;
 	end
 
   def global_tags
     result = [];
     
     object.tags.each do |tag|
-      result.push(tag.value)
+      unless result.include?(tag.value)
+        result.push(tag.value)
+      end
     end
 
     return result

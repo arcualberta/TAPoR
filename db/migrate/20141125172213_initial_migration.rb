@@ -29,6 +29,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.belongs_to :user
   		t.string :name
   		t.text :description
+      t.string :url
   		t.boolean :is_approved, default: false
   		t.string :creators_name
       t.string :creators_email
@@ -36,21 +37,22 @@ class InitialMigration < ActiveRecord::Migration
       t.string :image_url      
       t.float :star_average, default: 0
       t.boolean :is_hidden, default: false
+      t.date :last_updated;      
   		t.timestamps
   	end
 
   	add_index :tools, :user_id
 
-    create_table :categories do |t|
-      t.string :name
-      t.timestamps
-    end
+    # create_table :categories do |t|
+    #   t.string :name
+    #   t.timestamps
+    # end
 
-    create_table :tool_categories do |t|
-      t.belongs_to :tool
-      t.belongs_to :category
-      t.timestamps
-    end
+    # create_table :tool_categories do |t|
+    #   t.belongs_to :tool
+    #   t.belongs_to :category
+    #   t.timestamps
+    # end
 
   	create_table :tool_ratings do |t|
   		t.belongs_to :user

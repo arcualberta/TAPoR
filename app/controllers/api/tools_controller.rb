@@ -25,6 +25,44 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
+	def view
+		respond_to do |format|
+			if current_user 
+				@tool_use = ToolUseMetric.create({
+					user_id: current_user[:id],
+					tool_id: params[:id]
+				});	
+				format.json { render json: @tool_use}			
+			else
+				format.json { {status: :unauthorized} }
+			end
+		end
+	end
+
+	def also_viewed
+		respond_to do |format|
+			result = [];
+			initialMetrics = ToolUseMetric.where(tool_id: params[:id]);
+			initialMetrics.each do |metric|
+				@nextMetric = ToolUseMetric.where("user_id = ? AND created_at > ? ", metric[:user_id], metric[:created_at]).take();
+				if @nextMetric
+					@tool = Tool.find(@nextMetric.tool_id)
+					this_tool = {
+						name: @tool.name,
+						id: @tool.id,
+						thumb_url: @tool.image_url ? @tool.image_url.gsub(/\.png/, "-thumb.png") : ""
+					}
+					result.push(this_tool);
+					if result.length == 5
+						break;
+					end
+				end
+			end
+			format.json { render json: result};
+		end
+	end
+
+
 	def featured
 		@featured_tools = FeaturedTool.order(index: :asc)
 
@@ -85,11 +123,12 @@ class Api::ToolsController < ApplicationController
 
 					@tool = Tool.create({
 						name: safe_params[:name], 
+						url: safe_params[:url],
 						description: safe_params[:description],
 						creators_name: safe_params[:creators_name],
 						creators_email: safe_params[:creators_email],
 						creators_url: safe_params[:creators_url],
-						# is_approved: safe_params[:is_approved],
+						last_updated: Time.now(),
 						user_id: current_user[:id]
 					})								
 					
@@ -163,7 +202,7 @@ class Api::ToolsController < ApplicationController
 
 					
 
-
+					
 					format.json { render json: @tool, status: :created }
 				rescue ActiveRecord::RecordInvalid
 					format.json { render json: @tool.errors, status: :unprocessable_entity }
@@ -182,12 +221,18 @@ class Api::ToolsController < ApplicationController
 						# main tool content
 						@tool.name ||= safe_params[:name];
 						@tool.description ||= safe_params[:description];
+						@tool.url ||= safe_params[:url]
 						@tool.creators_name ||= safe_params[:creators_name];
 						@tool.creators_email ||= safe_params[:creators_email];
 						@tool.creators_url ||= safe_params[:creators_url];					
 						if current_user.is_admin?
 							@tool.is_approved ||= safe_params[:is_approved];
 						end
+						
+						if safe_params.length >0
+							@tool.last_updated = Time.now();
+						end
+
 						@tool.save()
 
 						# stars
@@ -287,9 +332,8 @@ class Api::ToolsController < ApplicationController
 						end
 
 						# attributes
-						# save_parameters(@tool, params[:attribute_types]);
 						save_parameters()
-						
+						# XXX update tool
 						# image
 
 						if params[:image] and params[:image] != "" and params[:image].include? "base64"						
@@ -298,7 +342,10 @@ class Api::ToolsController < ApplicationController
 								FileUtils::rm [@tool.image_url]
 							end
 							new_url_path = save_image(params[:image])
-							@tool.update(image_url: new_url_path)
+							@tool.image_url = new_url_path
+							@tool.last_updated = Time.now()
+							@tool.save()
+
 						end
 
 						# managed comments (changing pinned and hidden status)
@@ -352,7 +399,7 @@ class Api::ToolsController < ApplicationController
 		def safe_params
 			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
 			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url);
+			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url, :url);
 		end
 
 		def save_image(base_image)
@@ -391,6 +438,7 @@ class Api::ToolsController < ApplicationController
 			tool_attributes = params[:tool_attributes]			
 			if tool_attributes
 				@tool.tool_attributes.destroy_all()
+				@tool.update(last_updated: Time.now())				
 				tool_attributes.each do |attribute|
 					puts ">>>>" + attribute.to_s
 					if attribute[:model] != nil

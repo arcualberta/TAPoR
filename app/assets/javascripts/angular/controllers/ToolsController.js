@@ -29,6 +29,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   $scope.data.tool_tags.tags = "";
   
   $scope.data.comments = {}
+  $scope.data.also = [];
 
 	var tagLoad = function(query, callback) {
   	if (query != "") {
@@ -39,6 +40,14 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 	  	})	
   	}
   	
+  }
+
+  $scope.updateToolView = function() {
+  	$http.post('/api/tools/view/' + $scope.id)
+  	.success(function(data, status, headers, config){
+  		console.log(data)
+  	})
+
   }
 
   $scope.updateRateFunction = function(rating) {
@@ -53,7 +62,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
     $http.patch('/api/tools/' + $scope.id, data)
     .success(function(data, status, headers, config) {
-    	console.log("Rating selected - " + rating);
+    	// console.log("Rating selected - " + rating);
     	// update overall rating
     });
 
@@ -82,7 +91,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 		
 		$scope.is_editable = $scope.current_user.is_admin || $scope.current_user.id == data.user_id;
 		$scope.data = data;
-
+		console.log(data)
 		if (data.tags && data.tags.length > 0) {
 			var tags = [];
 			$.each(data.tags, function(i, v){
@@ -93,8 +102,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 		// Attributes
 
-		attributes = [];
-		console.log(data.tool_attributes)
+		attributes = [];		
 		$.each(data.tool_attributes, function(i, v){
 
 			var need_to_add = false;
@@ -154,6 +162,10 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 		}
 
+		$http.get('/api/tools/view/' + $scope.id)
+		.success(function(data, status, headers, config){
+			$scope.data.also = data;
+		});
 
 
 	});
@@ -161,7 +173,6 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 	$http.get('/api/tool_lists/related/' + $routeParams.id + '?limit=4')
 	.success(function(data, status, headers, config) {
 		$scope.data.related_lists = data;
-		console.log(data);
 	});
 
 	$scope.updateToolUserDetails = function() {
@@ -190,11 +201,13 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.data.creators_name = "";
   $scope.data.creators_email = "";
   $scope.data.creators_url = "";
+  $scope.data.url = "";
 
 	$scope.data.tool_ratings = [{"stars" : 0}];  
-   
-  $scope.data.tool_tags = {};
-  $scope.data.tool_tags.tags = "";
+  
+  // $scope.data.tool_tags = {};
+  // $scope.data.tool_tags.tags = "";
+  $scope.data.tags = [];
   $scope.data.comments = [];
   $scope.data.managed_comments = {
   	"pinned": [],
@@ -202,7 +215,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   }
   
   $scope.data.is_approved = false;
-  $scope.data.image = "";  
+  // $scope.data.image = "";  
   $scope.is_editing = $location.path().indexOf("edit") != -1;
   // var form = $("#tool_form");
   // form.validate();
@@ -280,7 +293,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
-    valueField: 'value',
+    valueField: 'id',
     labelField: 'value',
     searchField: 'value',
     sortField: 'value',
@@ -298,6 +311,13 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 		.success(function(data, status, headers, config){
 			console.log(data)
 			$scope.data= data;
+			if (data.tags && data.tags.length > 0) {
+			var tags = [];
+			$.each(data.tags, function(i, v){
+				tags.push(v.value);
+			});
+			$scope.data.tags = tags;			
+		}
 			// add model to each attribute value
 
 		});	

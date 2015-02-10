@@ -6,6 +6,8 @@ Rails.application.routes.draw do
     get 'users/current', to: 'users#current'
     get 'tags/search', to: 'tags#search'
     post 'tools/featured', to: 'tools#featured_edit'
+    post 'tools/view/:id', to: 'tools#view'
+    get 'tools/view/:id', to: 'tools#also_viewed'
     get 'tools/featured', to: 'tools#featured'
     get 'tool_lists/related/:id', to: 'tool_lists#related'
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'

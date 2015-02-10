@@ -13,7 +13,11 @@
 						<div class="media-body">
 							<div class="row">
 							<div class="col-md-10">
-								<h4 class="media-heading">{{data.name}}</h4>	
+								<h4 class="media-heading">{{data.name}}</h4>
+								<ul>
+									<li>Last updated: {{data.last_updated}}</li>
+									<li>Site: <a href="{{data.url}}" ng-click="updateToolView()">{{data.url}}</a></li>
+								</ul>	
 							</div>
 							<div class="col-md-1">
 							 <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.id}}" role="button">Edit</a>
@@ -87,13 +91,15 @@
 									System wide tags
 								</dt>
 								<dd>
-									<span ng-repeat="tag in data.tags">{{tag}} </span>		
+									<span ng-repeat="tag in data.global_tags track by $index">{{tag}} </span>		
 								</dd>
 								<dt>
 									Your tags
 								</dt>
 								<dd>
-									<div selectize="tag_config" options='tag_options' id="inputTags" ng-model="data.tags"></div>		
+									<!-- <div selectize="tag_config" options='tag_options' id="inputTags" ng-model="data.tags"></div>		 -->
+					        <selectize config="tag_config" options='tag_options' ng-model="data.tags"></selectize>
+
 								</dd>
 							</dl>
 							
@@ -223,7 +229,18 @@
 							<h3 class="panel-title">People also viewed</h3>
 						</div>
 						<div class="panel-body">
-							Panel content
+							<div class="row" ng-repeat="tool in data.also">
+								<div class="media">
+									<div class="media-right">
+										<a href="/tools/{{tool.id}}">
+											<img class="media-object" src="{{tool.thumb_url}}">
+										</a>
+									</div>
+									<div class="media-body">
+									<h5 class="media-heading">{{tool.name}}</h5>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

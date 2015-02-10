@@ -29,12 +29,6 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.datetime "updated_at"
   end
 
-  create_table "categories", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "comments", force: true do |t|
     t.integer  "user_id"
     t.integer  "tool_id"
@@ -81,13 +75,6 @@ ActiveRecord::Schema.define(version: 20141125172213) do
 
   add_index "tool_attributes", ["attribute_type_id"], name: "index_tool_attributes_on_attribute_type_id", using: :btree
   add_index "tool_attributes", ["tool_id"], name: "index_tool_attributes_on_tool_id", using: :btree
-
-  create_table "tool_categories", force: true do |t|
-    t.integer  "tool_id"
-    t.integer  "category_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "tool_list_items", force: true do |t|
     t.integer  "tool_list_id"
@@ -162,6 +149,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.integer  "user_id"
     t.string   "name"
     t.text     "description"
+    t.string   "url"
     t.boolean  "is_approved",    default: false
     t.string   "creators_name"
     t.string   "creators_email"
@@ -169,6 +157,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "image_url"
     t.float    "star_average",   default: 0.0
     t.boolean  "is_hidden",      default: false
+    t.date     "last_updated"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
