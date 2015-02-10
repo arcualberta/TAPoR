@@ -41,9 +41,25 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   	
   }
 
-  $scope.rateFunction = function(obj) {
-  	console.log(obj);
-  }
+  $scope.updateRateFunction = function(rating) {
+    
+    var data = {
+    	id: $scope.id,
+    	tool_ratings:[]
+    }
+    data.tool_ratings.push({
+    	stars: rating
+    });
+
+    $http.patch('/api/tools/' + $scope.id, data)
+    .success(function(data, status, headers, config) {
+    	console.log("Rating selected - " + rating);
+    	// update overall rating
+    });
+
+
+
+  };
 
 	$scope.tag_options = [];
   $scope.tag_config = {

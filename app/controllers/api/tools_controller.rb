@@ -180,18 +180,18 @@ class Api::ToolsController < ApplicationController
 					begin
 
 						# main tool content
-						@tool.name = safe_params[:name];
-						@tool.description = safe_params[:description];
-						@tool.creators_name = safe_params[:creators_name];
-						@tool.creators_email = safe_params[:creators_email];
-						@tool.creators_url = safe_params[:creators_url];					
+						@tool.name ||= safe_params[:name];
+						@tool.description ||= safe_params[:description];
+						@tool.creators_name ||= safe_params[:creators_name];
+						@tool.creators_email ||= safe_params[:creators_email];
+						@tool.creators_url ||= safe_params[:creators_url];					
 						if current_user.is_admin?
-							@tool.is_approved = safe_params[:is_approved];
+							@tool.is_approved ||= safe_params[:is_approved];
 						end
 						@tool.save()
 
 						# stars
-						if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
+						if params[:tool_ratings] and params[:tool_ratings].length > 0 #and params[:tool_ratings][0][:stars] != 0
 
 							if params[:tool_ratings][0][:stars] == 0
 								@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]

@@ -190,7 +190,7 @@
 								</dt>
 								<dd ng-if="current_user">								
 								<!-- user rating -->							
-									<div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="rateFunction(data.tool_ratings[0].stars)" max="5"></div>
+									<div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="updateRateFunction" max="5"></div>
 								</dd>
 
 									

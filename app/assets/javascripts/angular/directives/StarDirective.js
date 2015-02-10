@@ -12,7 +12,7 @@ app.directive("starRating", function() {
     scope : {
       ratingValue : "=",
       max : "=",
-      onRatingSelected : "&"
+      onRatingSelected : "="
     },
     link : function(scope, elem, attrs) {
       var updateStars = function() {        
@@ -25,15 +25,11 @@ app.directive("starRating", function() {
       };
       scope.toggle = function(index) {       
         scope.ratingValue = index + 1;
-        scope.onRatingSelected({
-          rating : index + 1
-        });
+        scope.onRatingSelected(scope.ratingValue);
       };
       scope.clear = function(){
         scope.ratingValue = 0;
-        scope.onRatingSelected({
-          rating : 0
-        });
+        scope.onRatingSelected(scope.ratingValue);
       }
       scope.$watch("ratingValue", function(oldVal, newVal) {
         updateStars();
