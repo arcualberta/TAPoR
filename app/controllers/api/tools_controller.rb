@@ -152,9 +152,9 @@ class Api::ToolsController < ApplicationController
 					end
 					
 					# tags
-					if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""			
-						
-						tags = params[:tool_tags][:tags];
+					# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""			
+					if params[:tags] and params[:tags].length > 0						
+						tags = params[:tags];
 						new_tag_ids = []
 
 						# check if tags exists otherwise create
@@ -272,8 +272,9 @@ class Api::ToolsController < ApplicationController
 						end
 
 						# tags
-						if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""
-							tags = params[:tool_tags][:tags];
+						# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""
+						if params[:tags] and params[:tags].length > 0		
+							tags = params[:tags];
 							tag_ids = []
 							tags.each do |tag|
 								@currentTag = Tag.find_or_create_by value: tag
