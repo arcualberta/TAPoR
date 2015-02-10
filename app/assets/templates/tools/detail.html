@@ -99,7 +99,7 @@
 								<dd>
 									<!-- <div selectize="tag_config" options='tag_options' id="inputTags" ng-model="data.tags"></div>		 -->
 					        <selectize config="tag_config" options='tag_options' ng-model="data.tags"></selectize>
-
+					        <button class="btn btn-primary" ng-click="updateTags()">Save tags</button>
 								</dd>
 							</dl>
 							
@@ -144,29 +144,41 @@
 						</div>
 						<div class="panel-body">
 							<!-- pinned -->
-							<div ng-repeat="comment in data.comments.pinned">
-								<div class="media">
-			  					<div class="media-left">
-										<img src="{{comment.user.image_url}}" class="img-circle">
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading">{{comment.user.name}}</h4>
-										{{comment.content}}
+							<div class="row" ng-repeat="comment in data.comments.pinned">
+								<div class="col-md-12">
+									<div class="media">
+				  					<div class="media-left">
+											<img src="{{comment.user.image_url}}" class="img-circle">
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">{{comment.user.name}}</h4>
+											{{comment.content}}
+										</div>
 									</div>
 								</div>															
 							</div>
 							<!-- chronological -->
-							<div ng-repeat="comment in data.comments.not_pinned">
-								<div class="media">
-			  					<div class="media-left">
-										<img src="{{comment.user.image_url}}" class="img-circle">
-									</div>
-									<div class="media-body">
-										<h4 class="media-heading">{{comment.user.name}}</h4>
-										{{comment.content}}
-									</div>
-								</div>	
+							<div class="row" ng-repeat="comment in data.comments.not_pinned">
+								<div class="col-md-12">
+									<div class="media">
+				  					<div class="media-left">
+											<img src="{{comment.user.image_url}}" class="img-circle">
+										</div>
+										<div class="media-body">
+											<h4 class="media-heading">{{comment.user.name}}</h4>
+											{{comment.content}}
+										</div>
+									</div>	
+								</div>
 							</div>
+
+<!-- 							<div class="row">
+								<div class="col-md-12">
+									<label>Your comment</label>
+									<textarea class="vertical-text-area" rows="3" id="inputComment" ng-model="data.comments[0].content"></textarea>
+								</div>
+							</div> -->
+
 						</div>
 					</div>
 				</div>
@@ -196,7 +208,7 @@
 								</dt>
 								<dd ng-if="current_user">								
 								<!-- user rating -->							
-									<div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="updateRateFunction" max="5"></div>
+									<div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="updateRating" max="5"></div>
 								</dd>
 
 									

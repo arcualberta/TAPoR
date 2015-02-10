@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     get 'tags/search', to: 'tags#search'
     post 'tools/featured', to: 'tools#featured_edit'
     post 'tools/view/:id', to: 'tools#view'
+    patch 'tools/rate/:id', to: 'tools#update_rating'
+    patch 'tools/tags/:id', to: 'tools#update_tags'
     get 'tools/view/:id', to: 'tools#also_viewed'
     get 'tools/featured', to: 'tools#featured'
     get 'tool_lists/related/:id', to: 'tool_lists#related'

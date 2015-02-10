@@ -13,7 +13,7 @@ class ToolSerializer < ActiveModel::Serializer
  	def tags   
  		# object.tags.joins(:tool_tags).where(tool_tags: {user_id: current_user})		
     result = [];
-    @tool_tags = ToolTag.where(tool_id: object[:id])
+    @tool_tags = ToolTag.where(tool_id: object[:id], user_id: current_user[:id])
 
     @tool_tags.each do |tool_tag|
       result.push(Tag.find(tool_tag[:tag_id]))

@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags]
 	
 	def index
 		# @tools = Tool.all
@@ -166,6 +166,7 @@ class Api::ToolsController < ApplicationController
 						end
 
 						new_tag_ids.each do |ids|
+						
 							@tool_tag = @tool.tool_tags.create({
 								tag_id: ids,
 								user_id: current_user[:id]
@@ -213,20 +214,41 @@ class Api::ToolsController < ApplicationController
 	
 	end
 
+
+	def update_rating
+		respond_to do |format|
+			@tool_rating = @tool.tool_ratings.find_or_create_by(user_id: current_user[:id]);
+			if params[:stars] == 0
+				@tool_rating.destroy
+				format.json {render json: {status: "OK"}, status: :ok}
+			else
+				@tool_rating.update(stars: params[:stars]);
+				format.json { render json: @tool_rating, status: :ok }
+			end
+		end
+	end
+
+	def update_tags
+		respond_to do |format|
+			process_update_tags();
+			format.json {render json: {status: "OK"}, status: :ok}
+		end
+	end
+
 	def update
 			respond_to do |format|
 				Tool.transaction do
 					begin
 
 						# main tool content
-						@tool.name ||= safe_params[:name];
-						@tool.description ||= safe_params[:description];
-						@tool.url ||= safe_params[:url]
-						@tool.creators_name ||= safe_params[:creators_name];
-						@tool.creators_email ||= safe_params[:creators_email];
-						@tool.creators_url ||= safe_params[:creators_url];					
+						@tool.name = safe_params[:name];
+						@tool.description = safe_params[:description];
+						@tool.url = safe_params[:url]
+						@tool.creators_name = safe_params[:creators_name];
+						@tool.creators_email = safe_params[:creators_email];
+						@tool.creators_url = safe_params[:creators_url];					
 						if current_user.is_admin?
-							@tool.is_approved ||= safe_params[:is_approved];
+							@tool.is_approved = safe_params[:is_approved];
 						end
 						
 						if safe_params.length >0
@@ -273,49 +295,8 @@ class Api::ToolsController < ApplicationController
 
 						# tags
 						# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""
-						if params[:tags] and params[:tags].length > 0		
-							tags = params[:tags];
-							tag_ids = []
-							tags.each do |tag|
-								@currentTag = Tag.find_or_create_by value: tag
-								tag_ids.push(@currentTag)
-							end	
-							
-							@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
 
-
-							# adding new tags
-							tag_ids.each do |tag_id|
-								found = false;
-								@tool_tags.each do |tool_tag|
-									puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
-									if tool_tag.tag_id == tag_id.id
-										found = true;
-										break;
-									end
-								end
-								if !found
-									@test = @tool.tool_tags.create({
-										tag_id: tag_id.id,
-										user_id: current_user[:id]
-									});
-									@test.save
-								end
-							end
-
-							@tool_tags.each do |tool_tag|
-								found = false;
-								tag_ids.each do |tag_id|
-									if tool_tag.tag_id == tag_id.id
-										found = true
-										break					
-									end							
-								end
-								if !found
-									tool_tag.destroy()
-								end
-							end
-						end
+						process_update_tags();
 
 						# comment
 
@@ -433,6 +414,54 @@ class Api::ToolsController < ApplicationController
 
 			return path.to_s
 
+		end
+
+		def process_update_tags()
+			if params[:tags]
+				tags = params[:tags];
+				tag_ids = []
+				tags.each do |tag|
+					@currentTag = Tag.find_or_create_by value: tag
+					tag_ids.push(@currentTag)
+				end	
+				
+				@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
+
+
+				# adding new tags
+				tag_ids.each do |tag_id|
+					found = false;
+					@tool_tags.each do |tool_tag|
+						puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
+						if tool_tag.tag_id == tag_id.id
+							found = true;
+							break;
+						end
+					end
+					if !found
+						@test = @tool.tool_tags.create({
+							tag_id: tag_id.id,
+							user_id: current_user[:id]
+						});
+						@test.save
+					end
+				end
+
+				@tool_tags.each do |tool_tag|
+					found = false;
+					tag_ids.each do |tag_id|
+						if tool_tag.tag_id == tag_id.id
+							found = true
+							break					
+						end							
+					end
+					if !found
+						tool_tag.destroy()
+					end
+				end
+			else
+				@tool.tool_tags.where( user_id: current_user[:id]).destroy_all();
+			end
 		end
 
 		def save_parameters()

@@ -42,6 +42,11 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   	
   }
 
+
+  var tagChange = function(obj, arg) {
+  	console.log(obj + " " + arg);
+  }
+
   $scope.updateToolView = function() {
   	$http.post('/api/tools/view/' + $scope.id)
   	.success(function(data, status, headers, config){
@@ -50,25 +55,34 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
   }
 
-  $scope.updateRateFunction = function(rating) {
+  $scope.updateRating = function(rating) {
     
     var data = {
     	id: $scope.id,
-    	tool_ratings:[]
-    }
-    data.tool_ratings.push({
     	stars: rating
-    });
-
-    $http.patch('/api/tools/' + $scope.id, data)
+    }
+    
+    $http.patch('/api/tools/rate/' + $scope.id, data)
     .success(function(data, status, headers, config) {
-    	// console.log("Rating selected - " + rating);
+    	console.log("Rating selected - " + rating);
     	// update overall rating
     });
 
 
 
   };
+
+  $scope.updateTags = function() {
+  	var data = {
+  		id: $scope.id,
+  		tags: $scope.data.tags
+  	}
+
+  	$http.patch('/api/tools/tags/' + $scope.id, data)
+  	.success(function(data, status, headers, config){
+  		console.log("saved")
+  	});
+  }
 
 	$scope.tag_options = [];
   $scope.tag_config = {
@@ -81,7 +95,10 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
     allowEmptyOption: false,
     preload: true,
     load: tagLoad,
-    hideSelected: true
+    hideSelected: true,
+    // onInitialize: function(selectize){
+    // 	console.log(selectize)
+    // }
   };
 
 
@@ -90,15 +107,16 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 	.success(function(data, status, headers, config){
 		
 		$scope.is_editable = $scope.current_user.is_admin || $scope.current_user.id == data.user_id;
-		$scope.data = data;
-		console.log(data)
+		$scope.data = data;		
 		if (data.tags && data.tags.length > 0) {
 			var tags = [];
 			$.each(data.tags, function(i, v){
 				tags.push(v.value);
 			});
-			$scope.data.tags = tags;			
+			$scope.data.tags = tags;						
 		}
+
+	
 
 		// Attributes
 
@@ -293,7 +311,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
-    valueField: 'id',
+    valueField: 'value',
     labelField: 'value',
     searchField: 'value',
     sortField: 'value',
@@ -308,8 +326,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
   if ($scope.is_editing) {
 		$http.get('/api/tools/' + $routeParams.id)
-		.success(function(data, status, headers, config){
-			console.log(data)
+		.success(function(data, status, headers, config){			
 			$scope.data= data;
 			if (data.tags && data.tags.length > 0) {
 			var tags = [];
@@ -447,6 +464,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
+				console.log($scope.data)
 				$http.patch('/api/tools/' + $scope.id, $scope.data)
 				.success(function(data, status, headers, config){
 					$location.path('/tools/' + data.id);
