@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     patch 'tools/comments/:id', to: 'tools#update_comments'
     get 'tools/view/:id', to: 'tools#also_viewed'
     get 'tools/featured', to: 'tools#featured'
+    get 'tools/suggested/:id', to: 'tools#suggested'
     get 'tool_lists/related/:id', to: 'tool_lists#related'
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
     # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'

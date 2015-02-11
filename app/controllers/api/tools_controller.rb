@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested]
 	
 	def index
 		# @tools = Tool.all
@@ -39,20 +39,40 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
+
+	def simple_tool(tool) 
+		this_tool = {
+			name: tool.name,
+			id: tool.id,
+			thumb_url: tool.image_url ? tool.image_url.gsub(/\.png/, "-thumb.png") : ""
+		}
+		return this_tool;
+	end
+
+
+	def suggested
+		respond_to do |format|
+			result = []
+			@tool.suggested_tools.each do |suggested|
+				result.push(simple_tool(Tool.find(suggested[:tool_id])));
+				if result.length == 5
+					break;
+				end			
+			end
+
+			format.json { render json: result};
+
+		end
+	end
+
 	def also_viewed
 		respond_to do |format|
 			result = [];
 			initialMetrics = ToolUseMetric.where(tool_id: params[:id]);
 			initialMetrics.each do |metric|
 				@nextMetric = ToolUseMetric.where("user_id = ? AND created_at > ? ", metric[:user_id], metric[:created_at]).take();
-				if @nextMetric
-					@tool = Tool.find(@nextMetric.tool_id)
-					this_tool = {
-						name: @tool.name,
-						id: @tool.id,
-						thumb_url: @tool.image_url ? @tool.image_url.gsub(/\.png/, "-thumb.png") : ""
-					}
-					result.push(this_tool);
+				if @nextMetric					
+					result.push(simple_tool(Tool.find(@nextMetric.tool_id)));
 					if result.length == 5
 						break;
 					end
@@ -217,15 +237,16 @@ class Api::ToolsController < ApplicationController
 
 	def update_rating
 		respond_to do |format|
-			@tool_rating = @tool.tool_ratings.find_or_create_by(user_id: current_user[:id]);
-			if params[:stars] == 0
-				@tool_rating.destroy
-				format.json {render json: {status: "OK"}, status: :ok}
-			else
-				@tool_rating.update(stars: params[:stars]);
-				format.json { render json: @tool_rating, status: :ok }
-			end
-		end
+			# @tool_rating = @tool.tool_ratings.find_or_create_by(user_id: current_user[:id]);
+			# if params[:stars] == 0
+			# 	@tool_rating.destroy
+			# 	format.json {render json: {status: "OK"}, status: :ok}
+			# else
+			# 	@tool_rating.update(stars: params[:stars]);
+			# 	format.json { render json: @tool_rating, status: :ok }
+			process_update_rating(params[:stars])
+			format.json {render json: {status: "OK"}, status: :ok}
+		end		
 	end
 
 	def update_tags
@@ -266,35 +287,35 @@ class Api::ToolsController < ApplicationController
 
 						# stars
 						if params[:tool_ratings] and params[:tool_ratings].length > 0 #and params[:tool_ratings][0][:stars] != 0
-
-							if params[:tool_ratings][0][:stars] == 0
-								@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
-								tool_rating_count = @user_tool_rating.length
-	 							if @user_tool_rating
-	 								@tool.star_average *= tool_rating_count
-	 								@tool.star_average -= @user_tool_rating.stars
-									@user_tool_rating.destroy()
-									if tool_rating_count != 1
-										@tool.star_average /= tool_rating_count - 1
-									else
-										@tool.star_average = 0;
-									end
-									@tool.save()
-								end
-							else 
-								tool_rating_count = @tool.tool_ratings.count
-								@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
-								puts params[:tool_ratings][0][:stars]
-								@tool_ratings.stars = params[:tool_ratings][0][:stars]
-								@tool_ratings.save()
-								puts "here"
-								puts @tool.star_average
-								puts tool_rating_count
-								@tool.star_average *= tool_rating_count
-								@tool.star_average += @tool_ratings.stars
-								@tool.star_average /= tool_rating_count + 1
-								@tool.save()
-							end
+							process_update_rating(params[:tool_ratings][0][:stars])
+							# if params[:tool_ratings][0][:stars] == 0
+							# 	@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
+							# 	tool_rating_count = @user_tool_rating.length
+	 					# 		if @user_tool_rating
+	 					# 			@tool.star_average *= tool_rating_count
+	 					# 			@tool.star_average -= @user_tool_rating.stars
+							# 		@user_tool_rating.destroy()
+							# 		if tool_rating_count != 1
+							# 			@tool.star_average /= tool_rating_count - 1
+							# 		else
+							# 			@tool.star_average = 0;
+							# 		end
+							# 		@tool.save()
+							# 	end
+							# else 
+							# 	tool_rating_count = @tool.tool_ratings.count
+							# 	@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
+							# 	puts params[:tool_ratings][0][:stars]
+							# 	@tool_ratings.stars = params[:tool_ratings][0][:stars]
+							# 	@tool_ratings.save()
+							# 	puts "here"
+							# 	puts @tool.star_average
+							# 	puts tool_rating_count
+							# 	@tool.star_average *= tool_rating_count
+							# 	@tool.star_average += @tool_ratings.stars
+							# 	@tool.star_average /= tool_rating_count + 1
+							# 	@tool.save()
+							# end
 
 
 
@@ -411,6 +432,18 @@ class Api::ToolsController < ApplicationController
 			return path.to_s
 
 		end
+
+		def process_update_rating(stars)
+			@tool_rating = @tool.tool_ratings.find_or_create_by(user_id: current_user[:id]);
+			if params[:stars] == 0		
+				@tool_rating.destroy				
+			else
+				@tool_rating.update(stars: params[:stars]);				
+			end
+			@tool.star_average = @tool.tool_ratings.average("stars");
+			@tool.save()
+		end
+
 
 		def process_update_comments()
 			if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""

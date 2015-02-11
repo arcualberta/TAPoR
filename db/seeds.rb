@@ -150,3 +150,31 @@ AttributeValue.create(id: 66, attribute_type_id: 1, name: "RDF")
 AttributeValue.create(id: 67, attribute_type_id: 1, name: "Sentiment Analysis")
 AttributeValue.create(id: 68, attribute_type_id: 1, name: "Sequence Analysis")
 AttributeValue.create(id: 69, attribute_type_id: 1, name: "Social Media Analysis")
+
+
+# Test tools
+
+Tool.create(id:1, user_id: 2, name: "Tool A", url:"http://omarrodriguez.org", is_approved: true, creators_name: "Omar Rodriguez-Arenas", creators_url: "http://omarrodriguez.org", creators_email: "orodrigu@ualberta.ca", image_url: "images/tools/seed/a.png", last_updated:"2015-02-10", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque faucibus neque ac aliquet scelerisque. Pellentesque quis rutrum metus. Etiam interdum gravida velit vitae maximus. Curabitur bibendum leo eu ligula blandit tristique. Aliquam dignissim posuere rhoncus. Ut elit erat, dapibus at massa vitae, pretium fermentum nisi. Proin vitae sollicitudin dui.");
+Tool.create(id:2, user_id: 2, name: "Tool B", url:"http://google.org", is_approved: true, creators_name: "Omar Rodriguez-Arenas", creators_url: "http://omarrodriguez.org", creators_email: "orodrigu@ualberta.ca", image_url: "images/tools/seed/b.png", last_updated:"2015-02-10", description: "Maecenas neque odio, dictum ac ullamcorper sed, imperdiet eget massa. In nec ex eget metus rutrum pellentesque. Quisque sed ex non augue tincidunt finibus in dictum diam. Integer in mi quis felis cursus molestie. Nunc leo mauris, auctor eu tellus at, consectetur luctus ligula. Phasellus mollis nec nunc eu vestibulum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Interdum et malesuada fames ac ante ipsum primis in faucibus. Phasellus feugiat pharetra tempor. Aliquam pretium ex eget est consectetur, ut condimentum urna pulvinar. Sed id risus hendrerit, lacinia nibh eu, pharetra odio. Aenean placerat ipsum diam, a placerat nunc viverra in.");
+Tool.create(id:3, user_id: 2, name: "Tool C", url:"http://slashdot.org", is_approved: true, creators_name: "Omar Rodriguez-Arenas", creators_url: "http://omarrodriguez.org", creators_email: "orodrigu@ualberta.ca", image_url: "images/tools/seed/c.png", last_updated:"2015-02-10", description: "Donec eleifend, risus sed tempus tincidunt, ex nisi cursus dui, in vulputate ante libero non risus. Donec et nibh id risus congue fringilla. Proin ornare turpis sagittis ante consectetur, sit amet commodo dui cursus. Donec pellentesque lectus id vulputate porttitor. Sed id imperdiet nisl, eget faucibus nisi. Integer at sapien sapien. Integer convallis enim sed dolor fringilla, eu rhoncus eros pulvinar. Integer iaculis ac lorem ac auctor. Fusce pharetra enim at nisl scelerisque ultrices. Ut fermentum metus id arcu varius suscipit. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis lectus sem, mattis in leo eu, lobortis vulputate ex.");
+Tool.create(id:4, user_id: 2, name: "Tool D", url:"http://www.ualberta.ca", is_approved: true, creators_name: "Omar Rodriguez-Arenas", creators_url: "http://omarrodriguez.org", creators_email: "orodrigu@ualberta.ca", image_url: "images/tools/seed/d.png", last_updated:"2015-02-10", description: "Pellentesque imperdiet convallis porta. Mauris varius, dolor et faucibus viverra, elit diam aliquam nunc, vitae pretium eros nunc eget dui. Donec quis dui vel massa fermentum lacinia vel eu nisi. Phasellus tortor nisi, iaculis id ante vel, consectetur scelerisque enim. Mauris viverra, lorem id varius convallis, magna libero ornare ipsum, quis porttitor odio lorem sit amet risus. Suspendisse nec orci sit amet tortor commodo dapibus. Donec egestas, risus et consectetur pellentesque, ante ex ornare diam, sed aliquam eros urna sit amet nisi. Nam quis urna vitae risus sodales egestas. Maecenas id odio libero. Suspendisse convallis, diam vitae posuere blandit, tellus nunc molestie elit, in lacinia velit magna sed eros. Etiam pharetra magna felis. Proin placerat tempus nulla, vitae lacinia quam semper eget. Maecenas vitae velit lectus. Donec aliquam ligula ac nisl lacinia, quis consectetur urna vehicula. Sed dignissim, purus ut faucibus volutpat, arcu neque viverra turpis, et ultricies orci dolor ac nunc. Sed lectus ligula, finibus vitae leo quis, elementum lobortis ante.");
+Tool.create(id:5, user_id: 2, name: "Tool E", url:"http://arc.arts.ualberta.ca", is_approved: true, creators_name: "Omar Rodriguez-Arenas", creators_url: "http://omarrodriguez.org", creators_email: "orodrigu@ualberta.ca", image_url: "images/tools/seed/e.png", last_updated:"2015-02-10", description: "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Integer venenatis nulla non arcu varius, a placerat dolor dignissim. Integer ac ullamcorper ligula, ac porta arcu. Vestibulum vestibulum dolor id arcu blandit vehicula. Nullam condimentum velit id bibendum luctus. Donec eu eros vestibulum, sodales elit at, tincidunt urna. Donec mollis aliquet massa ac ultrices. Duis molestie lorem ac leo cursus, et bibendum leo venenatis. Ut ornare risus ac tellus accumsan interdum eget non mi. Nunc cursus bibendum ex, sed consequat mi. In vestibulum fringilla ipsum in euismod. Quisque quam erat, sodales vitae porttitor quis, vehicula facilisis sem. Phasellus ut odio nisl. Aenean gravida quis urna ut laoreet.");
+
+
+Tag.create(id:1, value:"Tag 1");
+Tag.create(id:2, value:"Tag 2");
+Tag.create(id:3, value:"Tag 3");
+Tag.create(id:4, value:"Tag 4");
+Tag.create(id:5, value:"Tag 5");
+
+ToolTag.create(user_id: 2, tool_id: 1, tag_id: 1);
+ToolTag.create(user_id: 2, tool_id: 1, tag_id: 2);
+ToolTag.create(user_id: 2, tool_id: 2, tag_id: 1);
+ToolTag.create(user_id: 2, tool_id: 3, tag_id: 4);
+ToolTag.create(user_id: 2, tool_id: 4, tag_id: 5);
+
+ToolAttribute.create(tool_id: 1, attribute_type_id: 5, value: 21);
+ToolAttribute.create(tool_id: 2, attribute_type_id: 5, value: 25);
+ToolAttribute.create(tool_id: 2, attribute_type_id: 5, value: 23);
+ToolAttribute.create(tool_id: 2, attribute_type_id: 5, value: 22);
+ToolAttribute.create(tool_id: 2, attribute_type_id: 5, value: 25);

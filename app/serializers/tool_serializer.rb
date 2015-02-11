@@ -3,12 +3,24 @@ class ToolSerializer < ActiveModel::Serializer
   has_many :tool_ratings
  	has_many :tags, through: :tool_tags
  	has_many :comments
+  # has_many :suggested_tools
  	# has_many :tool_attributes
  	# has_many :attribute_types, through: :tool_attributes
 
   def tool_ratings
   	object.tool_ratings.where(user_id: current_user)
   end
+
+  # def suggested_tools
+  #   result = []
+
+  #   object.suggested_tools.each do |suggested|
+  #     tool = Tool.find(suggested.suggested_tool_id);
+  #     result.push(tool)
+  #   end
+
+  #   return result;
+  # end
 
  	def tags   
  		# object.tags.joins(:tool_tags).where(tool_tags: {user_id: current_user})		
@@ -101,11 +113,5 @@ class ToolSerializer < ActiveModel::Serializer
 
     return result
   end
-
-  # def attributes
-  # 	data = super
-  # 	data[:thumb_url] = object.image_url ? object.image_url.gsub(/\.png/, "-thumb.png") : "" ;  	
-  # 	return data
-  # end
 
 end

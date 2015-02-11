@@ -208,14 +208,14 @@
 								</dt>
 								<dd>								
 								<!-- overall rating -->							
-								Content pending
+								<div star-rating rating-value="data.star_average" max="5" is-interactive="false"></div>
 								</dd>
 								<dt ng-if="current_user">
 									Your rating
 								</dt>
 								<dd ng-if="current_user">								
 								<!-- user rating -->							
-									<div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="updateRating" max="5"></div>
+									<div star-rating rating-value="data.tool_ratings[0].stars" on-rating-selected="updateRating" max="5" is-interactive="true"></div>
 								</dd>
 
 									
@@ -231,10 +231,21 @@
 				<div class="col-md-12">
 					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h3 class="panel-title">Recommended tools</h3>
+							<h3 class="panel-title">Suggested tools</h3>
 						</div>
 						<div class="panel-body">
-							Panel content
+							<div class="row" ng-repeat="tool in data.suggested_tools">
+								<div class="media">
+									<div class="media-right">
+										<a href="/tools/{{tool.id}}">
+											<img class="media-object" src="{{tool.thumb_url}}">
+										</a>
+									</div>
+									<div class="media-body">
+									<h5 class="media-heading">{{tool.name}}</h5>
+									</div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
