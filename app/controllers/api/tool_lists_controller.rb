@@ -30,6 +30,22 @@ class Api::ToolListsController < ApplicationController
 		end
 	end
 	
+	def by_curator
+		respond_to do |format|
+			result = []
+			ToolList.where(user_id: params[:id], is_public: true).each do |list|
+				if (list[:id] != params[:exclude].to_i)
+					result.push({
+						id: list[:id],
+						name: list[:name],
+					})
+				end
+			end
+
+			format.json { render json: result}			
+		end
+	end
+
 	def related
 		respond_to do |format|
 			result = [];

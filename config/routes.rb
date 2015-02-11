@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'tools/featured', to: 'tools#featured'
     get 'tools/suggested/:id', to: 'tools#suggested'
     get 'tool_lists/related/:id', to: 'tool_lists#related'
+    get 'tool_lists/by_curator/:id', to: 'tool_lists#by_curator'
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
     # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'
 

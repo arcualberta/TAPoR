@@ -142,8 +142,15 @@ app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 			});
 		}
 		
+		$http.get('/api/tool_lists/by_curator/' + $scope.data.user.id + "?exclude=" + $scope.data.id)
+		.success(function(data, status, headers, config){
+			$scope.by_curator = data;
+			console.log(data);
+		});
 
 	});
+
+
 
 
 }]);	

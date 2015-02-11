@@ -24,7 +24,7 @@
 								<h4 class="media-heading">
 									{{item.tool.name}}			
 								</h4>										
-								<div star-rating rating-value="item.tool.star_average" max="5" is-interactive="false"></div>
+<!-- 								<div star-rating rating-value="item.tool.star_average" max="5" is-interactive="false"></div> -->
 								{{item.notes}}
 							</div>
 						</div>
@@ -45,10 +45,14 @@
 				<div class="col-md-12">
 					<div class="panel panel-default">
 					  <div class="panel-heading">
-					    <h3 class="panel-title">Other lists by</h3>
+					    <h3 class="panel-title">Other lists by {{data.user.name}}</h3>
 					  </div>
 					  <div class="panel-body">
-						Panel content	    
+							<ul>
+								<li ng-repeat="list in by_curator">
+									<a href="/tool_lists/{{list.id}}">{{list.name}}</a>
+								</li>
+							</ul>	    
 					  </div>
 					</div>
 				</div>
