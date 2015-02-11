@@ -1,108 +1,75 @@
 <div ng-controller='ListsDetailCtrl' class='tapor-container'>
-	
-	<div class="row">
-		<div class="col-sm-10">
-		<h1>{{data.name}}</h1>
-		</div>
-		<div class="col-sm-2">
-			<a ng-if="can_edit" href="/tool_lists/edit/{{data.id}}" class="btn btn-primary">Edit</a>
-		</div>
-	</div>
 
 	<div class="row">
-		<div class="col-sm-6">
-
+		<!-- left content -->
+		<div class="col-md-9">
 			<div class="panel panel-default">
 			  <div class="panel-heading">
-			    <h3 class="panel-title">Description</h3>
+			    <h3 class="panel-title">{{data.name}}</h3>
 			  </div>
 			  <div class="panel-body">
-			    {{data.description}}
+			  	<div class="well">
+			  		{{data.description}}
+			  	</div>
+			    
+			  	<div class="well" ng-repeat="item in data.tool_list_items">
+
+			  		<div class="row">
+			  		<div class="col-md-12">
+			  		<div class="media">	  					
+			  			<div class="media-left">
+								<img src='{{item.tool.thumb_url}}'>
+							</div>
+							<div class="media-body">							
+								<h4 class="media-heading">
+									{{item.tool.name}}			
+								</h4>										
+								<div star-rating rating-value="item.tool.star_average" max="5" is-interactive="false"></div>
+								{{item.notes}}
+							</div>
+						</div>
+						</div>	
+						</div>
+
+			  	</div>
+
 			  </div>
 			</div>
-
-			
 		</div>
-		<div class="col-sm-6">
 
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h3 class="panel-title">Curator</h3>
-			  </div>
-			  <div class="panel-body">
-			    <div class="row" ng-repeat="editor in data.tool_list_user_roles">
-			    	<div nf-if="editor.is_editor">
-			    		<img src="{{editor.user.image_url}}" class="img-circle">
-			    	 {{editor.user.name}}
-			    	</div>
-			    </div>
-			  </div>
+		<!-- right content -->
+
+		<div class="col-md-3">
+
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Other lists by</h3>
+					  </div>
+					  <div class="panel-body">
+						Panel content	    
+					  </div>
+					</div>
+				</div>
+			</div>
+		
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+					  <div class="panel-heading">
+					    <h3 class="panel-title">Related lists</h3>
+					  </div>
+					  <div class="panel-body">
+						Panel content	    
+					  </div>
+					</div>
+				</div>
 			</div>
 
-		</div>
-	</div>
-
-	<div class="row">
-		<div class="col-sm-12">
-
-			<div class="panel panel-default">
-			  <div class="panel-heading">
-			    <h3 class="panel-title">Tools</h3>
-			  </div>
-			  <div class="panel-body tool_list_panel" >
-			    <div class="row" ng-repeat="item in data.tool_list_items">
-			    	<div class="well col-sm-10 col-sm-offset-1" >
-			    		
-			    		<h3>
-			    			{{item.tool.name}}
-			    		</h3>
-
-			    		<img src="{{item.tool.thumb_url}}">
-			    		
-			    		<h3>
-			    			Average rating
-			    		</h3>
-
-			    		{{item.tool.star_average}}
-
-			    		<h3>
-			    			Description
-			    		</h3>
-
-			    		{{item.tool.description}}
-
-			    		<dl>
-				    		<dt>
-				    			Creator
-				    		</dt>
-									{{item.tool.creators_name}}				    			
-				    		<dt>
-				    		<dt>
-				    			Creator's email
-				    		</dt>
-									{{item.tool.creators_email}}				    			
-				    		<dt><dt>
-				    			Creator's website
-				    		</dt>
-									{{item.tool.creators_url}}				    			
-				    		<dt>
-			    		</dl>
-
-			    		<h3>Tags</h3>
-			    		<ul>
-			    		<li ng-repeat="tag in item.tool.tags">{{tag.value}}</li>
-			    		</ul>
-
-
-			    		<h3>Notes</h3>
-			    		{{item.notes}}
-			    	
-			    	</div>
-			    </div>
-			  </div>
-			</div>
 
 		</div>
+
 	</div>
 
 </div>

@@ -25,6 +25,7 @@ class ToolListSerializer < ActiveModel::Serializer
   	missing_content.tool = Tool.new({  		
   		name: "Content missing",
   		image_url: "images/tools/missing.png",  		
+      star_average: 0
   	})
 
   	object.tool_list_items.each do |item|

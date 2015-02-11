@@ -128,7 +128,7 @@ app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 	$http.get('/api/tool_lists/' + list_id)
 	.success(function(data, status, headers, config){
 		$scope.data = data;
-		
+		console.log(data);
 		$scope.can_edit = $scope.current_user.is_admin;
 
 		if (! $scope.can_edit) {

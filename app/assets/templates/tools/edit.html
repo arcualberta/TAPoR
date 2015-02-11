@@ -128,36 +128,37 @@
       <div class="form-group">
         <label for="inputCreatorsURL" class="col-sm-2 control-label">Comments</label>
 
-      <!-- not pinned -->
-      <div class="col-sm-3">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            Chronological
-          </div>
-          <div class="panel-body">
-            <ul class="draggable_place" as-sortable="commentDragListeners" ng-model="data.managed_comments.not_pinned">
-              <li class="column_sortable" ng-repeat="comment in data.managed_comments.not_pinned" as-sortable-item>
-                <div as-sortable-item-handle>
-                  <div>
-                    <img src="{{comment.user.image_url}}" class="img-circle">
+        <!-- not pinned -->
+        <div class="col-sm-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Chronological
+            </div>
+            <div class="panel-body">
+              <ul class="draggable_place" as-sortable="commentDragListeners" ng-model="data.managed_comments.not_pinned">
+                <li class="column_sortable" ng-repeat="comment in data.managed_comments.not_pinned" as-sortable-item>
+                  <div as-sortable-item-handle>
+                    <div>
+                      <img src="{{comment.user.image_url}}" class="img-circle">
+                    </div>
+                    <div>
+                      {{comment.user.name}}
+                    </div>
+                    <div>
+                      {{comment.content}}
+                    </div>
+                    <div>
+                      <label>
+                        Hide <input type="checkbox" name="is_hidden" value="is_hidden" id="inputIsBlocked" ng-model="comment.is_hidden"> 
+                      </label>
+                    </div>            
                   </div>
-                  <div>
-                    {{comment.user.name}}
-                  </div>
-                  <div>
-                    {{comment.content}}
-                  </div>
-                  <div>
-                    <label>
-                      Hide <input type="checkbox" name="is_hidden" value="is_hidden" id="inputIsBlocked" ng-model="comment.is_hidden"> 
-                    </label>
-                  </div>            
-                </div>
-              </li>
-            </ul>
-          </div>
-          </div>
-      </div>
+                </li>
+              </ul>
+            </div>
+            </div>
+        </div>
+      
       <!-- pinned -->
       <div class="col-sm-3">
         <div class="panel panel-default">
@@ -202,6 +203,7 @@
     </div>
    
 
+    <!-- recommended -->
 
     <!-- end -->
 
