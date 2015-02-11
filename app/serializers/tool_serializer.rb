@@ -1,5 +1,5 @@
 class ToolSerializer < ActiveModel::Serializer
-	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url, :star_average, :thumb_url, :tool_attributes, :global_tags, :star_average, :url, :last_updated
+	attributes :id, :user_id, :name, :description, :is_approved, :image_url, :creators_name, :creators_email, :creators_url, :star_average, :thumb_url, :tool_attributes, :global_tags, :star_average, :url, :last_updated, :user_comment
   has_many :tool_ratings
  	has_many :tags, through: :tool_tags
  	has_many :comments
@@ -32,6 +32,10 @@ class ToolSerializer < ActiveModel::Serializer
     end
 
     return result
+  end
+
+  def user_comment
+    object.comments.where(user_id: current_user).take()
   end
 
 	def comments

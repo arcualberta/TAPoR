@@ -17,6 +17,7 @@ class Tool < ActiveRecord::Base
 	has_many :tool_list_items
 	has_many :tool_lists, through: :tool_list_items
 	has_one :featured_tool
+	has_many :suggested_tools
 
 	accepts_nested_attributes_for :tool_ratings
 end

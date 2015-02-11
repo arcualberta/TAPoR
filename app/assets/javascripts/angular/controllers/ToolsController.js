@@ -84,6 +84,19 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   	});
   }
 
+  $scope.updateComment = function() {
+  	var data = {
+  		id: $scope.id,
+  		comments: [$scope.data.user_comment]
+  	}
+
+  	$http.patch('/api/tools/comments/' + $scope.id, data)
+  	.success(function(data, status, headers, config){
+  		console.log("saved")
+  	});
+
+  }
+
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,

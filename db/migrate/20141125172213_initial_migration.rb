@@ -171,5 +171,11 @@ class InitialMigration < ActiveRecord::Migration
   	add_index :tool_attributes, :tool_id
   	add_index :tool_attributes, :attribute_type_id
 
+    create_table :suggested_tools do |t|
+      t.belongs_to :tool
+      t.integer :suggested_tool_id
+      t.timestamps
+    end
+
   end
 end

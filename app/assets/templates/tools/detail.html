@@ -172,12 +172,19 @@
 								</div>
 							</div>
 
-<!-- 							<div class="row">
+							<div class="row">
 								<div class="col-md-12">
-									<label>Your comment</label>
-									<textarea class="vertical-text-area" rows="3" id="inputComment" ng-model="data.comments[0].content"></textarea>
+									<hr>
+									<form>
+										<div class="form-group">
+											<label>Your comment</label>
+											<textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.user_comment.content"></textarea>
+											</div>
+											<button class="btn btn-primary" ng-click="updateComment()">Save comment</button>
+										
+									</form>
 								</div>
-							</div> -->
+							</div>
 
 						</div>
 					</div>

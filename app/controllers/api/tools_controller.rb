@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments]
 	
 	def index
 		# @tools = Tool.all
@@ -235,6 +235,13 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
+	def update_comments
+		respond_to do |format|
+			process_update_comments()
+			format.json {render json: {status: "OK"}, status: :ok}
+		end
+	end
+
 	def update
 			respond_to do |format|
 				Tool.transaction do
@@ -300,30 +307,19 @@ class Api::ToolsController < ApplicationController
 
 						# comment
 
-						if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
-							if params[:comments][0][:content] == ""
-								@user_tool_comment = @tool.comments.find_by user_id: current_user[:id]
-								if @user_tool_comment
-									@user_tool_comment.destroy()
-								end							
-							else
-								@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
-								@comment.content = params[:comments][0][:content]
-								@comment.save
-							end
-						end
+						process_update_comments
 
 						# attributes
 						save_parameters()
 						# XXX update tool
 						# image
 
-						if params[:image] and params[:image] != "" and params[:image].include? "base64"						
+						if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"						
 							# remove old image
 							if @tool.image_url
 								FileUtils::rm [@tool.image_url]
 							end
-							new_url_path = save_image(params[:image])
+							new_url_path = save_image(params[:image_url])
 							@tool.image_url = new_url_path
 							@tool.last_updated = Time.now()
 							@tool.save()
@@ -414,6 +410,21 @@ class Api::ToolsController < ApplicationController
 
 			return path.to_s
 
+		end
+
+		def process_update_comments()
+			if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
+				if params[:comments][0][:content] == ""
+					@user_tool_comment = @tool.comments.find_by user_id: current_user[:id]
+					if @user_tool_comment
+						@user_tool_comment.destroy()
+					end							
+				else
+					@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
+					@comment.content = params[:comments][0][:content]
+					@comment.save
+				end
+			end
 		end
 
 		def process_update_tags()
