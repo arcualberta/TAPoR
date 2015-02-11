@@ -22,13 +22,13 @@ app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 	$http.get('/api/tools/featured')
 	.success(function(data, status, headers, config) {
 		var featured = data;
-
-		if (featured.length == 0) {
-			// get random tools
-		}
-
 		$scope.featured = featured;
-		console.log(featured)
+		if (featured.length == 0) {
+			$http.get('/api/tools/latest')
+			.success(function(data, status, headers, config) {
+				$scope.featured = data;
+			});
+		}
 	});
 
 	$scope.carousel_next = function() {
@@ -52,6 +52,16 @@ app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 	$http.get('/api/tools/latest')
 	.success(function(data, status, headers, config){
 		$scope.latest_tools = data;
+	})
+
+	$http.get('/api/tool_lists/latest')
+	.success(function(data, status, headers, config){
+		$scope.latest_lists = data;
+
+		$.each(data, function(i, v){
+			$scope.latest_lists[i].total_items = v.tool_list_items.length;
+			$scope.latest_lists[i].tool_list_items = $scope.latest_lists[i].tool_list_items.slice(0, 3);
+		});
 	})
 
 }]);

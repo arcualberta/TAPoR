@@ -46,6 +46,12 @@ class Api::ToolListsController < ApplicationController
 		end
 	end
 
+	def latest
+		respond_to do |format|
+			format.json { render json: ToolList.limit(5).reverse_order, status: :ok}			
+		end
+	end
+
 	def related
 		respond_to do |format|
 			result = [];

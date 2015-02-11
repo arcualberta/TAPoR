@@ -266,7 +266,7 @@ class Api::ToolsController < ApplicationController
 	def latest
 		respond_to do |format|
 			response = [];
-			@tools = Tool.last(5).reverse
+			@tools = Tool.limit(5).reverse_order
 			@tools.each do |tool|
 				response.push(simple_tool(tool));
 			end

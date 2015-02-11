@@ -21,6 +21,26 @@
 							<li>Tour</li>
 							<li>Tutorials</li>
 							<li>Useful links</li>
+
+							<li>
+								<a href='tools'>Tools</a>
+							</li>		
+							<li ng-if="current_user.is_admin">
+								<a href='tools/featured'>Featured</a>
+							</li>		
+							<li ng-if="current_user">
+								<a href='tools/new'>New tool</a>
+							</li>
+							<li ng-if="current_user">
+								<a href='tool_lists/contributing'>My lists</a>
+							</li>
+							<li ng-if="current_user.is_admin">
+								<a href='attributes/new'>New attribute</a>
+							</li>
+							<li ng-if="current_user.is_admin">
+								<a href='users'>Users</a>
+							</li>
+							
 							<li>Contact</li>
 							<li>
 

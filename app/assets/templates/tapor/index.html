@@ -72,7 +72,7 @@
 		<!-- left content -->
 
 		<div class="row">
-			<div class="well">
+			<div class="col-md-12 well">
 			<h2>Curated tools</h2>
 			<h4>About TAPoR curation</h4>
 			<p>
@@ -81,6 +81,34 @@
 			</div>
 		</div>
 
+
+		<div class="row" ng-repeat="list in latest_lists">
+			<div class="col-md-12">
+				<div class="well">
+					<div class="row">
+						
+						<div class="col-md-3">
+							<a href="/tool_lists/{{list.id}}"><label>{{list.name}}</label></a>
+							<p>Curated by {{list.user.name}}</p>
+							<p>{{list.description}}</p>
+							<p>Viewing {{list.tool_list_items.length}} of {{list.total_items}}</p>
+						</div>
+						<div class="col-md-3" ng-repeat="item in list.tool_list_items">
+							<div class="panel panel-default">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">{{item.tool.name}}</h3>
+							  </div>
+							  <div class="panel-body">
+							    <a href="/tools/{{item.tool.id}}"> <img src="{{item.tool.thumb_url}} "></a>
+							  </div>
+							</div>
+						</div>
+						
+
+					</div>
+				</div>
+			</div>
+		</div>
 
 	</div>
 	<div class="col-md-3">
@@ -138,27 +166,6 @@
 
 <div class='row' id='spheres'>
 	<div class="col-md-12">
-	<ul>
-		<li>
-			<a href='tools'>Tools</a>
-		</li>		
-		<li ng-if="current_user.is_admin">
-			<a href='tools/featured'>Featured</a>
-		</li>		
-		<li ng-if="current_user">
-			<a href='tools/new'>New tool</a>
-		</li>
-		<li ng-if="current_user">
-			<a href='tool_lists/contributing'>My lists</a>
-		</li>
-		<li ng-if="current_user.is_admin">
-			<a href='attributes/new'>New attribute</a>
-		</li>
-		<li ng-if="current_user.is_admin">
-			<a href='users'>Users</a>
-		</li>
-	</ul>
-
 
 	</div>
 </div>
