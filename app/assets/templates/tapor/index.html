@@ -6,34 +6,57 @@
 
 	<!--  -->
 
-	<div id="carousel-featured" class="carousel slide" data-ride="carousel">
+	<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
-    <li data-target="#carousel-featured" data-slide-to="0" class="active"></li>
-    <li data-target="#carousel-featured" data-slide-to="1"></li>
-    <li data-target="#carousel-featured" data-slide-to="2"></li>
+    <!-- <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+    <li data-target="#carousel-example-generic" data-slide-to="1"></li> -->
+    <li ng-repeat="tool in featured track by $index" data-target="#carousel-example-generic" data-slide-to="{{$index}}" ng-class="{active: $first }"></li>
   </ol>
 
   <!-- Wrapper for slides -->
   <div class="carousel-inner" role="listbox">
-    <div class="item active">
-    <p>Primer</p>
+    
+    <div ng-repeat="tool in featured track by $index" class="item" ng-class="{active: $first }">
+    	<div class="row">
+    		<div class="col-md-4">
+
+    		</div>
+    		<div class="col-md-4">
+    			<img src="{{tool.image_url}}">
+    		</div>
+    		<div class="col-md-4">
+    			<label>Rating</label>
+    			<div star-rating rating-value="tool.star_average" max="5" is-interactive="false"></div>		    			
+    		</div>
+    		
+    		
+      		
+    		
+    	</div>
+
+
+      
+
+
+
+      <div class="carousel-caption">
+        <h3>{{tool.name}}</h3>
+      </div>
+    
     </div>
-    <div class="item">
-    <p>Segundo</p>
-    </div>
-    <div class="item">
-    <p>Tercero</p>
-    </div>
+    
+
+
   </div>
 
   <!-- Controls -->
-  <a class="left carousel-control" href="#carousel-featured" role="button" data-slide="prev">
-    <span class="fa fa-chevron-left" aria-hidden="true"></span>
+  <a class="left carousel-control" ng-click="carousel_prev()">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
     <span class="sr-only">Previous</span>
   </a>
-  <a class="right carousel-control" href="#carousel-featured" role="button" data-slide="next">
-    <span class="fa fa-chevron-right" aria-hidden="true"></span>
+  <a class="right carousel-control" role="button" ng-click="carousel_prev()">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
     <span class="sr-only">Next</span>
   </a>
 </div>
@@ -44,11 +67,77 @@
 	</div>
 </div>
 
+<div class="row">
+	<div class="col-md-9">
+		<!-- left content -->
+
+		<div class="row">
+			<div class="well">
+			<h2>Curated tools</h2>
+			<h4>About TAPoR curation</h4>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac hendrerit risus. Fusce at augue tincidunt tellus vulputate ullamcorper. Praesent ligula metus, ullamcorper id euismod ac, venenatis non odio. Fusce ut enim sed ante rhoncus aliquam. Suspendisse hendrerit, mauris sed sollicitudin tincidunt, erat libero commodo sapien, eget eleifend justo nisi vitae diam. Nunc semper lectus blandit consequat dictum. Curabitur finibus ac sem a tincidunt. In sed porta lacus. Nullam cursus dignissim ante, at commodo diam lacinia eget. In placerat odio nisl, a sodales odio tincidunt at. Cras viverra, mi eget scelerisque lobortis, eros orci molestie nisl, in fringilla massa orci ut tortor. In iaculis tristique nibh quis eleifend. Suspendisse ex nisl, tincidunt quis tempus non, aliquam et tortor.
+			</p>
+			</div>
+		</div>
+
+
+	</div>
+	<div class="col-md-3">
+		<!-- right content -->
+		
+		<!-- new tools -->
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">New tools</h3>
+			</div>
+			<div class="panel-body">
+				<div ng-repeat="tool in latest_tools" class="well well-sm">
+					<div class="media-right">
+							<a href="/tools/{{tool.id}}">
+								<img class="media-object" src="{{tool.thumb_url}}">
+							</a>
+						</div>
+						<div class="media-body">
+						<h5 class="media-heading">{{tool.name}}</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+
+		<!-- tags -->
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tool tags</h3>
+			</div>
+			<div class="panel-body">
+				<span ng-repeat="tag in system_tags.tags">{{tag.value}} </span>
+			</div>
+		</div>
+
+		<!-- comments -->
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tool comments</h3>
+			</div>
+			<div class="panel-body">
+				<div ng-repeat="comment in latest_comments" class="well well-sm">
+					{{comment.user.name}}	said: {{comment.content}}
+				</div>
+			</div>
+		</div>
+	
+	</div>
+</div>
+
+	
 
 <div class='row' id='spheres'>
 	<div class="col-md-12">
-
-
 	<ul>
 		<li>
 			<a href='tools'>Tools</a>
@@ -74,20 +163,5 @@
 	</div>
 </div>
 
-<div class='row'>
-	<div class="col-md-9">
-		<div class='row'>
-			<div class="col-md-12">
-				Curated tools
-			</div>
-		</div>
-	</div>
-	<div class="col-md-3">
-		<div class='row'>
-			All lists
-		</div>
-	</div>
-
-</div>
 
 

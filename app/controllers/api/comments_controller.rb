@@ -11,6 +11,13 @@ class Api::CommentsController < ApplicationController
 		end
 	end
 
+	def latest
+		@comments = Comment.last(5)
+		respond_to do |format|			
+			format.json {render json: @comments}
+		end
+	end
+
 	def update
 		respond_to do |format|
 			if current_user[:id] == safe_params[:id] or current_user.is_admin?				

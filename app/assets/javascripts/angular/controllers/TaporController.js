@@ -28,6 +28,30 @@ app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 		}
 
 		$scope.featured = featured;
+		console.log(featured)
 	});
+
+	$scope.carousel_next = function() {
+		$("#carousel-example-generic").carousel("next");
+	}
+
+	$scope.carousel_prev = function() {
+		$("#carousel-example-generic").carousel("next");	
+	}
+
+	$http.get('/api/tags')
+	.success(function(data, status, headers, config){
+		$scope.system_tags = data;
+	})
+
+	$http.get('/api/comments/latest')
+	.success(function(data, status, headers, config){
+		$scope.latest_comments = data;
+	})
+
+	$http.get('/api/tools/latest')
+	.success(function(data, status, headers, config){
+		$scope.latest_tools = data;
+	})
 
 }]);

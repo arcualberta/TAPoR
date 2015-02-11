@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     get 'users/current', to: 'users#current'
     get 'tags/search', to: 'tags#search'
     post 'tools/featured', to: 'tools#featured_edit'
+    get 'tools/latest', to: 'tools#latest'
     post 'tools/view/:id', to: 'tools#view'
     patch 'tools/rate/:id', to: 'tools#update_rating'
     patch 'tools/tags/:id', to: 'tools#update_tags'
@@ -15,6 +16,8 @@ Rails.application.routes.draw do
     get 'tools/suggested/:id', to: 'tools#suggested'
     get 'tool_lists/related/:id', to: 'tool_lists#related'
     get 'tool_lists/by_curator/:id', to: 'tool_lists#by_curator'
+    get 'tags', to: 'tags#index'
+    get 'comments/latest', to: 'comments#latest'
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
     # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'
 

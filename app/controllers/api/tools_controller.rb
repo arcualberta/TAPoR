@@ -263,6 +263,17 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
+	def latest
+		respond_to do |format|
+			response = [];
+			@tools = Tool.last(5).reverse
+			@tools.each do |tool|
+				response.push(simple_tool(tool));
+			end
+			format.json { render json: response, status: :ok }
+		end
+	end
+
 	def update
 			respond_to do |format|
 				Tool.transaction do
