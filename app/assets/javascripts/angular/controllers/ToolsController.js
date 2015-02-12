@@ -31,22 +31,6 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   $scope.data.comments = {}
   $scope.data.also = [];
 
-	var tagLoad = function(query, callback) {
-  	if (query != "") {
-	  	$http.get("/api/tags/search?query="+query)
-	  	.success(function(data, status, headers, config){
-	  		$scope.tag_options = data;
-	  		callback($scope.tag_options);
-	  	})	
-  	}
-  	
-  }
-
-
-  var tagChange = function(obj, arg) {
-  	console.log(obj + " " + arg);
-  }
-
   $scope.updateToolView = function() {
   	$http.post('/api/tools/view/' + $scope.id)
   	.success(function(data, status, headers, config){
@@ -95,6 +79,17 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
   		console.log("saved")
   	});
 
+  }
+
+  var tagLoad = function(query, callback) {
+  	if (query != "") {
+	  	$http.get("/api/tags/search?query="+query)
+	  	.success(function(data, status, headers, config){
+	  		$scope.tag_options = data;
+	  		callback($scope.tag_options);
+	  	})	
+  	}
+  	
   }
 
 	$scope.tag_options = [];
