@@ -17,7 +17,19 @@ app.controller('TaporMainCtrl',['$scope', '$http', function($scope, $http){
 
 app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 
+	$scope.carousel_next = function() {
+		$("#carousel-example-generic").carousel("next");
+	}
+
+	$scope.carousel_prev = function() {
+		$("#carousel-example-generic").carousel("next");	
+	}
+
 	$scope.featured = []
+	$scope.system_tags = {};
+	$scope.latest_comments = [];
+	$scope.latest_lists = [];
+	$scope.latest_tools = [];
 
 	$http.get('/api/tools/featured')
 	.success(function(data, status, headers, config) {
@@ -31,13 +43,7 @@ app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 		}
 	});
 
-	$scope.carousel_next = function() {
-		$("#carousel-example-generic").carousel("next");
-	}
 
-	$scope.carousel_prev = function() {
-		$("#carousel-example-generic").carousel("next");	
-	}
 
 	$http.get('/api/tags')
 	.success(function(data, status, headers, config){
