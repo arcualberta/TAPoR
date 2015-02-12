@@ -73,20 +73,23 @@ class Api::ToolListsController < ApplicationController
 
 			@tool_list.tool_list_items.each do |item|
 				# other_lists = ToolList.joins(:tool_list_items).where.not(id: @tool_list[:id]).where('tool_list_item.id = ?', item[:id])			
-				other_lists = ToolList.joins(:tool_list_items).where("`tool_lists`.`id` != ? AND `tool_list_items`.`tool_id` = ?", @tool_list[:id], item[:id])
+				other_lists = ToolList.joins(:tool_list_items).where("`tool_lists`.`id` != ? AND `tool_list_items`.`tool_id` = ?", @tool_list[:id], item[:tool_id])
 				other_lists.each do |other|
-					# puts "JERE " + other.tool_list_items.to_s
+					puts "JERE " + other.tool_list_items.to_s
 					need_add = true;
 
 					response.each do |list|
-						if other == list
+						if other[:id] == list[:id]
 							need_add = false;
 							break
 						end
 					end
 
 					if need_add
+						puts "adding " + other[:id].to_s
 						response.push(other)
+					else
+						puts "not adding " + other[:id].to_s
 					end
 
 

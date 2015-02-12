@@ -147,11 +147,12 @@ app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 			$scope.by_curator = data;
 			console.log(data);
 		});
-
-
+		
 		$http.get('/api/tool_lists/related_by_list/' + $scope.data.id)
 		.success(function(data, status, headers, config){
 			$scope.related_lists = data;
+			console.log("here")
+			console.log(data);
 		});
 
 
