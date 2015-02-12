@@ -230,8 +230,8 @@ class Api::ToolsController < ApplicationController
 
 					# image
 
-					if params[:image] and params[:image] != "" and params[:image].include? "base64"						
-						@tool.image_url = save_image(params[:image])
+					if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"						
+						@tool.image_url = save_image(params[:image_url])
 						@tool.save
 					end
 
