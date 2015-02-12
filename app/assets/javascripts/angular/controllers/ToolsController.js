@@ -201,7 +201,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 	});
 
-	$http.get('/api/tool_lists/related/' + $routeParams.id + '?limit=4')
+	$http.get('/api/tool_lists/related_by_tool/' + $routeParams.id + '?limit=4')
 	.success(function(data, status, headers, config) {
 		$scope.data.related_lists = data;
 	});

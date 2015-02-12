@@ -148,6 +148,13 @@ app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 			console.log(data);
 		});
 
+
+		$http.get('/api/tool_lists/related_by_list/' + $scope.data.id)
+		.success(function(data, status, headers, config){
+			$scope.related_lists = data;
+		});
+
+
 	});
 
 

@@ -26,7 +26,7 @@ class Api::ToolListsController < ApplicationController
 		respond_to do |format|
 			@tool_list = ToolList.find(params[:id]);
 			# format.json { render json: @tool, include_comments: params[:include_comments] }			
-			format.json { render json: @tool_list}			
+			format.json { render json: @tool_list, status: :ok}			
 		end
 	end
 	
@@ -42,7 +42,7 @@ class Api::ToolListsController < ApplicationController
 				end
 			end
 
-			format.json { render json: result}			
+			format.json { render json: result, status: :ok}			
 		end
 	end
 
@@ -52,7 +52,7 @@ class Api::ToolListsController < ApplicationController
 		end
 	end
 
-	def related
+	def related_by_tool
 		respond_to do |format|
 			result = [];
 			params[:limit] ||= 10000; #need to paginate
@@ -60,7 +60,40 @@ class Api::ToolListsController < ApplicationController
 				tool_list = ToolList.find(item[:tool_list_id]);
 				result.push(tool_list);
 			end
-			format.json { render json: result}			
+			format.json { render json: result, status: :ok}			
+		end
+	end
+
+	def related_by_list
+		# XXX need to add random parameter
+		respond_to do |format|
+			response = []
+
+			@tool_list = ToolList.find(params[:id]);
+
+			@tool_list.tool_list_items.each do |item|
+				# other_lists = ToolList.joins(:tool_list_items).where.not(id: @tool_list[:id]).where('tool_list_item.id = ?', item[:id])			
+				other_lists = ToolList.joins(:tool_list_items).where("`tool_lists`.`id` != ? AND `tool_list_items`.`tool_id` = ?", @tool_list[:id], item[:id])
+				other_lists.each do |other|
+					# puts "JERE " + other.tool_list_items.to_s
+					need_add = true;
+
+					response.each do |list|
+						if other == list
+							need_add = false;
+							break
+						end
+					end
+
+					if need_add
+						response.push(other)
+					end
+
+
+				end
+			end
+
+			format.json{render json: response, status: :ok}
 		end
 	end
 
