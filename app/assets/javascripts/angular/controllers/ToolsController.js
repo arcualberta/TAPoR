@@ -247,10 +247,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   // $scope.data.tool_tags.tags = "";
   $scope.data.tags = [];
   $scope.data.comments = [];
-  $scope.data.managed_comments = {
-  	"pinned": [],
-  	"not_pinned": []
-  }
+
   
   $scope.data.is_approved = false;
   // $scope.data.image = "";  
@@ -403,87 +400,31 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	})
 	// get suggested tools
 	$scope.data.suggested_tools = [];
-	console.log("here")
 	$http.get('/api/tools/suggested/' + $scope.id)
 	.success(function(data, status, headers, config){
 		console.log(data);
 		$scope.data.suggested_tools = data;
 	});
 
-
-
-
- //  
-
- //  if ($scope.is_editing) {
- //  	// get values
-	// 	$http.get('/api/tools/' + $routeParams.id)
-	// 	.success(function(data, status, headers, config){
-	// 		for (var i in data) {
-	// 			if (data.hasOwnProperty(i)) {
-	// 				$scope.data[i] = data[i];					
-	// 			}
-	// 		}	
-
-	// 		// fix tags
-
-	// 		$scope.data.tool_tags.tags = [];
-	// 		$.each($scope.data.tags, function(i, v){				
-	// 			$scope.data.tool_tags.tags.push(v.value)
-	// 		});
-
-	// 		// fix image
-	// 		$scope.data.image = $scope.data.image_url;
-
-	// 		// fix attributes
-	// 		for (var i=0; i < data.tool_attributes.length; ++i) {
-	// 			var thisToolAttribute = data.tool_attributes[i];
-	// 			for (var j=0; j<$scope.data.attribute_types.length; ++j) {
-	// 				var thisAttribute = $scope.data.attribute_types[j];
-	// 				if (thisToolAttribute.attribute_type_id == thisAttribute.id) {
-	// 					if (thisAttribute.is_multiple) {
-	// 						var values = thisToolAttribute.value.split("|");
-	// 						for (var p=0; p<values.length; ++p) {
-	// 							for (var q=0; q<thisAttribute.possible_values.length; ++q) {	
-	// 								if (values[p] == thisAttribute.possible_values[q]) {
-	// 									thisAttribute.model[q] = true;
-	// 									break;
-	// 								}
-	// 							}
-	// 						}
-	// 					} else {
-	// 						thisAttribute.model = thisToolAttribute.value;
-	// 					}
-	// 					break;
-	// 				}
-	// 			}
-	// 		}
-
-	// 	});
-
-
-
-	// });
-
 		// get comments
 		
 
-		
+	$scope.data.managed_comments = {
+  	"pinned": [],
+  	"not_pinned": []
+  }	
 
-		$http.get('/api/comments/?id=' + $routeParams.id)
-		.success(function(data, status, headers, config){
-			var comments = {
-				"pinned" : [],
-				"not_pinned" : [],
+	$http.get('/api/comments/?id=' + $routeParams.id)
+	.success(function(data, status, headers, config){
+
+		$.each(data, function(i, v){
+			if (v.is_pinned) {
+				$scope.data.managed_comments.pinned.push(v);
+			} else {					
+				$scope.data.managed_comments.not_pinned.push(v);
 			}
-			$.each(data, function(i, v){
-				if (v.is_pinned) {
-					$scope.data.managed_comments.pinned.push(v);
-				} else {					
-					$scope.data.managed_comments.not_pinned.push(v);
-				}
-			});
 		});
+	});
 
   
 	$scope.deleteTool = function(id) {
@@ -497,16 +438,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   $scope.createOrUpdateTool = function() {
   	
 
-  	if ($('#tool_form')[0].checkValidity()) {
-			
-
-  		// $.each($scope.data.tool_attributes, function(i,v){
-  		// 	if (!v.is_multiple) {
-
-  		// 	}
-  		// })
-
-
+  	if ($('#tool_form')[0].checkValidity()) {			
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
 				console.log($scope.data)
