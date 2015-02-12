@@ -44,6 +44,7 @@ class Api::ToolsController < ApplicationController
 		this_tool = {
 			name: tool.name,
 			id: tool.id,
+			image_url: tool.image_url,
 			thumb_url: tool.image_url ? tool.image_url.gsub(/\.png/, "-thumb.png") : ""
 		}
 		return this_tool;

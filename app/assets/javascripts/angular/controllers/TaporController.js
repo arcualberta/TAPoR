@@ -39,6 +39,7 @@ app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 			$http.get('/api/tools/latest')
 			.success(function(data, status, headers, config) {
 				$scope.featured = data;
+				console.log(data)
 			});
 		}
 	});
