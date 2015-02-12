@@ -13,7 +13,7 @@ class Api::ToolsController < ApplicationController
 		# @tools = Tool.all
 		@tools = Tool.where(is_hidden: false)
 		respond_to do |format|			
-			format.json {render json: @tools}
+			format.json {render json: @tools, status: :ok}
 		end
 	end
 
@@ -21,7 +21,7 @@ class Api::ToolsController < ApplicationController
 		respond_to do |format|
 			@tool = Tool.find(params[:id]);
 			# format.json { render json: @tool, include_comments: params[:include_comments] }			
-			format.json { render json: @tool}			
+			format.json { render json: @tool, status: :ok}			
 		end
 	end
 
@@ -32,7 +32,7 @@ class Api::ToolsController < ApplicationController
 					user_id: current_user[:id],
 					tool_id: params[:id]
 				});	
-				format.json { render json: @tool_use}			
+				format.json { render json: @tool_use, status: :ok}			
 			else
 				format.json { {status: :unauthorized} }
 			end
