@@ -218,10 +218,8 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 		console.log(id)
 	}
 
-	console.log("here")
 	$http.get('/api/tools/suggested/' + $scope.id)
 	.success(function(data, status, headers, config){
-		console.log(data);
 		$scope.data.suggested_tools = data;
 	});
 
@@ -318,15 +316,6 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   	orderChanged: function (event) {}
   }
 
-
-  // $scope.templates = {
-  // 	sortable_comment: {
-  // 		url: "templates/tools/commasdasent.html",
-  // 		name: "sortable comment"
-
-  // 	}
-  // }
-
 	var tagLoad = function(query, callback) {
   	if (query != "") {
 	  	$http.get("/api/tags/search?query="+query)
@@ -352,6 +341,15 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
     hideSelected: true
   };
 
+  $scope.tools = [];
+	
+	$scope.data.managed_comments = {
+  	"pinned": [],
+  	"not_pinned": []
+  }
+
+  $scope.data.suggested_tools = [];
+
   // get attribute types
 
   if ($scope.is_editing) {
@@ -366,6 +364,38 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			$scope.data.tags = tags;			
 		}
 			// add model to each attribute value
+
+			// This should be moved outside
+
+
+			// get suggested tools
+				
+				$http.get('/api/tools/suggested/' + $scope.id)
+				.success(function(data, status, headers, config){
+					console.log(data);
+					$scope.data.suggested_tools = data;
+				});
+
+					// get comments
+					
+
+				
+
+				$http.get('/api/comments/?id=' + $routeParams.id)
+				.success(function(data, status, headers, config){
+
+					$.each(data, function(i, v){
+						if (v.is_pinned) {
+							$scope.data.managed_comments.pinned.push(v);
+						} else {					
+							$scope.data.managed_comments.not_pinned.push(v);
+						}
+					});
+				});
+
+
+
+
 
 		});	
 
@@ -393,39 +423,12 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   }
 
 	// get all simple tools
-	$scope.tools = [];
+	
 	$http.get('/api/tools')
 	.success(function(data, status, headers, config){
 		$scope.tools = data;
 	})
-	// get suggested tools
-	$scope.data.suggested_tools = [];
-	$http.get('/api/tools/suggested/' + $scope.id)
-	.success(function(data, status, headers, config){
-		console.log(data);
-		$scope.data.suggested_tools = data;
-	});
-
-		// get comments
-		
-
-	$scope.data.managed_comments = {
-  	"pinned": [],
-  	"not_pinned": []
-  }	
-
-	$http.get('/api/comments/?id=' + $routeParams.id)
-	.success(function(data, status, headers, config){
-
-		$.each(data, function(i, v){
-			if (v.is_pinned) {
-				$scope.data.managed_comments.pinned.push(v);
-			} else {					
-				$scope.data.managed_comments.not_pinned.push(v);
-			}
-		});
-	});
-
+	
   
 	$scope.deleteTool = function(id) {
 		$http.delete("/api/tools/"+id)
