@@ -7,14 +7,14 @@ class Api::CommentsController < ApplicationController
 		
 		@comments = Comment.where(tool_id: params[:id])
 		respond_to do |format|			
-			format.json {render json: @comments}
+			format.json {render json: @comments, status: :ok}
 		end
 	end
 
 	def latest
 		@comments = Comment.last(5)
 		respond_to do |format|			
-			format.json {render json: @comments}
+			format.json {render json: @comments, status: :ok}
 		end
 	end
 

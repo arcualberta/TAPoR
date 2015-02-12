@@ -4,7 +4,7 @@ class Api::TagsController < ApplicationController
 		prefix = params[:query]
 		@tags = Tag.where("value LIKE :prefix", prefix: "#{prefix}%")		
 		respond_to do |format|			
-			format.json {render json: @tags}
+			format.json {render json: @tags, :status :ok}
 		end
 	end
 
@@ -34,7 +34,7 @@ class Api::TagsController < ApplicationController
 				end
 			end
 
-			format.json {render json: response}
+			format.json {render json: response, status: :ok}
 		end
 	end
 
