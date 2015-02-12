@@ -218,6 +218,13 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 		console.log(id)
 	}
 
+	console.log("here")
+	$http.get('/api/tools/suggested/' + $scope.id)
+	.success(function(data, status, headers, config){
+		console.log(data);
+		$scope.data.suggested_tools = data;
+	});
+
 
 
 }]);
@@ -302,6 +309,19 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   }
 
 
+  $scope.suggestedDragListeners = {
+   	accept: function (sourceItemHandleScope, destSortableScope) {return true},
+   	itemMoved: function (event) {},
+  	orderChanged: function (event) {}
+  }
+
+  $scope.toolDragListeners = {
+  	accept: function (sourceItemHandleScope, destSortableScope) {return true},
+  	itemMoved: function (event) {},
+  	orderChanged: function (event) {}
+  }
+
+
   // $scope.templates = {
   // 	sortable_comment: {
   // 		url: "templates/tools/commasdasent.html",
@@ -375,8 +395,20 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	  });
   }
 
-
-  
+	// get all simple tools
+	$scope.tools = [];
+	$http.get('/api/tools')
+	.success(function(data, status, headers, config){
+		$scope.tools = data;
+	})
+	// get suggested tools
+	$scope.data.suggested_tools = [];
+	console.log("here")
+	$http.get('/api/tools/suggested/' + $scope.id)
+	.success(function(data, status, headers, config){
+		console.log(data);
+		$scope.data.suggested_tools = data;
+	});
 
 
 
@@ -491,6 +523,14 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 					console.log("error")
 				});	
 			}
+
+
+			// set suggested tools
+
+			$http.post('/api/tools/suggested/' + $scope.id, {id: $scope.id, suggested: $scope.data.suggested_tools})
+			.success(function(data, status, headers, config){
+				console.log("saved suggested");
+			});
 			
 		}
   }

@@ -133,3 +133,7 @@ body {
 .tool_panel {
 	max-width: 300px;
 }
+
+#imageContainer {
+	/*max-width: 550px;*/
+}

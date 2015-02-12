@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested]
 	
 	def index
 		# @tools = Tool.all
@@ -52,11 +52,23 @@ class Api::ToolsController < ApplicationController
 	end
 
 
+	def update_suggested
+		respond_to do |format|
+			@tool.suggested_tools.destroy_all
+			params[:suggested].each do |suggested|
+				@tool.suggested_tools.create({
+					suggested_tool_id: suggested[:id]
+				});
+			end
+			format.json {render json: {status: "OK"}, status: :ok }
+		end
+	end
+
 	def suggested
 		respond_to do |format|
 			result = []
 			@tool.suggested_tools.each do |suggested|
-				result.push(simple_tool(Tool.find(suggested[:tool_id])));
+				result.push(simple_tool(Tool.find(suggested[:suggested_tool_id])));
 				if result.length == 5
 					break;
 				end			

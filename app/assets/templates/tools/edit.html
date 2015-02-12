@@ -33,7 +33,7 @@
           Browse <input type="file" fileread="data.image_url"/>
         </span>
                   
-        <img ng-if="data.image_url.length > 0" src="{{data.image_url}}" id="imageContainer" width="550" alt="Image preview...">      
+        <img ng-if="data.image_url.length > 0" src="{{data.image_url}}" id="imageContainer"  alt="Image preview...">      
         
         <!-- </div> -->
       </div>
@@ -182,6 +182,64 @@
                     <label>
                       Hide <input type="checkbox" name="is_hidden" value="is_hidden" id="inputIsBlocked" ng-model="comment.is_hidden"> 
                     </label>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+      </div>
+    </div>
+
+
+    <!-- suggested tools -->
+
+      <div ng-if="is_editing">
+
+      <div class="form-group">
+        <label for="inputCreatorsURL" class="col-sm-2 control-label">Suggested tools</label>
+
+        <!-- All tools -->
+        <div class="col-sm-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Tools
+            </div>
+            <div class="panel-body">
+              <ul class="draggable_place" as-sortable="toolDragListeners" ng-model="tools">
+                <li class="column_sortable" ng-repeat="tool in tools" as-sortable-item>
+                  <div as-sortable-item-handle>
+
+                  <div>
+                    
+                    <img width="100" src="{{tool.image_url}}">
+                    
+                  </div>
+
+              
+                  </div>
+                </li>
+              </ul>
+            </div>
+            </div>
+        </div>
+      
+      <!-- pinned -->
+      <div class="col-sm-3">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            Suggested
+          </div>
+          <div class="panel-body">
+             <ul class="draggable_place" as-sortable="suggestedDragListeners" ng-model="data.suggested_tools">
+              <li class="column_sortable" ng-repeat="tool in data.suggested_tools" as-sortable-item>
+                <div as-sortable-item-handle>
+                    <div>
+                    
+                    <img width="100" src="{{tool.image_url}}">
+                    
                   </div>
                 </div>
               </li>

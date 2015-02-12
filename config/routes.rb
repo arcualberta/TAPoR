@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     get 'tools/view/:id', to: 'tools#also_viewed'
     get 'tools/featured', to: 'tools#featured'    
     get 'tools/suggested/:id', to: 'tools#suggested'
+    post 'tools/suggested/:id', to: 'tools#update_suggested'
     get 'tool_lists/latest', to: 'tool_lists#latest'
     get 'tool_lists/related_by_tool/:id', to: 'tool_lists#related_by_tool'
     get 'tool_lists/related_by_list/:id', to: 'tool_lists#related_by_list'
