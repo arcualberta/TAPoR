@@ -55,10 +55,12 @@ class Api::ToolsController < ApplicationController
 	def update_suggested
 		respond_to do |format|
 			@tool.suggested_tools.destroy_all
-			params[:suggested].each do |suggested|
-				@tool.suggested_tools.create({
-					suggested_tool_id: suggested[:id]
-				});
+			if params[:suggested]
+				params[:suggested].each do |suggested|
+					@tool.suggested_tools.create({
+						suggested_tool_id: suggested[:id]
+					});
+				end
 			end
 			format.json {render json: {status: "OK"}, status: :ok }
 		end
@@ -363,7 +365,8 @@ class Api::ToolsController < ApplicationController
 						if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"						
 							# remove old image
 							if @tool.image_url
-								FileUtils::rm [@tool.image_url]
+								# XXX FIXME
+								FileUtils::rm [File.join('public', @tool.image_url)]
 							end
 							new_url_path = save_image(params[:image_url])
 							@tool.image_url = new_url_path
@@ -423,7 +426,7 @@ class Api::ToolsController < ApplicationController
 		def safe_params
 			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
 			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url, :url);
+			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url);
 		end
 
 		def save_image(base_image)
