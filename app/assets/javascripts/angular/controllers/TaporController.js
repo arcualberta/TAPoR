@@ -22,7 +22,7 @@ app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 	}
 
 	$scope.carousel_prev = function() {
-		$("#carousel-example-generic").carousel("next");	
+		$("#carousel-example-generic").carousel("prev");	
 	}
 
 	$scope.featured = []
