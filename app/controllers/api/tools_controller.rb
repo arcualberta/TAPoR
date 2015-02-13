@@ -410,12 +410,24 @@ class Api::ToolsController < ApplicationController
 		
 	end
 
-	# def destroy
-	# 	@tool.destroy
-	# 	respond_to do |format|
-	# 		format.json {head :no_content}
-	# 	end
-	# end
+	def destroy
+		# @tool.destroy
+		# use_metrics
+		# attributes
+		# tags
+		# comments
+		# ratings
+		# tool list item
+		
+		# set to hidden
+		@tool.update{
+			is_hidden: true
+		}
+
+		respond_to do |format|
+			format.json {head :no_content}
+		end
+	end
 
 	private 
 
