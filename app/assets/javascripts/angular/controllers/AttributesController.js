@@ -1,6 +1,6 @@
 
 
-app.controller('AttributesNewCtrl', ['$scope', '$http' , function($scope, $http) {
+app.controller('AttributesNewController', ['$scope', '$http' , function($scope, $http) {
   
 	$scope.data = {};
 	$scope.data.name = "";	

@@ -1,4 +1,4 @@
-app.controller('UsersIndexCtrl', ['$scope', '$http', function($scope, $http){
+app.controller('UsersIndexController', ['$scope', '$http', function($scope, $http){
 	// $scope.checkUser();
 	$scope.updateIsAdmin = function(id, is_admin) {
 		var data = {}
@@ -27,7 +27,7 @@ app.controller('UsersIndexCtrl', ['$scope', '$http', function($scope, $http){
 
 }]);
 
-app.controller("UsersDetailCtrl", ['$scope', '$http', '$location', function($scope, $http, $location){
+app.controller("UsersDetailController", ['$scope', '$http', '$location', function($scope, $http, $location){
 	
 	$scope.data = $scope.current_user
 

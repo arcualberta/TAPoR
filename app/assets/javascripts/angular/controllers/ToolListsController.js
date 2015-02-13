@@ -1,4 +1,4 @@
-app.controller('ListsContributingCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('ListsContributingController', ['$scope', '$http', function($scope, $http) {
 	
 	$scope.data = {
 			tool_lists: []
@@ -31,7 +31,7 @@ app.controller('ListsContributingCtrl', ['$scope', '$http', function($scope, $ht
 
 }]);
 
-app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+app.controller('ListsEditController', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
 	
 	$scope.tools = [];	
 	$scope.data = {
@@ -118,7 +118,7 @@ app.controller('ListsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 }]);
 
 
-app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+app.controller('ListsDetailController', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 	var list_id = $routeParams.id;
 
 	$scope.data = {};

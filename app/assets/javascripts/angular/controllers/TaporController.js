@@ -1,6 +1,6 @@
 
 
-app.controller('TaporMainCtrl',['$scope', '$http', function($scope, $http){
+app.controller('TaporMainController',['$scope', '$http', function($scope, $http){
 
 	$scope.current_user = null;
 	$scope.is_logged_in = false;

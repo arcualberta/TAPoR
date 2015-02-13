@@ -1,5 +1,5 @@
 
-app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('ToolsIndexController', ['$scope', '$http', function($scope, $http) {
 
 	$http.get("/api/tools")
 	.success(function(data, status, headers, config){			
@@ -12,7 +12,7 @@ app.controller('ToolsIndexCtrl', ['$scope', '$http', function($scope, $http) {
 
 }]);
 
-app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
 	// alert($routeParams.toolId)
 	
 	$scope.id = $routeParams.id;
@@ -222,7 +222,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 
 }]);
 
-app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
   
   $scope.id = $routeParams.id;
 	$scope.data = {};
@@ -469,7 +469,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 
 
 
-app.controller('ToolsFeaturedCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('ToolsFeaturedController', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
 	$scope.tools = [];
 
