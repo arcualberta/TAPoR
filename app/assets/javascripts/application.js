@@ -22,11 +22,6 @@
 //= require turbolinks
 //= require ng-sortable/dist/ng-sortable
 //= require angular/app
-//= require angular/directives/StarDirective
-//= require angular/directives/MultSelectDirective
-//= require angular/directives/FileReadDirective
-//= require angular/controllers/TaporController
-//= require angular/controllers/ToolsController
-//= require angular/controllers/UsersController
-//= require angular/controllers/AttributesController
-//= require	angular/controllers/ToolListsController
+//= require_tree ./angular/services
+//= require_tree ./angular/directives
+//= require_tree ./angular/controllers

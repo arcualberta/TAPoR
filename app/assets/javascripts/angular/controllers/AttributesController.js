@@ -1,6 +1,6 @@
 
 
-app.controller('AttributesNewController', ['$scope', '$http' , function($scope, $http) {
+app.controller('AttributesNewController', ['$scope', '$location', 'services' , function($scope, $location, services) {
   
 	$scope.data = {};
 	$scope.data.name = "";	
@@ -21,24 +21,14 @@ app.controller('AttributesNewController', ['$scope', '$http' , function($scope, 
 	}
 
   $scope.createAttribute = function() {
- 		// $scope.data.possible_values = $scope.possible_values.join('|');
-		$http.post("/api/attribute_types#create", $scope.data)
-		.success(function(data, status, headers, config) {
-			// console.log("success")
-			// console.log(data)
-			// console.log(status)
-			// console.log(headers)
-			// console.log(config)
-			// after saving redirect to attribute view page
-		})
-		.error(function(data, status, headers, config) {
-			// console.log("error")
-			// console.log(data)
-			// console.log(status)
-			// console.log(headers)
-			// console.log(config)
-		});
 
+  	services.attribute_type.create($scope.data).then(
+  	function(data){
+  		$location.path("/")
+  	},
+  	function(errorMessage){
+  		$scope.error = errorMessage;
+  	});
   }
 
 
