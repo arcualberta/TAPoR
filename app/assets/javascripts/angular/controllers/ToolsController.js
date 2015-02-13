@@ -118,7 +118,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 		$scope.data = data;		
 		if (data.tags && data.tags.length > 0) {
 			var tags = [];
-			$.each(data.tags, function(i, v){
+			angular.forEach(data.tags, function(v, i){
 				tags.push(v.value);
 			});
 			$scope.data.tags = tags;						
@@ -129,7 +129,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 		// Attributes
 
 		attributes = [];		
-		$.each(data.tool_attributes, function(i, v){
+		angular.forEach(data.tool_attributes, function(v, i){
 
 			var need_to_add = false;
 			var current_attribute = {
@@ -140,7 +140,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 			if (v.is_multiple) {
 				if (v.model && v.model.length) {
 					var values = [];
-					$.each(v.model, function(j, att){
+					angular.forEach(v.model, function(att, j){
 						if (att) {
 							need_to_add = true;
 							values.push(v.attribute_values[j].name)
@@ -172,7 +172,7 @@ app.controller('ToolsDetailCtrl', ['$scope', '$http', '$location', '$routeParams
 				pinned: [],
 				not_pinned: []
 			}
-			$.each(data.comments, function(i,v){
+			angular.forEach(data.comments, function(v, i){
 				if (v.is_pinned) {
 					new_comments.pinned.push(v);
 				} else {
@@ -272,7 +272,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
   // comment drag manager
 
   var resetPinnedIndex = function() {
-  	$.each($scope.data.managed_comments.pinned, function(i, v){
+  	angular.forEach($scope.data.managed_comments.pinned, function(v, i){
     	v.index = i;
     });
   }
@@ -353,7 +353,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 			$scope.data= data;
 			if (data.tags && data.tags.length > 0) {
 			var tags = [];
-			$.each(data.tags, function(i, v){
+			angular.forEach(data.tags, function(v, i){
 				tags.push(v.value);
 			});
 			$scope.data.tags = tags;			
@@ -379,7 +379,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 				$http.get('/api/comments/?id=' + $routeParams.id)
 				.success(function(data, status, headers, config){
 
-					$.each(data, function(i, v){
+					angular.forEach(data, function(v, i){
 						if (v.is_pinned) {
 							$scope.data.managed_comments.pinned.push(v);
 						} else {					
@@ -402,7 +402,7 @@ app.controller('ToolsEditCtrl', ['$scope', '$http', '$location', '$routeParams',
 	  .success(function(data, status, headers, config){
 	  	console.log(data);
 	  	$scope.data.tool_attributes = data;
-	  	$.each($scope.data.tool_attributes, function(i, v){
+	  	angular.forEach($scope.data.tool_attributes, function(v, i){
 	  		var len = v.is_multiple ? v.attribute_values.length : 1 ;
 	  		$scope.data.tool_attributes[i].model = [];
 

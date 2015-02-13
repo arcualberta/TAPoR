@@ -420,9 +420,9 @@ class Api::ToolsController < ApplicationController
 		# tool list item
 		
 		# set to hidden
-		@tool.update{
+		@tool.update({
 			is_hidden: true
-		}
+		});
 
 		respond_to do |format|
 			format.json {head :no_content}

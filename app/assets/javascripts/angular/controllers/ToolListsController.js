@@ -134,7 +134,7 @@ app.controller('ListsDetailCtrl', ['$scope', '$http', '$routeParams', function($
 		if (! $scope.can_edit) {
 			var roles = data.tool_list_user_roles;
 
-			$.each(roles, function(i,v){
+			angular.forEach(roles, function(v, i){
 				if ($scope.current_user.id == v.user_id) {
 					$scope.can_edit = v.is_editor;
 					return false;

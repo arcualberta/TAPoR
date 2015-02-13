@@ -65,7 +65,7 @@ app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
 	.success(function(data, status, headers, config){
 		$scope.latest_lists = data;
 
-		$.each(data, function(i, v){
+		angular.forEach(data, function(v, i){
 			$scope.latest_lists[i].total_items = v.tool_list_items.length;
 			$scope.latest_lists[i].tool_list_items = $scope.latest_lists[i].tool_list_items.slice(0, 3);
 		});
