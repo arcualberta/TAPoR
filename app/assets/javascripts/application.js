@@ -25,10 +25,8 @@
 //= require angular/directives/StarDirective
 //= require angular/directives/MultSelectDirective
 //= require angular/directives/FileReadDirective
-//= require angular/controllers/NavController
 //= require angular/controllers/TaporController
 //= require angular/controllers/ToolsController
 //= require angular/controllers/UsersController
 //= require angular/controllers/AttributesController
-//= require angular/controllers/SigninIndexController
 //= require	angular/controllers/ToolListsController
