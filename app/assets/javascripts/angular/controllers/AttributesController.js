@@ -24,19 +24,19 @@ app.controller('AttributesNewCtrl', ['$scope', '$http' , function($scope, $http)
  		// $scope.data.possible_values = $scope.possible_values.join('|');
 		$http.post("/api/attribute_types#create", $scope.data)
 		.success(function(data, status, headers, config) {
-			console.log("success")
-			console.log(data)
-			console.log(status)
-			console.log(headers)
-			console.log(config)
+			// console.log("success")
+			// console.log(data)
+			// console.log(status)
+			// console.log(headers)
+			// console.log(config)
 			// after saving redirect to attribute view page
 		})
 		.error(function(data, status, headers, config) {
-			console.log("error")
-			console.log(data)
-			console.log(status)
-			console.log(headers)
-			console.log(config)
+			// console.log("error")
+			// console.log(data)
+			// console.log(status)
+			// console.log(headers)
+			// console.log(config)
 		});
 
   }
