@@ -37,7 +37,8 @@ class InitialMigration < ActiveRecord::Migration
       t.string :image_url      
       t.float :star_average, default: 0
       t.boolean :is_hidden, default: false
-      t.date :last_updated;      
+      t.date :last_updated
+      t.string :documentation_url  
   		t.timestamps
   	end
 

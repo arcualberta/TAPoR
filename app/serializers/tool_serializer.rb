@@ -51,11 +51,12 @@ class ToolSerializer < ActiveModel::Serializer
   end
 
 	def comments
-		if @options[:include_comments]
-    	object.comments.where(is_hidden: false)
-    else
-    	object.comments.where(user_id: current_user)
-    end
+    object.comments.where(is_hidden: false)
+		# if @options[:include_comments]
+  #   	object.comments.where(is_hidden: false)
+  #   else
+  #   	object.comments.where(user_id: current_user)
+  #   end
   end
 
   def thumb_url

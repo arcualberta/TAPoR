@@ -442,9 +442,9 @@ class Api::ToolsController < ApplicationController
 		end
 
 		def save_image(base_image)
-			time = Time.new
 			name = @tool.id.to_s + ".png"
-			directory = "tools/" + time.year.to_s + "/" + time.month.to_s + "/" + time.day.to_s + "/";
+			pathDirectory = (@tool.id / 500).to_i;
+			directory = "tools/" + pathDirectory + "/";
 			FileUtils::mkdir_p File.join("public", "images", directory)
 			path = File.join("public", "images", directory, name)
 			decoded = Base64.urlsafe_decode64( base_image.split(",")[1] )
@@ -454,8 +454,8 @@ class Api::ToolsController < ApplicationController
 			image.format = "PNG";
 
 			# resize
-			finalWidth = 240;#550; # 900;
-			finalHeight = 190;#440;
+			finalWidth = 550; # 900;
+			finalHeight = 440;
 			image.resize_to_fill!(finalWidth);
 
 			# crop

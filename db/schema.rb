@@ -157,14 +157,15 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "name"
     t.text     "description"
     t.string   "url"
-    t.boolean  "is_approved",    default: false
+    t.boolean  "is_approved",       default: false
     t.string   "creators_name"
     t.string   "creators_email"
     t.string   "creators_url"
     t.string   "image_url"
-    t.float    "star_average",   default: 0.0
-    t.boolean  "is_hidden",      default: false
+    t.float    "star_average",      default: 0.0
+    t.boolean  "is_hidden",         default: false
     t.date     "last_updated"
+    t.string   "documentation_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
