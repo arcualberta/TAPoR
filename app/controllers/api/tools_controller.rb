@@ -40,16 +40,16 @@ class Api::ToolsController < ApplicationController
 	end
 
 
-	def simple_tool(tool) 
-		this_tool = {
-			name: tool.name,
-			id: tool.id,
-			image_url: tool.image_url,
-			star_average: tool.star_average,
-			thumb_url: tool.image_url ? tool.image_url.gsub(/\.png/, "-thumb.png") : ""
-		}
-		return this_tool;
-	end
+	# def simple_tool(tool) 
+	# 	this_tool = {
+	# 		name: tool.name,
+	# 		id: tool.id,
+	# 		image_url: tool.image_url,
+	# 		star_average: tool.star_average,
+	# 		thumb_url: tool.image_url ? tool.image_url.gsub(/\.png/, "-thumb.png") : ""
+	# 	}
+	# 	return this_tool;
+	# end
 
 
 	def update_suggested
@@ -70,7 +70,7 @@ class Api::ToolsController < ApplicationController
 		respond_to do |format|
 			result = []
 			@tool.suggested_tools.each do |suggested|
-				result.push(simple_tool(Tool.find(suggested[:suggested_tool_id])));
+				result.push(Tool.find(suggested[:suggested_tool_id]));
 				if result.length == 5
 					break;
 				end			
@@ -88,7 +88,7 @@ class Api::ToolsController < ApplicationController
 			initialMetrics.each do |metric|
 				@nextMetric = ToolUseMetric.where("user_id = ? AND created_at > ? ", metric[:user_id], metric[:created_at]).take();
 				if @nextMetric					
-					result.push(simple_tool(Tool.find(@nextMetric.tool_id)));
+					result.push(Tool.find(@nextMetric.tool_id));
 					if result.length == 5
 						break;
 					end
@@ -174,57 +174,57 @@ class Api::ToolsController < ApplicationController
 
 					# stars
 					# if params[:tool_ratings] and params[:tool_ratings][:stars] and params[:tool_ratings][:stars] != 0
-					if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
+					# if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
 						
 
-						@tool_ratings = @tool.tool_ratings.create({
-							stars: params[:tool_ratings][0][:stars], 
-							user_id: current_user[:id]
-						});
+					# 	@tool_ratings = @tool.tool_ratings.create({
+					# 		stars: params[:tool_ratings][0][:stars], 
+					# 		user_id: current_user[:id]
+					# 	});
 						
-						@tool_ratings.save
-						@tool.star_average = @tool_ratings.stars;
-						@tool.save()
-					end
+					# 	@tool_ratings.save
+					# 	@tool.star_average = @tool_ratings.stars;
+					# 	@tool.save()
+					# end
 					
 					# tags
 					# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""			
-					if params[:tags] and params[:tags].length > 0						
-						tags = params[:tags];
-						new_tag_ids = []
+					# if params[:tags] and params[:tags].length > 0						
+					# 	tags = params[:tags];
+					# 	new_tag_ids = []
 
-						# check if tags exists otherwise create
-						tags.each do |tag|
-							if tag != ""
-								currentTag = Tag.find_or_create_by value: tag;
-								new_tag_ids.push(currentTag.id);
-							end
-						end
+					# 	# check if tags exists otherwise create
+					# 	tags.each do |tag|
+					# 		if tag != ""
+					# 			currentTag = Tag.find_or_create_by value: tag;
+					# 			new_tag_ids.push(currentTag.id);
+					# 		end
+					# 	end
 
-						new_tag_ids.each do |ids|
+					# 	new_tag_ids.each do |ids|
 						
-							@tool_tag = @tool.tool_tags.create({
-								tag_id: ids,
-								user_id: current_user[:id]
-							})
-							@tool_tag.save
+					# 		@tool_tag = @tool.tool_tags.create({
+					# 			tag_id: ids,
+					# 			user_id: current_user[:id]
+					# 		})
+					# 		@tool_tag.save
 
-						end
-
-
-
-					end
+					# 	end
 
 
-					# comment
-					if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
-						 puts params[:comments][0];
-						@comment = @tool.comments.create({
-							content: params[:comments][0][:content], 
-							user_id: current_user[:id]
-						});
-						@comment.save
-					end
+
+					# end
+
+
+					# # comment
+					# if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
+					# 	 puts params[:comments][0];
+					# 	@comment = @tool.comments.create({
+					# 		content: params[:comments][0][:content], 
+					# 		user_id: current_user[:id]
+					# 	});
+					# 	@comment.save
+					# end
 
 					# attributes
 					# save_parameters(@tool, params[:attribute_types]);
@@ -284,7 +284,7 @@ class Api::ToolsController < ApplicationController
 			response = [];
 			@tools = Tool.limit(5).reverse_order
 			@tools.each do |tool|
-				response.push(simple_tool(tool));
+				response.push(tool);
 			end
 			format.json { render json: response, status: :ok }
 		end
@@ -313,40 +313,40 @@ class Api::ToolsController < ApplicationController
 						@tool.save()
 
 						# stars
-						if params[:tool_ratings] and params[:tool_ratings].length > 0 #and params[:tool_ratings][0][:stars] != 0
-							process_update_rating(params[:tool_ratings][0][:stars])
-							# if params[:tool_ratings][0][:stars] == 0
-							# 	@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
-							# 	tool_rating_count = @user_tool_rating.length
-	 					# 		if @user_tool_rating
-	 					# 			@tool.star_average *= tool_rating_count
-	 					# 			@tool.star_average -= @user_tool_rating.stars
-							# 		@user_tool_rating.destroy()
-							# 		if tool_rating_count != 1
-							# 			@tool.star_average /= tool_rating_count - 1
-							# 		else
-							# 			@tool.star_average = 0;
-							# 		end
-							# 		@tool.save()
-							# 	end
-							# else 
-							# 	tool_rating_count = @tool.tool_ratings.count
-							# 	@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
-							# 	puts params[:tool_ratings][0][:stars]
-							# 	@tool_ratings.stars = params[:tool_ratings][0][:stars]
-							# 	@tool_ratings.save()
-							# 	puts "here"
-							# 	puts @tool.star_average
-							# 	puts tool_rating_count
-							# 	@tool.star_average *= tool_rating_count
-							# 	@tool.star_average += @tool_ratings.stars
-							# 	@tool.star_average /= tool_rating_count + 1
-							# 	@tool.save()
-							# end
+						# if params[:tool_ratings] and params[:tool_ratings].length > 0 #and params[:tool_ratings][0][:stars] != 0
+						# 	process_update_rating(params[:tool_ratings][0][:stars])
+						# 	# if params[:tool_ratings][0][:stars] == 0
+						# 	# 	@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
+						# 	# 	tool_rating_count = @user_tool_rating.length
+	 				# 	# 		if @user_tool_rating
+	 				# 	# 			@tool.star_average *= tool_rating_count
+	 				# 	# 			@tool.star_average -= @user_tool_rating.stars
+						# 	# 		@user_tool_rating.destroy()
+						# 	# 		if tool_rating_count != 1
+						# 	# 			@tool.star_average /= tool_rating_count - 1
+						# 	# 		else
+						# 	# 			@tool.star_average = 0;
+						# 	# 		end
+						# 	# 		@tool.save()
+						# 	# 	end
+						# 	# else 
+						# 	# 	tool_rating_count = @tool.tool_ratings.count
+						# 	# 	@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
+						# 	# 	puts params[:tool_ratings][0][:stars]
+						# 	# 	@tool_ratings.stars = params[:tool_ratings][0][:stars]
+						# 	# 	@tool_ratings.save()
+						# 	# 	puts "here"
+						# 	# 	puts @tool.star_average
+						# 	# 	puts tool_rating_count
+						# 	# 	@tool.star_average *= tool_rating_count
+						# 	# 	@tool.star_average += @tool_ratings.stars
+						# 	# 	@tool.star_average /= tool_rating_count + 1
+						# 	# 	@tool.save()
+						# 	# end
 
 
 
-						end
+						# end
 
 						# tags
 						# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""

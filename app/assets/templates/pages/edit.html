@@ -1,0 +1,44 @@
+<div ng-controller='PagesEditController' class='tapor-container'>
+	<div class="row">
+		<div class="col-md-10">
+			<div class="form-group">     	
+      	<div class="col-sm-6">
+
+        	<input ng-if="!is_editing" type="text" class="form-control" id="inputName" placeholder="Page name" ng-model="data.title" required>
+
+        	<h3 ng-if="is_editing">{{data.title}}</h3>
+      	</div>
+    </div>
+		</div>
+		<div class="col-md-2">
+		<button class="btn btn-primary" ng-click="save()">Save</button>
+		<a href="/pages" class="btn btn-warning">Cancel</a>
+		</div>
+		
+	</div>
+	<br>
+	<div class="row">	
+		<div class="col-md-12">
+			
+			<input toggle-checkbox ng-model="is_rich_editing" type="checkbox" data-on="Rich text" data-off="Plain text">
+			<hr>
+			
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="row">	
+		<div class="col-md-12">
+			
+			<div ng-if="! is_rich_editing" ui-ace="{
+				  useWrapMode : true,				  
+				  mode: 'html',
+				}" ng-model="data.content">
+			</div>
+
+			<div ng-if="is_rich_editing">
+				<textarea ui-tinymce="tinymceOptions" ng-model="data.content"></textarea>
+			</div>
+
+		</div>
+	</div>
+</div>

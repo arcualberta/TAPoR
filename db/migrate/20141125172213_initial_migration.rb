@@ -7,11 +7,12 @@ class InitialMigration < ActiveRecord::Migration
   		t.timestamps
   	end
 
+    add_index :pages, :name, :unique => true
+
   	create_table :users do |t|
   		t.string :uid
   		t.string :provider
   		t.string :name
-      t.string :login
   		t.string :email # user provided
   		t.boolean :is_email_publishable, default: false # user provided
   		t.string :site # user provided
@@ -164,8 +165,8 @@ class InitialMigration < ActiveRecord::Migration
   	create_table :tool_attributes do |t|
   		t.belongs_to :tool
   		t.belongs_to :attribute_type
-      # t.belongs_to :attribute_value;
-      t.integer :value
+      t.belongs_to :attribute_value;
+      # t.integer :value
   		t.timestamps
   	end
 

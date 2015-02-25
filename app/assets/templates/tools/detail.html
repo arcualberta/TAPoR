@@ -8,7 +8,7 @@
 				<div class="col-md-12">
 					<div class="media">
   					<div class="media-left">
-							<img src='{{data.image_url}}'>
+							<img src='{{data.thumb_url}}'>
 						</div>
 						<div class="media-body">
 							<div class="row">
@@ -93,10 +93,10 @@
 								<dd>
 									<span ng-repeat="tag in data.global_tags track by $index">{{tag}} </span>		
 								</dd>
-								<dt>
+								<dt ng-if="current_user">
 									Your tags
 								</dt>
-								<dd>
+								<dd ng-if="current_user">
 					         <selectize config="tag_config" options='tag_options' ng-model="data.tags"></selectize>
 
 					        <button class="btn btn-primary" ng-click="updateTags()">Save tags</button>
@@ -173,12 +173,12 @@
 							</div>
 
 							<div class="row">
-								<div class="col-md-12">
+								<div class="col-md-12" ng-if="current_user">
 									<hr>
 									<form>
 										<div class="form-group">
 											<label>Your comment</label>
-											<textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.user_comment.content"></textarea>
+											<textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.user_comment.content" placeholder="A short description of why you recommend this tool"></textarea>
 											</div>
 											<button class="btn btn-primary" ng-click="updateComment()">Save comment</button>
 										

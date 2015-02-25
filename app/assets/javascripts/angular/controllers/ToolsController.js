@@ -114,7 +114,7 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 	$http.get('/api/tools/' + $routeParams.id)
 	.success(function(data, status, headers, config){
 		
-		$scope.is_editable = $scope.current_user.is_admin || $scope.current_user.id == data.user_id;
+		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
 		$scope.data = data;		
 		if (data.tags && data.tags.length > 0) {
 			var tags = [];

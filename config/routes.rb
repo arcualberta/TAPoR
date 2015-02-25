@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :attribute_types
     resources :comments
     resources :tool_lists
+    resources :pages
   end
 
 

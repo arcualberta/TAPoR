@@ -6,7 +6,7 @@ app.directive("multselect", function() {
         				"		<ul>"+
         				"			<li class='checkbox' ng-repeat='value in values track by $index'>"+
         				"				<label>"+
-        				"					<input ng-model='model[$index]' name='name' value='value.id' type='checkbox'> {{value.name}} "+
+        				"					<input toggle-checkbox ng-model='model[$index]' name='name' value='value.id' type='checkbox' data-on='Yes' data-off='No'> {{value.name}} "+
         				"				</label>"+
         				"			</li>"+
         				"		</ul>"+

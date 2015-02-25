@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   create_table "tool_attributes", force: true do |t|
     t.integer  "tool_id"
     t.integer  "attribute_type_id"
-    t.integer  "value"
+    t.integer  "attribute_value_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -176,7 +176,6 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "uid"
     t.string   "provider"
     t.string   "name"
-    t.string   "login"
     t.string   "email"
     t.boolean  "is_email_publishable", default: false
     t.string   "site"

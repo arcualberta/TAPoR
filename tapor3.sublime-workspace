@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"ass",
+				"association"
+			],
+			[
+				"is",
+				"is_hidden"
+			],
+			[
+				"pat",
+				"pathDirectory"
+			],
+			[
+				"save",
+				"save_path"
+			],
+			[
+				"ori",
+				"original_size"
+			],
+			[
+				"in",
+				"interheight"
+			],
+			[
+				"fin",
+				"final_width"
+			],
+			[
+				"file",
+				"filePath"
+			],
+			[
+				"dire",
+				"directory"
+			],
+			[
+				"direc",
+				"directories"
+			],
+			[
+				"de",
+				"denominator"
+			],
+			[
+				"too",
+				"tool_average"
+			],
+			[
 				"Ve",
 				"Vector2"
 			],
@@ -136,10 +184,6 @@
 				"squareSide"
 			],
 			[
-				"too",
-				"tool_list_user_roles"
-			],
-			[
 				"be",
 				"belongs_to"
 			],
@@ -178,10 +222,6 @@
 			[
 				"comm",
 				"comments_pinned"
-			],
-			[
-				"is",
-				"is_hidden"
 			],
 			[
 				"include",
@@ -256,10 +296,6 @@
 				"finalWidth"
 			],
 			[
-				"fin",
-				"finalWidth"
-			],
-			[
 				"dc",
 				"decoded"
 			],
@@ -330,10 +366,6 @@
 			[
 				"se",
 				"service_url"
-			],
-			[
-				"in",
-				"integer"
 			],
 			[
 				"colo",
@@ -482,15 +514,100 @@
 			[
 				"clip_",
 				"clip_path"
-			],
-			[
-				"File",
-				"FileUtils"
 			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "db/seeds.rb",
+			"settings":
+			{
+				"buffer_size": 1087104,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/api/users_controller.rb",
+			"settings":
+			{
+				"buffer_size": 2108,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "db/migrate/20141125172213_initial_migration.rb",
+			"settings":
+			{
+				"buffer_size": 4131,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/serializers/tool_serializer.rb",
+			"settings":
+			{
+				"buffer_size": 2990,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/orodrigu/Workspace/tapor3_datamigration/comments_result.txt",
+			"settings":
+			{
+				"buffer_size": 484316,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/orodrigu/Workspace/tapor3_datamigration/comments.csv",
+			"settings":
+			{
+				"buffer_size": 460733,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/orodrigu/Workspace/tapor3_datamigration/process_comments.py",
+			"settings":
+			{
+				"buffer_size": 804,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/orodrigu/Workspace/tapor3_datamigration/test.txt",
+			"settings":
+			{
+				"buffer_size": 21896,
+				"line_ending": "Unix",
+				"name": "<!--[if gte mso 9]><xml>"
+			}
+		},
+		{
+			"file": "/Users/orodrigu/Workspace/tapor3_datamigration/tool_tags_results.txt",
+			"settings":
+			{
+				"buffer_size": 135966,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/orodrigu/Workspace/tapor3_datamigration/process_icons.py",
+			"settings":
+			{
+				"buffer_size": 834,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/api/tools_controller.rb",
+			"settings":
+			{
+				"buffer_size": 14931,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -519,10 +636,28 @@
 	},
 	"expanded_folders":
 	[
-		"/Users/orodrigu/Workspace/tapor3"
+		"/Users/orodrigu/Workspace/tapor3",
+		"/Users/orodrigu/Workspace/tapor3/app",
+		"/Users/orodrigu/Workspace/tapor3/app/controllers",
+		"/Users/orodrigu/Workspace/tapor3/app/controllers/api",
+		"/Users/orodrigu/Workspace/tapor3/app/models",
+		"/Users/orodrigu/Workspace/tapor3/app/serializers",
+		"/Users/orodrigu/Workspace/tapor3/db",
+		"/Users/orodrigu/Workspace/tapor3/db/migrate",
+		"/Users/orodrigu/Workspace/tapor3/public"
 	],
 	"file_history":
 	[
+		"/Users/orodrigu/Desktop/test.txt",
+		"/Users/orodrigu/Workspace/tapor3_datamigration/comments.csv",
+		"/Users/orodrigu/.bash_profile",
+		"/Users/orodrigu/.bashrc",
+		"/Users/orodrigu/Workspace/tapor3_datamigration/tools.csv",
+		"/Users/orodrigu/Workspace/tapor3_datamigration/tools_result.txt",
+		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/angular/angular.min.js.gzip",
+		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/users_controller.rb",
+		"/Users/orodrigu/Workspace/tapor3_datamigration/process_tools.py",
+		"/Users/orodrigu/Workspace/tapor3/db/migrate/20141125172213_initial_migration.rb",
 		"/Users/orodrigu/Workspace/ParachuteDemo/Assets/Objects/Plane/ColliderControl.js",
 		"/Volumes/Kindle/linkss/autoreboot",
 		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/tool_list_user_role_serializer.rb",
@@ -543,7 +678,6 @@
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/ToolsController.js",
 		"/Users/orodrigu/Workspace/tapor3/app/views/api/tools/update.html",
 		"/Users/orodrigu/Workspace/tapor3/db/schema.rb",
-		"/Users/orodrigu/Workspace/tapor3/db/migrate/20141125172213_initial_migration.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/stylesheets/style.css",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/templates/users/detail.html",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/templates/users/index.html",
@@ -575,7 +709,6 @@
 		"/Users/orodrigu/Workspace/tapor3/Gemfile",
 		"/Users/orodrigu/Desktop/error.html",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/UsersController.js",
-		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/users_controller.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/stylesheets/application.css",
 		"/Users/orodrigu/Workspace/tapor3/.gitignore",
 		"/Users/orodrigu/Workspace/tapor3/app/models/tool_attribute.rb",
@@ -613,8 +746,6 @@
 		"/Users/orodrigu/Workspace/SpeculativeTimelines/Assets/Textures/glyphicons/png/glyphicons_140_database_lock.png.meta",
 		"/Users/orodrigu/Workspace/SpeculativeTimelines/Assets/Textures/glyphicons/png/glyphicons_409_sort-by-attributes-alt.png.meta",
 		"/Users/orodrigu/Workspace/tapor3/db/migrate/20141105160544_initial_migration.rb",
-		"/Users/orodrigu/.bashrc",
-		"/Users/orodrigu/.bash_profile",
 		"/Users/orodrigu/Workspace/tapor3/db/migrate/20141104174518_initial.rb",
 		"/Users/orodrigu/Workspace/tapor3/Gemfile.lock",
 		"/Users/orodrigu/Workspace/ikema/app/assets/stylesheets/contributions.css",
@@ -644,23 +775,25 @@
 		"/Users/orodrigu/Workspace/ikema/test/controllers/users_controller_test.rb",
 		"/Users/orodrigu/Workspace/ikema/test/controllers/contributions_controller_test.rb",
 		"/Users/orodrigu/Workspace/ikema/config/database.yml",
-		"/Users/orodrigu/Workspace/ikema/db/migrate/20141015211425_create_users.rb",
-		"/Users/orodrigu/Workspace/ikema/app/controllers/users/omniauth_callbacks_controller.rb",
-		"/Users/orodrigu/Workspace/ikema/app/assets/javascripts/application.js",
-		"/Users/orodrigu/Workspace/ikema/app/controllers/user_controller.rb",
-		"/Users/orodrigu/Workspace/ikema/config/routes.rb",
-		"/Users/orodrigu/Workspace/ikema/config/initializers/omniauth.rb",
-		"/Users/orodrigu/Workspace/ikema/app/controllers/sessions_controller.rb"
+		"/Users/orodrigu/Workspace/ikema/db/migrate/20141015211425_create_users.rb"
 	],
 	"find":
 	{
-		"height": 23.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
 		"height": 93.0,
 		"where_history":
 		[
+			"seeds.rb",
+			"comments.csv",
+			"test.txt",
+			"comments.csv",
+			"tools.csv",
+			"seeds.rb",
+			"tools.csv",
+			"seeds.rb",
 			""
 		]
 	},
@@ -669,6 +802,77 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"ToolAttribute.create(id: \"344\"",
+			"ToolAttribute.create(id: \"344",
+			"association",
+			"is_admin:",
+			"login\\: '.+?', ",
+			"login\\: '.+?',",
+			"/login\\: '.+',/",
+			"login\\: '.+',",
+			"login\\: '",
+			"login\\:",
+			"login\\:\\s\\'.+\\',",
+			"login\\:",
+			"login",
+			"login\\: \\'.+\\'",
+			"login: \\'.+\\'",
+			"comments",
+			"comment",
+			"index:",
+			"\\\"",
+			"\\n",
+			"<div>\\n",
+			"</p>\\n",
+			"^\\\\\\n",
+			"\"301",
+			"ENDVALUE",
+			"END",
+			"</a>\\s*\\n",
+			"</a>\\s+\\n$",
+			"</a>\\s*\\n$",
+			"</a> $",
+			"</p>\\n",
+			"^\\\\\\n",
+			"^\\\\",
+			"^\\\\n",
+			"^\\\\\\n",
+			"image_url",
+			"tools/2015/2/17",
+			"time",
+			"print",
+			"filePath",
+			"originalSize",
+			"interheight",
+			"liquid",
+			"image",
+			"save",
+			"\\\"",
+			",",
+			"\"\"",
+			"</p>\"\",",
+			"\\\"",
+			",",
+			"</p>\"\",",
+			",",
+			"500",
+			"'",
+			"</p>\"\",",
+			"\\N",
+			"</p>\"\"",
+			"</p>\"\",",
+			"\"\",",
+			"\\code",
+			"url",
+			"url:",
+			"\\\\N",
+			"\\N",
+			"{}",
+			"+",
+			"int",
+			"^\\\\\\n",
+			"^\\\\\\n\\n",
+			"^\\\\\\n",
 			"DisplaceNeighbours",
 			"MoveVerticalAngleBlock",
 			"direction * ",
@@ -725,78 +929,7 @@
 			"triangleVertexIndex",
 			"vertexIndex",
 			"vertexCount",
-			"Move",
-			"squareLength/2.0",
-			"originalVertices",
-			"newSquarePositions",
-			"scalingFactor",
-			"vertexAccess",
-			"vertex",
-			":",
-			"lick",
-			"squareLe",
-			"vertexAccessor",
-			"lick",
-			"click",
-			"newVertices",
-			"- squareSide",
-			"count",
-			"id:",
-			"role:",
-			"ListsUserCtrl",
-			"contributing",
-			"createOrUpdateList",
-			"cancel",
-			".create",
-			"tool_list_roles",
-			"tool_list_user_roles",
-			"@tool_list_item",
-			"user_is",
-			"list_description",
-			"list_name",
-			"list_description",
-			"list_name",
-			"safe_params",
-			".create",
-			"safe_params",
-			"is_email_publishable",
-			":",
-			",",
-			"tools",
-			"$scope.data",
-			"name",
-			"list",
-			"fd",
-			"is_editing",
-			"col-sm",
-			"tool_id",
-			"is_editing",
-			"tool_id\ntool_id",
-			"tool_id",
-			"createorUpdate",
-			"createOrUpdate",
-			"location",
-			"Save",
-			"note",
-			"$index",
-			"star_average",
-			"star",
-			"updateToolUserDetails",
-			"location",
-			"tool_ratings",
-			"tools",
-			"Rating",
-			">          				",
-			"h2",
-			"desri",
-			"check",
-			"editing_tool",
-			"location",
-			"path",
-			"editing",
-			"btn-primary",
-			"tool_ratings",
-			"col-sm"
+			"Move"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -804,6 +937,18 @@
 		"regex": false,
 		"replace_history":
 		[
+			"is_admin: ",
+			"",
+			"'",
+			"",
+			"'",
+			"",
+			"'",
+			"</p>\",",
+			"\"\"",
+			"</p>\",",
+			"\"\"",
+			""
 		],
 		"reverse": false,
 		"show_context": true,
@@ -814,8 +959,327 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "db/seeds.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1087104,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1087104,
+								1087104
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 55167.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/controllers/api/users_controller.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2108,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								279,
+								279
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "db/migrate/20141125172213_initial_migration.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4131,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								249,
+								249
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/serializers/tool_serializer.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2990,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1364,
+								1364
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 2.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/Users/orodrigu/Workspace/tapor3_datamigration/comments_result.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 484316,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								460866
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 38231.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/Users/orodrigu/Workspace/tapor3_datamigration/comments.csv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 460733,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								453251,
+								453251
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 38051.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "/Users/orodrigu/Workspace/tapor3_datamigration/process_comments.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 804,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								705,
+								613
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/Users/orodrigu/Workspace/tapor3_datamigration/test.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21896,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								21896
+							]
+						],
+						"settings":
+						{
+							"auto_name": "<!--[if gte mso 9]><xml>",
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 11.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "/Users/orodrigu/Workspace/tapor3_datamigration/tool_tags_results.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 135966,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								135966
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "/Users/orodrigu/Workspace/tapor3_datamigration/process_icons.py",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 834,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								272,
+								272
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Python/Python.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "app/controllers/api/tools_controller.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14931,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11519,
+								11519
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 6525.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				}
 			]
 		}
 	],

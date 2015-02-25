@@ -137,3 +137,11 @@ body {
 #imageContainer {
 	/*max-width: 550px;*/
 }
+
+.ace_editor { 
+	height: 400px; 
+}
+
+.mce-tinymce {
+	height: 400px
+}

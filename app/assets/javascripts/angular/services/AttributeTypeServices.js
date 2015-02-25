@@ -17,3 +17,4 @@ app.factory('attributeTypeServices', ['$http', '$q', function($http, $q){
 
 
 	
+

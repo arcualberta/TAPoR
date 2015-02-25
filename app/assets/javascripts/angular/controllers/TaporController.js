@@ -15,7 +15,7 @@ app.controller('TaporMainController',['$scope', '$http', function($scope, $http)
 
 }]);
 
-app.controller('TaporIndexCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('TaporIndexController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.carousel_next = function() {
 		$("#carousel-example-generic").carousel("next");
