@@ -59,6 +59,8 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.datetime "updated_at"
   end
 
+  add_index "pages", ["name"], name: "index_pages_on_name", unique: true, using: :btree
+
   create_table "suggested_tools", force: true do |t|
     t.integer  "tool_id"
     t.integer  "suggested_tool_id"

@@ -1,6 +1,6 @@
 class Api::PagesController < ApplicationController
 
-	before_action :set_page, only: [:update, :show, :destroy]
+	before_action :set_page, only: [:show, :destroy]
 
 	def index
 		@pages = Page.all
@@ -28,7 +28,11 @@ class Api::PagesController < ApplicationController
 	# end
 
 	def update
+
 		if current_user and current_user.is_admin?
+			puts "HERE"
+			puts params
+			@page = Page.find_or_create_by( name: params[:name]);
 			respond_to do |format|
 				Page.transaction do
 					begin
@@ -36,9 +40,9 @@ class Api::PagesController < ApplicationController
 						# 	name: safe_params[:name],
 						# 	content: safe_params[:content]
 						# })
-
-						@page = Page.find_or_create_by( name: safe_params[:name]);
-						@page.content = safe_params[:content]
+						
+						@page.name = params[:name]
+						@page.content = params[:content]
 						@page.save();
 						format.json { render json: @page, status: :ok }
 					rescue
@@ -51,7 +55,6 @@ class Api::PagesController < ApplicationController
 
 	def show
 		respond_to do |format|						
-			puts @page
 			format.json { render json: @page, include: :content, status: :ok}			
 		end
 	end

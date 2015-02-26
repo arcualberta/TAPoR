@@ -26,6 +26,9 @@
 //= require bootstrap-toggle/js/bootstrap-toggle
 //= require turbolinks
 //= require ng-sortable/dist/ng-sortable
+//= require ui.bootstrap/dist/ui-bootstrap-tpls-0.12.1.min
+//= require jqcloud2/dist/jqcloud
+//= require angular-jqcloud/angular-jqcloud
 //= require angular/app
 //= require_tree ./angular/services
 //= require_tree ./angular/directives

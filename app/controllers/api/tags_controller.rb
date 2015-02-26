@@ -21,8 +21,8 @@ class Api::TagsController < ApplicationController
 				tag_count = tag.tools.count;
 				if tag_count > 0
 					response[:tags].push({
-						value: tag[:value],
-						count: tag_count
+						text: tag[:value],
+						weight: tag_count
 					})
 
 					if tag_count > response[:max]

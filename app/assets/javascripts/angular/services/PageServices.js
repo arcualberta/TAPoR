@@ -29,20 +29,19 @@ app.factory('pageServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 		},
 
 		save : function(data) {			
-			if (current_user && current_user.is_admin) {
-				if (angular.isUndefined(data.name)) {
-					data.name = data.title.toLowerCase().replace(' ', '_');
-				}			
-				var deferred = $q.defer();
-				$http.patch('/api/pages/' + data.name)
-				.success(function(data){
-					deferred.resolve(data)
-				})
-				.error(function(){
-					deferred.reject("An error occured while saving page " + data.name);
-				});
-				return data;
-			}
+			if (angular.isUndefined(data.name)) {
+				data.name = data.title.toLowerCase().replace(' ', '_');
+			}			
+			var deferred = $q.defer();
+			$http.patch('/api/pages/' + data.name, data)
+			.success(function(data){
+				deferred.resolve(data)
+			})
+			.error(function(){
+				deferred.reject("An error occured while saving page " + data.name);
+			});
+			return deferred.promise;
+		
 		}
 
 	}

@@ -19,11 +19,9 @@ app.controller('PagesIndexController', ['$scope', 'services', function($scope, s
 
 app.controller('PagesDetailController', ['$scope', '$routeParams', '$location', 'services', function($scope, $routeParams, $location, services){
 	$scope.data = {};
-	console.log($routeParams.name);
 	services.page.get($routeParams.name).then(
 		function(data){
 			$scope.data = data;
-			console.log($scope)
 		},
 		function(errorMessage){
 			$scope.error = errorMessage;
@@ -59,7 +57,7 @@ app.controller('PagesEditController', ['$scope', '$routeParams', '$location', 's
 	if ($scope.is_editing) {
 		services.page.get($routeParams.name).then(
 			function(data){
-				$scope.data = data;				
+				$scope.data = data;			
 			},
 			function(errorMessage){
 				$scope.error = errorMessage;
@@ -68,18 +66,16 @@ app.controller('PagesEditController', ['$scope', '$routeParams', '$location', 's
 	}
 
 	$scope.save = function() {
-
-		if (current_user && current_user.is_admin){
-			services.pages.save($scope.data).then(
-				function(data){
-					$location.path("/pages/" + $scope.data.name)
-				},
-				function(errorMessage) {
-					$scope.error = errorMessage
-				}
-			);
-		}
-		
+		services.page.save($scope.data).then(
+			function(data){
+				$location.path("/pages/" + $scope.data.name)
+			},
+			function(errorMessage) {
+				$scope.error = errorMessage
+			}
+		);
 	}
+	
+
 
 }]);

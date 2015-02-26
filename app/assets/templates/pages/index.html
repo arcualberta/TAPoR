@@ -1,10 +1,10 @@
 <div ng-controller='PagesIndexController' class='tapor-container'>
 	<div class='row'>
 		<div class="col-md-12">
-
-		<ul>
-		<li ng-repeat="page in data"> <a href="/pages/{{page.name}}">{{page.title}}</a></li>
-		</ul>
+			<a href="/pages/new" class="btn btn-primary">New page</a>
+			<ul>
+			<li ng-repeat="page in data"> <a href="/pages/{{page.name}}">{{page.title}}</a></li>
+			</ul>
 
 		</div>
 	</div>

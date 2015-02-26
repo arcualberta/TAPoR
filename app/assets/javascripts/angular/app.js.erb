@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('taporApp', ['ngResource', 'ngRoute', 'selectize', 'ui.sortable', 'ui.ace', 'ui.tinymce']);
+var app = angular.module('taporApp', ['ngResource', 'ngRoute', 'selectize', 'ui.sortable', 'ui.ace', 'ui.tinymce', 'ui.bootstrap', 'angular-jqcloud']);
 
 app.config(['$httpProvider', function($httpProvider){
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');

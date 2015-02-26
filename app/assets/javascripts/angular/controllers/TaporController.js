@@ -1,6 +1,6 @@
 
 
-app.controller('TaporMainController',['$scope', '$http', function($scope, $http){
+app.controller('TaporMainController',['$scope', '$http', '$location', function($scope, $http, $location){
 
 	$scope.current_user = null;
 	$scope.is_logged_in = false;
@@ -13,17 +13,13 @@ app.controller('TaporMainController',['$scope', '$http', function($scope, $http)
 		
 	}
 
+	$scope.go_to = function(page) {
+		$location.path(page)
+	}
+
 }]);
 
 app.controller('TaporIndexController', ['$scope', '$http', function($scope, $http) {
-
-	$scope.carousel_next = function() {
-		$("#carousel-example-generic").carousel("next");
-	}
-
-	$scope.carousel_prev = function() {
-		$("#carousel-example-generic").carousel("prev");	
-	}
 
 	$scope.featured = []
 	$scope.system_tags = {};
@@ -43,6 +39,7 @@ app.controller('TaporIndexController', ['$scope', '$http', function($scope, $htt
 			});
 		}
 	});
+
 
 
 

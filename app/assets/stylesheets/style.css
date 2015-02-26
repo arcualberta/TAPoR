@@ -5,8 +5,8 @@ body {
 #nav {
 	background: #2A2A2A;
 	color: #F3F3F3;
-	height: 32px;
-	line-height: 32px;
+	height: 45px;
+	line-height: 45px;
 }
 
 #header {
@@ -98,8 +98,8 @@ body {
 }
 
 .nav-bar-profile {
-	height : 25px;
-	width : 25px;
+	height : 17px;
+	width : 17px;
 }
 
 .draggable_place {
