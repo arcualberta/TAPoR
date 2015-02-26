@@ -42,24 +42,25 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 
   }
 
-  $scope.updateRating = function(rating) {
+  // $scope.updateRating = function(rating) {
     
-    var data = {
-    	id: $scope.id,
-    	stars: rating
-    }
+  //   var data = {
+  //   	id: $scope.id,
+  //   	stars: rating
+  //   }
     
-    $http.patch('/api/tools/rate/' + $scope.id, data)
-    .success(function(data, status, headers, config) {
-    	console.log("Rating selected - " + rating);
-    	// update overall rating
-    });
-  };
+  //   $http.patch('/api/tools/rate/' + $scope.id, data)
+  //   .success(function(data, status, headers, config) {
+  //   	console.log("Rating selected - " + rating);
+  //   	// update overall rating
+  //   });
+  // };
 
 
   services.tool.get_tool($scope.id).then(
   	function(data){
   		$scope.data.tool = data;
+  		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
   	},
   	function(errorMesssage){
   		$scope.error = errorMesssage;
@@ -76,6 +77,15 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   	}
   );
 
+  services.tool.get_ratings($scope.id).then(
+  	function(data){
+  		$scope.data.ratings = data;
+  	},
+  	function(errorMesssage){
+  		$scope.error = errorMesssage
+  	}
+  );
+
 
   $scope.update_tags = function() {
 
@@ -84,15 +94,30 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   		tags: $scope.data.tags.user
   	}
 
-  	services.tool.update_tags($scope.id, data).then(
+  	services.tool.update_tags(data).then(
   		function(data){
-  			console.log(data);
   			$scope.data.tags = data;
   		},
   		function(errorMesssage) {
   			$scope.error = errorMesssage
   		}
   	)
+  }
+
+  $scope.update_ratings = function(stars) {
+  	 var data = {
+  		id : $scope.id,
+  		stars: stars
+  	}  	
+  	services.tool.update_ratings(data).then(
+  		function(data){  	
+  			console.log(data)		
+  			$scope.data.ratings = data;
+  		},
+  		function(errorMesssage) {
+  			$scope.error = errorMesssage
+  		}
+  	)	
   }
 
   // $scope.updateTags = function() {
@@ -272,7 +297,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.creators_url = "";
   $scope.data.url = "";
 
-	$scope.data.tool_ratings = [{"stars" : 0}];  
+	// $scope.data.tool_ratings = [{"stars" : 0}];  
   
   // $scope.data.tool_tags = {};
   // $scope.data.tool_tags.tags = "";

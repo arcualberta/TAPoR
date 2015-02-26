@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags, :get_ratings, :update_ratings]
 	
 	def index
 		# @tools = Tool.all
@@ -238,24 +238,9 @@ class Api::ToolsController < ApplicationController
 	
 	end
 
-
-	def update_rating
-		respond_to do |format|
-			# @tool_rating = @tool.tool_ratings.find_or_create_by(user_id: current_user[:id]);
-			# if params[:stars] == 0
-			# 	@tool_rating.destroy
-			# 	format.json {render json: {status: "OK"}, status: :ok}
-			# else
-			# 	@tool_rating.update(stars: params[:stars]);
-			# 	format.json { render json: @tool_rating, status: :ok }
-			process_update_rating(params[:stars])
-			format.json {render json: {status: "OK"}, status: :ok}
-		end		
-	end
-
 	def update_tags
-			process_update_tags();
-			get_tags();
+		process_update_tags();
+		get_tags();
 	end
 
 	def get_tags()
@@ -289,6 +274,34 @@ class Api::ToolsController < ApplicationController
 			end
 			
 	end
+
+	def update_ratings
+		process_update_rating();
+		get_ratings();
+	end
+
+	def get_ratings
+		response = {
+			system: @tool.star_average,
+		}
+
+		if current_user
+			user_rating = @tool.tool_ratings.where(user_id: current_user[:id]).take()
+
+			if (user_rating and user_rating[:stars])
+				response[:user] = user_rating[:stars]				
+			else				
+				response[:user] = 0;
+			end
+		end
+		respond_to do |format|
+			format.json {render json: response, status: :ok}
+		end
+	end
+
+
+
+
 
 	def update_comments
 		respond_to do |format|
@@ -491,7 +504,7 @@ class Api::ToolsController < ApplicationController
 
 		end
 
-		def process_update_rating(stars)
+		def process_update_rating()
 			@tool_rating = @tool.tool_ratings.find_or_create_by(user_id: current_user[:id]);
 			if params[:stars] == 0		
 				@tool_rating.destroy				
@@ -512,7 +525,7 @@ class Api::ToolsController < ApplicationController
 					end							
 				else
 					@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
-					@comment.content = params[:comments][0][:content]
+					@comment.content = ActionController::Base.helpers.sanitize(params[:comments][0][:content]);
 					@comment.save
 				end
 			end

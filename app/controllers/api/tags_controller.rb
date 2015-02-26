@@ -2,7 +2,7 @@ class Api::TagsController < ApplicationController
 
 	def search
 		prefix = params[:query]
-		@tags = Tag.where("text LIKE :prefix", prefix: prefix + "%")		
+		@tags = Tag.where("text RLIKE '^"+prefix+".*'")		
 		respond_to do |format|			
 			format.json {render json: @tags, status: :ok}
 		end

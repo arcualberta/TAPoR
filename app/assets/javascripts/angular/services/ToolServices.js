@@ -28,10 +28,10 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			return deferred.promise;
 		},
 
-		update_tags: function(id, data) {
-			console.log(data)
+		update_tags: function(data) {
+			
 			var deferred = $q.defer();
-			$http.patch('/api/tools/'+id+'/tags/', data)
+			$http.patch('/api/tools/'+data.id+'/tags/', data)
 			.success(function(data){
 				deferred.resolve(data);
 			})
@@ -40,7 +40,58 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			})
 
 			return deferred.promise;
-		}
+		},
+
+		get_ratings: function(id) {
+			var deferred = $q.defer();
+			$http.get('/api/tools/' + id + "/ratings")
+			.success(function(data){
+				deferred.resolve(data);
+			})
+			.error(function(){
+				deferred.reject("An error occurred while getting ratings");
+			})
+			return deferred.promise;
+		},
+
+		update_ratings: function(data) {
+			var deferred = $q.defer();
+			$http.patch('/api/tools/'+data.id+'/ratings/', data)
+			.success(function(data){
+				deferred.resolve(data);
+			})
+			.error(function(){
+				deferred.reject("An error occurred while updating ratings");
+			})
+			return deferred.promise;
+		},
+
+		get_comments: function(id) {
+			var deferred = $q.defer();
+			$http.get('/api/tools/' + id + "/comments")
+			.success(function(data){
+				deferred.resolve(data);
+			})
+			.error(function(){
+				deferred.reject("An error occurred while getting comments");
+			})
+			return deferred.promise;
+		},
+
+		update_comments: function(data) {
+			var deferred = $q.defer();
+			$http.patch('/api/tools/'+data.id+'/comments/', data)
+			.success(function(data){
+				deferred.resolve(data);
+			})
+			.error(function(){
+				deferred.reject("An error occurred while updating comments");
+			})
+			return deferred.promise;
+		},
+
+		
+
 	}
 }]);
 
