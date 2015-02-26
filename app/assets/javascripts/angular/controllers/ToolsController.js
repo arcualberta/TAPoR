@@ -12,24 +12,27 @@ app.controller('ToolsIndexController', ['$scope', '$http', function($scope, $htt
 
 }]);
 
-app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
 	// alert($routeParams.toolId)
 	
 	$scope.id = $routeParams.id;
 
 	$scope.data = {};  
-  $scope.data.name = "";
-  $scope.data.description = "";
-  $scope.data.image_url = "";
-  $scope.data.id = "";
+  // $scope.data.name = "";
+  // $scope.data.description = "";
+  // $scope.data.image_url = "";
+  // $scope.data.id = "";
   
-  $scope.data.tool_ratings = [{"stars" : 0}];  
+  // $scope.data.tool_ratings = [{"stars" : 0}];  
   
-  $scope.data.tool_tags = {};
-  $scope.data.tool_tags.tags = "";
+  // $scope.data.tool_tags = {};
+  // $scope.data.tool_tags.tags = "";
   
-  $scope.data.comments = {}
-  $scope.data.also = [];
+  // $scope.data.comments = {}
+  // $scope.data.also = [];
+
+
+
 
   $scope.updateToolView = function() {
   	$http.post('/api/tools/view/' + $scope.id)
@@ -51,22 +54,58 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
     	console.log("Rating selected - " + rating);
     	// update overall rating
     });
-
-
-
   };
 
-  $scope.updateTags = function() {
+
+  services.tool.get_tool($scope.id).then(
+  	function(data){
+  		$scope.data.tool = data;
+  	},
+  	function(errorMesssage){
+  		$scope.error = errorMesssage;
+  	}
+  );
+
+
+  services.tool.get_tags($scope.id).then(
+  	function(data){
+  		$scope.data.tags = data;
+  	},
+  	function(errorMesssage){
+  		$scope.error = errorMesssage
+  	}
+  );
+
+
+  $scope.update_tags = function() {
+
   	var data = {
-  		id: $scope.id,
-  		tags: $scope.data.tags
+  		id : $scope.id,
+  		tags: $scope.data.tags.user
   	}
 
-  	$http.patch('/api/tools/tags/' + $scope.id, data)
-  	.success(function(data, status, headers, config){
-  		console.log("saved")
-  	});
+  	services.tool.update_tags($scope.id, data).then(
+  		function(data){
+  			console.log(data);
+  			$scope.data.tags = data;
+  		},
+  		function(errorMesssage) {
+  			$scope.error = errorMesssage
+  		}
+  	)
   }
+
+  // $scope.updateTags = function() {
+  // 	var data = {
+  // 		id: $scope.id,
+  // 		tags: $scope.data.tags
+  // 	}
+
+  // 	$http.patch('/api/tools/tags/' + $scope.id, data)
+  // 	.success(function(data, status, headers, config){
+  // 		console.log("saved")
+  // 	});
+  // }
 
   $scope.updateComment = function() {
   	var data = {
@@ -95,10 +134,10 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
-    valueField: 'value',
-    labelField: 'value',
-    searchField: 'value',
-    sortField: 'value',
+    valueField: 'text',
+    labelField: 'text',
+    searchField: 'text',
+    sortField: 'text',
     delimiter: ',',
     allowEmptyOption: false,
     preload: true,
@@ -111,90 +150,90 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 
 
 
-	$http.get('/api/tools/' + $routeParams.id)
-	.success(function(data, status, headers, config){
+	// $http.get('/api/tools/' + $routeParams.id)
+	// .success(function(data, status, headers, config){
 		
-		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
-		$scope.data = data;		
-		if (data.tags && data.tags.length > 0) {
-			var tags = [];
-			angular.forEach(data.tags, function(v, i){
-				tags.push(v.value);
-			});
-			$scope.data.tags = tags;						
-		}
+	// 	$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
+	// 	$scope.data = data;		
+	// 	// if (data.tags && data.tags.length > 0) {
+	// 	// 	var tags = [];
+	// 	// 	angular.forEach(data.tags, function(v, i){
+	// 	// 		tags.push(v.value);
+	// 	// 	});
+	// 	// 	$scope.data.tags = tags;						
+	// 	// }
 
 	
 
-		// Attributes
+	// 	// Attributes
 
-		attributes = [];		
-		angular.forEach(data.tool_attributes, function(v, i){
+	// 	attributes = [];		
+	// 	angular.forEach(data.tool_attributes, function(v, i){
 
-			var need_to_add = false;
-			var current_attribute = {
-				name: v.name,
-				value: "",
-			};			
+	// 		var need_to_add = false;
+	// 		var current_attribute = {
+	// 			name: v.name,
+	// 			value: "",
+	// 		};			
 			
-			if (v.is_multiple) {
-				if (v.model && v.model.length) {
-					var values = [];
-					angular.forEach(v.model, function(att, j){
-						if (att) {
-							need_to_add = true;
-							values.push(v.attribute_values[j].name)
-						}
-					});
-					if (need_to_add) {
-						current_attribute.value = values.join(",");
-					}
-				}
-			} else {
-				if (v.model && v.model.length) {
-					current_attribute.value = v.model[0].name
-					need_to_add = true;
-				}
-			}
+	// 		if (v.is_multiple) {
+	// 			if (v.model && v.model.length) {
+	// 				var values = [];
+	// 				angular.forEach(v.model, function(att, j){
+	// 					if (att) {
+	// 						need_to_add = true;
+	// 						values.push(v.attribute_values[j].name)
+	// 					}
+	// 				});
+	// 				if (need_to_add) {
+	// 					current_attribute.value = values.join(",");
+	// 				}
+	// 			}
+	// 		} else {
+	// 			if (v.model && v.model.length) {
+	// 				current_attribute.value = v.model[0].name
+	// 				need_to_add = true;
+	// 			}
+	// 		}
 
-			if (need_to_add) {
-				attributes.push(current_attribute);
-			}
+	// 		if (need_to_add) {
+	// 			attributes.push(current_attribute);
+	// 		}
 
-		});
+	// 	});
 
-		$scope.data.tool_attributes = attributes;
+	// 	$scope.data.tool_attributes = attributes;
 
-		// comments
+	// 	// comments
 
-		if (data.comments && data.comments.length) {
-			var new_comments = {
-				pinned: [],
-				not_pinned: []
-			}
-			angular.forEach(data.comments, function(v, i){
-				if (v.is_pinned) {
-					new_comments.pinned.push(v);
-				} else {
-					new_comments.not_pinned.push(v);
-				}
-			});
+	// 	if (data.comments && data.comments.length) {
+	// 		var new_comments = {
+	// 			pinned: [],
+	// 			not_pinned: []
+	// 		}
+	// 		angular.forEach(data.comments, function(v, i){
+	// 			if (v.is_pinned) {
+	// 				new_comments.pinned.push(v);
+	// 			} else {
+	// 				new_comments.not_pinned.push(v);
+	// 			}
+	// 		});
 
-			// sort comments
+	// 		// sort comments
 
-			$scope.data.comments = new_comments;
-
-
-
-		}
-
-		$http.get('/api/tools/view/' + $scope.id)
-		.success(function(data, status, headers, config){
-			$scope.data.also = data;
-		});
+	// 		$scope.data.comments = new_comments;
 
 
-	});
+
+	// 	}
+
+	// 	$http.get('/api/tools/view/' + $scope.id)
+	// 	.success(function(data, status, headers, config){
+	// 		$scope.data.also = data;
+	// 	});
+
+
+	// });
 
 	$http.get('/api/tool_lists/related_by_tool/' + $routeParams.id + '?limit=4')
 	.success(function(data, status, headers, config) {
@@ -209,11 +248,10 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 	}
 
 	$scope.addToList = function(id) {
-	
 		console.log(id)
 	}
 
-	$http.get('/api/tools/suggested/' + $scope.id)
+	$http.get('/api/tools/' + $scope.id + "/suggested")
 	.success(function(data, status, headers, config){
 		$scope.data.suggested_tools = data;
 	});
@@ -325,10 +363,10 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 	$scope.tag_options = [];
   $scope.tag_config = {
     create: true,
-    valueField: 'value',
-    labelField: 'value',
-    searchField: 'value',
-    sortField: 'value',
+    valueField: 'text',
+    labelField: 'text',
+    searchField: 'text',
+    sortField: 'text',
     delimiter: ',',
     allowEmptyOption: false,
     preload: true,

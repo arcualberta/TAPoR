@@ -8,24 +8,24 @@
 				<div class="col-md-12">
 					<div class="media">
   					<div class="media-left">
-							<img src='{{data.thumb_url}}'>
+							<img src='{{data.tool.thumb_url}}'>
 						</div>
 						<div class="media-body">
 							<div class="row">
 							<div class="col-md-10">
-								<h4 class="media-heading">{{data.name}}</h4>
+								<h4 class="media-heading">{{data.tool.name}}</h4>
 								<ul>
-									<li>Last updated: {{data.last_updated}}</li>
-									<li>Site: <a href="{{data.url}}" ng-click="updateToolView()">{{data.url}}</a></li>
+									<li>Last updated: {{data.tool.last_updated}}</li>
+									<li>Site: <a href="{{data.tool.url}}" ng-click="updateToolView()">{{data.url}}</a></li>
 								</ul>	
 							</div>
 							<div class="col-md-1">
-							 <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.id}}" role="button">Edit</a>
+							 <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.tool.id}}" role="button">Edit</a>
 							</div>
 
 								
 							</div>
-							{{data.description}}
+							<div ng-bind-html="data.tool.description"></div>
 						</div>
 					</div>									
 				</div>
@@ -44,19 +44,19 @@
 									Creator
 								</dt>
 								<dd>
-									{{data.creators_name}}
+									{{data.tool.creators_name}}
 								</dd>
 								<dt>
 									Creator's site
 								</dt>
 								<dd>
-									{{data.creators_url}}
+									{{data.tool.creators_url}}
 								</dd>
 								<dt>
 									Creator's email
 								</dt>
 								<dd>
-									{{data.creators_email}}
+									{{data.tool.creators_email}}
 								</dd>
 							</dl>
 						</div>
@@ -91,15 +91,17 @@
 									System wide tags
 								</dt>
 								<dd>
-									<span ng-repeat="tag in data.global_tags track by $index">{{tag}} </span>		
+									
+									<jqcloud words="data.tags.system" width="230" height="200" steps="7"></jqcloud>
+
 								</dd>
 								<dt ng-if="current_user">
 									Your tags
 								</dt>
 								<dd ng-if="current_user">
-					         <selectize config="tag_config" options='tag_options' ng-model="data.tags"></selectize>
+					         <selectize config="tag_config" options='tag_options' ng-model="data.tags.user"></selectize>
 
-					        <button class="btn btn-primary" ng-click="updateTags()">Save tags</button>
+					        <button class="btn btn-primary" ng-click="update_tags()">Save tags</button>
 								</dd>
 							</dl>
 							

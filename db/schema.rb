@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   end
 
   create_table "tags", force: true do |t|
-    t.string   "value"
+    t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

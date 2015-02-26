@@ -4,17 +4,24 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     get 'users/current', to: 'users#current'
+    
     get 'tags/search', to: 'tags#search'
-    post 'tools/featured', to: 'tools#featured_edit'
-    get 'tools/latest', to: 'tools#latest'
-    post 'tools/view/:id', to: 'tools#view'
-    patch 'tools/rate/:id', to: 'tools#update_rating'
-    patch 'tools/tags/:id', to: 'tools#update_tags'
-    patch 'tools/comments/:id', to: 'tools#update_comments'
-    get 'tools/view/:id', to: 'tools#also_viewed'
+    
+    
+    get 'tools/latest', to: 'tools#latest'    
+    get 'tools/:id/tags', to: 'tools#get_tags'    
+    get 'tools/:id/ratings', to: 'tools#get_rating'    
+    get 'tools/:id/comments', to: 'tools#get_comments'    
+    get 'tools/:id/view', to: 'tools#also_viewed'
     get 'tools/featured', to: 'tools#featured'    
-    get 'tools/suggested/:id', to: 'tools#suggested'
-    post 'tools/suggested/:id', to: 'tools#update_suggested'
+    get 'tools/:id/suggested', to: 'tools#suggested'
+    patch 'tools/:id/tags', to: 'tools#update_tags'
+    patch 'tools/:id/ratings', to: 'tools#update_rating'
+    patch 'tools/:id/comments', to: 'tools#update_comments'
+    post 'tools/:id/suggested', to: 'tools#update_suggested'
+    post 'tools/:id/view', to: 'tools#view'
+    post 'tools/featured', to: 'tools#featured_edit'
+    
     get 'tool_lists/latest', to: 'tool_lists#latest'
     get 'tool_lists/related_by_tool/:id', to: 'tool_lists#related_by_tool'
     get 'tool_lists/related_by_list/:id', to: 'tool_lists#related_by_list'

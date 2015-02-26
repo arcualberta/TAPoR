@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags]
 	
 	def index
 		# @tools = Tool.all
@@ -39,19 +39,7 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
-
-	# def simple_tool(tool) 
-	# 	this_tool = {
-	# 		name: tool.name,
-	# 		id: tool.id,
-	# 		image_url: tool.image_url,
-	# 		star_average: tool.star_average,
-	# 		thumb_url: tool.image_url ? tool.image_url.gsub(/\.png/, "-thumb.png") : ""
-	# 	}
-	# 	return this_tool;
-	# end
-
-
+	
 	def update_suggested
 		respond_to do |format|
 			@tool.suggested_tools.destroy_all
@@ -266,10 +254,40 @@ class Api::ToolsController < ApplicationController
 	end
 
 	def update_tags
-		respond_to do |format|
 			process_update_tags();
-			format.json {render json: {status: "OK"}, status: :ok}
-		end
+			get_tags();
+	end
+
+	def get_tags()
+			result = {
+				system: [],
+				user: [],
+			}
+			sum_tags = {};
+			@tool.tool_tags.each do |tool_tag|								
+				if sum_tags.has_key?(tool_tag.tag.text)
+					sum_tags[tool_tag.tag.text] += 1;
+				else 
+					sum_tags[tool_tag.tag.text] = 1;
+				end
+
+				if current_user and current_user[:id] == tool_tag.user_id
+					result[:user].push(tool_tag.tag.text)
+				end
+
+			end
+
+			sum_tags.each do |key, value|
+				result[:system].push({
+					text: key,
+					weight: value
+				})
+			end
+
+			respond_to do |format|
+				format.json { render json: result, status: :ok}			
+			end
+			
 	end
 
 	def update_comments
@@ -297,7 +315,7 @@ class Api::ToolsController < ApplicationController
 
 						# main tool content
 						@tool.name = safe_params[:name];
-						@tool.description = safe_params[:description];
+						@tool.description = ActionController::Base.helpers.sanitize(safe_params[:description]);
 						@tool.url = safe_params[:url]
 						@tool.creators_name = safe_params[:creators_name];
 						@tool.creators_email = safe_params[:creators_email];
@@ -498,14 +516,16 @@ class Api::ToolsController < ApplicationController
 					@comment.save
 				end
 			end
-		end
+		end		
 
 		def process_update_tags()
+			puts "here asdas dsadasdasds ad"
 			if params[:tags]
 				tags = params[:tags];
 				tag_ids = []
 				tags.each do |tag|
-					@currentTag = Tag.find_or_create_by value: tag
+					puts tag
+					@currentTag = Tag.find_or_create_by text: tag
 					tag_ids.push(@currentTag)
 				end	
 				
