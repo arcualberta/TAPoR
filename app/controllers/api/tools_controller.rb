@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags, :get_ratings, :update_ratings]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags, :get_ratings, :update_ratings, :get_comments]
 	
 	def index
 		# @tools = Tool.all
@@ -299,7 +299,20 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
+	def get_comments
 
+		response = []
+
+		@tool.comments.each do |comment|
+			if (comment.is_hidden and current_user.is_admin?) or not comment.is_hidden?
+				response.push(comment)
+			end
+		end
+
+		respond_to do |format|
+			format.json {render json: response, status: :ok}
+		end
+	end
 
 
 
@@ -532,7 +545,6 @@ class Api::ToolsController < ApplicationController
 		end		
 
 		def process_update_tags()
-			puts "here asdas dsadasdasds ad"
 			if params[:tags]
 				tags = params[:tags];
 				tag_ids = []

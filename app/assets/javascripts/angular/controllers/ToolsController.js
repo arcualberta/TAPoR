@@ -16,31 +16,10 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 	// alert($routeParams.toolId)
 	
 	$scope.id = $routeParams.id;
-
 	$scope.data = {};  
-  // $scope.data.name = "";
-  // $scope.data.description = "";
-  // $scope.data.image_url = "";
-  // $scope.data.id = "";
-  
-  // $scope.data.tool_ratings = [{"stars" : 0}];  
-  
-  // $scope.data.tool_tags = {};
-  // $scope.data.tool_tags.tags = "";
-  
-  // $scope.data.comments = {}
-  // $scope.data.also = [];
 
 
 
-
-  $scope.updateToolView = function() {
-  	$http.post('/api/tools/view/' + $scope.id)
-  	.success(function(data, status, headers, config){
-  		console.log(data)
-  	})
-
-  }
 
   // $scope.updateRating = function(rating) {
     
@@ -87,6 +66,15 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   );
 
 
+  services.tool.get_comments($scope.id).then(
+  	function(data){
+  		$scope.data.comments = data;
+  	},
+  	function(errorMesssage){
+  		$scope.error = errorMesssage
+  	}
+  );
+
   $scope.update_tags = function() {
 
   	var data = {
@@ -132,18 +120,18 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   // 	});
   // }
 
-  $scope.updateComment = function() {
-  	var data = {
-  		id: $scope.id,
-  		comments: [$scope.data.user_comment]
-  	}
+  // $scope.updateComment = function() {
+  // 	var data = {
+  // 		id: $scope.id,
+  // 		comments: [$scope.data.user_comment]
+  // 	}
 
-  	$http.patch('/api/tools/comments/' + $scope.id, data)
-  	.success(function(data, status, headers, config){
-  		console.log("saved")
-  	});
+  // 	$http.patch('/api/tools/comments/' + $scope.id, data)
+  // 	.success(function(data, status, headers, config){
+  // 		console.log("saved")
+  // 	});
 
-  }
+  // }
 
   var tagLoad = function(query, callback) {
   	if (query != "") {
@@ -174,19 +162,6 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   };
 
 
-
-	// $http.get('/api/tools/' + $routeParams.id)
-	// .success(function(data, status, headers, config){
-		
-	// 	$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
-	// 	$scope.data = data;		
-	// 	// if (data.tags && data.tags.length > 0) {
-	// 	// 	var tags = [];
-	// 	// 	angular.forEach(data.tags, function(v, i){
-	// 	// 		tags.push(v.value);
-	// 	// 	});
-	// 	// 	$scope.data.tags = tags;						
-	// 	// }
 
 	
 
@@ -265,21 +240,29 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 		$scope.data.related_lists = data;
 	});
 
-	$scope.updateToolUserDetails = function() {
-		$http.patch('/api/tools/' + $scope.id, $scope.data)
-		.success(function(data, status, headers, config){
-			$location.path('/tools/');
-		});
-	}
-
-	$scope.addToList = function(id) {
-		console.log(id)
-	}
-
 	$http.get('/api/tools/' + $scope.id + "/suggested")
 	.success(function(data, status, headers, config){
 		$scope.data.suggested_tools = data;
 	});
+
+	// $scope.updateToolUserDetails = function() {
+	// 	$http.patch('/api/tools/' + $scope.id, $scope.data)
+	// 	.success(function(data, status, headers, config){
+	// 		$location.path('/tools/');
+	// 	});
+	// }
+
+	// $scope.addToList = function(id) {
+	// 	console.log(id)
+	// }
+
+	$scope.updateToolView = function() {
+  	$http.post('/api/tools/view/' + $scope.id)
+  	.success(function(data, status, headers, config){
+  		console.log(data)
+  	})
+
+  }
 
 
 
