@@ -5,6 +5,9 @@ class ToolSerializer < ActiveModel::Serializer
     return object.image_url ? object.image_url.gsub(/\.png/, "-thumb.png") : "" ;   
   end
 
+  def description
+    ActionController::Base.helpers.sanitize(object[:description]);
+  end
 
 
 end

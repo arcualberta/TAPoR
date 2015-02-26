@@ -31,7 +31,7 @@ app.controller('ListsContributingController', ['$scope', '$http', function($scop
 
 }]);
 
-app.controller('ListsEditController', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+app.controller('ListsEditController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
 	
 	$scope.tools = [];	
 	$scope.data = {
@@ -108,11 +108,18 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 
 	// get all tools
 
-	$http.get("/api/tools")
-	.success(function(data, status, headers, config){
-		$scope.tools = data		
-	});
-
+	// $http.get("/api/tools")
+	// .success(function(data, status, headers, config){
+	// 	$scope.tools = data		
+	// });
+	services.tool.list().then(
+		function(data){
+			$scope.tools = data;
+		},
+		function(errorMessage){
+			$scope.error = errorMessage
+		}
+	)
 	
 
 }]);

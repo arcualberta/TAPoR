@@ -66,14 +66,17 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   );
 
 
-  services.tool.get_comments($scope.id).then(
-  	function(data){
+
+
+  services.tool.get_sorted_comments($scope.id, $scope.current_user.id).then(
+  	function(data) {
+  		console.log(data)
   		$scope.data.comments = data;
   	},
-  	function(errorMesssage){
-  		$scope.error = errorMesssage
+  	function(errorMesssage) {
+  		$scope.error = errorMesssage;
   	}
-  );
+  )
 
   $scope.update_tags = function() {
 

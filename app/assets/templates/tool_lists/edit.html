@@ -4,7 +4,7 @@
   		<div class="row">
   		<div class="panel panel-default">
   			<div class="panel-heading list-editing-column">
-        	<h1>Filtering & paginating mechanism</h1>
+        	<h1>Filtering and paginating mechanism</h1>
         </div>
   			<div class="panel-body">
   			<ul class="draggable_place list-tool-area" as-sortable="toolsListener" ng-model="tools">
@@ -35,7 +35,7 @@
 
             	<div class="row">
             		<div class="col-sm-12">
-            			{{tool.description}}
+            			<div ng-bind-html="tool.description"></div>
             		</div>
             	</div>
             

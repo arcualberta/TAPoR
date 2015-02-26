@@ -146,7 +146,7 @@
 						</div>
 						<div class="panel-body">
 							<!-- pinned -->
-							<div class="row" ng-repeat="comment in data.comments.pinned">
+							<div class="row" ng-repeat="comment in data.comments.system.pinned">
 								<div class="col-md-12">
 									<div class="media">
 				  					<div class="media-left">
@@ -154,13 +154,13 @@
 										</div>
 										<div class="media-body">
 											<h4 class="media-heading">{{comment.user.name}}</h4>
-											{{comment.content}}
+											<div ng-bind-html="comment.content"></div>
 										</div>
 									</div>
 								</div>															
 							</div>
 							<!-- chronological -->
-							<div class="row" ng-repeat="comment in data.comments.not_pinned">
+							<div class="row" ng-repeat="comment in data.comments.system.chronological">
 								<div class="col-md-12">
 									<div class="media">
 				  					<div class="media-left">
@@ -168,7 +168,7 @@
 										</div>
 										<div class="media-body">
 											<h4 class="media-heading">{{comment.user.name}}</h4>
-											{{comment.content}}
+											<div ng-bind-html="comment.content"></div>
 										</div>
 									</div>	
 								</div>
@@ -180,7 +180,7 @@
 									<form>
 										<div class="form-group">
 											<label>Your comment</label>
-											<textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.user_comment.content" placeholder="A short description of why you recommend this tool"></textarea>
+											<textarea class="form-control vertical-text-area" rows="3" id="inputComment" ng-model="data.comments.user.content" placeholder="A short description of why you recommend this tool"></textarea>
 											</div>
 											<button class="btn btn-primary" ng-click="updateComment()">Save comment</button>
 										

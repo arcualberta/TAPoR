@@ -12,6 +12,7 @@ class Api::ToolsController < ApplicationController
 	def index
 		# @tools = Tool.all
 		@tools = Tool.where(is_hidden: false)
+
 		respond_to do |format|			
 			format.json {render json: @tools, status: :ok}
 		end
@@ -19,8 +20,7 @@ class Api::ToolsController < ApplicationController
 
 	def show 
 		respond_to do |format|
-			@tool = Tool.find(params[:id]);
-			# format.json { render json: @tool, include_comments: params[:include_comments] }			
+			@tool = Tool.find(params[:id]);			
 			format.json { render json: @tool, status: :ok}			
 		end
 	end
@@ -304,6 +304,7 @@ class Api::ToolsController < ApplicationController
 		response = []
 
 		@tool.comments.each do |comment|
+			# comment.content = ActionController::Base.helpers.sanitize(comment.content);
 			if (comment.is_hidden and current_user.is_admin?) or not comment.is_hidden?
 				response.push(comment)
 			end
@@ -354,43 +355,7 @@ class Api::ToolsController < ApplicationController
 							@tool.last_updated = Time.now();
 						end
 
-						@tool.save()
-
-						# stars
-						# if params[:tool_ratings] and params[:tool_ratings].length > 0 #and params[:tool_ratings][0][:stars] != 0
-						# 	process_update_rating(params[:tool_ratings][0][:stars])
-						# 	# if params[:tool_ratings][0][:stars] == 0
-						# 	# 	@user_tool_rating = @tool.tool_ratings.find_by user_id: current_user[:id]
-						# 	# 	tool_rating_count = @user_tool_rating.length
-	 				# 	# 		if @user_tool_rating
-	 				# 	# 			@tool.star_average *= tool_rating_count
-	 				# 	# 			@tool.star_average -= @user_tool_rating.stars
-						# 	# 		@user_tool_rating.destroy()
-						# 	# 		if tool_rating_count != 1
-						# 	# 			@tool.star_average /= tool_rating_count - 1
-						# 	# 		else
-						# 	# 			@tool.star_average = 0;
-						# 	# 		end
-						# 	# 		@tool.save()
-						# 	# 	end
-						# 	# else 
-						# 	# 	tool_rating_count = @tool.tool_ratings.count
-						# 	# 	@tool_ratings = @tool.tool_ratings.find_or_create_by user_id: current_user[:id]
-						# 	# 	puts params[:tool_ratings][0][:stars]
-						# 	# 	@tool_ratings.stars = params[:tool_ratings][0][:stars]
-						# 	# 	@tool_ratings.save()
-						# 	# 	puts "here"
-						# 	# 	puts @tool.star_average
-						# 	# 	puts tool_rating_count
-						# 	# 	@tool.star_average *= tool_rating_count
-						# 	# 	@tool.star_average += @tool_ratings.stars
-						# 	# 	@tool.star_average /= tool_rating_count + 1
-						# 	# 	@tool.save()
-						# 	# end
-
-
-
-						# end
+						@tool.save()			
 
 						# tags
 						# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""

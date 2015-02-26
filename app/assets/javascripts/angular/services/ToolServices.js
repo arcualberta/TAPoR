@@ -1,5 +1,40 @@
 app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
+
+
+	var process_get_comments = function(id) {
+		var deferred = $q.defer();
+		$http.get('/api/tools/' + id + "/comments")
+		.success(function(data){
+
+			angular.forEach(data, function(v, k){
+				data[k].content = $sce.trustAsHtml(data[k].content);
+			})
+
+			deferred.resolve(data);
+		})
+		.error(function(){
+			deferred.reject("An error occurred while getting comments");
+		})
+		return deferred.promise;
+	}
+
 	return {		
+		 list : function() {
+			var deferred = $q.defer();
+				$http.get('/api/tools')
+				.success(function(data){
+					angular.forEach(data, function(v, k){
+						data[k].description = $sce.trustAsHtml(data[k].description);
+					})
+					deferred.resolve(data);
+				})
+				.error(function(){
+					deferred.reject("An error occurred while listing tools");
+				});
+
+			return deferred.promise;
+		},
+
 		get_tool: function(id) {
 			var deferred = $q.defer();
 			$http.get('/api/tools/' + id)
@@ -67,15 +102,79 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 		},
 
 		get_comments: function(id) {
-			var deferred = $q.defer();
-			$http.get('/api/tools/' + id + "/comments")
-			.success(function(data){
-				deferred.resolve(data);
-			})
-			.error(function(){
-				deferred.reject("An error occurred while getting comments");
-			})
-			return deferred.promise;
+			return process_get_comments(id)
+		},
+
+		get_sorted_comments: function(id, user_id) {
+			var deferred = $q.defer();			
+
+
+			process_get_comments(id).then(
+				function(data){	
+					var sorted_comments = {
+						system: {
+							pinned: [],
+							chronological: []
+						},
+						user : {
+							content: ""
+						}
+					}
+
+					angular.forEach(data, function(v, k){
+					
+						if (v.is_pinned) {
+							sorted_comments.system.pinned.push(v);
+						} else {
+							sorted_comments.system.chronological.push(v);
+						}
+
+						if (v.user_id == user_id) {
+							sorted_comments.user = v;
+						}
+					});
+
+					deferred.resolve(sorted_comments)
+				},
+				function(){
+					deferred.reject("An error occurred while getting sorted comments");
+				}
+			);
+
+
+  	// 	process_get_comments.then( 			
+  	// 		function(data) {
+  	// 			var sorted_comments = {
+		 //  			system: {
+		 //  				pinned: [],
+		 //  				chronological: []
+		 //  			},
+		 //  			user : {
+		 //  				content: ""
+		 //  			}
+		 //  		}
+
+  	// 			angular.forEach(data, function(v, k){
+		 //  			if (v.is_pinned) {
+		 //  				sorted_comments.system.pinned.push(v);
+		 //  			} else {
+		 //  				sorted_comments.system.chronological.push(v);
+		 //  			}
+
+		 //  			if (v.user_id == $scope.current_user.id) {
+		 //  				sorted_comments.user = v;
+		 //  			}
+		 //  		});
+
+
+  	// 			deferred.resolve(sorted_comments)
+  	// 		},
+  	// 		function(){
+  	// 			deferred.reject("An error ocurred when getting sorted comments")
+  	// 		}
+  	// 	)
+
+  		return deferred.promise;
 		},
 
 		update_comments: function(data) {
