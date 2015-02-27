@@ -89,7 +89,8 @@ body {
 }
 
 .tool-list-entry {
-	padding : 10px;
+	min-height: 250px;
+	padding: 10px;
 
 }
 

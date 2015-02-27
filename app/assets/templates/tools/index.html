@@ -1,13 +1,15 @@
 <div ng-controller='ToolsIndexController' class='tapor-container'>
-	<div class='row tool-list-entry' ng-repeat="tool in tools track by $index">
+
+
+	<div class='row tool-list-entry' ng-repeat="tool in tools track by $index">	
 		
-		<div class='col-md-3 tool-list-entry-image'>
+		<div class='col-md-4 tool-list-entry-image'>
 			<a href='tools/{{tool.id}}'>
 				<img src="/{{tool.thumb_url}}">
 			</a>
 		</div>
 		
-		<div class='col-md-9'>
+		<div class='col-md-8'>
 			<div class="row">
 				<label><a href='tools/{{tool.id}}'>{{tool.name}}</a></label>
 			</div>
@@ -15,6 +17,7 @@
 				{{tool.description}}
 			</div>
 		</div>
+
 
 	
 	

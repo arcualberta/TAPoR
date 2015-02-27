@@ -453,7 +453,7 @@ class Api::ToolsController < ApplicationController
 		def save_image(base_image)
 			name = @tool.id.to_s + ".png"
 			pathDirectory = (@tool.id / 500).to_i;
-			directory = "tools/" + pathDirectory + "/";
+			directory = "tools/" + pathDirectory.to_s + "/";
 			FileUtils::mkdir_p File.join("public", "images", directory)
 			path = File.join("public", "images", directory, name)
 			decoded = Base64.urlsafe_decode64( base_image.split(",")[1] )
@@ -571,14 +571,14 @@ class Api::ToolsController < ApplicationController
 							puts "++++ "  + saved_value.to_s			 
 							@tool.tool_attributes.create({
 								attribute_type_id: attribute[:id],
-								value: saved_value
+								attribute_value_id: saved_value
 							})							
 						end
-					else
-						@tool.tool_attributes.create({
-							attribute_type_id: attribute[:id],
-							value: nil
-						})							
+					# else
+						# @tool.tool_attributes.create({
+						# 	attribute_type_id: attribute[:id],
+						# 	attribute_value_id: nil
+						# })							
 					end
 				end
 			end

@@ -18,24 +18,6 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 	$scope.id = $routeParams.id;
 	$scope.data = {};  
 
-
-
-
-  // $scope.updateRating = function(rating) {
-    
-  //   var data = {
-  //   	id: $scope.id,
-  //   	stars: rating
-  //   }
-    
-  //   $http.patch('/api/tools/rate/' + $scope.id, data)
-  //   .success(function(data, status, headers, config) {
-  //   	console.log("Rating selected - " + rating);
-  //   	// update overall rating
-  //   });
-  // };
-
-
   services.tool.get_tool($scope.id).then(
   	function(data){
   		$scope.data.tool = data;
