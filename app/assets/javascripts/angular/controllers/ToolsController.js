@@ -66,17 +66,19 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   );
 
 
+  var get_sorted_comments = function() {
+  	services.tool.get_sorted_comments($scope.id, $scope.current_user.id).then(
+	  	function(data) {
+	  		$scope.data.comments = data;
+	  	},
+	  	function(errorMesssage) {
+	  		$scope.error = errorMesssage;
+	  	}
+	  )	
+  }
 
-
-  services.tool.get_sorted_comments($scope.id, $scope.current_user.id).then(
-  	function(data) {
-  		console.log(data)
-  		$scope.data.comments = data;
-  	},
-  	function(errorMesssage) {
-  		$scope.error = errorMesssage;
-  	}
-  )
+  get_sorted_comments();
+  
 
   $scope.update_tags = function() {
 
@@ -111,31 +113,22 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   	)	
   }
 
-  // $scope.updateTags = function() {
-  // 	var data = {
-  // 		id: $scope.id,
-  // 		tags: $scope.data.tags
-  // 	}
+  $scope.update_comment = function() {
 
-  // 	$http.patch('/api/tools/tags/' + $scope.id, data)
-  // 	.success(function(data, status, headers, config){
-  // 		console.log("saved")
-  // 	});
-  // }
+  	var data = $scope.data.comments.user;
+  	data.tool_id = $scope.id;
+  	services.comment.save(data).then(
+  		function(data){
+  			// XXX Fixme to update just user comment (?)
+  			get_sorted_comments();
+  		},
+  		function(errorMesssage){
+  			$scope.error = errorMesssage
+  		}
+  	)
+  }
 
-  // $scope.updateComment = function() {
-  // 	var data = {
-  // 		id: $scope.id,
-  // 		comments: [$scope.data.user_comment]
-  // 	}
-
-  // 	$http.patch('/api/tools/comments/' + $scope.id, data)
-  // 	.success(function(data, status, headers, config){
-  // 		console.log("saved")
-  // 	});
-
-  // }
-
+  
   var tagLoad = function(query, callback) {
   	if (query != "") {
 	  	$http.get("/api/tags/search?query="+query)

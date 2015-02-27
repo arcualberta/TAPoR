@@ -108,7 +108,6 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 		get_sorted_comments: function(id, user_id) {
 			var deferred = $q.defer();			
 
-
 			process_get_comments(id).then(
 				function(data){	
 					var sorted_comments = {
@@ -122,15 +121,21 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 					}
 
 					angular.forEach(data, function(v, k){
-					
 						if (v.is_pinned) {
 							sorted_comments.system.pinned.push(v);
 						} else {
 							sorted_comments.system.chronological.push(v);
 						}
 
-						if (v.user_id == user_id) {
-							sorted_comments.user = v;
+						if (v.user.id == user_id) {
+							sorted_comments.user = {
+								content: v.content,
+								id: v.id,
+								is_hidden: v.is_hidden,
+								is_pinned: v.is_pinned,
+								tool: v.tool,
+								user: v.user
+							}
 						}
 					});
 

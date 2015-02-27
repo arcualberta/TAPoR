@@ -1,8 +1,9 @@
-app.factory('services', ['attributeTypeServices', 'toolServices', 'pageServices', function(attributeTypeServices, toolServices, pageServices){
+app.factory('services', ['attributeTypeServices', 'toolServices', 'pageServices', 'commentServices', function(attributeTypeServices, toolServices, pageServices, commentServices){
 	return {
 		attribute_type: attributeTypeServices,
 		tool: toolServices,
-		page: pageServices
+		page: pageServices,
+		comment: commentServices
 	};
 }]);
 

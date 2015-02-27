@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     get 'tool_lists/by_curator/:id', to: 'tool_lists#by_curator'
     get 'tags', to: 'tags#index'
     get 'comments/latest', to: 'comments#latest'
+    
     # patch 'users/update_is_admin/:id' => 'users#update_is_admin'
     # patch 'users/update_is_blocked/:id' => 'users#update_is_blocked'
 
