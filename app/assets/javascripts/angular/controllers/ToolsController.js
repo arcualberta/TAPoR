@@ -18,6 +18,15 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 	$scope.id = $routeParams.id;
 	$scope.data = {};  
 
+
+	$scope.tinymceOptions = {
+  	menubar : false,
+  	height : 200,
+		resize: false,
+		toolbar: "undo redo | bold italic | link",
+		valid_elements : "a[href|target=_blank],strong/b,em/i,div[align],br,p"
+  };
+
   services.tool.get_tool($scope.id).then(
   	function(data){
   		$scope.data.tool = data;
