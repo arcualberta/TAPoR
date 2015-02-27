@@ -145,40 +145,6 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 					deferred.reject("An error occurred while getting sorted comments");
 				}
 			);
-
-
-  	// 	process_get_comments.then( 			
-  	// 		function(data) {
-  	// 			var sorted_comments = {
-		 //  			system: {
-		 //  				pinned: [],
-		 //  				chronological: []
-		 //  			},
-		 //  			user : {
-		 //  				content: ""
-		 //  			}
-		 //  		}
-
-  	// 			angular.forEach(data, function(v, k){
-		 //  			if (v.is_pinned) {
-		 //  				sorted_comments.system.pinned.push(v);
-		 //  			} else {
-		 //  				sorted_comments.system.chronological.push(v);
-		 //  			}
-
-		 //  			if (v.user_id == $scope.current_user.id) {
-		 //  				sorted_comments.user = v;
-		 //  			}
-		 //  		});
-
-
-  	// 			deferred.resolve(sorted_comments)
-  	// 		},
-  	// 		function(){
-  	// 			deferred.reject("An error ocurred when getting sorted comments")
-  	// 		}
-  	// 	)
-
   		return deferred.promise;
 		},
 
@@ -194,7 +160,9 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			return deferred.promise;
 		},
 
-		
+		get_attributes : function(data) {
+			
+		}
 
 	}
 }]);
