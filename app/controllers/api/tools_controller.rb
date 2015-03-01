@@ -11,7 +11,7 @@ class Api::ToolsController < ApplicationController
 	
 	def index
 		# @tools = Tool.all
-		@tools = Tool.where(is_hidden: false)
+		@tools = Tool.where(is_hidden: false).paginate(:page => params[:page], :per_page => 10)
 
 		respond_to do |format|			
 			format.json {render json: @tools, status: :ok}
