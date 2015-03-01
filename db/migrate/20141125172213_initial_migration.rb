@@ -79,7 +79,9 @@ class InitialMigration < ActiveRecord::Migration
 
   	add_index :comments, :user_id
   	add_index :comments, :tool_id
+    
 
+    
   	create_table :tool_lists do |t|
       t.belongs_to :user
   		t.string :name

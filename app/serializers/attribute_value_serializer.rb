@@ -1,3 +1,3 @@
 class AttributeValueSerializer < ActiveModel::Serializer
-  attributes :id, :name
+  attributes :id, :name, :index
 end

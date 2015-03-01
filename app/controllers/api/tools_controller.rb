@@ -7,7 +7,7 @@ class Api::ToolsController < ApplicationController
 	
 
 	# load_and_authorize_resource
-	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags, :get_ratings, :update_ratings, :get_comments]
+	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags, :get_ratings, :update_ratings, :get_comments, :get_attributes]
 	
 	def index
 		# @tools = Tool.all
@@ -238,40 +238,97 @@ class Api::ToolsController < ApplicationController
 	
 	end
 
+	def get_attributes
+		response = [];
+
+		AttributeType.all.each do |type|
+			response_type = {
+				id: type.id,
+				name: type.name,
+				is_multiple: type.is_multiple,
+				is_required: type.is_required,
+				possible_values: [],
+				selected: []
+			}
+			
+			AttributeValue.where(attribute_type_id: response_type[:id]).each do |value|
+				response_value = {
+					id: value[:id],
+					name: value[:name],
+					index: value[:index],
+				}
+
+				response_type[:possible_values].push(response_value);			
+				if response_type[:is_multiple]
+					@this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id], attribute_value_id: response_value[:id])	
+					if @this_model
+						@value = AttributeValue.find(@this_model.attribute_value_id);
+						response_type[:selected].push({
+							id: @value.id,
+							name: @value.name,
+							index: @value.index
+						});
+					end				
+				end
+
+			end
+
+
+			if not response_type[:is_multiple]
+				this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id]);
+				if this_model
+					@value = AttributeValue.find(this_model.attribute_value_id)
+					response_type[:selected] = {
+						id: @value.id,
+						name: @value.name,
+						index: @value.index
+					};
+				end
+			end
+			
+			response.push(response_type);
+
+		end
+
+		respond_to do |format|
+				format.json { render json: response, status: :ok}			
+		end		
+	end
+
 	def update_tags
 		process_update_tags();
 		get_tags();
 	end
 
 	def get_tags()
-			result = {
-				system: [],
-				user: [],
-			}
-			sum_tags = {};
-			@tool.tool_tags.each do |tool_tag|								
-				if sum_tags.has_key?(tool_tag.tag.text)
-					sum_tags[tool_tag.tag.text] += 1;
-				else 
-					sum_tags[tool_tag.tag.text] = 1;
-				end
-
-				if current_user and current_user[:id] == tool_tag.user_id
-					result[:user].push(tool_tag.tag.text)
-				end
-
+		response = {
+			system: [],
+			user: [],
+		}
+		sum_tags = {};
+		@tool.tool_tags.each do |tool_tag|								
+			if sum_tags.has_key?(tool_tag.tag.text)
+				sum_tags[tool_tag.tag.text] += 1;
+			else 
+				sum_tags[tool_tag.tag.text] = 1;
 			end
 
-			sum_tags.each do |key, value|
-				result[:system].push({
-					text: key,
-					weight: value
-				})
+			if current_user and current_user[:id] == tool_tag.user_id
+				response[:user].push(tool_tag.tag.text)
 			end
 
-			respond_to do |format|
-				format.json { render json: result, status: :ok}			
-			end
+		end
+
+		sum_tags.each do |key, value|
+			response[:system].push({
+				text: key,
+				weight: value
+			})
+		end
+
+		respond_to do |format|
+			format.json { render json: response, status: :ok}			
+		end
 			
 	end
 

@@ -9,11 +9,12 @@ Rails.application.routes.draw do
     
     
     get 'tools/latest', to: 'tools#latest'    
+    get 'tools/featured', to: 'tools#featured'    
     get 'tools/:id/tags', to: 'tools#get_tags'    
     get 'tools/:id/ratings', to: 'tools#get_ratings'    
     get 'tools/:id/comments', to: 'tools#get_comments'    
     get 'tools/:id/view', to: 'tools#also_viewed'
-    get 'tools/featured', to: 'tools#featured'    
+    get 'tools/:id/attributes', to: 'tools#get_attributes'
     get 'tools/:id/suggested', to: 'tools#suggested'
     patch 'tools/:id/tags', to: 'tools#update_tags'
     patch 'tools/:id/ratings', to: 'tools#update_ratings'

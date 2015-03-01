@@ -255,7 +255,7 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 
 }]);
 
-app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routeParams', function($scope, $http, $location, $routeParams) {
+app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
   
   $scope.id = $routeParams.id;
 	$scope.data = {};
@@ -381,6 +381,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   // get attribute types
 
   if ($scope.is_editing) {
+
 		$http.get('/api/tools/' + $routeParams.id)
 		.success(function(data, status, headers, config){			
 			$scope.data= data;
@@ -398,7 +399,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 			// get suggested tools
 				
-				$http.get('/api/tools/suggested/' + $scope.id)
+				$http.get('/api/tools/' + $scope.id + '/suggested')
 				.success(function(data, status, headers, config){
 					console.log(data);
 					$scope.data.suggested_tools = data;
@@ -421,8 +422,16 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 					});
 				});
 
-
-
+				console.log("getting")
+				services.tool.get_attributes($routeParams.id).then(
+		  		function(data){
+		  			console.log(data);
+		  			$scope.data.tool_attributes = data;
+		  		},
+		  		function(errorMesssage) {		  			
+		  			$scope.error = errorMesssage;
+		  		}
+		  	)
 
 
 		});	

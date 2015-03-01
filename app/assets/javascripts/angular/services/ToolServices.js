@@ -160,13 +160,45 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			return deferred.promise;
 		},
 
-		get_attributes : function(data) {
+		get_attributes : function(id) {
+			var deferred = $q.defer();
+
+			$http.get('/api/tools/' + id + '/attributes')
+			.success(function(data){
+				
+				angular.forEach(data, function(value_type, i){
+					if (value_type.is_multiple) {
+						value_type.model = [];
+						angular.forEach(value_type.possible_values, function(value, j){
+							var found_value = false;
+							angular.forEach(value_type.selected, function(selected_value, k){
+								if (!found_value && value.id == selected_value.id) {
+									found_value = true;
+								}
+							});
+							value_type.model.push(found_value);
+						});
+					} else {
+						value_type.model = {};
+						angular.forEach(value_type.possible_values, function(value, j){
+							var found_value = false;
+							if (!found_value && value_type.selected.id == value.id) {
+								found_value = true;
+								value_type.model = value;
+							}
+						});
+					}
+				});
+
+				deferred.resolve(data)
 			
+			})
+			.error(function(){
+				deferred.reject("An error occurred while getting tool attributes")
+			});
+
+			return deferred.promise;
 		}
 
 	}
 }]);
-
-
-
-	
