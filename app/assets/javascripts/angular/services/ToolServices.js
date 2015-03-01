@@ -160,35 +160,39 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			return deferred.promise;
 		},
 
-		get_attributes : function(id) {
+		get_attributes : function(id, with_model) {
+
+			if (angular.isUndefined(with_model)) {
+				with_model = false;
+			}
 			var deferred = $q.defer();
 
 			$http.get('/api/tools/' + id + '/attributes')
 			.success(function(data){
-				
-				angular.forEach(data, function(value_type, i){
-					value_type.model = [];
-					if (value_type.is_multiple) {						
-						angular.forEach(value_type.possible_values, function(value, j){
-							var found_value = false;
-							angular.forEach(value_type.selected, function(selected_value, k){
-								if (!found_value && value.id == selected_value.id) {
+				if (with_model){
+					angular.forEach(data, function(value_type, i){
+						value_type.model = [];
+						if (value_type.is_multiple) {						
+							angular.forEach(value_type.possible_values, function(value, j){
+								var found_value = false;
+								angular.forEach(value_type.selected, function(selected_value, k){
+									if (!found_value && value.id == selected_value.id) {
+										found_value = true;
+									}
+								});
+								value_type.model.push(found_value);
+							});
+						} else {
+							angular.forEach(value_type.possible_values, function(value, j){
+								var found_value = false;
+								if (!found_value && value_type.selected[0] && value_type.selected[0].id == value.id) {
 									found_value = true;
+									value_type.model = [value];
 								}
 							});
-							value_type.model.push(found_value);
-						});
-					} else {
-						angular.forEach(value_type.possible_values, function(value, j){
-							var found_value = false;
-							if (!found_value && value_type.selected.id == value.id) {
-								found_value = true;
-								value_type.model = [value];
-							}
-						});
-					}
-				});
-
+						}
+					});
+				}
 				deferred.resolve(data)
 			
 			})

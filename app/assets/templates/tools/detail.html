@@ -18,7 +18,7 @@
 									<li>Last updated: {{data.tool.last_updated}}</li>
 									<li>Site: <a href="{{data.tool.url}}" ng-click="updateToolView()">{{data.url}}</a></li>
 								</ul>	
-							</div
+							</div>
 							<div class="col-md-1">
 							 <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.tool.id}}" role="button">Edit</a>
 							</div>
@@ -70,11 +70,7 @@
 							<h3 class="panel-title">Attributes</h3>
 						</div>
 						<div class="panel-body">
-							<ul>
-								<li ng-repeat="attribute in data.tool_attributes">
-									<label>{{attribute.name}}:</label> {{attribute.value}}
-								</li>									
-							</ul>
+							<div render-attributes model="data.tool_attributes"></div>
 						</div>
 					</div>
 				

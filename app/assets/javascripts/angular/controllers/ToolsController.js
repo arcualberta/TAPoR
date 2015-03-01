@@ -37,6 +37,14 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   	}
   );
 
+  services.tool.get_attributes($routeParams.id).then(
+		function(data){
+			$scope.data.tool_attributes = data;
+		},
+		function(errorMesssage) {		  			
+			$scope.error = errorMesssage;
+		}
+	);
 
   services.tool.get_tags($scope.id).then(
   	function(data){
@@ -422,10 +430,9 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 					});
 				});
 
-				console.log("getting")
-				services.tool.get_attributes($routeParams.id).then(
+				
+				services.tool.get_attributes($routeParams.id, $scope.is_editing).then(
 		  		function(data){
-		  			console.log(data);
 		  			$scope.data.tool_attributes = data;
 		  		},
 		  		function(errorMesssage) {		  			

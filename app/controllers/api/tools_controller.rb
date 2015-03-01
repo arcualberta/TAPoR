@@ -276,9 +276,9 @@ class Api::ToolsController < ApplicationController
 				this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id]);
 				if this_model
 					@value = AttributeValue.find(this_model.attribute_value_id)
-					response_type[:selected] = {
+					response_type[:selected] = [{
 						id: @value.id,						
-					};
+					}];
 				end
 			end
 			
