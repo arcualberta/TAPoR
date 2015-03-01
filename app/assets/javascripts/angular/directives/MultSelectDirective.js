@@ -12,7 +12,7 @@ app.directive("multselect", function() {
         				"		</ul>"+
       					"	</div>"+
 					      "	<div ng-switch-when='false'>"+
-					      "		<select ng-required={{isRequired}} class='form-control' ng-model='model' ng-options='value.name for value in values track by value.id'>"+					      
+					      "		<select ng-required={{isRequired}} class='form-control' ng-model='model[0]' ng-options='value.name for value in values track by value.id'>"+					      
 					      "			<option selected name=''></option>"+
 					      "		</select>"+
 					      "	</div>"+

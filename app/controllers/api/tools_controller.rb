@@ -215,8 +215,8 @@ class Api::ToolsController < ApplicationController
 					# end
 
 					# attributes
-					# save_parameters(@tool, params[:attribute_types]);
-					save_parameters()
+					# save_attributes(@tool, params[:attribute_types]);
+					save_attributes();
 
 					# image
 
@@ -420,7 +420,7 @@ class Api::ToolsController < ApplicationController
 						process_update_comments
 
 						# attributes
-						save_parameters()
+						save_attributes();
 						# XXX update tool
 						# image
 
@@ -611,7 +611,7 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
-		def save_parameters()
+		def save_attributes()
 			tool_attributes = params[:tool_attributes]			
 			if tool_attributes
 				@tool.tool_attributes.destroy_all()

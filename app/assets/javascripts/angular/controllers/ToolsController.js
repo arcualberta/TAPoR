@@ -479,6 +479,8 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	
 
   	if ($('#tool_form')[0].checkValidity()) {			
+  		console.log("ccc")
+  		console.log($scope.data);
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
 				console.log($scope.data)
@@ -499,7 +501,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 			// set suggested tools
 
-			$http.post('/api/tools/suggested/' + $scope.id, {id: $scope.id, suggested: $scope.data.suggested_tools})
+			$http.post('/api/tools/' + $scope.id + "/suggested", {id: $scope.id, suggested: $scope.data.suggested_tools})
 			.success(function(data, status, headers, config){
 				console.log("saved suggested");
 			});
