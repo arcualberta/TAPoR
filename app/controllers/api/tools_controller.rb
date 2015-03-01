@@ -265,8 +265,6 @@ class Api::ToolsController < ApplicationController
 						@value = AttributeValue.find(@this_model.attribute_value_id);
 						response_type[:selected].push({
 							id: @value.id,
-							name: @value.name,
-							index: @value.index
 						});
 					end				
 				end
@@ -279,9 +277,7 @@ class Api::ToolsController < ApplicationController
 				if this_model
 					@value = AttributeValue.find(this_model.attribute_value_id)
 					response_type[:selected] = {
-						id: @value.id,
-						name: @value.name,
-						index: @value.index
+						id: @value.id,						
 					};
 				end
 			end
