@@ -2,15 +2,13 @@ app.directive("renderAttributes", function() {
 	return {
 		restrict : "A",
 		template : 	"<div>" +
-								"	<ul>" +
-								"		<span ng-repeat='type in model'>" +
-								"			<li ng-if='type.selected.length'>" +
-								"				<label>" +
-								"					{{type.name}}:"+
-								"				</label>" +
-								"				<span>{{get_selected_names(type)}}</span>" +
-								"			</li>" +
-								"		<span>" +
+								"	<ul>" +								
+								"		<li ng-repeat='type in model' ng-if='type.selected.length'>" +
+								"			<label>" +
+								"				{{type.name}}:"+
+								"			</label>" +
+								"			<span>{{get_selected_names(type)}}</span>" +
+								"		</li>" +								
 								"	</ul>" +
 								"</div>",
 		scope : {
