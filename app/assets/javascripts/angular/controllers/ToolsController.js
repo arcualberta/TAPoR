@@ -1,14 +1,34 @@
 
-app.controller('ToolsIndexController', ['$scope', '$http', function($scope, $http) {
+app.controller('ToolsIndexController', ['$scope', 'services', function($scope, services) {
 
-	$http.get("/api/tools")
-	.success(function(data, status, headers, config){			
-		$scope.tools = data;
+	$scope.current_page = 1;
 
-		// $.map($scope.tools, function(val, i){
-		// 	val.thumb_url =  val.image_url ? val.image_url.replace(/.png$/, "-thumb.png") : "";
-		// });
-	});
+	var get_page = function() {
+		services.tool.list_page($scope.current_page).then(
+			function(data) {
+				$scope.tools_page = data;
+			},
+			function(errorMessage) {
+				$scope.error = errorMessage;
+			}
+		);	
+	}
+
+	$scope.pageChanged = function() {
+		get_page();
+	}
+
+
+	get_page();
+
+	// $http.get("/api/tools")
+	// .success(function(data, status, headers, config){			
+	// 	$scope.tools = data;
+
+	// 	// $.map($scope.tools, function(val, i){
+	// 	// 	val.thumb_url =  val.image_url ? val.image_url.replace(/.png$/, "-thumb.png") : "";
+	// 	// });
+	// });
 
 }]);
 

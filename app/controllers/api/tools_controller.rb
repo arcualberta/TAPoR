@@ -14,7 +14,7 @@ class Api::ToolsController < ApplicationController
 		@tools = Tool.where(is_hidden: false).paginate(page: params[:page], per_page: 10)
 
 		respond_to do |format|			
-			format.json {render json: @tools, status: :ok}
+			format.json {render json: @tools, root: "tools", meta: {count: Tool.count}, status: :ok}
 		end
 	end
 

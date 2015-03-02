@@ -1,7 +1,14 @@
 <div ng-controller='ToolsIndexController' class='tapor-container'>
 
+<div class="row">
+	<div class="col-md-12">
+		<pagination total-items="tools_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
+	</div>
+</div>
 
-	<div class='row tool-list-entry' ng-repeat="tool in tools track by $index">	
+	
+
+	<div class='row tool-list-entry' ng-repeat="tool in tools_page.tools track by $index">	
 		
 		<div class='col-md-4 tool-list-entry-image'>
 			<a href='tools/{{tool.id}}'>
@@ -14,7 +21,7 @@
 				<label><a href='tools/{{tool.id}}'>{{tool.name}}</a></label>
 			</div>
 			<div class="row">
-				{{tool.description}}
+				<div ng-bind-html="tool.description"></div>				
 			</div>
 		</div>
 

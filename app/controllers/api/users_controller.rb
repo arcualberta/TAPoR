@@ -5,7 +5,7 @@ class Api::UsersController < ApplicationController
 	def index
 		@users = User.paginate(page: params[:page], per_page: 10)
 		respond_to do |format|			
-			format.json {render json: @users, root: "users", meta: { count: User.count }}
+			format.json {render json: @users, root: "users", meta: { count: User.count }, status: :ok}
 		end
 	end
 
