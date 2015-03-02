@@ -540,32 +540,70 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 
 
-app.controller('ToolsFeaturedController', ['$scope', '$http', '$location', function($scope, $http, $location) {
+app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', function($scope, $location, services) {
 
-	$scope.tools = [];
-
+	$scope.current_page = 1;
+	$scope.tools_page = [];
 	$scope.data = {
 		featured : []
 	}
 
-	$http.get("/api/tools")
-	.success(function(data, status, headers, config){
-		var tools = data	
-		$http.get("/api/tools/featured")
-		.success(function(data, status, headers, config){
-			$scope.data.featured = data		
+	var get_page = function() {
+		services.tool.list_page($scope.current_page).then(
+			function(data) {
+				// remove items already on featured list
+				angular.forEach(data.tools, function(v, i){
+					angular.forEach($scope.data.featured, function(tool, index){
+						if (data.tools[i]. id == tool.id) {
+							data.tools.splice(i,1);
+						}
+					})
+				});
 
-			for( var i =tools.length - 1; i>=0; i--){
-				for( var j=0; j<$scope.data.featured.length; j++){
-					if(tools[i].id === $scope.data.featured[j].id){
-						tools.splice(i, 1);
-					}
-				}
+				$scope.tools_page = data;
+			},
+			function(errorMessage) {
+				$scope.error = errorMessage;
 			}
+		);	
+	}
 
-			$scope.tools = tools			
-		});
-	});
+	$scope.pageChanged = function() {
+		get_page();
+	}
+
+
+	
+
+
+	services.tool.get_featured_tools().then(
+		function(data){
+			$scope.data.featured = data;
+			get_page();
+		},
+		function(errorMessage){
+			$scope.error = errorMessage;
+		}
+	);
+	// $http.get("/api/tools")
+	// .success(function(data, status, headers, config){
+	// 	var tools = data	
+	// 	$http.get("/api/tools/featured")
+	// 	.success(function(data, status, headers, config){
+	// 		$scope.data.featured = data		
+
+	// 		for( var i =tools.length - 1; i>=0; i--){
+	// 			for( var j=0; j<$scope.data.featured.length; j++){
+	// 				if(tools[i].id === $scope.data.featured[j].id){
+	// 					tools.splice(i, 1);
+	// 				}
+	// 			}
+	// 		}
+
+	// 		$scope.tools = tools			
+	// 	});
+	
+	// });
 
 	
 

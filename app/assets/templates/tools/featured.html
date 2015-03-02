@@ -6,10 +6,15 @@
   		<div class="panel panel-default">
   			<div class="panel-heading list-editing-column">
         	<h1>Filtering & paginating mechanism</h1>
+          <div class="row">
+            <div class="col-md-12">
+              <pagination total-items="tools_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> 
+            </div>
+          </div>
         </div>
   			<div class="panel-body">
-  			<ul class="draggable_place list-tool-area" as-sortable="toolsListener" ng-model="tools">
-          <li class="column_sortable" ng-repeat="tool in tools" as-sortable-item>
+  			<ul class="draggable_place list-tool-area" as-sortable="toolsListener" ng-model="tools_page.tools">
+          <li class="column_sortable" ng-repeat="tool in tools_page.tools" as-sortable-item>
             <div as-sortable-item-handle>
             	
             	<div class="row">

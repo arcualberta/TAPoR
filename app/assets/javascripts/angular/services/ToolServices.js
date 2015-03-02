@@ -216,13 +216,25 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 				}
 				deferred.resolve(data)
 			
-			})
-			.error(function(){
-				deferred.reject("An error occurred while getting tool attributes")
-			});
+		})
+		.error(function(){
+			deferred.reject("An error occurred while getting tool attributes")
+		});
 
-			return deferred.promise;
-		}
+		return deferred.promise;
+	},
+
+	get_featured_tools : function() {
+		var deferred = $q.defer();
+		$http.get("/api/tools/featured")
+		.success(function(data){
+			deferred.resolve(data);
+		})
+		.error(function(){
+			deferred.reject("Error getting featured tools")
+		});
+		return deferred.promise;
+	}
 
 	}
 }]);
