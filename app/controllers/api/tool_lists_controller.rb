@@ -11,7 +11,7 @@ class Api::ToolListsController < ApplicationController
 			@tool_lists = ToolList.joins(:tool_list_user_roles).where('tool_lists.is_hidden = ? AND tool_lists.user_id = ? AND (tool_list_user_roles.is_editor = ? OR tool_list_user_roles.is_follower = ?)', false, current_user[:id], params[:is_editor], params[:is_follower])
 		else
 			if current_user.is_admin?				
-				@tool_lists = ToolList.where is_hidden: false
+				@tool_lists = ToolList.where(is_hidden: false)
 			else				
 				@tool_lists = ToolList.where('is_public = ? AND is_hidden = ?', true, false);
 			end

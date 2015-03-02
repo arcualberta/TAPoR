@@ -146,3 +146,17 @@ body {
 .mce-tinymce {
 	height: 400px
 }
+
+.carousel-control .fa-chevron-left {
+position: absolute;
+top: 50%;
+z-index: 5;
+display: inline-block;
+}
+
+.carousel-control .fa-chevron-right {
+position: absolute;
+top: 50%;
+z-index: 5;
+display: inline-block;
+}

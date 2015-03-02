@@ -3,11 +3,9 @@ class Api::UsersController < ApplicationController
 	before_action :set_user, only: [:edit, :update, :destroy, :update_is_admin, :update_is_blocked]
 
 	def index
-		# @users = User.all
-		@users = User.paginate(page: params[:page])
-		@users = User.all;
+		@users = User.paginate(page: params[:page], per_page: 10)
 		respond_to do |format|			
-			format.json {render json: @users}
+			format.json {render json: @users, root: "users", meta: { count: User.count }}
 		end
 	end
 

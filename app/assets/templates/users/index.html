@@ -1,4 +1,11 @@
 <div ng-controller='UsersIndexController' class='tapor-container'>
+
+	<div class="row">
+		<div class="col-md-12">
+			<pagination total-items="users_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col-md-12">
 			<table class="table table-striped">
@@ -25,7 +32,7 @@
 					Admin
 				</th>
 			</tr>
-			<tr ng-repeat="user in users track by $index">
+			<tr ng-repeat="user in users_page.users track by $index">
 				<td>
 					<img src="{{user.image_url}}" class="img-circle">
 				</td>

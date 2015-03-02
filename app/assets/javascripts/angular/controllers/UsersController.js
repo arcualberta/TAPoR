@@ -1,5 +1,21 @@
-app.controller('UsersIndexController', ['$scope', '$http', function($scope, $http){
+;app.controller('UsersIndexController', ['$scope', '$http', 'services', function($scope, $http, services){
 	// $scope.checkUser();
+	
+	$scope.current_page = 1;
+
+	var get_page = function() {
+		services.user.list_page($scope.current_page).then(
+			function(data) {
+				$scope.users_page = data;
+			},
+			function(errorMessage) {
+				$scope.error = errorMessage;
+			}
+		);	
+	}
+
+	//////////
+
 	$scope.updateIsAdmin = function(id, is_admin) {
 		var data = {}
 		data.is_admin = is_admin;
@@ -19,11 +35,13 @@ app.controller('UsersIndexController', ['$scope', '$http', function($scope, $htt
 			console.log("success");
 		});
 	};
-
-	$http.get("/api/users")
-	.success(function(data, status, headers, config){			
-		$scope.users = data;
-	});
+	
+	$scope.pageChanged = function() {
+		get_page();
+	}
+	
+	get_page();
+	
 
 }]);
 
