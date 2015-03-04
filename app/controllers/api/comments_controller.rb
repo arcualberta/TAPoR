@@ -39,7 +39,6 @@ class Api::CommentsController < ApplicationController
 	end
 
 	def update
-		puts "UPDATING		"
 		respond_to do |format|
 			if current_user[:id] == safe_params[:id] or current_user.is_admin?				
 				clean_params = {}

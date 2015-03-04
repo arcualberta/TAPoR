@@ -80,12 +80,13 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/attributes', {
         templateUrl: "<%= asset_path('attributes/index.html') %>",
       })
-      .when('/attributes/new', {
-        templateUrl: "<%= asset_path('attributes/edit.html') %>",
-      })
       .when('/attributes/edit/:id', {
         templateUrl: "<%= asset_path('attributes/edit.html') %>",
       })
+      .when('/attributes/new', {
+        templateUrl: "<%= asset_path('attributes/edit.html') %>",
+      })
+
       // Lists
       // .when('/lists', {
       //   templateUrl: "<%= asset_path('lists/public.html') %>",

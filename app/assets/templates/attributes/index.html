@@ -1,0 +1,12 @@
+<div ng-controller='AttributesIndexController' class='tapor-container'>
+
+	<div class='row'>
+		<div class="col-md-12">
+			<a href="/attributes/new" class="btn btn-primary">New attribute</a>
+			<ul>
+			<li ng-repeat="attribute in data"><a href="/attributes/edit/{{attribute.id}}">{{attribute.name}}</a></li>
+			</ul>
+
+		</div>
+	</div>
+</div>
