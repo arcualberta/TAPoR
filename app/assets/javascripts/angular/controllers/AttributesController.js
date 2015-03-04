@@ -1,6 +1,6 @@
 
 
-app.controller('AttributesNewController', ['$scope', '$location', 'services' , function($scope, $location, services) {
+app.controller('AttributesEditController', ['$scope', '$location', 'services' , function($scope, $location, services) {
   
 	$scope.data = {};
 	$scope.data.name = "";	
