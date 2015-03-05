@@ -42,7 +42,7 @@ app.controller('AttributesEditController', ['$scope', '$location', '$routeParams
 
 	  	services.attribute_type.save($scope.data).then(
 	  	function(data){
-	  		$location.path("/")
+	  		$location.path("/attributes")
 	  	},
 	  	function(errorMessage){
 	  		$scope.error = errorMessage;
