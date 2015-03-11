@@ -13,35 +13,27 @@ class Api::ToolsController < ApplicationController
 		# @tools = Tool.all
 		
 		params[:page] ||= 1;
-
+		per_page = 10;
 		
 		if params[:attribute_values] && params[:attribute_values].length > 0
 
-			# total = 0;
 			attribute_values = []
 			params[:attribute_values].split(",").each do |value|				
 				attribute_values.push(value.to_i)
 			end
 			
 			filter_string = "attribute_value_id = " + attribute_values.join(" or attribute_value_id = ")
-			# filter_string = "attribute_value_id = 26 or attribute_value_id = 1";
-			puts "VVVV"
-			puts filter_string
-			# @tools = Tool.select("tools.*, count(tools.id) as total").joins(:tool_attributes).where("attribute_value_id = 26 or attribute_value_id = 1").group("tools.id").having("total = ?", attribute_values.count).order(:name).paginate(page: params[:page], per_page: 10)
-			@tools = Tool.select("tools.*, count(tools.id) as total").joins(:tool_attributes).where(filter_string).group("tools.id").having("total = ?", attribute_values.length).limit(10).offset((params[:page].to_i - 1) * 10);
+		
+			@tools = Tool.select("tools.*, count(tools.id) as total").joins(:tool_attributes).where(filter_string).group("tools.id").having("total = ?", attribute_values.length);
+		
 		else 
-			@tools = Tool.order(:name).where(is_hidden: false).paginate(page: params[:page], per_page: 10)
+			@tools = Tool.order(:name).where(is_hidden: false);
 		end
 
-		# @tools = Tool.order(:name).where(is_hidden: false).paginate(page: params[:page], per_page: 10)
 
-
-
-
-		
 
 		respond_to do |format|			
-			format.json {render json: @tools, root: "tools", meta: {count: Tool.count}, status: :ok}
+			format.json {render json: @tools.limit(per_page).offset((params[:page].to_i - 1) * per_page), root: "tools", meta: {count: @tools.length}, status: :ok}
 		end
 	end
 
