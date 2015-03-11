@@ -20,13 +20,29 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 
 	return {		
 
-		list_page : function(page) {
+		list_page : function(page, attribute_values) {
+
 			if (angular.isUndefined(page)){
 				page = 1;
 			}
+
+			if (angular.isUndefined(attribute_values)){
+				attribute_values = [];
+			}
+
+			console.log(attribute_values)
 			
 			var deferred = $q.defer();
-				$http.get('/api/tools?page='+ page)
+				// $http.get('/api/tools?page='+ page)
+
+				$http({
+    			url: '/api/tools', 
+    			method: "GET",
+    			params: {
+    				page: page,
+    				attribute_values: attribute_values.join(",") 				
+    			}
+ 				})
 				.success(function(data){
 					angular.forEach(data.tools, function(v, k){
 						v.description = $sce.trustAsHtml(v.description);

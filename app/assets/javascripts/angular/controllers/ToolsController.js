@@ -2,9 +2,23 @@
 app.controller('ToolsIndexController', ['$scope', 'services', function($scope, services) {
 
 	$scope.current_page = 1;
+	$scope.attribute_values = [];
+
+	services.attribute_type.list().then(
+		function(data) {
+			angular.forEach(data, function(v, i){
+				data[i].model = {id:"",name:"",index:""};
+			});
+			$scope.attributes = data;
+
+		},
+		function(errorMessage) {
+			$scope.error = errorMessage
+		}
+	)
 
 	var get_page = function() {
-		services.tool.list_page($scope.current_page).then(
+		services.tool.list_page($scope.current_page, $scope.attribute_values).then(
 			function(data) {
 				$scope.tools_page = data;
 			},
@@ -18,17 +32,21 @@ app.controller('ToolsIndexController', ['$scope', 'services', function($scope, s
 		get_page();
 	}
 
+	$scope.update_attributes_filter = function() {
+		$scope.attribute_values = [];
+		angular.forEach($scope.attributes, function(v, i){
+			if (v.model && v.model.id) {
+				$scope.attribute_values.push(v.model.id)
+			}
+		});
+		$scope.current_page = 1;
+		get_page();
+
+
+	}
 
 	get_page();
 
-	// $http.get("/api/tools")
-	// .success(function(data, status, headers, config){			
-	// 	$scope.tools = data;
-
-	// 	// $.map($scope.tools, function(val, i){
-	// 	// 	val.thumb_url =  val.image_url ? val.image_url.replace(/.png$/, "-thumb.png") : "";
-	// 	// });
-	// });
 
 }]);
 
@@ -52,8 +70,8 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   		$scope.data.tool = data;
   		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
   	},
-  	function(errorMesssage){
-  		$scope.error = errorMesssage;
+  	function(errorMessage){
+  		$scope.error = errorMessage;
   	}
   );
 

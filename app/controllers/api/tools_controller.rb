@@ -11,7 +11,34 @@ class Api::ToolsController < ApplicationController
 	
 	def index
 		# @tools = Tool.all
-		@tools = Tool.where(is_hidden: false).paginate(page: params[:page], per_page: 10)
+		
+		params[:page] ||= 1;
+
+		
+		if params[:attribute_values] && params[:attribute_values].length > 0
+
+			# total = 0;
+			attribute_values = []
+			params[:attribute_values].split(",").each do |value|				
+				attribute_values.push(value.to_i)
+			end
+			
+			filter_string = "attribute_value_id = " + attribute_values.join(" or attribute_value_id = ")
+			# filter_string = "attribute_value_id = 26 or attribute_value_id = 1";
+			puts "VVVV"
+			puts filter_string
+			# @tools = Tool.select("tools.*, count(tools.id) as total").joins(:tool_attributes).where("attribute_value_id = 26 or attribute_value_id = 1").group("tools.id").having("total = ?", attribute_values.count).order(:name).paginate(page: params[:page], per_page: 10)
+			@tools = Tool.select("tools.*, count(tools.id) as total").joins(:tool_attributes).where(filter_string).group("tools.id").having("total = ?", attribute_values.length).limit(10).offset((params[:page].to_i - 1) * 10);
+		else 
+			@tools = Tool.order(:name).where(is_hidden: false).paginate(page: params[:page], per_page: 10)
+		end
+
+		# @tools = Tool.order(:name).where(is_hidden: false).paginate(page: params[:page], per_page: 10)
+
+
+
+
+		
 
 		respond_to do |format|			
 			format.json {render json: @tools, root: "tools", meta: {count: Tool.count}, status: :ok}
@@ -146,12 +173,12 @@ class Api::ToolsController < ApplicationController
 				begin
 
 					@tool = Tool.create({
-						name: safe_params[:name], 
+						name: safe_params[:name].strip, 
 						url: safe_params[:url],
-						description: safe_params[:description],
-						creators_name: safe_params[:creators_name],
-						creators_email: safe_params[:creators_email],
-						creators_url: safe_params[:creators_url],
+						description: safe_params[:description].strip,
+						creators_name: safe_params[:creators_name].strip,
+						creators_email: safe_params[:creators_email].strip,
+						creators_url: safe_params[:creators_url].strip,
 						last_updated: Time.now(),
 						user_id: current_user[:id]
 					})								
@@ -394,12 +421,12 @@ class Api::ToolsController < ApplicationController
 					begin
 
 						# main tool content
-						@tool.name = safe_params[:name];
-						@tool.description = ActionController::Base.helpers.sanitize(safe_params[:description]);
-						@tool.url = safe_params[:url]
-						@tool.creators_name = safe_params[:creators_name];
-						@tool.creators_email = safe_params[:creators_email];
-						@tool.creators_url = safe_params[:creators_url];					
+						@tool.name = safe_params[:name].strip;
+						@tool.description = ActionController::Base.helpers.sanitize(safe_params[:description]).strip;
+						@tool.url = safe_params[:url].strip
+						@tool.creators_name = safe_params[:creators_name].strip;
+						@tool.creators_email = safe_params[:creators_email].strip;
+						@tool.creators_url = safe_params[:creators_url].strip;					
 						if current_user.is_admin?
 							@tool.is_approved = safe_params[:is_approved];
 						end
