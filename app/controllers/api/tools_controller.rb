@@ -24,7 +24,7 @@ class Api::ToolsController < ApplicationController
 			
 			filter_string = "attribute_value_id = " + attribute_values.join(" or attribute_value_id = ")
 		
-			@tools = Tool.select("tools.*, count(tools.id) as total").joins(:tool_attributes).where(filter_string).group("tools.id").having("total = ?", attribute_values.length);
+			@tools = Tool.order(:name).select("tools.*, count(tools.id) as total").joins(:tool_attributes).where(filter_string).group("tools.id").having("total = ?", attribute_values.length);
 		
 		else 
 			@tools = Tool.order(:name).where(is_hidden: false);
