@@ -61,6 +61,7 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
   	menubar : false,
   	height : 200,
 		resize: false,
+		plugins: ["autolink link anchor"],
 		toolbar: "undo redo | bold italic | link",
 		valid_elements : "a[href|target=_blank],strong/b,em/i,div[align],br,p"
   };
