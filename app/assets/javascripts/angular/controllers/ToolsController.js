@@ -104,7 +104,8 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 
 
   var get_sorted_comments = function() {
-  	services.tool.get_sorted_comments($scope.id, $scope.current_user.id).then(
+
+  	services.tool.get_sorted_comments($scope.id, $scope.current_user).then(
 	  	function(data) {
 	  		$scope.data.comments = data;
 	  	},

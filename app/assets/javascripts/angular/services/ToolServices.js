@@ -142,8 +142,14 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			return process_get_comments(id)
 		},
 
-		get_sorted_comments: function(id, user_id) {
+		get_sorted_comments: function(id, current_user) {
 			var deferred = $q.defer();			
+
+			var user_id = null;
+
+			if (current_user && current_user.id) {
+				user_id = current_user.id;
+			}
 
 			process_get_comments(id).then(
 				function(data){	
