@@ -160,3 +160,7 @@ top: 50%;
 z-index: 5;
 display: inline-block;
 }
+
+.tapor-carousel {
+	height : 440px;
+}
