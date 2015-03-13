@@ -56,21 +56,22 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			return deferred.promise;
 		},
 
-		// list : function() {
-		// 	var deferred = $q.defer();
-		// 		$http.get('/api/tools')
-		// 		.success(function(data){
-		// 			angular.forEach(data, function(v, k){
-		// 				data[k].description = $sce.trustAsHtml(data[k].description);
-		// 			})
-		// 			deferred.resolve(data);
-		// 		})
-		// 		.error(function(){
-		// 			deferred.reject("An error occurred while listing tools");
-		// 		});
+		list : function() {
+			var deferred = $q.defer();
+				$http.get('/api/tools')
+				.success(function(data){
+					console.log(data)
+					angular.forEach(data.tools, function(v, k){
+						v.description = $sce.trustAsHtml(v.description);
+					})
+					deferred.resolve(data.tools);
+				})
+				.error(function(){
+					deferred.reject("An error occurred while listing tools");
+				});
 
-		// 	return deferred.promise;
-		// },
+			return deferred.promise;
+		},
 
 		get_tool: function(id) {
 			var deferred = $q.defer();
