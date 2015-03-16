@@ -4,6 +4,22 @@
 		"selected_items":
 		[
 			[
+				"user",
+				"user_id"
+			],
+			[
+				"att",
+				"attribute_values"
+			],
+			[
+				"attr",
+				"attribute_values"
+			],
+			[
+				"erro",
+				"errorMessage"
+			],
+			[
 				"er",
 				"errorMessage"
 			],
@@ -16,19 +32,11 @@
 				"errorMessage"
 			],
 			[
-				"att",
-				"attribute_type"
-			],
-			[
 				"is",
 				"is_admin"
 			],
 			[
 				"attri",
-				"attribute_type"
-			],
-			[
-				"attr",
 				"attribute_type"
 			],
 			[
@@ -46,10 +54,6 @@
 			[
 				"curr",
 				"current_page"
-			],
-			[
-				"user",
-				"userServices"
 			],
 			[
 				"max",
@@ -146,10 +150,6 @@
 			[
 				"def",
 				"deferred"
-			],
-			[
-				"erro",
-				"errorMesssage"
 			],
 			[
 				"defer",
@@ -544,12 +544,94 @@
 			}
 		},
 		{
+			"contents": "Searching 6461 files for \"checkUser\" (case sensitive)\n\n/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/TaporController.js:\n    6  	$scope.is_logged_in = false;\n    7  \n    8: 	$scope.checkUser = function() {\n    9  		$http.get('/api/users/current')\n   10  		.success(function(data, status, headers, config){	\n\n/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/UsersController.js:\n    1  ;app.controller('UsersIndexController', ['$scope', '$http', 'services', function($scope, $http, services){\n    2: 	// $scope.checkUser();\n    3  	\n    4  	$scope.current_page = 1;\n\n/Users/orodrigu/Workspace/tapor3/app/views/layouts/application.html.erb:\n  154  				<!-- end of nav -->\n  155  \n  156: 				<div ng-init=\"checkUser()\" ng-view id=\"main-view\"></div> \n  157  \n  158  				<!-- footer -->\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/2f5173deea6c795b8fdde723bb4b63af:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/30f5a060aaa598131fe58b1b47aac62c:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/64b117c448bbfca22d79df2a8fb09bcb:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/6daa6d245a415f233ceffd291f65fd6b:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/982b85bdf25148ff23ba81dd518340ae:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/9b0ba4544f57bd86c7dc1ad355d2a515:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/bf9bbca95a7f77c41b6a2942069914a4:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/cffd775d018f68ce5dba1ee0d951a994:\n    <binary>\n\n13 matches across 11 files\n\n\nSearching 6461 files for \"get_sorted_comments\" (case sensitive)\n\n/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/ToolsController.js:\n  104  \n  105  \n  106:   var get_sorted_comments = function() {\n  107    	\n  108:   	services.tool.get_sorted_comments($scope.id, $scope.current_user.id).then(\n  109  	  	function(data) {\n  110  	  		$scope.data.comments = data;\n  ...\n  116    }\n  117  \n  118:   get_sorted_comments();\n  119    \n  120  \n  ...\n  159    		function(data){\n  160    			// XXX Fixme to update just user comment (?)\n  161:   			get_sorted_comments();\n  162    		},\n  163    		function(errorMesssage){\n\n/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/services/ToolServices.js:\n  143  		},\n  144  \n  145: 		get_sorted_comments: function(id, user_id) {\n  146  			var deferred = $q.defer();			\n  147  \n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/0c04bc98dd7a47ecd5842fe1e9c766c4:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/0ffcbf93a9010c15616807d3da92e2b7:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/2f5173deea6c795b8fdde723bb4b63af:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/37f32af474964cb0fa99a41ef4b85fe1:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/798967b14191c956e10fa3d11c8a4d64:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/a25203aff5c153c5e370339a2fdb9aca:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/cffd775d018f68ce5dba1ee0d951a994:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/e2bb81e1dc3befb320875099bd74174e:\n    <binary>\n\n30 matches across 10 files\n\n\nSearching 6461 files for \"get_sorted_comments\" (case sensitive)\n\n/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/ToolsController.js:\n  104  \n  105  \n  106:   var get_sorted_comments = function() {\n  107    	\n  108:   	services.tool.get_sorted_comments($scope.id, $scope.current_user.id).then(\n  109  	  	function(data) {\n  110  	  		$scope.data.comments = data;\n  ...\n  116    }\n  117  \n  118:   get_sorted_comments();\n  119    \n  120  \n  ...\n  159    		function(data){\n  160    			// XXX Fixme to update just user comment (?)\n  161:   			get_sorted_comments();\n  162    		},\n  163    		function(errorMesssage){\n\n/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/services/ToolServices.js:\n  143  		},\n  144  \n  145: 		get_sorted_comments: function(id, user_id) {\n  146  			var deferred = $q.defer();			\n  147  \n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/0c04bc98dd7a47ecd5842fe1e9c766c4:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/0ffcbf93a9010c15616807d3da92e2b7:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/2f5173deea6c795b8fdde723bb4b63af:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/37f32af474964cb0fa99a41ef4b85fe1:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/798967b14191c956e10fa3d11c8a4d64:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/a25203aff5c153c5e370339a2fdb9aca:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/cffd775d018f68ce5dba1ee0d951a994:\n    <binary>\n\n~/Workspace/tapor3/tmp/cache/assets/development/sprockets/e2bb81e1dc3befb320875099bd74174e:\n    <binary>\n\n30 matches across 10 files\n",
+			"settings":
+			{
+				"buffer_size": 5176,
+				"line_ending": "Unix",
+				"name": "Find Results",
+				"scratch": true
+			}
+		},
+		{
+			"file": "app/assets/javascripts/angular/controllers/TaporController.js",
+			"settings":
+			{
+				"buffer_size": 1610,
+				"line_ending": "Unix"
+			}
+		},
+		{
 			"file": "app/assets/templates/attributes/index.html",
 			"settings":
 			{
 				"buffer_size": 339,
 				"line_ending": "Unix",
 				"name": "index.html"
+			}
+		},
+		{
+			"file": "app/controllers/api/tools_controller.rb",
+			"settings":
+			{
+				"buffer_size": 16363,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/routes.rb",
+			"settings":
+			{
+				"buffer_size": 3718,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/javascripts/angular/controllers/ToolsController.js",
+			"settings":
+			{
+				"buffer_size": 14346,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/templates/tapor/index.html",
+			"settings":
+			{
+				"buffer_size": 3642,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/stylesheets/style.css",
+			"settings":
+			{
+				"buffer_size": 2036,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/templates/tools/index.html",
+			"settings":
+			{
+				"buffer_size": 1459,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/javascripts/angular/services/ToolServices.js",
+			"settings":
+			{
+				"buffer_size": 6102,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/javascripts/angular/controllers/ToolListsController.js",
+			"settings":
+			{
+				"buffer_size": 3935,
+				"line_ending": "Unix"
 			}
 		},
 		{
@@ -569,10 +651,10 @@
 			}
 		},
 		{
-			"file": "app/views/home/index.html.erb",
+			"file": ".gitignore",
 			"settings":
 			{
-				"buffer_size": 233,
+				"buffer_size": 582,
 				"line_ending": "Unix"
 			}
 		},
@@ -582,6 +664,23 @@
 			{
 				"buffer_size": 2038,
 				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/application.rb",
+			"settings":
+			{
+				"buffer_size": 1054,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/controllers/concerns/verbose_path.rb",
+			"settings":
+			{
+				"buffer_size": 89,
+				"line_ending": "Unix",
+				"name": "module Identify"
 			}
 		}
 	],
@@ -614,8 +713,6 @@
 	[
 		"/Users/orodrigu/Workspace/tapor3",
 		"/Users/orodrigu/Workspace/tapor3/app",
-		"/Users/orodrigu/Workspace/tapor3/app/assets",
-		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/directives",
@@ -636,15 +733,11 @@
 		"/Users/orodrigu/Workspace/tapor3/app/views",
 		"/Users/orodrigu/Workspace/tapor3/app/views/home",
 		"/Users/orodrigu/Workspace/tapor3/app/views/layouts",
-		"/Users/orodrigu/Workspace/tapor3/config",
-		"/Users/orodrigu/Workspace/tapor3/db",
 		"/Users/orodrigu/Workspace/tapor3/db/migrate",
+		"/Users/orodrigu/Workspace/tapor3/lib/assets",
 		"/Users/orodrigu/Workspace/tapor3/public",
-		"/Users/orodrigu/Workspace/tapor3/vendor",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components",
-		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ace-builds/src/snippets",
-		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ace-builds/textarea/src",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ui.bootstrap",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ui.bootstrap/dist",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ui.bootstrap/docs",
@@ -653,6 +746,17 @@
 	],
 	"file_history":
 	[
+		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/tools_controller.rb",
+		"/Users/orodrigu/Workspace/tapor3/app/serializers/tag_serializer.rb",
+		"/Users/orodrigu/Workspace/tapor3/test/fixtures/tools.yml",
+		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/directives/MultSelectDirective.js",
+		"/Users/orodrigu/Workspace/tapor3/config/initializers/mime_types.rb",
+		"/Users/orodrigu/Workspace/tapor3/app/assets/templates/tapor/signin.html",
+		"/Users/orodrigu/Workspace/tapor3/db/seeds.rb",
+		"/Users/orodrigu/Workspace/tapor3/.bowerrc",
+		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ace-builds/src/snippets/gitignore.js",
+		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/jquery/src/css/addGetHookIf.js",
+		"/Users/orodrigu/Workspace/tapor3/Gemfile",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/services/AttributeTypeServices.js",
 		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/comments_controller.rb",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ui.bootstrap/node_modules/grunt-karma/node_modules/karma/node_modules/istanbul/node_modules/escodegen/node_modules/source-map/lib/source-map/source-map-generator.js",
@@ -662,10 +766,8 @@
 		"/Users/orodrigu/Workspace/tapor3/config/routes.rb",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ui.bootstrap/dist/ui-bootstrap-tpls-0.12.1.js",
 		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/tool_lists_controller.rb",
-		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/tools_controller.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/templates/tool_lists/contributing.html",
 		"/Users/orodrigu/Workspace/tapor3/app/serializers/tool_serializer.rb",
-		"/Users/orodrigu/Workspace/tapor3/app/serializers/tag_serializer.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/PagesController.js",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/controllers/ToolsController.js",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/services/UserServices.js",
@@ -683,7 +785,6 @@
 		"/Users/orodrigu/Workspace/tapor3/test/controllers/api/tools_controller_test.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/controllers/api/users_controller.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/services/Services.js",
-		"/Users/orodrigu/Workspace/tapor3/db/seeds.rb",
 		"/Users/orodrigu/Workspace/tapor3/test/models/user_test.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/serializers/user_serializer.rb",
 		"/Users/orodrigu/Workspace/tapor3/test/fixtures/users.yml",
@@ -699,14 +800,11 @@
 		"/Users/orodrigu/Workspace/tapor3/app/assets/templates/tapor/loading.html",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ui.bootstrap/dist/ui-bootstrap-tpls-0.12.1.min.js",
 		"/Users/orodrigu/Workspace/tapor3/app/assets/templates/tapor/index.html",
-		"/Users/orodrigu/Workspace/tapor3/app/assets/javascripts/angular/directives/MultSelectDirective.js",
 		"/Users/orodrigu/Workspace/tapor3/app/helpers/api/tools_helper.rb",
 		"/Users/orodrigu/Workspace/tapor3/test/helpers/api/tools_helper_test.rb",
 		"/Users/orodrigu/Workspace/tapor3/test/models/tool_test.rb",
-		"/Users/orodrigu/Workspace/tapor3/test/fixtures/tools.yml",
 		"/Users/orodrigu/Workspace/tapor3/vendor/assets/components/ui.bootstrap/dist/assets/smoothscroll-angular-custom.js",
 		"/Users/orodrigu/Workspace/tapor3/tmp/cache/assets/development/sprockets/ae76e75972b49b60d61daa174156747d",
-		"/Users/orodrigu/Workspace/tapor3/config/initializers/mime_types.rb",
 		"/Users/orodrigu/Workspace/tapor3/app/serializers/tool_list_serializer.rb",
 		"/Users/orodrigu/Workspace/tapor3/test/models/tool_tag_test.rb",
 		"/Users/orodrigu/Workspace/tapor3/test/models/tool_rating_test.rb",
@@ -775,12 +873,7 @@
 		"/Users/orodrigu/Workspace/tapor3_datamigration/test.txt",
 		"/Users/orodrigu/Workspace/tapor3_datamigration/process_comments.py",
 		"/Users/orodrigu/Workspace/tapor3_datamigration/comments.csv",
-		"/Users/orodrigu/Workspace/tapor3_datamigration/comments_result.txt",
-		"/Users/orodrigu/Workspace/tapor3_datamigration/attributes/tool_attributes_result.txt",
-		"/Users/orodrigu/Desktop/test.txt",
-		"/Users/orodrigu/.bash_profile",
-		"/Users/orodrigu/.bashrc",
-		"/Users/orodrigu/Workspace/tapor3_datamigration/tools.csv"
+		"/Users/orodrigu/Workspace/tapor3_datamigration/comments_result.txt"
 	],
 	"find":
 	{
@@ -812,6 +905,19 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"Detail",
+			"get_sorted_comments",
+			"user_id",
+			"checkUser",
+			"10",
+			"attribute_values",
+			"attributes",
+			"count",
+			"query_string",
+			"<select",
+			"services",
+			"attribute_types",
+			"update",
 			"list",
 			"$location.",
 			"attributes",
@@ -926,20 +1032,7 @@
 			"update_tags",
 			"tags",
 			"addToList",
-			"tag",
-			"inverse",
-			"tool_tag",
-			"tags",
-			"update",
-			"process_update_tags",
-			"comments",
-			"global_tags",
-			"tags",
-			".tags",
-			"response.tags",
-			"tag_count",
-			"tag",
-			"value:"
+			"tag"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -972,7 +1065,7 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -1001,7 +1094,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 20,
 					"type": "text"
 				},
 				{
@@ -1031,7 +1124,7 @@
 						"translation.y": 636.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 19,
 					"type": "text"
 				},
 				{
@@ -1059,11 +1152,134 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 12,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5176,
+						"regions":
+						{
+							"match":
+							{
+								"flags": 112,
+								"regions":
+								[
+									[
+										211,
+										220
+									],
+									[
+										566,
+										575
+									],
+									[
+										759,
+										768
+									],
+									[
+										1906,
+										1925
+									],
+									[
+										1976,
+										1995
+									],
+									[
+										2140,
+										2159
+									],
+									[
+										2283,
+										2302
+									],
+									[
+										2476,
+										2495
+									],
+									[
+										3637,
+										3656
+									],
+									[
+										3707,
+										3726
+									],
+									[
+										3871,
+										3890
+									],
+									[
+										4014,
+										4033
+									],
+									[
+										4207,
+										4226
+									]
+								],
+								"scope": ""
+							}
+						},
+						"selection":
+						[
+							[
+								3719,
+								3719
+							]
+						],
+						"settings":
+						{
+							"detect_indentation": false,
+							"line_numbers": false,
+							"output_tag": 3,
+							"result_base_dir": "",
+							"result_file_regex": "^([A-Za-z\\\\/<].*):$",
+							"result_line_regex": "^ +([0-9]+):",
+							"scroll_past_end": true,
+							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1575.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/assets/javascripts/angular/controllers/TaporController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1610,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								901,
+								901
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 120.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 11,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
 					"file": "app/assets/templates/attributes/index.html",
 					"semi_transient": false,
 					"settings":
@@ -1088,17 +1304,277 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 15,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "app/controllers/api/tools_controller.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16363,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								784,
+								784
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "config/routes.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3718,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1634,
+								1649
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 14,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/assets/javascripts/angular/controllers/ToolsController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14346,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1346,
+								1346
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 462.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "app/assets/templates/tapor/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3642,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								175,
+								175
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "app/assets/stylesheets/style.css",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2036,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2015,
+								2000
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 1510.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 11,
+					"file": "app/assets/templates/tools/index.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1459,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								173,
+								183
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 13,
 					"type": "text"
 				}
 			]
 		},
 		{
-			"selected": 1,
+			"selected": 8,
 			"sheets":
 			[
 				{
-					"buffer": 4,
+					"buffer": 12,
+					"file": "app/assets/javascripts/angular/services/ToolServices.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6102,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1549,
+								1549
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 319.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "app/assets/javascripts/angular/controllers/ToolsController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14346,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 13,
+					"file": "app/assets/javascripts/angular/controllers/ToolListsController.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3935,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2761,
+								2765
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1182.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 14,
 					"file": "app/assets/javascripts/angular/controllers/AttributesController.js",
 					"semi_transient": false,
 					"settings":
@@ -1116,17 +1592,18 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 7.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 18,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 15,
 					"file": "app/views/layouts/application.html.erb",
 					"semi_transient": false,
 					"settings":
@@ -1151,39 +1628,39 @@
 						"translation.y": 276.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 17,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "app/views/home/index.html.erb",
-					"semi_transient": true,
+					"buffer": 16,
+					"file": ".gitignore",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 233,
+						"buffer_size": 582,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								233,
-								181
+								582,
+								582
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 16,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 17,
 					"file": "app/controllers/api/attribute_types_controller.rb",
 					"semi_transient": false,
 					"settings":
@@ -1204,11 +1681,70 @@
 							"syntax": "Packages/Ruby/Ruby.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 207.0,
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 18,
+					"file": "config/application.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1054,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								378,
+								378
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 19,
+					"file": "app/controllers/concerns/verbose_path.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 89,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								78,
+								78
+							]
+						],
+						"settings":
+						{
+							"auto_name": "module Identify",
+							"syntax": "Packages/Ruby/Ruby.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1272,6 +1808,38 @@
 		"selected_items":
 		[
 			[
+				"toollist",
+				"app/assets/javascripts/angular/controllers/ToolListsController.js"
+			],
+			[
+				"toolsc",
+				"app/assets/javascripts/angular/controllers/ToolsController.js"
+			],
+			[
+				"tapor",
+				"app/assets/javascripts/angular/controllers/TaporController.js"
+			],
+			[
+				"tools_con",
+				"app/controllers/api/tools_controller.rb"
+			],
+			[
+				"mult",
+				"app/assets/javascripts/angular/directives/MultSelectDirective.js"
+			],
+			[
+				"routes",
+				"config/routes.rb"
+			],
+			[
+				"sign",
+				"app/assets/templates/tapor/signin.html"
+			],
+			[
+				".git",
+				".gitignore"
+			],
+			[
 				"",
 				"app/views/layouts/application.html.erb"
 			],
@@ -1282,10 +1850,6 @@
 			[
 				"img",
 				"vendor/assets/components/ui.bootstrap/node_modules/grunt-karma/node_modules/karma/node_modules/istanbul/node_modules/escodegen/node_modules/source-map/lib/source-map/source-map-generator.js"
-			],
-			[
-				"routes",
-				"config/routes.rb"
 			],
 			[
 				"tool_con",
@@ -1342,14 +1906,6 @@
 			[
 				"tool_contr",
 				"app/controllers/api/tools_controller.rb"
-			],
-			[
-				"toolsc",
-				"app/controllers/api/tools_controller.rb"
-			],
-			[
-				"mult",
-				"app/assets/javascripts/angular/directives/MultSelectDirective.js"
 			],
 			[
 				"toolc",
@@ -1418,10 +1974,6 @@
 			[
 				"tooltag",
 				"app/models/tool_tag.rb"
-			],
-			[
-				"tapor",
-				"app/assets/javascripts/angular/controllers/TaporController.js"
 			],
 			[
 				"tags",

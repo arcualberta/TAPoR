@@ -560,7 +560,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 
 
-app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', function($scope, $location, services) {
+app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$http', function($scope, $location, services, $http) {
 
 	$scope.current_page = 1;
 	$scope.tools_page = [];
