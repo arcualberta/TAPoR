@@ -17,7 +17,7 @@ app.controller('PagesIndexController', ['$scope', 'services', function($scope, s
 
 
 
-app.controller('PagesDetailController', ['$scope', '$routeParams', '$location', 'services', function($scope, $routeParams, $location, services){
+app.controller('PagesViewController', ['$scope', '$routeParams', '$location', 'services', function($scope, $routeParams, $location, services){
 	$scope.data = {};
 	services.page.get($routeParams.name).then(
 		function(data){

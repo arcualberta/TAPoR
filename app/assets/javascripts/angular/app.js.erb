@@ -67,14 +67,14 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('tools/featured.html') %>",
       })
       .when('/tools/:named_id', {
-        templateUrl: "<%= asset_path('tools/detail.html') %>",
+        templateUrl: "<%= asset_path('tools/view.html') %>",
       })
       // Users
       .when('/users', {
         templateUrl: "<%= asset_path('users/index.html') %>",
       })
       .when('/users/:id', {
-        templateUrl: "<%= asset_path('users/detail.html') %>",
+        templateUrl: "<%= asset_path('users/view.html') %>",
       })
       // Attributes
       .when('/attributes', {
@@ -103,7 +103,7 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('tool_lists/edit.html') %>",
       })
       .when('/tool_lists/:id', {
-        templateUrl: "<%= asset_path('tool_lists/detail.html') %>",
+        templateUrl: "<%= asset_path('tool_lists/view.html') %>",
       })
       .when('/pages', {
         templateUrl: "<%= asset_path('pages/index.html') %>",
@@ -115,7 +115,7 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('pages/edit.html') %>",
       })
       .when('/pages/:name', {
-        templateUrl: "<%= asset_path('pages/detail.html') %>",
+        templateUrl: "<%= asset_path('pages/view.html') %>",
       })
 
 

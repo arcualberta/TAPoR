@@ -125,7 +125,7 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 }]);
 
 
-app.controller('ListsDetailController', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+app.controller('ListsViewController', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 	var list_id = $routeParams.id;
 
 	$scope.data = {};

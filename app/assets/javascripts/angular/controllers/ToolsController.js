@@ -50,7 +50,7 @@ app.controller('ToolsIndexController', ['$scope', 'services', function($scope, s
 
 }]);
 
-app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
+app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
 	// alert($routeParams.toolId)
 	
 	$scope.named_id = $routeParams.named_id;

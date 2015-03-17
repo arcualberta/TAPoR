@@ -45,7 +45,7 @@
 
 }]);
 
-app.controller("UsersDetailController", ['$scope', '$http', '$location', function($scope, $http, $location){
+app.controller("UsersViewController", ['$scope', '$http', '$location', function($scope, $http, $location){
 	
 	$scope.data = $scope.current_user
 
