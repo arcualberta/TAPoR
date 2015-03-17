@@ -73,9 +73,9 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			return deferred.promise;
 		},
 
-		get_tool: function(id) {
+		get_tool: function(named_id) {
 			var deferred = $q.defer();
-			$http.get('/api/tools/' + id)
+			$http.get('/api/tools/' + named_id)
 			.success(function(data){
 				
 				data.description = $sce.trustAsHtml(data.description);

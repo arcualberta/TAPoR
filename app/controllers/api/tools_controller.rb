@@ -39,7 +39,7 @@ class Api::ToolsController < ApplicationController
 
 	def show 
 		respond_to do |format|
-			@tool = Tool.find(params[:id]);			
+			@tool = Tool.find_by(named_id: params[:id]);			
 			format.json { render json: @tool, status: :ok}			
 		end
 	end

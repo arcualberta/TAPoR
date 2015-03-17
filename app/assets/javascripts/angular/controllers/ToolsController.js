@@ -53,7 +53,7 @@ app.controller('ToolsIndexController', ['$scope', 'services', function($scope, s
 app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
 	// alert($routeParams.toolId)
 	
-	$scope.id = $routeParams.id;
+	$scope.named_id = $routeParams.named_id;
 	$scope.data = {};  
 
 
@@ -66,43 +66,55 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 		valid_elements : "a[href|target=_blank],strong/b,em/i,div[align],br,p"
   };
 
-  services.tool.get_tool($scope.id).then(
+  services.tool.get_tool($scope.named_id).then(
   	function(data){
   		$scope.data.tool = data;
   		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
+
+  		$scope.id = $scope.data.tool.id;
+			services.tool.get_attributes($scope.id).then(
+				function(data){
+					$scope.data.tool_attributes = data;
+				},
+				function(errorMesssage) {		  			
+					$scope.error = errorMesssage;
+				}
+			);
+
+			services.tool.get_tags($scope.id).then(
+				function(data){
+					$scope.data.tags = data;
+				},
+				function(errorMesssage){
+					$scope.error = errorMesssage
+				}
+			);
+
+			services.tool.get_ratings($scope.id).then(
+				function(data){
+					$scope.data.ratings = data;
+				},
+				function(errorMesssage){
+					$scope.error = errorMesssage
+				}
+			);
+
+			$http.get('/api/tool_lists/related_by_tool/' + $scope.id + '?limit=4')
+			.success(function(data, status, headers, config) {
+				$scope.data.related_lists = data;
+			});
+
+			$http.get('/api/tools/' + $scope.id + "/suggested")
+			.success(function(data, status, headers, config){
+				$scope.data.suggested_tools = data;
+			});
+
+			get_sorted_comments();
   	},
   	function(errorMessage){
   		$scope.error = errorMessage;
   	}
   );
-
-  services.tool.get_attributes($routeParams.id).then(
-		function(data){
-			$scope.data.tool_attributes = data;
-		},
-		function(errorMesssage) {		  			
-			$scope.error = errorMesssage;
-		}
-	);
-
-  services.tool.get_tags($scope.id).then(
-  	function(data){
-  		$scope.data.tags = data;
-  	},
-  	function(errorMesssage){
-  		$scope.error = errorMesssage
-  	}
-  );
-
-  services.tool.get_ratings($scope.id).then(
-  	function(data){
-  		$scope.data.ratings = data;
-  	},
-  	function(errorMesssage){
-  		$scope.error = errorMesssage
-  	}
-  );
-
 
   var get_sorted_comments = function() {
 
@@ -116,7 +128,7 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 	  )	
   }
 
-  get_sorted_comments();
+  
   
 
   $scope.update_tags = function() {
@@ -270,15 +282,7 @@ app.controller('ToolsDetailController', ['$scope', '$http', '$location', '$route
 
 	// });
 
-	$http.get('/api/tool_lists/related_by_tool/' + $routeParams.id + '?limit=4')
-	.success(function(data, status, headers, config) {
-		$scope.data.related_lists = data;
-	});
 
-	$http.get('/api/tools/' + $scope.id + "/suggested")
-	.success(function(data, status, headers, config){
-		$scope.data.suggested_tools = data;
-	});
 
 	// $scope.updateToolUserDetails = function() {
 	// 	$http.patch('/api/tools/' + $scope.id, $scope.data)

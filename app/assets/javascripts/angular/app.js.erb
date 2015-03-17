@@ -66,14 +66,14 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/tools/featured', {
         templateUrl: "<%= asset_path('tools/featured.html') %>",
       })
-      .when('/tools/:id', {
+      .when('/tools/:named_id', {
         templateUrl: "<%= asset_path('tools/detail.html') %>",
       })
       // Users
       .when('/users', {
         templateUrl: "<%= asset_path('users/index.html') %>",
       })
-      .when('/users/profile', {
+      .when('/users/:id', {
         templateUrl: "<%= asset_path('users/detail.html') %>",
       })
       // Attributes

@@ -2,12 +2,14 @@ class InitialMigration < ActiveRecord::Migration
   def change
   	
   	create_table :pages do |t|
+      t.string :named_id
   		t.string :name
   		t.text :content
   		t.timestamps
   	end
 
     add_index :pages, :name, :unique => true
+    add_index :pages, :named_id, :unique => true
 
   	create_table :users do |t|
   		t.string :uid
@@ -28,6 +30,7 @@ class InitialMigration < ActiveRecord::Migration
 
   	create_table :tools do |t|
   		t.belongs_to :user
+      t.string :named_id
   		t.string :name
   		t.text :description
       t.string :url
@@ -44,7 +47,7 @@ class InitialMigration < ActiveRecord::Migration
   	end
 
   	add_index :tools, :user_id
-
+    add_index :tools, :named_id
     # create_table :categories do |t|
     #   t.string :name
     #   t.timestamps
@@ -84,12 +87,15 @@ class InitialMigration < ActiveRecord::Migration
     
   	create_table :tool_lists do |t|
       t.belongs_to :user
+      t.string :named_id
   		t.string :name
   		t.text :description
   		t.boolean :is_public, default: true
       t.boolean :is_hidden, default: false
   		t.timestamps
   	end
+
+    add_index :tool_lists, :named_id
 
   	create_table :tool_list_items do |t|
   		t.belongs_to :tool_list
@@ -150,6 +156,7 @@ class InitialMigration < ActiveRecord::Migration
   	add_index :featured_tools, :tool_id
 
     create_table :attribute_types do |t|
+      t.string :named_id
   		t.string :name
   		# t.string :possible_values
   		t.boolean :is_multiple, default: false
@@ -157,12 +164,17 @@ class InitialMigration < ActiveRecord::Migration
   		t.timestamps
   	end
 
+    add_index :attribute_types, :named_id
+
     create_table :attribute_values do |t|
       t.belongs_to :attribute_type
+      t.string :named_id
       t.string :name
       t.integer :index
       t.timestamps
     end
+
+    add_index :attribute_values, :named_id
 
   	create_table :tool_attributes do |t|
   		t.belongs_to :tool

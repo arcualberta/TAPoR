@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     
     
     get 'tools/latest', to: 'tools#latest'    
-    get 'tools/featured', to: 'tools#featured'    
+    get 'tools/featured', to: 'tools#featured'
     get 'tools/:id/tags', to: 'tools#get_tags'    
     get 'tools/:id/ratings', to: 'tools#get_ratings'    
     get 'tools/:id/comments', to: 'tools#get_comments'    
