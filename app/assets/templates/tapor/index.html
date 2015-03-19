@@ -51,7 +51,7 @@
 							    <h3 class="panel-title">{{item.tool.name}}</h3>
 							  </div>
 							  <div class="panel-body">
-							    <a href="/tools/{{item.tool.id}}"> <img src="{{item.tool.thumb_url}} "></a>
+							    <a href="/tools/{{item.tool.id}}"> <img src="{{item.tool.thumb_url}}" width="145px"></a>
 							  </div>
 							</div>
 						</div>
@@ -74,17 +74,20 @@
 			</div>
 			<div class="panel-body">
 				<div ng-repeat="tool in latest_tools" class="well well-sm">
-					<div class="media-right">
-							<a href="/tools/{{tool.id}}">
-								<img class="media-object" src="{{tool.thumb_url}}">
-							</a>
-						</div>
-						<div class="media-body">
-						<h5 class="media-heading">{{tool.name}}</h5>
-						</div>
+					
+					<div>
+						<a href="/tools/{{tool.id}}">
+							<img class="media-object" src="{{tool.thumb_url}}" width="205px">
+						</a>
 					</div>
+					<div>
+						<h5 class="media-heading">{{tool.name}}</h5>
+					</div>
+
+
 				</div>
 			</div>
+		</div>
 		
 
 		<!-- tags -->
@@ -106,9 +109,12 @@
 				<h3 class="panel-title">Tool comments</h3>
 			</div>
 			<div class="panel-body">
-				<div ng-repeat="comment in latest_comments" class="well well-sm">
+				<div ng-repeat="comment in latest_comments" class="well well-sm break-content">
 					
-					{{comment.user.name}}	said about {{comment.tool.name}}: {{comment.content}}
+					{{comment.user.name}}	said about {{comment.tool.name}}:
+					<span ng-bind-html="comment.content"></span>
+
+					
 					
 				</div>
 			</div>

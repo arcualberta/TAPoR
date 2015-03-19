@@ -19,7 +19,7 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 
 }]);
 
-app.controller('TaporIndexController', ['$scope', '$http', function($scope, $http) {
+app.controller('TaporIndexController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
 
 	$scope.featured = []
 	$scope.system_tags = {};
@@ -50,6 +50,9 @@ app.controller('TaporIndexController', ['$scope', '$http', function($scope, $htt
 	$http.get('/api/comments/latest')
 	.success(function(data, status, headers, config){
 		$scope.latest_comments = data;
+		angular.forEach($scope.latest_comments, function(v, i){
+			$scope.latest_comments[i].content = $sce.trustAsHtml($scope.latest_comments[i].content);
+		});
 	})
 
 	$http.get('/api/tools/latest')

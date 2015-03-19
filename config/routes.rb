@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: {format: :json} do
     get 'users/current', to: 'users#current'
-    
+    get 'users/:id/tool_lists', to: 'users#get_tool_lists'
+
+
     get 'tags/search', to: 'tags#search'
     
     

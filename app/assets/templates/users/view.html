@@ -1,86 +1,65 @@
 <div ng-controller='UsersViewController' class='tapor-container'>
 	<div class='row'>
-		<form class="form-horizontal" role="form">
-		<!-- image -->
-		<div class="form-group">
-      <label class="col-sm-2 control-label"></label>
-      <div class="col-sm-5">
-      	<img src="{{data.image_url}}" class="img-circle">        
+  	
+    <!-- left column -->
+    <div class="col-md-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-3">
+              <img src="{{current_user.image_url}}" class="img-circle">  
+            </div>
+            <div class="col-md-9">
+              {{current_user.name}} 
+              <a ng-if="is_editable" href="/users/{{current_user.id}}/edit" class="btn btn-default">Edit</a>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              {{current_user.description}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <ul>
+                <li>
+                  {{current_user.position_affiliation}}
+                </li>
+                <li ng-if="current_user.is_email_publishable">
+                  Email: {{current_user.email}}
+                </li>
+                <li>
+                  Web site: {{current_user.site}}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
 
-
-		<!-- name -->
-		<div class="form-group">
-      <label class="col-sm-2 control-label"></label>
-      <div class="col-sm-5">
-        <label>{{data.name}}</label>
+    <!-- right column -->
+    <div class="col-md-9">
+      <div ng-repeat="tool_list in tool_lists">
+        <div class="row">
+          <div class="col-md-3">
+            {{tool_list.name}}
+            {{tool_list.description}}
+          </div>
+          <div class="col-md-9 horizontal-scrolling">
+            
+            <ul class="list-inline list-unstyled">
+              <li ng-repeat="item in tool_list.tool_list_items">
+                <img src="{{item.tool.thumb_url}}">
+              </li>
+            </ul>
+            
+          </div>
+        </div>
       </div>
-    </div>
-
-		<!-- email -->
-		<div class="form-group">
-      <label class="col-sm-2 control-label">Email</label>
-      <div class="col-sm-5">       
-
-				<div class="input-group">
-					
-					<input type="email" class="form-control" id="inputEmail" placeholder="Email" ng-model="data.email">
-					<span class="input-group-addon">
-						Publish <input type="checkbox" name="is_email_publishable" value="is_email_publishable" id="inputIsEmailPublishable" ng-model="data.is_email_publishable">
-					</span>
-				</div><!-- /input-group -->				
-
-				<!-- <input type="text" class="form-control" id="inputEmail" placeholder="Email" ng-model="data.email">
-        <ul>
-          <li class="checkbox">
-            <label>
-              <input type="checkbox" name="is_email_publishable" value="is_email_publishable" id="inputIsEmailPublishable" ng-model="data.is_email_publishable">Publish 
-            </label>
-          </li>
-        </ul>  -->
-
-      </div>
-    </div>
-		<!-- publish ? -->
-		<!-- site -->
-		<div class="form-group">
-      <label for="inputSite" class="col-sm-2 control-label">Site</label>
-      <div class="col-sm-5">
-        <input type="url" class="form-control" id="inputSite" placeholder="URL" ng-model="data.site">
-      </div>
-    </div>
-		<!-- affiliation -->
-		<div class="form-group">
-      <label for="inputAffiliation" class="col-sm-2 control-label">Affiliation</label>
-      <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputAffiliation" placeholder="Affiliation" ng-model="data.affiliation">
-      </div>
-    </div>
-		<!-- position -->
-		<div class="form-group">
-      <label for="inputPosition" class="col-sm-2 control-label">Position</label>
-      <div class="col-sm-5">
-        <input type="text" class="form-control" id="inputPosition" placeholder="Position" ng-model="data.position">
-      </div>
-    </div>
-		<!-- description -->
-    <div class="form-group">
-      <label for="inputDescription" class="col-sm-2 control-label">Description</label>
-      <div class="col-sm-5	">
-        <textarea class="form-control vertical-text-area" rows="3" id="inputDescription" ng-model="data.description"></textarea>
-      </div>
-    </div>
-
-
-		<div class="form-group">
-			<div class="col-sm-offset-2 col-sm-10">
-				<button ng-click="saveProfile()" class="btn btn-success">Save</button>
-			</div>
-		</div>
 
     </div>
-		</form>
-	</div>
+
+  </div>
 </div>

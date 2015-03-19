@@ -27,14 +27,14 @@
 	<div class='row tool-list-entry' ng-repeat="tool in tools_page.tools track by $index">	
 		
 		<div class='col-md-4 tool-list-entry-image'>
-			<a href='tools/{{tool.named_id}}'>
+			<a href='tools/{{tool.id}}'>
 				<img src="/{{tool.thumb_url}}">
 			</a>
 		</div>
 		
 		<div class='col-md-8'>
 			<div class="row">
-				<label><a href='tools/{{tool.named_id}}'>{{tool.name}}</a></label>
+				<label><a href='tools/{{tool.id}}'>{{tool.name}}</a></label>
 			</div>
 			<div class="row">
 				<div ng-bind-html="tool.description"></div>				

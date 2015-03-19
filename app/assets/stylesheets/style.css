@@ -164,3 +164,17 @@ display: inline-block;
 .tapor-carousel {
 	height : 440px;
 }
+
+.horizontal-scrolling{
+		/*width: auto;	*/
+    width: 600px;
+    /*height:220px;*/
+    border: 2px solid #cdcdcd;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.break-content {
+	word-wrap: break-word;
+}

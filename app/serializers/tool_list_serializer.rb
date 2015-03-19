@@ -5,19 +5,6 @@ class ToolListSerializer < ActiveModel::Serializer
 
   def tool_list_items
   	result = []
-  	# missing_content = {
-  	# 	id: 0,
-  	# 	tool: {
-  	# 		id: 0,
-	  # 		user_id:0,
-	  # 		name:"Mising content",
-	  # 		description:"",
-	  # 		is_approved:true,
-	  # 		image_url:"images/tools/missing.png",  		
-	  # 		star_average:0.0,
-	  # 		thumb_url:"images/tools/missing-thumb.png"
-  	# 	}
-  	# };
 
   	missing_content = ToolListItem.new({
   	})

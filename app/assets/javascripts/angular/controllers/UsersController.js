@@ -45,9 +45,30 @@
 
 }]);
 
-app.controller("UsersViewController", ['$scope', '$http', '$location', function($scope, $http, $location){
+app.controller("UsersViewController", ['$scope', '$location', '$routeParams','services', function($scope, $location, $routeParams, services){
+	$scope.is_editable = $routeParams.id == $scope.current_user.id;
+	// $scope.current_user = $scope.current_user;
+
+	$scope.current_user.position_affiliation = $scope.current_user.position;
+	if ($scope.current_user.position_affiliation != "" && $scope.current_user.affiliation != "") {
+		$scope.current_user.position_affiliation += ", " + $scope.current_user.affiliation	
+	}
+
+	services.user.get_tool_lists($scope.current_user.id).then(
+		function(data){
+			$scope.tool_lists = data;
+		},
+		function(errorMessage) {
+			$scope.error = errorMessage;
+		}
+	);
+
 	
-	$scope.data = $scope.current_user
+}]);
+
+app.controller("UsersEditController", ['$scope', '$http', '$location', function($scope, $http, $location){
+	
+	$scope.data = $scope.current_user;
 
 	$scope.saveProfile = function() {
 		$http.patch('/api/users/' + $scope.data.id, $scope.data)
