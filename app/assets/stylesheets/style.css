@@ -169,7 +169,7 @@ display: inline-block;
 		/*width: auto;	*/
     width: 600px;
     /*height:220px;*/
-    border: 2px solid #cdcdcd;
+    /*border: 2px solid #cdcdcd;*/
     overflow-x: scroll;
     overflow-y: hidden;
     white-space: nowrap;
