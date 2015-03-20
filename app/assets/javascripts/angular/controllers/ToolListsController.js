@@ -7,7 +7,6 @@ app.controller('ListsContributingController', ['$scope', '$http', function($scop
 	$scope.set_contributing = function() {
 		$http.get('/api/tool_lists?is_editor=true')
 		.success(function(data, status, headers, config){
-			console.log(data)
 			$scope.data.tool_lists = data;		
 		});	
 	}
@@ -49,8 +48,6 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	$scope.toolsListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
 		itemMoved: function(event){
-
-			// console.log(event.source.itemScope.modelValue);
 			$scope.data.tool_list_items[event.dest.index] = {
 				notes : "",
 				tool : event.source.itemScope.modelValue
@@ -82,14 +79,14 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 			if ($scope.is_editing) {
 				$http.patch("/api/tool_lists/" + $scope.data.id, 	$scope.data)
 				.success(function(data, status, headers, config) {
-					$location.path('/tool_lists/contributing');
+					$location.path('/tool_lists');
 				});
 				
 			} else {
 				
 				$http.post("/api/tool_lists", 	$scope.data)
 				.success(function(data, status, headers, config) {
-					$location.path('/tool_lists/contributing');
+					$location.path('/tool_lists');
 				});
 			}
 		}
@@ -135,7 +132,6 @@ app.controller('ListsViewController', ['$scope', '$http', '$routeParams', functi
 	$http.get('/api/tool_lists/' + list_id)
 	.success(function(data, status, headers, config){
 		$scope.data = data;
-		console.log(data);
 		$scope.can_edit = $scope.current_user.is_admin;
 
 		if (! $scope.can_edit) {
@@ -152,14 +148,11 @@ app.controller('ListsViewController', ['$scope', '$http', '$routeParams', functi
 		$http.get('/api/tool_lists/by_curator/' + $scope.data.user.id + "?exclude=" + $scope.data.id)
 		.success(function(data, status, headers, config){
 			$scope.by_curator = data;
-			console.log(data);
 		});
 		
 		$http.get('/api/tool_lists/related_by_list/' + $scope.data.id)
 		.success(function(data, status, headers, config){
 			$scope.related_lists = data;
-			console.log("here")
-			console.log(data);
 		});
 
 
@@ -172,16 +165,22 @@ app.controller('ListsViewController', ['$scope', '$http', '$routeParams', functi
 
 app.controller('ListsIndexController', ['$scope', 'services', function($scope, services){
 
-	$scope.tool_list_page = 1;
+	$scope.current_page = 1;
 
-	services.tool_list.get_tool_list_page($scope.tool_list_page).then(
-		function(data){
-			$scope.tool_lists = data;
-		},
-		function(errorMessage){
-			$scope.error = errorMessage;
-		}
-	);
+	$scope.pageChanged = function() {
+		services.tool_list.get_tool_list_page($scope.current_page).then(
+			function(data){
+				// $scope.tool_lists = data.tool_lists;
+				// $scope.tool_lists_count = data.meta.count;
+				$scope.tool_lists_page = data;
+			},
+			function(errorMessage){
+				$scope.error = errorMessage;
+			}
+		);
+	}
+
+	$scope.pageChanged();	
 
 }]);
 
