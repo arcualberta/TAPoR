@@ -98,6 +98,9 @@ app.config(['$routeProvider', '$locationProvider',
       //   controller: 'ListsPublicCtrl'
       // })
 
+      .when('/tool_lists', {
+        templateUrl: "<%= asset_path('tool_lists/index.html') %>",
+      })
       .when('/tool_lists/contributing', {
         templateUrl: "<%= asset_path('tool_lists/contributing.html') %>",
       })

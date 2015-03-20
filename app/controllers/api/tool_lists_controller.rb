@@ -3,6 +3,10 @@ class Api::ToolListsController < ApplicationController
 	before_action :set_tool_list, only: [:update, :destroy]
 
 	def index
+
+		params[:page] ||= 1;
+		per_page = 10;
+
 		params[:is_editor] = params[:is_editor].to_boolean
 		params[:is_follower] = params[:is_follower].to_boolean
 		if params[:is_editor] and params[:is_follower]						
@@ -18,7 +22,8 @@ class Api::ToolListsController < ApplicationController
 		end			
 
 		respond_to do |format|			
-			format.json {render json: @tool_lists}
+			# format.json {render json: @tool_lists}
+			format.json {render json: @tool_lists.limit(per_page).offset((params[:page].to_i - 1) * per_page), root: "tool_lists", meta: {count: @tool_lists.length}, status: :ok}
 		end
 	end
 

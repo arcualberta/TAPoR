@@ -169,3 +169,19 @@ app.controller('ListsViewController', ['$scope', '$http', '$routeParams', functi
 
 
 }]);	
+
+app.controller('ListsIndexController', ['$scope', 'services', function($scope, services){
+
+	$scope.tool_list_page = 1;
+
+	services.tool_list.get_tool_list_page($scope.tool_list_page).then(
+		function(data){
+			$scope.tool_lists = data;
+		},
+		function(errorMessage){
+			$scope.error = errorMessage;
+		}
+	);
+
+}]);
+
