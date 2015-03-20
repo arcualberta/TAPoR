@@ -1,5 +1,5 @@
 class ToolListSerializer < ActiveModel::Serializer
-  attributes :id, :name, :description, :is_public, :user, :named_id
+  attributes :id, :name, :description, :is_public, :user
   has_many :tool_list_items
   has_many :tool_list_user_roles
 

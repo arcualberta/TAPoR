@@ -14,7 +14,6 @@
 ActiveRecord::Schema.define(version: 20141125172213) do
 
   create_table "attribute_types", force: true do |t|
-    t.string   "named_id"
     t.string   "name"
     t.boolean  "is_multiple", default: false
     t.boolean  "is_required", default: false
@@ -22,18 +21,13 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.datetime "updated_at"
   end
 
-  add_index "attribute_types", ["named_id"], name: "index_attribute_types_on_named_id", using: :btree
-
   create_table "attribute_values", force: true do |t|
     t.integer  "attribute_type_id"
-    t.string   "named_id"
     t.string   "name"
     t.integer  "index"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "attribute_values", ["named_id"], name: "index_attribute_values_on_named_id", using: :btree
 
   create_table "comments", force: true do |t|
     t.integer  "user_id"
@@ -119,7 +113,6 @@ ActiveRecord::Schema.define(version: 20141125172213) do
 
   create_table "tool_lists", force: true do |t|
     t.integer  "user_id"
-    t.string   "named_id"
     t.string   "name"
     t.text     "description"
     t.boolean  "is_public",   default: true
@@ -127,8 +120,6 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "tool_lists", ["named_id"], name: "index_tool_lists_on_named_id", using: :btree
 
   create_table "tool_ratings", force: true do |t|
     t.integer  "user_id"
@@ -167,7 +158,6 @@ ActiveRecord::Schema.define(version: 20141125172213) do
 
   create_table "tools", force: true do |t|
     t.integer  "user_id"
-    t.string   "named_id"
     t.string   "name"
     t.text     "description"
     t.string   "url"
@@ -184,7 +174,6 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.datetime "updated_at"
   end
 
-  add_index "tools", ["named_id"], name: "index_tools_on_named_id", using: :btree
   add_index "tools", ["user_id"], name: "index_tools_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
