@@ -13,7 +13,7 @@ app.directive("multselect", function() {
       					"	</div>"+
 					      "	<div ng-switch-when='false'>"+
 					      "		<select ng-required={{isRequired}} class='form-control' ng-model='model[0]' ng-options='value.name for value in values track by value.id'>"+					      
-					      "			<option selected name=''></option>"+
+					      "			<option ng-if='addEmpty' selected name=''></option>"+
 					      "		</select>"+
 					      "	</div>"+
 					    	"</div>",
@@ -22,7 +22,8 @@ app.directive("multselect", function() {
 			isMultiple : "=",
 			isRequired : "=",
 			name : "=",
-			values : "="
+			values : "=",
+			addEmpty: "="
 		}
 	};
 })

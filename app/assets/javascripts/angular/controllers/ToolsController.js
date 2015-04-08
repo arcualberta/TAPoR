@@ -233,19 +233,24 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.creators_url = "";
   $scope.data.url = "";
 
-  $scope.data.nature = 0;
   $scope.possible_nature = [
-  	// {
-  	// 	name: "Tool",
-  	// 	value: "tool",
-  	// },
-  	// {
-  	// 	name: "Code",
-  	// 	value: "code",
-  	// },
+  	{
+  		name: "Tool",
+  		value: "tool",
+  		id: 0,
+  	},
+  	{
+  		name: "Code",
+  		value: "code",
+  		id: 1,
+  	},
   ];
-  $scope.data.language = "";
+  $scope.data.nature = [$scope.possible_nature[0]];
+
+  
   $scope.possible_language = ["python", "php", "r", "javascript", "java", "mathematica", "other"]
+  $scope.data.language = $scope.possible_language[0];
+  
   $scope.data.code = "";
 
 	// $scope.data.tool_ratings = [{"stars" : 0}];  
