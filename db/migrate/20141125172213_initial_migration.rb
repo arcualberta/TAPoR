@@ -42,7 +42,12 @@ class InitialMigration < ActiveRecord::Migration
       t.boolean :is_hidden, default: false
       t.date :last_updated
       t.string :documentation_url  
-  		t.timestamps
+
+      t.text :code
+      t.integer :language
+      t.integer :nature, default: 0
+  		
+      t.timestamps
   	end
 
   	add_index :tools, :user_id
@@ -154,7 +159,6 @@ class InitialMigration < ActiveRecord::Migration
 
     create_table :attribute_types do |t|
   		t.string :name
-  		# t.string :possible_values
   		t.boolean :is_multiple, default: false
       t.boolean :is_required, default: false
   		t.timestamps

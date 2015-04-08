@@ -209,92 +209,6 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   };
 
 
-
-	
-
-	// 	// Attributes
-
-	// 	attributes = [];		
-	// 	angular.forEach(data.tool_attributes, function(v, i){
-
-	// 		var need_to_add = false;
-	// 		var current_attribute = {
-	// 			name: v.name,
-	// 			value: "",
-	// 		};			
-			
-	// 		if (v.is_multiple) {
-	// 			if (v.model && v.model.length) {
-	// 				var values = [];
-	// 				angular.forEach(v.model, function(att, j){
-	// 					if (att) {
-	// 						need_to_add = true;
-	// 						values.push(v.attribute_values[j].name)
-	// 					}
-	// 				});
-	// 				if (need_to_add) {
-	// 					current_attribute.value = values.join(",");
-	// 				}
-	// 			}
-	// 		} else {
-	// 			if (v.model && v.model.length) {
-	// 				current_attribute.value = v.model[0].name
-	// 				need_to_add = true;
-	// 			}
-	// 		}
-
-	// 		if (need_to_add) {
-	// 			attributes.push(current_attribute);
-	// 		}
-
-	// 	});
-
-	// 	$scope.data.tool_attributes = attributes;
-
-	// 	// comments
-
-	// 	if (data.comments && data.comments.length) {
-	// 		var new_comments = {
-	// 			pinned: [],
-	// 			not_pinned: []
-	// 		}
-	// 		angular.forEach(data.comments, function(v, i){
-	// 			if (v.is_pinned) {
-	// 				new_comments.pinned.push(v);
-	// 			} else {
-	// 				new_comments.not_pinned.push(v);
-	// 			}
-	// 		});
-
-	// 		// sort comments
-
-	// 		$scope.data.comments = new_comments;
-
-
-
-	// 	}
-
-	// 	$http.get('/api/tools/view/' + $scope.id)
-	// 	.success(function(data, status, headers, config){
-	// 		$scope.data.also = data;
-	// 	});
-
-
-	// });
-
-
-
-	// $scope.updateToolUserDetails = function() {
-	// 	$http.patch('/api/tools/' + $scope.id, $scope.data)
-	// 	.success(function(data, status, headers, config){
-	// 		$location.path('/tools/');
-	// 	});
-	// }
-
-	// $scope.addToList = function(id) {
-	// 	console.log(id)
-	// }
-
 	$scope.updateToolView = function() {
   	$http.post('/api/tools/view/' + $scope.id)
   	.success(function(data, status, headers, config){
@@ -318,6 +232,21 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.creators_email = "";
   $scope.data.creators_url = "";
   $scope.data.url = "";
+
+  $scope.data.nature = 0;
+  $scope.possible_nature = [
+  	// {
+  	// 	name: "Tool",
+  	// 	value: "tool",
+  	// },
+  	// {
+  	// 	name: "Code",
+  	// 	value: "code",
+  	// },
+  ];
+  $scope.data.language = "";
+  $scope.possible_language = ["python", "php", "r", "javascript", "java", "mathematica", "other"]
+  $scope.data.code = "";
 
 	// $scope.data.tool_ratings = [{"stars" : 0}];  
   
@@ -477,6 +406,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 				
 				services.tool.get_attributes($routeParams.id, $scope.is_editing).then(
 		  		function(data){
+		  			console.log(data);
 		  			$scope.data.tool_attributes = data;
 		  		},
 		  		function(errorMesssage) {		  			

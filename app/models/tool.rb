@@ -18,6 +18,9 @@ class Tool < ActiveRecord::Base
 	has_many :tool_lists, through: :tool_list_items
 	has_one :featured_tool
 	has_many :suggested_tools
+	
+	enum nature: [ :tool, :code ]
+	enum language: [ :python, :php, :r, :javascript, :java, :mathematica, :other ]
 
 	accepts_nested_attributes_for :tool_ratings
 end

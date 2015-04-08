@@ -217,7 +217,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 					angular.forEach(data, function(value_type, i){
 						value_type.model = [];
 						if (value_type.is_multiple) {						
-							angular.forEach(value_type.possible_values, function(value, j){
+							angular.forEach(value_type.attribute_values, function(value, j){
 								var found_value = false;
 								angular.forEach(value_type.selected, function(selected_value, k){
 									if (!found_value && value.id == selected_value.id) {
@@ -227,7 +227,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 								value_type.model.push(found_value);
 							});
 						} else {
-							angular.forEach(value_type.possible_values, function(value, j){
+							angular.forEach(value_type.attribute_values, function(value, j){
 								var found_value = false;
 								if (!found_value && value_type.selected[0] && value_type.selected[0].id == value.id) {
 									found_value = true;

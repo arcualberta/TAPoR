@@ -179,62 +179,8 @@ class Api::ToolsController < ApplicationController
 						@tool.update(is_approved: safe_params[:is_approved]);
 					end
 
-					# stars
-					# if params[:tool_ratings] and params[:tool_ratings][:stars] and params[:tool_ratings][:stars] != 0
-					# if params[:tool_ratings] and params[:tool_ratings].length > 0 and params[:tool_ratings][0][:stars] != 0
-						
-
-					# 	@tool_ratings = @tool.tool_ratings.create({
-					# 		stars: params[:tool_ratings][0][:stars], 
-					# 		user_id: current_user[:id]
-					# 	});
-						
-					# 	@tool_ratings.save
-					# 	@tool.star_average = @tool_ratings.stars;
-					# 	@tool.save()
-					# end
-					
-					# tags
-					# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""			
-					# if params[:tags] and params[:tags].length > 0						
-					# 	tags = params[:tags];
-					# 	new_tag_ids = []
-
-					# 	# check if tags exists otherwise create
-					# 	tags.each do |tag|
-					# 		if tag != ""
-					# 			currentTag = Tag.find_or_create_by value: tag;
-					# 			new_tag_ids.push(currentTag.id);
-					# 		end
-					# 	end
-
-					# 	new_tag_ids.each do |ids|
-						
-					# 		@tool_tag = @tool.tool_tags.create({
-					# 			tag_id: ids,
-					# 			user_id: current_user[:id]
-					# 		})
-					# 		@tool_tag.save
-
-					# 	end
-
-
-
-					# end
-
-
-					# # comment
-					# if params[:comments] and params[:comments].length > 0 and params[:comments][0][:content] != ""
-					# 	 puts params[:comments][0];
-					# 	@comment = @tool.comments.create({
-					# 		content: params[:comments][0][:content], 
-					# 		user_id: current_user[:id]
-					# 	});
-					# 	@comment.save
-					# end
-
 					# attributes
-					# save_attributes(@tool, params[:attribute_types]);
+
 					save_attributes();
 
 					# image
@@ -266,7 +212,7 @@ class Api::ToolsController < ApplicationController
 				name: type.name,
 				is_multiple: type.is_multiple,
 				is_required: type.is_required,
-				possible_values: [],
+				attribute_values: [],
 				selected: []
 			}
 			
@@ -277,7 +223,7 @@ class Api::ToolsController < ApplicationController
 					index: value[:index],
 				}
 
-				response_type[:possible_values].push(response_value);			
+				response_type[:attribute_values].push(response_value);			
 				if response_type[:is_multiple]
 					@this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id], attribute_value_id: response_value[:id])	
 					if @this_model
