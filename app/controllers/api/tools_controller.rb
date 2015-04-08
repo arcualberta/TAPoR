@@ -172,9 +172,17 @@ class Api::ToolsController < ApplicationController
 						creators_email: safe_params[:creators_email].strip,
 						creators_url: safe_params[:creators_url].strip,
 						last_updated: Time.now(),
+						nature: params[:nature][0][:value],
 						user_id: current_user[:id]
-					})								
+
+					});
+
+					if params[:nature][0][:value] == 'code'
+						@tool.update(language: params[:language][0][:value])
+						@tool.update(code: params[:code])
+					end
 					
+
 					if current_user.is_admin?
 						@tool.update(is_approved: safe_params[:is_approved]);
 					end
@@ -465,7 +473,7 @@ class Api::ToolsController < ApplicationController
 		def safe_params
 			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
 			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url);
+			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code);
 		end
 
 		def save_image(base_image)
