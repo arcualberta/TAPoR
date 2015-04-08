@@ -52,14 +52,28 @@
     <!-- nature -->
      <div class="form-group">
       <label for="inputNature" class="col-sm-2 control-label">Type</label>
-      <div class="col-sm-6  ">
+      <div class="col-sm-6">
         <div multselect add-empty="false" is-multiple="false" model="data.nature" name="nature" values="possible_nature"> </div>
       </div>
     </div>
     <!-- language -->
-   
+    
+    <div class="form-group" ng-if="data.nature[0].value == 'code';">
+      <label for="inputLanguage" class="col-sm-2 control-label">Language</label>
+      <div class="col-sm-6">
+        <select class='form-control' ng-model='data.language[0]' ng-options='value.name for value in possible_language track by value.id' ng-change="modeChanged()"></select>            
+      </div>
+    </div>
     <!-- code -->
+    <div class="form-group" ng-if="data.nature[0].value == 'code';">
+      <label for="inputCode" class="col-sm-2 control-label">Code</label>
+      <div class="col-sm-6">
+      <!-- XXX set ui-ace mode dinamycally -->
+      <div ui-ace="aceOption" ng-model="data.code">
+      </div>
 
+      </div>
+    </div>
     <!-- creator name -->
 
     <div class="form-group">

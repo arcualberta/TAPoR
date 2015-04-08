@@ -248,8 +248,55 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.nature = [$scope.possible_nature[0]];
 
   
-  $scope.possible_language = ["python", "php", "r", "javascript", "java", "mathematica", "other"]
-  $scope.data.language = $scope.possible_language[0];
+  // $scope.possible_language = ["python", "php", "r", "javascript", "java", "mathematica", "other"]
+  
+  $scope.possible_language = [
+  	{
+  		id: 0,
+  		name: "Python",
+  		mode: "python",
+  		value: "python"
+  	},
+  	{
+  		id: 1,
+  		name: "PHP",
+  		mode: "php",
+  		value: "php"
+  	},
+  	{
+  		id: 2,
+  		name: "R",
+  		mode: "r",
+  		value: "r"
+  	},
+  	{
+  		id: 3,
+  		name: "Javascript",
+  		mode: "javascript",
+  		value: "javascript"
+  	},
+  	{
+  		id: 4,
+  		name: "Java",
+  		mode: "java",
+  		value: "java"
+  	},
+  	{
+  		id: 5,
+  		name: "Mathematica",
+  		mode: "plain_text",
+  		value: "mathematica"
+  	},
+  	{
+  		id: 6,
+  		name: "Other",
+  		mode: "plain_text",
+  		value: "other"
+  	},
+  ]
+
+
+  $scope.data.language = [$scope.possible_language[6]];
   
   $scope.data.code = "";
 
@@ -266,6 +313,21 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.is_editing = $location.path().indexOf("edit") != -1;
   // var form = $("#tool_form");
   // form.validate();
+
+
+  $scope.aceOption = {
+    mode: "plain_text",
+    useWrapMode : true,
+    onLoad: function (_ace) {
+ 
+      // HACK to have the ace instance in the scope...
+      $scope.modeChanged = function () {
+        _ace.getSession().setMode("ace/mode/" + $scope.data.language[0].mode);
+      };
+ 
+    }
+  };
+  
 
   $scope.updateIsPinned = function(id, is_pinned) {
   	var data = {
