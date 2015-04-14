@@ -114,9 +114,9 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   create_table "tool_lists", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.text     "description"
-    t.boolean  "is_public",   default: true
-    t.boolean  "is_hidden",   default: false
+    t.text     "detail"
+    t.boolean  "is_public",  default: true
+    t.boolean  "is_hidden",  default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -159,7 +159,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
   create_table "tools", force: true do |t|
     t.integer  "user_id"
     t.string   "name"
-    t.text     "description"
+    t.text     "detail"
     t.string   "url"
     t.boolean  "is_approved",       default: false
     t.string   "creators_name"
@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.string   "site"
     t.string   "affiliation"
     t.string   "position"
-    t.string   "description"
+    t.string   "detail"
     t.string   "image_url"
     t.boolean  "is_blocked",           default: false
     t.boolean  "is_admin",             default: false

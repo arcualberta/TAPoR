@@ -54,4 +54,5 @@ gem 'will_paginate', '~> 3.0.7'
 gem 'rmagick', '~> 2.13.2'
 gem 'byebug', '~> 3.5.1', group: [:development, :test]
 gem 'to_boolean', '~> 1.0.2'
-
+gem 'xapian', '~> 1.2.18.2'
+gem 'xapian_db', '~> 1.3.5.4'

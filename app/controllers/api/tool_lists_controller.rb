@@ -125,7 +125,7 @@ class Api::ToolListsController < ApplicationController
 						# save intrinsic info
 						@tool_list.update({
 							name: safe_params[:name],
-							description: safe_params[:description],
+							detail: safe_params[:detail],
 							is_public: safe_params[:is_public],
 						})
 						# delete all items
@@ -167,7 +167,7 @@ class Api::ToolListsController < ApplicationController
 					@tool_list = ToolList.create({
 						user_id: current_user[:id],
 						name: safe_params[:name],
-						description: safe_params[:description],
+						detail: safe_params[:detail],
 						is_public: safe_params[:is_public],						
 					})	
 
@@ -201,7 +201,7 @@ class Api::ToolListsController < ApplicationController
 		end
 
 		def safe_params	
-			params.require(:tool_list).permit(:id, :name, :description, :is_public);
+			params.require(:tool_list).permit(:id, :name, :detail, :is_public);
 		end
 
 		def save_tool_items

@@ -167,7 +167,7 @@ class Api::ToolsController < ApplicationController
 					@tool = Tool.create({
 						name: safe_params[:name].strip, 
 						url: safe_params[:url],
-						description: safe_params[:description].strip,
+						detail: safe_params[:detail].strip,
 						creators_name: safe_params[:creators_name].strip,
 						creators_email: safe_params[:creators_email].strip,
 						creators_url: safe_params[:creators_url].strip,
@@ -368,7 +368,7 @@ class Api::ToolsController < ApplicationController
 
 						# main tool content
 						@tool.name = safe_params[:name].strip;
-						@tool.description = ActionController::Base.helpers.sanitize(safe_params[:description]).strip;
+						@tool.detail = ActionController::Base.helpers.sanitize(safe_params[:detail]).strip;
 						@tool.url = safe_params[:url].strip
 						@tool.creators_name = safe_params[:creators_name].strip;
 						@tool.creators_email = safe_params[:creators_email].strip;
@@ -471,9 +471,9 @@ class Api::ToolsController < ApplicationController
 		end
 
 		def safe_params
-			# params.require(:tool).permit(:name, :description, :tool_ratings => [:id, :stars]);
-			 # params.require(:tool).permit(:name, :description, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :description, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code);
+			# params.require(:tool).permit(:name, :detail, :tool_ratings => [:id, :stars]);
+			 # params.require(:tool).permit(:name, :detail, tool_ratings: :stars);
+			params.require(:tool).permit(:name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code);
 		end
 
 		def save_image(base_image)

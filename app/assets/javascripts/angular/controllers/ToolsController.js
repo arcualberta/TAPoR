@@ -226,7 +226,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.id = $routeParams.id;
 	$scope.data = {};
   $scope.data.name = "";
-  $scope.data.description = "";
+  $scope.data.detail = "";
   $scope.data.is_approved = false;
   $scope.data.creators_name = "";
   $scope.data.creators_email = "";

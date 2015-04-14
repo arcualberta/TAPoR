@@ -20,7 +20,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.string :site # user provided
   		t.string :affiliation # user provided
   		t.string :position # user provided
-  		t.string :description # user provided
+  		t.string :detail # user provided
   		t.string :image_url
   		t.boolean :is_blocked, default: false
       t.boolean :is_admin, default: false
@@ -31,7 +31,7 @@ class InitialMigration < ActiveRecord::Migration
   	create_table :tools do |t|
   		t.belongs_to :user
   		t.string :name
-  		t.text :description
+  		t.text :detail
       t.string :url
   		t.boolean :is_approved, default: false
   		t.string :creators_name
@@ -51,17 +51,6 @@ class InitialMigration < ActiveRecord::Migration
   	end
 
   	add_index :tools, :user_id
-
-    # create_table :categories do |t|
-    #   t.string :name
-    #   t.timestamps
-    # end
-
-    # create_table :tool_categories do |t|
-    #   t.belongs_to :tool
-    #   t.belongs_to :category
-    #   t.timestamps
-    # end
 
   	create_table :tool_ratings do |t|
   		t.belongs_to :user
@@ -92,7 +81,7 @@ class InitialMigration < ActiveRecord::Migration
   	create_table :tool_lists do |t|
       t.belongs_to :user
   		t.string :name
-  		t.text :description
+  		t.text :detail
   		t.boolean :is_public, default: true
       t.boolean :is_hidden, default: false
   		t.timestamps

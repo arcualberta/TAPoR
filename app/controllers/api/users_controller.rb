@@ -22,7 +22,7 @@ class Api::UsersController < ApplicationController
 				clean_params[:site] = safe_params[:site] if safe_params[:site] != nil
 				clean_params[:affiliation] = safe_params[:affiliation] if safe_params[:affiliation] != nil
 				clean_params[:position] = safe_params[:position] if safe_params[:position] != nil
-				clean_params[:description] = safe_params[:description] if safe_params[:description] != nil
+				clean_params[:detail] = safe_params[:detail] if safe_params[:detail] != nil
 				# clean_params[:image_url] = safe_params[:image_url] if safe_params[:image_url] != nil	
 				clean_params[:is_blocked] = safe_params[:is_blocked] if safe_params[:is_blocked] != nil and current_user.is_admin?
 				clean_params[:is_admin] = safe_params[:is_admin] if safe_params[:is_admin] != nil and current_user.is_admin?
@@ -62,7 +62,7 @@ class Api::UsersController < ApplicationController
 		end
 
 		def safe_params
-			params.require(:user).permit(:id, :name, :email, :is_email_publishable, :site, :affiliation, :position, :description, :image_url, :is_blocked, :is_admin)
+			params.require(:user).permit(:id, :name, :email, :is_email_publishable, :site, :affiliation, :position, :detail, :image_url, :is_blocked, :is_admin)
 		end
 
 end

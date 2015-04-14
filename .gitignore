@@ -19,3 +19,4 @@ public/images/tools/2*
 config/application.yml
 config/database.yml
 tapor3.sublime-workspace
+db/xapian_db/*

@@ -35,7 +35,7 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	$scope.tools = [];	
 	$scope.data = {
 		name: "",
-		description: "",
+		detail: "",
 		is_public: true,
 		tool_list_items: [],
 	};

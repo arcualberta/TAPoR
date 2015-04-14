@@ -45,7 +45,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
  				})
 				.success(function(data){
 					angular.forEach(data.tools, function(v, k){
-						v.description = $sce.trustAsHtml(v.description);
+						v.detail = $sce.trustAsHtml(v.detail);
 					})
 					deferred.resolve(data);
 				})
@@ -62,7 +62,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 				.success(function(data){
 					console.log(data)
 					angular.forEach(data.tools, function(v, k){
-						v.description = $sce.trustAsHtml(v.description);
+						v.detail = $sce.trustAsHtml(v.detail);
 					})
 					deferred.resolve(data.tools);
 				})
@@ -78,7 +78,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			$http.get('/api/tools/' + named_id)
 			.success(function(data){
 				
-				data.description = $sce.trustAsHtml(data.description);
+				data.detail = $sce.trustAsHtml(data.detail);
 				deferred.resolve(data);
 			})
 			.error(function(){
