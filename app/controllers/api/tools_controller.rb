@@ -11,10 +11,22 @@ class Api::ToolsController < ApplicationController
 	
 	def index
 		# @tools = Tool.all
-		
+		params[:query] ||= "*";
 		params[:page] ||= 1;
 		per_page = 10;
 		
+		# Working with xapian
+		# @tools = Tool.search params[:query], per_page: per_page, page: 1
+		# docs = Tool.search params[:query], per_page: per_page, page: params[:page]
+		# @tools = [];
+		# docs.each do |doc|
+		# 	@tools.push(doc.indexed_object);
+		# end
+
+		# respond_to do |format|		
+		# 	format.json {render json: @tools, root: "tools", meta: {count: Tool.search(params[:query]).size}, status: :ok}
+		# end
+
 		if params[:attribute_values] && params[:attribute_values].length > 0
 
 			attribute_values = []
@@ -29,9 +41,6 @@ class Api::ToolsController < ApplicationController
 		else 
 			@tools = Tool.order(:name).where(is_hidden: false);
 		end
-
-
-
 		respond_to do |format|			
 			format.json {render json: @tools.limit(per_page).offset((params[:page].to_i - 1) * per_page), root: "tools", meta: {count: @tools.length}, status: :ok}
 		end
