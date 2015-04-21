@@ -32,7 +32,9 @@ app.controller('ListsContributingController', ['$scope', '$http', function($scop
 
 app.controller('ListsEditController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
 	
-	$scope.tools = [];	
+	
+
+	$scope.tools_page = {};	
 	$scope.data = {
 		name: "",
 		detail: "",
@@ -42,15 +44,22 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	
 	$scope.is_editing = $location.path().indexOf("edit") != -1;
 
+	// pagination and faceting
+	$scope.current_page = 1;
+	$scope.attribute_values = [];
+	services.helper.setup_tool_pagination_faceted_browsing($scope);
+
+
 
 	// draggable listeners
 
 	$scope.toolsListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
 		itemMoved: function(event){
+			console.log(event.source.itemScope.tool)
 			$scope.data.tool_list_items[event.dest.index] = {
 				notes : "",
-				tool : event.source.itemScope.modelValue
+				tool : event.source.itemScope.tool
 			}
 		},
 		orderChanged: function(event){}
@@ -59,7 +68,7 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	$scope.listListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
 		itemMoved: function(event){						
-			$scope.tools[event.dest.index] = event.source.itemScope.modelValue.tool
+			$scope.tools_page.tools[event.dest.index] = event.source.itemScope.tool
 
 
 		},
@@ -109,14 +118,14 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	// .success(function(data, status, headers, config){
 	// 	$scope.tools = data		
 	// });
-	services.tool.list().then(
-		function(data){
-			$scope.tools = data;
-		},
-		function(errorMessage){
-			$scope.error = errorMessage
-		}
-	)
+	// services.tool.list().then(
+	// 	function(data){
+	// 		$scope.tools = data;
+	// 	},
+	// 	function(errorMessage){
+	// 		$scope.error = errorMessage
+	// 	}
+	// )
 	
 
 }]);

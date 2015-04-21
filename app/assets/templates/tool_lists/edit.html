@@ -4,11 +4,37 @@
   		<div class="row">
   		<div class="panel panel-default">
   			<div class="panel-heading list-editing-column">
-        	<h1>Filtering and paginating mechanism</h1>
+        	<!-- <h1>Filtering and paginating mechanism</h1> -->
+          
+          <!-- faceting -->
+          <div class="row">
+            <div class="col-md-12">
+              <form class="form-inline">
+                <span ng-repeat="attribute in attributes">
+                  <div class="form-group">    
+                    <label>{{attribute.name}}</label>
+                    <select class='form-control' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
+                      <option selected name=''></option>
+                    </select>
+                  </div>
+                </span>
+              </form>
+            </div>
+          </div>
+
+          <!-- pagination -->
+          <div class="row">
+            <div class="col-md-12">
+              <pagination total-items="tools_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> 
+            </div>
+          </div>
+
+
+
         </div>
   			<div class="panel-body">
   			<ul class="draggable_place list-tool-area" as-sortable="toolsListener" ng-model="tools">
-          <li class="column_sortable" ng-repeat="tool in tools" as-sortable-item>
+          <li class="column_sortable" ng-repeat="tool in tools_page.tools track by $index" as-sortable-item>
             <div as-sortable-item-handle>
             	
             	<div class="row">

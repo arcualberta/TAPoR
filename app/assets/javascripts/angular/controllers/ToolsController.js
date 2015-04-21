@@ -4,48 +4,12 @@ app.controller('ToolsIndexController', ['$scope', 'services', function($scope, s
 	$scope.current_page = 1;
 	$scope.attribute_values = [];
 
-	services.attribute_type.list().then(
-		function(data) {
-			angular.forEach(data, function(v, i){
-				data[i].model = {id:"",name:"",index:""};
-			});
-			$scope.attributes = data;
 
-		},
-		function(errorMessage) {
-			$scope.error = errorMessage
-		}
-	)
+	// function
 
-	var get_page = function() {
-		services.tool.list_page($scope.current_page, $scope.attribute_values).then(
-			function(data) {
-				$scope.tools_page = data;
-			},
-			function(errorMessage) {
-				$scope.error = errorMessage;
-			}
-		);	
-	}
+	services.helper.setup_tool_pagination_faceted_browsing($scope);
 
-	$scope.pageChanged = function() {
-		get_page();
-	}
-
-	$scope.update_attributes_filter = function() {
-		$scope.attribute_values = [];
-		angular.forEach($scope.attributes, function(v, i){
-			if (v.model && v.model.id) {
-				$scope.attribute_values.push(v.model.id)
-			}
-		});
-		$scope.current_page = 1;
-		get_page();
-
-
-	}
-
-	get_page();
+	// end of function
 
 
 }]);
