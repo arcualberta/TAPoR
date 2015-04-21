@@ -539,7 +539,7 @@ app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$
 				// remove items already on featured list
 				angular.forEach(data.tools, function(v, i){
 					angular.forEach($scope.data.featured, function(tool, index){
-						if (data.tools[i]. id == tool.id) {
+						if (data.tools[i].id == tool.id) {
 							data.tools.splice(i,1);
 						}
 					})

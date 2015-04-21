@@ -45,6 +45,20 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	$scope.is_editing = $location.path().indexOf("edit") != -1;
 
 	// pagination and faceting
+
+	$scope.on_page_change = function() {
+		for (var i=0; i<$scope.tools_page.tools.length; ++i) {
+			for (var j=0; j<$scope.data.tool_list_items.length; ++j) {
+				var tool = $scope.tools_page.tools[i];
+				var item = $scope.data.tool_list_items[j];
+
+				if (tool && tool.id == item.tool.id) {
+					$scope.tools_page.tools.splice(i--,1);
+				}
+			}
+		}
+	}
+
 	$scope.current_page = 1;
 	$scope.attribute_values = [];
 	services.helper.setup_tool_pagination_faceted_browsing($scope);
@@ -56,11 +70,11 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	$scope.toolsListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
 		itemMoved: function(event){
-			console.log(event.source.itemScope.tool)
 			$scope.data.tool_list_items[event.dest.index] = {
 				notes : "",
 				tool : event.source.itemScope.tool
 			}
+			$scope.on_page_change();
 		},
 		orderChanged: function(event){}
 	}
@@ -69,8 +83,6 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
 		itemMoved: function(event){						
 			$scope.tools_page.tools[event.dest.index] = event.source.itemScope.tool
-
-
 		},
 		orderChanged: function(event){}
 	}

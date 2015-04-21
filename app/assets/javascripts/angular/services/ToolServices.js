@@ -29,8 +29,6 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			if (angular.isUndefined(attribute_values)){
 				attribute_values = [];
 			}
-
-			console.log(attribute_values)
 			
 			var deferred = $q.defer();
 				// $http.get('/api/tools?page='+ page)
@@ -60,7 +58,6 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			var deferred = $q.defer();
 				$http.get('/api/tools')
 				.success(function(data){
-					console.log(data)
 					angular.forEach(data.tools, function(v, k){
 						v.detail = $sce.trustAsHtml(v.detail);
 					})

@@ -26,6 +26,9 @@ app.factory('helperServices', ['attributeTypeServices', 'toolServices', function
 				toolServices.list_page($scope.current_page, $scope.attribute_values).then(
 					function(data) {
 						$scope.tools_page = data;
+						if ($scope.on_page_change) {
+							$scope.on_page_change();
+						}
 					},
 					function(errorMessage) {
 						$scope.error = errorMessage;
