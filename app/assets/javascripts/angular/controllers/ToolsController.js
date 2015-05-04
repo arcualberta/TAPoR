@@ -263,6 +263,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.language = [$scope.possible_language[6]];
   
   $scope.data.code = "";
+  $scope.data.repository = ""
 
 	// $scope.data.tool_ratings = [{"stars" : 0}];  
   
