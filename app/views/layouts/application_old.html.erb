@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html ng-app="taporApp">
+	<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <title>TAPoR</title>
+	  <base href="<%=root_url%>" target="_self">
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>	
+	</head>
+	<body>
+		<div class="container">
+			<div ng-controller="TaporMainController"> 
+				<!-- nav -->
+				<div class="row" id="nav">
+					<div class="col-md-12 text-right">
+						<div class="btn-group" role="group">
+						  <button type="button" class="btn btn-default btn-sm" ng-click="go_to('/pages/about_tapor');">About</button>
+						  <button type="button" class="btn btn-default btn-sm" ng-click="go_to('/pages/contact');">Contact</button>
+
+						  <div class="btn-group" role="group">
+						    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+						      Explore
+						      <span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu" role="menu">
+						      <li><a href="/tools">Tools</a></li>
+						      <li><a href="/tool_lists">Lists</a></li>
+						    </ul>
+						  </div>
+
+						  <div class="btn-group" role="group">
+						    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+						      Help
+						      <span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu" role="menu">
+						      <li><a href="/pages/tour">Tour</a></li>
+						      <li><a href="/pages/tutorials">Tutorials</a></li>
+						      <li><a href="/pages/useful_links">Useful links</a></li>
+						    </ul>
+						  </div>
+
+						  <button type="button" class="btn btn-default btn-sm" ng-if="current_user == null" ng-click="go_to('/signin');">Login</button>
+
+						  <div class="btn-group" role="group" ng-if="current_user != null">
+						    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+						      <img src='{{current_user.image_url}}' class="img-circle nav-bar-profile" widht="7px" height="7px">  My TAPoR
+						      <span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu" role="menu">
+						      <li><a href="/users/{{current_user.id}}">Profile</a></li>
+						      <li><a href="#">My tools</a></li>
+						      <li><a href="/tools/new">Add tool</a></li>
+						      <li><a href="#">My lists</a></li>
+						      <li><a href="/tool_lists/new">Add list</a></li>
+						      <li><a href="/sign_out">Log out</a></li>
+						      
+						    </ul>
+						  </div>
+
+						  <div class="btn-group" role="group" ng-if="current_user.is_admin">
+						    <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-expanded="false">
+						      Admin
+						      <span class="caret"></span>
+						    </button>
+						    <ul class="dropdown-menu" role="menu">
+						      <li><a href="/tools/featured">Featured tools</a></li>
+						      <li><a href="/pages">Pages</a></li>
+						      <li><a href="/attributes/new">Add attribute</a></li>
+						      <li><a href="/attributes">List attributes</a></li>
+						      <li><a href="#">Remap attributes</a></li>
+						      <li><a href="/users">Manage users</a></li>
+						    </ul>
+						  </div>
+
+						</div>
+
+<!-- 						<ul class="list-inline">
+							<li>About</li>
+							<li>Tour</li>
+							<li>Tutorials</li>
+							<li>Useful links</li>
+							<li>
+								<a href='tools'>Tools</a>
+							</li>		
+							<li ng-if="current_user.is_admin">
+								<a href='tools/featured'>Featured</a>
+							</li>		
+							<li ng-if="current_user">
+								<a href='tools/new'>New tool</a>
+							</li>
+							<li ng-if="current_user">
+								<a href='tool_lists/contributing'>My lists</a>
+							</li>
+							<li ng-if="current_user.is_admin">
+								<a href='attributes/new'>New attribute</a>
+							</li>
+							<li ng-if="current_user.is_admin">
+								<a href='users'>Users</a>
+							</li>
+							
+							<li>Contact</li>
+							<li>
+
+								<span ng-switch="current_user">
+									
+									<span ng-switch-when="null">
+										<a href="signin">Sign in</a>
+									</span>
+									
+									<span ng-switch-default>
+										<img src='{{current_user.image_url}}' class="img-circle nav-bar-profile"> 
+										<a href='users/profile'>
+											{{current_user.name}}
+										</a> 
+										<a href="sign_out">
+											Sign out
+										</a>
+									</span>
+
+								</span>
+							</li>
+						</ul> -->
+
+
+					</div>
+
+
+				</div>
+				<div class="row" id="header">
+					<div class="col-md-5">
+						<a href="<%=root_url%>"><img src="img/tapor/tapor-logo.png"></a>
+					</div>
+					<div class="col-md-4">
+						Discover research tools for studying texts.
+					</div>
+
+					<div class="col-md-3">
+						<form class="form-inline" role="form">
+							<div class="form-group">
+								<div class="input-group">					
+				      		<input type="search" class="form-control" id="searchQuery" placeholder="Search">
+										<span class="input-group-btn">
+											<button class="btn btn-default" type="button"><i class="fa fa-search"></i></button>
+										</span>
+				      	</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<!-- end of nav -->
+
+				<div ng-init="checkUser()" ng-view id="main-view"></div> 
+
+				<!-- footer -->
+
+				<div class='row' id='footer'>
+					<div class="col-md-12">
+						TAPoR 3 Copyright 2014, University of Alberta Version | About | Privacy
+					</div>
+				</div>
+
+
+				<!-- end of fotter -->
+			</div>
+		</div>
+	</body>
+</html>

@@ -189,6 +189,7 @@ class Api::ToolsController < ApplicationController
 					if params[:nature][0][:value] == 'code'
 						@tool.update(language: params[:language][0][:value])
 						@tool.update(code: params[:code])
+						@tool.update(repository: params[:repository])
 					end
 					
 
@@ -482,7 +483,7 @@ class Api::ToolsController < ApplicationController
 		def safe_params
 			# params.require(:tool).permit(:name, :detail, :tool_ratings => [:id, :stars]);
 			 # params.require(:tool).permit(:name, :detail, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code);
+			params.require(:tool).permit(:name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code, :repository);
 		end
 
 		def save_image(base_image)

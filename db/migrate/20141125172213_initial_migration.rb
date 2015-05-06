@@ -44,6 +44,7 @@ class InitialMigration < ActiveRecord::Migration
       t.string :documentation_url  
 
       t.text :code
+      t.string :repository
       t.integer :language
       t.integer :nature, default: 0
   		

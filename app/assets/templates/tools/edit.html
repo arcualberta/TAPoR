@@ -74,6 +74,16 @@
 
       </div>
     </div>
+    <!-- repository -->
+
+    <div class="form-group" ng-if="data.nature[0].value == 'code';">
+      <label for="inputRepository" class="col-sm-2 control-label">Repository</label>
+      <div class="col-sm-6">
+        <input type="url" class="form-control" id="inputRepository" placeholder="URL" ng-model="data.repository">
+      </div>
+    </div>
+
+
     <!-- creator name -->
 
     <div class="form-group">

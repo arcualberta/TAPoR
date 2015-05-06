@@ -171,6 +171,7 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.date     "last_updated"
     t.string   "documentation_url"
     t.text     "code"
+    t.string   "repository"
     t.integer  "language"
     t.integer  "nature",            default: 0
     t.datetime "created_at"
