@@ -1,0 +1,135 @@
+
+<div ng-controller='TaporIndexController' class='tapor-container'>
+<div class='row'>
+	<div class="col-md-12">
+
+	<!--  -->
+
+	  <carousel interval="5000" class="tapor-carousel">
+      <slide ng-repeat="tool in featured" active="slide.active">
+        <img ng-src="{{tool.image_url}}" style="margin:auto;" height="440" width="550">
+        <div class="carousel-caption">
+        	<h3>{{tool.name}}</h3>
+        </div>
+      </slide>
+    </carousel>
+
+	<!--  -->
+
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-9">
+		<!-- left content -->
+
+		<div class="row">
+			<div class="col-md-12 well">
+			<h2>Curated tools</h2>
+			<h4>About TAPoR curation</h4>
+			<p>
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ac hendrerit risus. Fusce at augue tincidunt tellus vulputate ullamcorper. Praesent ligula metus, ullamcorper id euismod ac, venenatis non odio. Fusce ut enim sed ante rhoncus aliquam. Suspendisse hendrerit, mauris sed sollicitudin tincidunt, erat libero commodo sapien, eget eleifend justo nisi vitae diam. Nunc semper lectus blandit consequat dictum. Curabitur finibus ac sem a tincidunt. In sed porta lacus. Nullam cursus dignissim ante, at commodo diam lacinia eget. In placerat odio nisl, a sodales odio tincidunt at. Cras viverra, mi eget scelerisque lobortis, eros orci molestie nisl, in fringilla massa orci ut tortor. In iaculis tristique nibh quis eleifend. Suspendisse ex nisl, tincidunt quis tempus non, aliquam et tortor.
+			</p>
+			</div>
+		</div>
+
+
+		<div class="row" ng-repeat="list in latest_lists">
+			<div class="col-md-12">
+				<div class="well">
+					<div class="row">
+						
+						<div class="col-md-3">
+							<a href="/tool_lists/{{list.id}}"><label>{{list.name}}</label></a>
+							<p>Curated by {{list.user.name}}</p>
+							<p>{{list.description}}</p>
+							<p>Viewing {{list.tool_list_items.length}} of {{list.total_items}}</p>
+						</div>
+						<div class="col-md-3" ng-repeat="item in list.tool_list_items">
+							<div class="panel panel-default">
+							  <div class="panel-heading">
+							    <h3 class="panel-title">{{item.tool.name}}</h3>
+							  </div>
+							  <div class="panel-body">
+							    <a href="/tools/{{item.tool.id}}"> <img src="{{item.tool.thumb_url}}" width="145px"></a>
+							  </div>
+							</div>
+						</div>
+						
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="col-md-3">
+		<!-- right content -->
+		
+		<!-- new tools -->
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">New tools</h3>
+			</div>
+			<div class="panel-body">
+				<div ng-repeat="tool in latest_tools" class="well well-sm">
+					
+					<div>
+						<a href="/tools/{{tool.id}}">						
+							<img class="media-object" src="{{tool.thumb_url}}" width="205px">
+						</a>
+					</div>
+					<div>
+						<h5 class="media-heading">{{tool.name}}</h5>
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+		
+
+		<!-- tags -->
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tool tags</h3>
+			</div>
+			<div class="panel-body">
+				<jqcloud words="system_tags" width="230" height="380" steps="7"></jqcloud>
+
+			</div>
+		</div>
+
+		<!-- comments -->
+
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">Tool comments</h3>
+			</div>
+			<div class="panel-body">
+				<div ng-repeat="comment in latest_comments" class="well well-sm break-content">
+					
+					{{comment.user.name}}	said about {{comment.tool.name}}:
+					<span ng-bind-html="comment.content"></span>
+
+					
+					
+				</div>
+			</div>
+		</div>
+	
+	</div>
+</div>
+
+	
+
+<div class='row' id='spheres'>
+	<div class="col-md-12">
+
+	</div>
+</div>
+
+
+

@@ -1,0 +1,178 @@
+/*
+
+body {
+	background: #DEDEDE;
+}
+
+#nav {
+	background: #2A2A2A;
+	color: #F3F3F3;
+	height: 45px;
+	line-height: 45px;
+}
+
+#header {
+	background: #030303;
+	color: #F3F3F3;
+	height: 75px;	
+	
+}
+
+#current {
+	background: #C3C3C3;
+	height: 500px;
+}
+
+#spheres {
+	background: #040404;
+	height:280px;
+}
+
+#footer {
+	background: #030303;
+	color: #F3F3F3;
+}
+
+.vertical-text-area {
+	resize: vertical;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.rating {
+  margin: 0;
+  display: inline-block; 
+}
+
+.rating li {
+	padding: 1px;
+	color: #a9a9a9;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	list-style-type: none;
+	display: inline-block;
+	cursor: pointer; 
+}
+.rating li.filled {
+	color: #FFC500; 
+}
+
+.rating li.clear {
+	color: #A00; 
+}
+
+.possible-value {
+	padding:0px 0px 10px 0px;	
+}
+
+.tapor-container {
+	padding : 10px;
+}
+
+.tool-list-entry {
+	min-height: 250px;
+	padding: 10px;
+
+}
+
+.tool-list-entry-image {
+	height: 100px;
+}
+
+.nav-bar-profile {
+	height : 17px;
+	width : 17px;
+}
+
+.draggable_place {
+	min-height: 10px;
+	list-style-type: none;
+	padding:10px;
+}
+
+.column_sortable {
+	padding:10px;
+}
+
+.noresize-textarea {
+    resize: none;
+}
+
+.list-editing-column {
+	height: 180px;
+}
+
+.list-tool-area {
+	min-height: 190px;
+}
+
+.horizontal_list li {
+	display: inline;
+	list-style-type: none;
+	padding-right: 20px;
+}
+
+.tool_panel {
+	max-width: 300px;
+}
+
+#imageContainer {
+	
+}
+
+.ace_editor { 
+	height: 400px; 
+}
+
+.mce-tinymce {
+	height: 400px
+}
+
+.carousel-control .fa-chevron-left {
+position: absolute;
+top: 50%;
+z-index: 5;
+display: inline-block;
+}
+
+.carousel-control .fa-chevron-right {
+position: absolute;
+top: 50%;
+z-index: 5;
+display: inline-block;
+}
+
+.tapor-carousel {
+	height : 440px;
+}
+
+.horizontal-scrolling{
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+.break-content {
+	word-wrap: break-word;
+}
+
+*/
