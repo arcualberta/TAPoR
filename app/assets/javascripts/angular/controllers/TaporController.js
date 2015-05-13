@@ -19,7 +19,7 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 
 }]);
 
-app.controller('TaporIndexController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
+app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', function($scope, $http, $sce, services) {
 
 	$scope.featured = []
 	$scope.system_tags = {};
@@ -31,12 +31,36 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', function($sco
 	.success(function(data, status, headers, config) {
 		var featured = data;
 		$scope.featured = featured;
+		angular.forEach($scope.featured, function(v, i){
+			$scope.featured[i].detail = $sce.trustAsHtml($scope.featured[i].detail);
+			services.tool.get_ratings($scope.featured[i].id).then(
+				function(data){
+					$scope.featured[i].ratings = data;
+				},
+				function(errorMesssage){
+					$scope.error = errorMesssage
+				}
+			);
+		});
 		if (featured.length == 0) {
 			$http.get('/api/tools/latest')
 			.success(function(data, status, headers, config) {
 				$scope.featured = data;
+				angular.forEach($scope.featured, function(v, i){
+					$scope.featured[i].detail = $sce.trustAsHtml($scope.featured[i].detail);
+					services.tool.get_ratings($scope.featured[i].id).then(
+						function(data){
+							$scope.featured[i].ratings = data;					
+						},
+						function(errorMesssage){
+							$scope.error = errorMesssage
+						}
+					);
+				});
 			});
 		}
+		
+		
 	});
 
 

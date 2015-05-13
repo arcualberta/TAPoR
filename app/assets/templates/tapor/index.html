@@ -1,13 +1,119 @@
 <div ng-controller='TaporIndexController' class='tapor-container'>
 	<!-- featured -->
-	<div class="row">
-		
+	<div class="row" >
+		<div class="col-md-12" id="tapor-featured-carrousel">
+			<carousel interval="5000000" class="tapor-carousel">
+	      <slide ng-repeat="tool in featured" active="slide.active" class="tapor-slide">
+	   
+<!-- 	      	<div>
+						<div class="tapor-slide-image">
+							<img ng-src="{{tool.image_url}}" style="margin:auto;" height="440" width="550">	 
+						</div>
+					</div> -->
+
+ 	      <div class="row">
+	      	<div class="col-md-3">
+	      		
+	      		<div class="row">
+	      			<div class="col-md-12">
+
+	      			<div class="break-content tapor-tool-detail" ng-bind-html="tool.detail"></div>
+	      			
+	      			</div>
+	      		</div>
+
+	      		<div class="row">
+	      			<div class="col-md-12">
+	      			</div>
+	      		</div>
+
+	      		<div class="row">
+	      			<div class="col-md-12">
+	      				<div star-rating rating-value="tool.ratings.system" max="5" is-interactive="false"></div>
+	      			</div>
+	      		</div>
+
+	      	</div>	
+	      	<div class="col-md-9">
+						<img ng-src="{{tool.image_url}}" style="margin:auto;" height="440" width="550">	      		
+	      	</div>
+	      </div>
+
+	      <div class="row tapor-featured-name-row">
+		      <div class="col-md-3 col-md-offset-9 tapor-featured-name">
+		      	<h1>{{tool.name}}</h1>
+		      </div>	
+	      </div>
+<!-- 
+	      <div class="row tapor-featured-bottom">
+	      	
+	      </div> -->
+
+	        <!-- <img ng-src="{{tool.image_url}}" style="margin:auto;" height="440" width="550"> -->
+<!-- 	        <div class="carousel-caption">
+	        	<h3>{{tool.name}}</h3>
+	        </div> -->
+	      </slide>
+    </carousel>
+		</div>
 	</div>
 
 	<!-- content -->
-	<div class="row">
+	<div class="row tapor-block-content">
 		<!-- left content -->
 		<div class="col-md-9">
+			<div class="row">
+				
+				<div class="col-md-8">
+					<h1 class="tapor-title">Curated Tool Lists</h1>
+					<p>
+					Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur dictum augue non quam mollis tristique. Vestibulum scelerisque porttitor. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur dictum augue non quam mollis tristique. Vestib ulum scelerisque porttitor. Lorem ipsum dolor sit amet, consec tetur adipiscing elit. Curabitur dictum augue non quam mollis tristique.
+					</p>
+				</div>
+
+				<div class="col-md-4">
+					<div class="tapor-title tapor-blue">
+						<h1 class=""><strong>new</strong> in TAPoR 3.0</h1>
+						<hr>
+					</div>
+					<ul class="tapor-rightaligned-list">
+						<li>
+							Tool lists
+						</li>
+						<li>
+							Code as tools
+						</li>
+					</ul>
+				</div>
+
+			</div>
+			<!-- latest lists -->
+			<div class="row">
+				
+			</div>
+			<!-- latest tools -->
+			<div class="row">
+				
+			</div>
+
+			<div class="row">
+				<!-- latest lists -->
+				<div class="col-md-4">
+					
+				</div>
+				<!-- latest reviews -->
+				<div class="col-md-4">
+					
+				</div>
+				<!-- latest methods -->
+				<div class="col-md-4">
+					
+				</div>
+			</div>
+
+
+
+
 		</div>
 		<!-- right content -->
 		<div class="col-md-3">
@@ -33,7 +139,7 @@
 	<div class="row">
 		<div class="col-md-12" id="tapor-tagcloud">
 			<!-- XXX rearrange with modified width -->
-			<jqcloud words="system_tags" width="1170" height="145" steps="7"></jqcloud>
+			<jqcloud words="system_tags" width="1170" height="145" steps="7" shape="rectangular"></jqcloud>
 		</div>
 	</div>
 </div>

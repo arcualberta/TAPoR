@@ -1,5 +1,6 @@
 body {
-	background: RGBA(244, 240, 235, 1);
+	/*background: RGBA(244, 240, 235, 1);*/
+	background: RGBA(255, 255, 255, 1);
 }
 
 #tapor-navigation {
@@ -28,8 +29,18 @@ body {
   padding-right: 30px;
 }
 
-#tapor-tagline {
-	color: RGBA(89, 189, 230, 1);
+.tapor-blue {
+	color: RGBA(89, 189, 230, 1);	
+}
+
+.tapor-blue hr {
+		/*display: block; 
+		height: 1px;*/
+    border: 0; 
+    border-top: 5px solid RGBA(89, 189, 230, 1);	
+    /*margin: 1em 0; 
+    padding: 0; */
+    margin-top: 0px
 }
 
 .tapor-logo {
@@ -59,11 +70,106 @@ body {
 }
 
 #tapor-comments-column {
-	background-color: RGBA(255, 255, 255, 1);
+	background-color: RGBA(248, 246, 243, 1);
 	border-radius: 0px 0px 5px 5px;
 }
 
 .tapor-title {
 	font-family: 'Rokkitt', serif;
 	font-size: 2em;
+}
+
+#tapor-featured-carrousel {
+	height: 600px;
+	background-color: RGBA(255, 255, 255, 1);
+	padding: 0px;
+	border-bottom: 10px solid RGBA(77, 77, 77, 1);
+}
+
+.tapor-carousel {
+	height : 600px;
+}
+
+.tapor-slide {
+	margin: 14px 21px 14px 21px;
+}
+/* rating */
+
+.rating {
+  margin: 0;
+  display: inline-block; 
+}
+
+.rating li {
+	padding: 1px;
+	color: #a9a9a9;
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+	list-style-type: none;
+	display: inline-block;
+	cursor: pointer; 
+}
+.rating li.filled {
+	color: RGBA(51, 172, 224, 1); 
+}
+
+.rating li.clear {
+	color: #A00; 
+}
+
+.tapor-featured-name {
+	background: RGBA(77, 77, 77, 1);
+	border-radius: 10px 10px 0px 0px;
+	color: #FFF;
+	font-family: 'Rokkitt', serif;
+	margin-top: 72px;
+	
+}
+
+.tapor-featured-name-row {
+
+}
+
+.tapor-tool-detail {
+	text-align: left;
+	height: 400px;
+	overflow: scroll;
+}
+
+.tapor-block-content {
+	border-top: thick solid RGBA(255, 255, 255, 1);	
+	margin: 0px -10px 0px -10px;
+	/*margin-left: 7px;
+	margin-right: 7px;*/
+	/*padding-top: 5px;*/
+}
+
+.tapor-slide-image {
+	position: relative;
+}
+
+.tapor-rightaligned-list {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+	text-align: right;
+}
+
+.tapor-rightaligned-list li{
+	padding-right: .6em;
+}
+
+.carousel-control.right {
+	background-image: none;
+	color: RGBA(77, 77, 77, 1);	
+}
+
+.carousel-control.left {
+	background-image: none;
+	color: RGBA(77, 77, 77, 1);	
+}
+
+.no-list {
+	list-style-type: none;
 }

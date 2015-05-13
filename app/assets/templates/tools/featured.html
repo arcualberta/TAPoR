@@ -21,7 +21,7 @@
             		<div class="col-sm-6">
               		<img src="{{tool.thumb_url}}">
               	</div>
-            		<div class="col-sm-6">
+            		<div class="col-sm-6 break-content">
             			<ul>
             				<li>
             					{{tool.name}}
@@ -33,7 +33,7 @@
             					{{tool.creators_email}}
             				</li>
             				<li ng-if="tool.creators_url">
-            					{{tool.creators_url}}
+                      <a href="{{tool.creators_url}}"> {{tool.creators_url}}</a>  
             				</li>
             			</ul>         
               	</div>
@@ -90,7 +90,7 @@
             					{{tool.creators_email}}
             				</li>
             				<li ng-if="tool.creators_url">
-            					{{tool.creators_url}}
+            					<a href="{{tool.creators_url}}"> {{tool.creators_url}}</a>
             				</li>
             			</ul>         
               	</div>
