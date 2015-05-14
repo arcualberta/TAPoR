@@ -173,3 +173,7 @@ body {
 .no-list {
 	list-style-type: none;
 }
+
+.list-tool-area {
+	min-height: 190px;
+}

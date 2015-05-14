@@ -38,16 +38,17 @@
             <div as-sortable-item-handle>
             	
             	<div class="row">
-            		<div class="col-sm-6">
+            		<div class="col-sm-6 break-content">
               		<img src="{{tool.thumb_url}}">
               	</div>
-            		<div class="col-sm-6">
+            		<div class="col-sm-6 break-content">
             			<ul>
             				<li>
             					{{tool.name}}
             				</li>
             				<li>
-            					{{tool.star_average}}
+                    <div star-rating rating-value="tool.star_average" max="5" is-interactive="false"></div>
+            					
             				</li>
             				<li ng-if="tool.creators_email">
             					{{tool.creators_email}}
