@@ -10,7 +10,7 @@ app.controller('PagesIndexController', ['$scope', 'services', function($scope, s
 		function(errorMessage){
 			$scope.error = errorMessage;
 		}
-	)
+	);
 
 
 }]);
@@ -26,11 +26,11 @@ app.controller('PagesViewController', ['$scope', '$routeParams', '$location', 's
 		function(errorMessage){
 			$scope.error = errorMessage;
 		}
-	)
+	);
 
 	$scope.edit_page = function() {
 		$location.path('/pages/edit/' + $routeParams.name);
-	}
+	};
 
 
 }]);
@@ -62,19 +62,19 @@ app.controller('PagesEditController', ['$scope', '$routeParams', '$location', 's
 			function(errorMessage){
 				$scope.error = errorMessage;
 			}
-		)
+		);
 	}
 
 	$scope.save = function() {
 		services.page.save($scope.data).then(
 			function(data){
-				$location.path("/pages/" + $scope.data.name)
+				$location.path("/pages/" + $scope.data.name);
 			},
 			function(errorMessage) {
-				$scope.error = errorMessage
+				$scope.error = errorMessage;
 			}
 		);
-	}
+	};
 	
 
 
