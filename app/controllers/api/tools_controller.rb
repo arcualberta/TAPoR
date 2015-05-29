@@ -363,7 +363,7 @@ class Api::ToolsController < ApplicationController
 	def latest
 		respond_to do |format|
 			response = [];
-			@tools = Tool.limit(5).reverse_order
+			@tools = Tool.limit(4).reverse_order
 			@tools.each do |tool|
 				response.push(tool);
 			end
@@ -409,7 +409,7 @@ class Api::ToolsController < ApplicationController
 
 						if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"						
 							# remove old image
-							if @tool.image_url
+							if @tool.image_url and File.exist?(File.join('public', @tool.image_url))
 								# XXX FIXME
 								FileUtils::rm [File.join('public', @tool.image_url)]
 							end

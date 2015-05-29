@@ -89,14 +89,32 @@
 			</div>
 			<!-- latest lists -->
 			<div class="row" ng-repeat="list in latest_lists">
-
-			<div compressed list='list'></div>
-				
+				<div compressed-list list='list'></div>				
 			</div>
 			<!-- latest tools -->
 			<div class="row">
-				
+				<div class="col-md-12">
+
+						<div class="row">
+							<div class="col-md-12">
+								<h3>Latest tools</h3>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-3" ng-repeat="tool in latest_tools">
+								<div>
+									<a href="/tools/{{tool.id}}"> <img src="{{tool.thumb_url}}" width="160px"></a>
+									<p><h6>{{tool.name}}</h6></p>
+								</div>								
+							</div>
+						</div>
+
+				</div>				
 			</div>
+			
+			<!-- <div class="row" ng-repeat="tool in latest_tools">
+					<div>tool</div>
+				</div> -->
 
 			<div class="row">
 				<!-- latest lists -->
@@ -121,7 +139,7 @@
 		<div class="col-md-3">
 			<div class="row">
 				<div class="col-md-12" id="tapor-bubble-counter">
-				<h1>233</h1>
+				<!-- <h1>233</h1> -->
 				</div>
 			</div>
 			<div class="row" id="tapor-comments-column">
