@@ -63,9 +63,6 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', f
 		
 	});
 
-
-
-
 	$http.get('/api/tags')
 	.success(function(data, status, headers, config){
 		$scope.system_tags = data;

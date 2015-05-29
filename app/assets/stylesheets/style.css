@@ -177,3 +177,17 @@ body {
 .list-tool-area {
 	min-height: 190px;
 }
+
+#tapor-nav {
+	text-align: right;
+	margin-top: 10px;
+}
+
+#tapor-nav a {
+	color: #FFF;
+}
+
+#tapor-nav li {
+	display: inline;
+	margin-left: 10px;
+}

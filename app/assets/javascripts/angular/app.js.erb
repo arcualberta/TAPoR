@@ -27,7 +27,7 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('tapor/signin.html') %>",
       })
       .when('/sign_out', {
-        templateUrl: "<%= asset_path('tapor/index.html') %>",
+        // templateUrl: "<%= asset_path('tapor/index.html') %>",
         redirectTo: function(current, path, query) {
           window.location= '/sign_out';
         }

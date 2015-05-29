@@ -26,5 +26,5 @@ app.directive("multselect", function() {
 			addEmpty: "="
 		}
 	};
-})
+});
 

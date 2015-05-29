@@ -1,15 +1,14 @@
 <div ng-controller='PagesViewController' class='tapor-container'>
 	<div class="row">
-		<div class="col-md-10">		
+		<!-- <div class="col-md-10">		
 			<h1>{{data.title}}</h1>
-		</div>
-		<div class="col-md-2">		
+		</div> -->
+		<div class="col-md-offset-10 col-md-2">		
 			<button class="btn btn-primary" ng-click="edit_page()">Edit</button>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-md-12">		
-			<hr>
 			<div ng-bind-html="data.clean_content">
 			</div>
 		</div>
