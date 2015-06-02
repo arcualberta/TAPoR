@@ -191,3 +191,11 @@ body {
 	display: inline;
 	margin-left: 10px;
 }
+
+.ace_editor { 
+	height: 400px; 
+}
+
+.mce-tinymce {
+	height: 400px
+}
