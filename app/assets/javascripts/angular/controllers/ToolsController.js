@@ -39,6 +39,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 			services.tool.get_attributes($scope.id).then(
 				function(data){
 					$scope.data.tool_attributes = data;
+          console.log(data);
 				},
 				function(errorMesssage) {		  			
 					$scope.error = errorMesssage;
@@ -414,7 +415,6 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 				
 				$http.get('/api/tools/' + $scope.id + '/suggested')
 				.success(function(data, status, headers, config){
-					console.log(data);
 					$scope.data.suggested_tools = data;
 				});
 
