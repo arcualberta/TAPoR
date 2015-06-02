@@ -26,7 +26,7 @@
 				<a href='#' ng-click="go_to('/signin')">Login</a>
 			</li>
 			<li ng-if="current_user != null">
-				<a href='#' ng-click="go_to('/users/{{current_user.id}}')">Profile</a>
+				<a href='/users/{{current_user.id}}'>Profile</a>
 			</li>
 			<li ng-if="current_user != null">
 				<a href='#' ng-click="go_to('/tools/new')">Add tool</a>

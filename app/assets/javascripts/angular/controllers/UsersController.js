@@ -49,6 +49,14 @@ app.controller("UsersViewController", ['$scope', '$location', '$routeParams','se
 	$scope.is_editable = $routeParams.id == $scope.current_user.id;
 	// $scope.current_user = $scope.current_user;
 
+	if ($scope.current_user.position == null) {
+		$scope.current_user.position = "";
+	}
+	if ($scope.current_user.affiliation == null) {
+		$scope.current_user.affiliation = "";
+	}
+
+
 	$scope.current_user.position_affiliation = $scope.current_user.position;
 	if ($scope.current_user.position_affiliation != "" && $scope.current_user.affiliation != "") {
 		$scope.current_user.position_affiliation += ", " + $scope.current_user.affiliation	
