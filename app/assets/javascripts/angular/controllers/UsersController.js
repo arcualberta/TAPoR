@@ -49,20 +49,29 @@ app.controller("UsersViewController", ['$scope', '$location', '$routeParams','se
 	$scope.is_editable = $routeParams.id == $scope.current_user.id;
 	// $scope.current_user = $scope.current_user;
 
-	if ($scope.current_user.position == null) {
-		$scope.current_user.position = "";
-	}
-	if ($scope.current_user.affiliation == null) {
-		$scope.current_user.affiliation = "";
-	}
+	services.user.get_user($routeParams.id).then(
+		function(data) {
+			$scope.profile_user = data;
+				if ($scope.profile_user.position == null) {
+					$scope.profile_user.position = "";
+				}
+				if ($scope.profile_user.affiliation == null) {
+					$scope.profile_user.affiliation = "";
+				}
+
+				$scope.profile_user.position_affiliation = $scope.profile_user.position;
+				if ($scope.profile_user.position_affiliation != "" && $scope.profile_user.affiliation != "") {
+					$scope.profile_user.position_affiliation += ", " + $scope.profile_user.affiliation	
+				}
+		},
+		function(errorMessage) {
+			$scope.error = errorMessage;
+		}
+	);
 
 
-	$scope.current_user.position_affiliation = $scope.current_user.position;
-	if ($scope.current_user.position_affiliation != "" && $scope.current_user.affiliation != "") {
-		$scope.current_user.position_affiliation += ", " + $scope.current_user.affiliation	
-	}
 
-	services.user.get_tool_lists($scope.current_user.id).then(
+	services.user.get_tool_lists($routeParams.id).then(
 		function(data){
 			$scope.tool_lists = data;
 		},

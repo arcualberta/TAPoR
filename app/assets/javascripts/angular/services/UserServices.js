@@ -29,6 +29,17 @@ app.factory('userServices', ['$http', '$q', function($http, $q){
 			})
 
 			return deferred.promise;
+		},
+		get_user: function(id) {
+			var deferred = $q.defer();			
+			$http.get('/api/users/'+id)
+			.success(function(data){
+				deferred.resolve(data);
+			})
+			.error(function(){
+				deferred.reject("An error occurred while getting user");
+			});
+			return deferred.promise;
 		}
 
 	}

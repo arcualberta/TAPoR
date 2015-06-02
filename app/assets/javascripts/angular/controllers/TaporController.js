@@ -70,7 +70,7 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', f
 
 	$http.get('/api/comments/latest')
 	.success(function(data, status, headers, config){
-		$scope.latest_comments = data;
+		$scope.latest_comments = data.reverse();
 		angular.forEach($scope.latest_comments, function(v, i){
 			$scope.latest_comments[i].content = $sce.trustAsHtml($scope.latest_comments[i].content);
 		});

@@ -7,29 +7,29 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-3">
-              <img src="{{current_user.image_url}}" class="img-circle">  
+              <img src="{{profile_user.image_url}}" class="img-circle">  
             </div>
             <div class="col-md-9">
-              {{current_user.name}} 
-              <a ng-if="is_editable" href="/users/{{current_user.id}}/edit" class="btn btn-default">Edit</a>
+              {{profile_user.name}} 
+              <a ng-if="is_editable" href="/users/{{profile_user.id}}/edit" class="btn btn-default">Edit</a>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
-              {{current_user.description}}
+              {{profile_user.description}}
             </div>
           </div>
           <div class="row">
             <div class="col-md-12">
               <ul>
-                <li ng-if="current_user.position_affiliation != ''">
-                  {{current_user.position_affiliation}}
+                <li ng-if="profile_user.position_affiliation != ''">
+                  {{profile_user.position_affiliation}}
                 </li>
-                <li ng-if="current_user.is_email_publishable">
-                  Email: {{current_user.email}}
+                <li ng-if="profile_user.is_email_publishable">
+                  Email: {{profile_user.email}}
                 </li>
-                <li ng-if="current_user.site != ''">
-                  Web site: {{current_user.current_user}}
+                <li ng-if="profile_user.site != ''">
+                  Web site: {{profile_user.site}}
                 </li>
               </ul>
             </div>

@@ -1,6 +1,6 @@
 class Api::UsersController < ApplicationController
 	# load_and_authorize_resource
-	before_action :set_user, only: [:edit, :update, :destroy, :update_is_admin, :update_is_blocked, :get_tool_lists]
+	before_action :set_user, only: [:show, :edit, :update, :destroy, :update_is_admin, :update_is_blocked, :get_tool_lists]
 
 	def index
 		@users = User.paginate(page: params[:page], per_page: 10)
@@ -9,6 +9,12 @@ class Api::UsersController < ApplicationController
 		end
 	end
 
+	def show
+		# XXX Make robust
+		respond_to do |format|
+			format.json { render json: @user, status: :ok }
+		end
+	end
 
 	def update	
 
@@ -47,10 +53,8 @@ class Api::UsersController < ApplicationController
 	end
 
 	def get_tool_lists
-		puts params
-		puts "here"
-		puts @user
-		puts "here2"
+		# puts params
+		# puts @user
 		respond_to do |format|
 			format.json { render json: @user.tool_lists, status: :ok }
 		end
