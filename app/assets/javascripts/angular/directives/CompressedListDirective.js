@@ -7,7 +7,7 @@ app.directive("compressedList", function() {
 								'			<div class=\"col-md-3\">',
 								'				<div class=\"row\">',
 								'					<div class="col-md-3">',
-								'						<img class=\"img-circle\" src=\"{{list.user.thumb_url}}\">',
+								'						<img class=\"img-circle\" src=\"{{list.user.image_url}}\">',
 								'					</div>',
 								'					<div class="col-md-9">',
 								'										<a href=\"/tool_lists/{{list.id}}\"><label>{{list.name}}</label></a>',

@@ -13,7 +13,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       puts "NOT persisted"      
       update_user()
       sign_in @user
-      redirect_to '/users/' + @user[:id]
+      redirect_to '/users/' + @user[:id].to_s
     end
 	end
 
