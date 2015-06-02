@@ -159,7 +159,7 @@ app.controller('ListsViewController', ['$scope', '$http', '$routeParams', functi
 			var roles = data.tool_list_user_roles;
 
 			angular.forEach(roles, function(v, i){
-				if ($scope.current_user.id == v.user_id) {
+				if ($scope.current_user.id == v.user.id) {
 					$scope.can_edit = v.is_editor;
 					return false;
 				}
