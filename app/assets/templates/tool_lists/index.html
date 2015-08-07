@@ -15,6 +15,13 @@
 	        <div class="row">
 	          <div class="col-md-12">
 	            <a href="/tool_lists/{{tool_list.id}}"><label>{{tool_list.name}}</label></a>
+
+							<div class="checkbox">
+								<label>
+									<input type="checkbox" ng-model='tool_list.is_featured' ng-change='setFeatureTool(tool_list)'> Featured
+								</label>
+							</div>
+
 	          </div>
 	         </div>
 	         <div class="row">

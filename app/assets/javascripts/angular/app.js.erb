@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('taporApp', ['ngResource', 'ngRoute', 'selectize', 'ui.sortable', 'ui.ace', 'ui.tinymce', 'ui.bootstrap', 'angular-jqcloud']);
+var app = angular.module('taporApp', ['ngResource', 'ngRoute', 'selectize', 'ui.sortable', 'ui.ace', 'ui.tinymce', 'ui.bootstrap', 'angular-jqcloud', 'genericFilters']);
 
 app.config(['$httpProvider', function($httpProvider){
   $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
@@ -19,7 +19,15 @@ app.config(['$routeProvider', '$locationProvider',
           if(query.goto){
           // if we were passed in a query param, and it has a path
           // to redirect to, then redirect to that path
-            return "/" + query.goto;
+            console.log(current)
+            console.log(path)
+            console.log(query)
+
+            var result = "/" + query.goto;
+            if (angular.isDefined(query.page)) {
+              result += '?page=2' + query.page;
+            }
+            return result;
           }
         }
       })
@@ -27,27 +35,23 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('tapor/signin.html') %>",
       })
       .when('/sign_out', {
-        // templateUrl: "<%= asset_path('tapor/index.html') %>",
         redirectTo: function(current, path, query) {
           window.location= '/sign_out';
         }
       })
       .when('/users/auth/google_oauth2', {
-        // Change to loading
         templateUrl: "<%= asset_path('tapor/loading.html') %>",
         redirectTo: function(current, path, query) {
           window.location= '/users/auth/google_oauth2';
         }
       })
       .when('/users/auth/twitter', {
-        // Change to loading
         templateUrl: "<%= asset_path('tapor/loading.html') %>",
         redirectTo: function(current, path, query) {
           window.location= '/users/auth/twitter';
         }
       })
       .when('/users/auth/yahoo', {
-        // Change to loading
         templateUrl: "<%= asset_path('tapor/loading.html') %>",
         redirectTo: function(current, path, query) {
           window.location= '/users/auth/yahoo';
@@ -93,11 +97,6 @@ app.config(['$routeProvider', '$locationProvider',
       })
 
       // Lists
-      // .when('/lists', {
-      //   templateUrl: "<%= asset_path('lists/public.html') %>",
-      //   controller: 'ListsPublicCtrl'
-      // })
-
       .when('/tool_lists', {
         templateUrl: "<%= asset_path('tool_lists/index.html') %>",
       })
@@ -113,6 +112,8 @@ app.config(['$routeProvider', '$locationProvider',
       .when('/tool_lists/:id', {
         templateUrl: "<%= asset_path('tool_lists/view.html') %>",
       })
+
+      // Pages
       .when('/pages', {
         templateUrl: "<%= asset_path('pages/index.html') %>",
       })

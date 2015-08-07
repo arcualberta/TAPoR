@@ -1,25 +1,14 @@
 
 app.controller('ToolsIndexController', ['$scope', 'services', function($scope, services) {
-
-	$scope.current_page = 1;
-	$scope.attribute_values = [];
-
-
-	// function
-
 	services.helper.setup_tool_pagination_faceted_browsing($scope);
-
-	// end of function
-
-
 }]);
 
-app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
+app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routeParams', '$anchorScroll', '$timeout', 'services', function($scope, $http, $location, $routeParams, $anchorScroll, $timeout, services) {
 	// alert($routeParams.toolId)
 	
 	$scope.named_id = $routeParams.named_id;
 	$scope.data = {};  
-
+  $scope.data.newComment = "";
 
 	$scope.tinymceOptions = {
   	menubar : false,
@@ -38,8 +27,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   		$scope.id = $scope.data.tool.id;
 			services.tool.get_attributes($scope.id).then(
 				function(data){
-					$scope.data.tool_attributes = data;
-          console.log(data);
+					$scope.data.tool_attributes = data;          
 				},
 				function(errorMesssage) {		  			
 					$scope.error = errorMesssage;
@@ -85,7 +73,11 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 
   	services.tool.get_sorted_comments($scope.id, $scope.current_user).then(
 	  	function(data) {
-	  		$scope.data.comments = data;
+        console.log(data);
+	  		$scope.data.comments = data;        
+        $timeout(function() {
+          $anchorScroll();
+        });       
 	  	},
 	  	function(errorMesssage) {
 	  		$scope.error = errorMesssage;
@@ -129,23 +121,42 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   	)	
   }
 
-  $scope.update_comment = function() {
+  $scope.save_comment = function() {
+    // services.comment.save() 
+    var sending = {
+      content: $scope.data.newComment,
+      tool_id: $scope.id
+    }
+    console.log(sending);
+    services.comment.save(sending).then(
+      function(data){
+        get_sorted_comments();
+        $scope.data.newComment = "";
+      },
+      function(errorMesssage){
+        $scope.error = errorMesssage
+      }
+    )
+  }
 
-  	var data = $scope.data.comments.user;
-  	data.tool_id = $scope.id;
-  	services.comment.save(data).then(
-  		function(data){
-  			// XXX Fixme to update just user comment (?)
-  			get_sorted_comments();
-  		},
-  		function(errorMesssage){
-  			$scope.error = errorMesssage
-  		}
-  	)
+  $scope.update_comment = function(comment) {
+    console.log("updating")
+    console.log(comment)
+    services.comment.update(comment).then(
+      function(data){
+        get_sorted_comments();
+        $timeout(function() {
+          $anchorScroll(comment.id);
+        });       
+      },
+      function(errorMesssage){
+        $scope.error = errorMesssage
+      }
+    )
   }
 
   
-  var tagLoad = function(query, callback) {
+  var tag_load = function(query, callback) {
   	if (query != "") {
 	  	$http.get("/api/tags/search?query="+query)
 	  	.success(function(data, status, headers, config){
@@ -166,7 +177,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
     delimiter: ',',
     allowEmptyOption: false,
     preload: true,
-    load: tagLoad,
+    load: tag_load,
     hideSelected: true,
     // onInitialize: function(selectize){
     // 	console.log(selectize)
@@ -358,7 +369,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	orderChanged: function (event) {}
   }
 
-	var tagLoad = function(query, callback) {
+	var tag_load = function(query, callback) {
   	if (query != "") {
 	  	$http.get("/api/tags/search?query="+query)
 	  	.success(function(data, status, headers, config){
@@ -379,7 +390,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
     delimiter: ',',
     allowEmptyOption: false,
     preload: true,
-    load: tagLoad,
+    load: tag_load,
     hideSelected: true
   };
 

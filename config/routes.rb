@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     get 'tool_lists/related_by_tool/:id', to: 'tool_lists#related_by_tool'
     get 'tool_lists/related_by_list/:id', to: 'tool_lists#related_by_list'
     get 'tool_lists/by_curator/:id', to: 'tool_lists#by_curator'
+    get 'tool_lists/featured', to: 'tool_lists#featured'
+    
     get 'tags', to: 'tags#index'
     get 'comments/latest', to: 'comments#latest'
     
@@ -54,6 +56,7 @@ Rails.application.routes.draw do
   match "api" => proc { [404, {}, ['Invalid API endpoint']] }, via: [:get, :post]
   match "api/*path" => proc { [404, {}, ['Invalid API endpoint']] }, via: [:get, :post]
   match "/*path" => redirect("/?goto=%{path}"), via: [:get, :post]
+  
 
   # You can have the root of your site routed with "root"
   # root 'welcome#index'

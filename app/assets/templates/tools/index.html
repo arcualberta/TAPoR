@@ -1,5 +1,21 @@
 <div ng-controller='ToolsIndexController' class='tapor-container'>
 
+<!-- search -->
+<div class="row">
+	<div class="col-md-12">
+		<form class="form-inline">
+			<div class="form-group">				
+				<div class="input-group">
+					<input type="text" class="form-control" placeholder="Search for..." ng-model='query'>
+					<span class="input-group-btn">
+						<button class="btn btn-default" type="button" ng-click='update_query_filter()'>Go</button>
+					</span>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+
 <!-- faceting -->
 <div class="row">
 	<div class="col-md-12">
@@ -19,7 +35,7 @@
 <!-- pagination -->
 <div class="row">
 	<div class="col-md-12">
-		<pagination total-items="tools_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
+		<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
 	</div>
 </div>
 
@@ -35,21 +51,19 @@
 		
 		<div class='col-md-8'>
 			<div class="row">
-				<label><a href='tools/{{tool.id}}'>{{tool.name}}</a></label>
-			</div>
-			<div class="row">
-				<div ng-bind-html="tool.detail"></div>				
+				<div class='col-md-3'>
+					<label><a href='tools/{{tool.id}}'>{{tool.name}}</a></label>
+				</div>
+				<div class='col-md-3'>
+					<div star-rating rating-value="tool.star_average" max="5" is-interactive="false"></div>
+				</div>
 			</div>
 		</div>
+		<div class="row">
+			<div ng-bind-html="tool.detail"></div>				
+		</div>
+	</div>
 	
 	</div>
-
-	<!-- pagination -->
-	<div class="row">
-		<div class="col-md-12">
-			<pagination total-items="tools_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
-		</div>
-	</div>
-
 
 </div>

@@ -68,8 +68,8 @@ class InitialMigration < ActiveRecord::Migration
   		t.belongs_to :user
   		t.belongs_to :tool
   		t.text :content
-      t.boolean :is_pinned
-      t.boolean :is_hidden
+      t.boolean :is_pinned, default: false
+      t.boolean :is_hidden, default: false
       t.integer :index
   		t.timestamps
   	end
@@ -85,6 +85,7 @@ class InitialMigration < ActiveRecord::Migration
   		t.text :detail
   		t.boolean :is_public, default: true
       t.boolean :is_hidden, default: false
+      t.boolean :is_featured, default: false
   		t.timestamps
   	end
 

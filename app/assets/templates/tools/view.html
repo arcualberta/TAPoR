@@ -131,7 +131,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>	
 
 			<!-- Comments -->
 			<div class="row">
@@ -142,31 +142,17 @@
 						</div>
 						<div class="panel-body">
 							<!-- pinned -->
-							<div class="row" ng-repeat="comment in data.comments.system.pinned">
-								<div class="col-md-12">
-									<div class="media">
-				  					<div class="media-left">
-											<img src="{{comment.user.image_url}}" class="img-circle">
-										</div>
-										<div class="media-body">
-											<h4 class="media-heading">{{comment.user.name}}</h4>
-											<div ng-bind-html="comment.content"></div>
-										</div>
-									</div>
-								</div>															
+							<div ng-if="data.comments.system.pinned.length">
+								<h1 class="tapr-logo">Pinned</h1>
+								<div class="row" ng-repeat="comment in data.comments.system.pinned">
+									<div comment model='comment' user='current_user' update='update_comment'></div>
+								</div>
 							</div>
 							<!-- chronological -->
-							<div class="row" ng-repeat="comment in data.comments.system.chronological">
-								<div class="col-md-12">
-									<div class="media">
-				  					<div class="media-left">
-											<img src="{{comment.user.image_url}}" class="img-circle">
-										</div>
-										<div class="media-body">
-											<h4 class="media-heading">{{comment.user.name}}</h4>
-											<div ng-bind-html="comment.content"></div>
-										</div>
-									</div>	
+							<div ng-if="data.comments.system.chronological.length">
+								<h1 class="tapr-logo">Chronological</h1>
+								<div class="row" ng-repeat="comment in data.comments.system.chronological">
+									<div comment model='comment' user='current_user' update='update_comment'></div>
 								</div>
 							</div>
 
@@ -175,11 +161,9 @@
 									<hr>
 									<form>
 										<div class="form-group">
-											<label>Your comment</label>
-
-											<textarea ui-tinymce="tinymceOptions" ng-model="data.comments.user.content"></textarea>
-
-											<button class="btn btn-primary" ng-click="update_comment()">Save comment</button>
+											<label>Comment</label>											
+											<textarea ui-tinymce="tinymceOptions" ng-model="data.newComment"></textarea>
+											<button class="btn btn-primary" ng-click="save_comment()">Publish</button>
 										</div>										
 									</form>
 								</div>

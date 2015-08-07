@@ -33,8 +33,8 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.integer  "user_id"
     t.integer  "tool_id"
     t.text     "content"
-    t.boolean  "is_pinned"
-    t.boolean  "is_hidden"
+    t.boolean  "is_pinned",  default: false
+    t.boolean  "is_hidden",  default: false
     t.integer  "index"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -115,8 +115,9 @@ ActiveRecord::Schema.define(version: 20141125172213) do
     t.integer  "user_id"
     t.string   "name"
     t.text     "detail"
-    t.boolean  "is_public",  default: true
-    t.boolean  "is_hidden",  default: false
+    t.boolean  "is_public",   default: true
+    t.boolean  "is_hidden",   default: false
+    t.boolean  "is_featured", default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

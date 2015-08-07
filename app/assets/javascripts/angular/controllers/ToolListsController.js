@@ -184,7 +184,7 @@ app.controller('ListsViewController', ['$scope', '$http', '$routeParams', functi
 
 }]);	
 
-app.controller('ListsIndexController', ['$scope', 'services', function($scope, services){
+app.controller('ListsIndexController', ['$scope', '$http', 'services', function($scope, $http, services){
 
 	$scope.current_page = 1;
 
@@ -199,6 +199,10 @@ app.controller('ListsIndexController', ['$scope', 'services', function($scope, s
 				$scope.error = errorMessage;
 			}
 		);
+	}
+
+	$scope.setFeatureTool = function(toolList) {
+		$http.patch("/api/tool_lists/" + toolList.id, {is_featured: toolList.is_featured});
 	}
 
 	$scope.pageChanged();	

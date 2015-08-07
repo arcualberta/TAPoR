@@ -91,4 +91,21 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', f
 		});
 	})
 
+
+	services.tool_list.get_featured_tool_lists().then(
+		function(data){
+			$scope.featured_tool_lists = data;
+
+			angular.forEach($scope.featured_tool_lists, function(v, i){
+				v.total_items = v.tool_list_items.length;
+				if (v.tool_list_items.length > 3){
+					v.tool_list_items.length = 3;
+				}
+			});
+		},
+		function(errorMessage){
+			$scope.error = errorMessage;
+		}
+	);
+
 }]);

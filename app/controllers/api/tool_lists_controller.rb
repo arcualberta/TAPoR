@@ -53,7 +53,7 @@ class Api::ToolListsController < ApplicationController
 
 	def latest
 		respond_to do |format|
-			format.json { render json: ToolList.limit(5).reverse_order, status: :ok}			
+			format.json { render json: ToolList.limit(10).reverse_order, status: :ok}			
 		end
 	end
 
@@ -123,15 +123,10 @@ class Api::ToolListsController < ApplicationController
 
 					if is_editor
 						# save intrinsic info
-						@tool_list.update({
-							name: safe_params[:name],
-							detail: safe_params[:detail],
-							is_public: safe_params[:is_public],
-						})
+						@tool_list.update(safe_params)
 						# delete all items
 						ToolListItem.where(tool_list_id: @tool_list.id).destroy_all;
-		# 				# save items
-
+						# save items
 						save_tool_items();
 					end
 
@@ -192,6 +187,12 @@ class Api::ToolListsController < ApplicationController
 		end
 	end
 
+	def featured
+		featured_lists = ToolList.where(is_featured: true).where(is_hidden: false).where(is_public: true);
+		respond_to do |format|
+			format.json { render json: featured_lists, status: :ok}
+		end
+	end
 
 
 	private 
@@ -201,7 +202,7 @@ class Api::ToolListsController < ApplicationController
 		end
 
 		def safe_params	
-			params.require(:tool_list).permit(:id, :name, :detail, :is_public);
+			params.require(:tool_list).permit(:id, :name, :detail, :is_public, :is_hidden, :is_featured);
 		end
 
 		def save_tool_items

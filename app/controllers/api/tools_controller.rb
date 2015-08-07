@@ -1,6 +1,8 @@
 require 'fileutils'
 require 'base64'
 require 'RMagick'
+require 'xapian'
+
 include Magick
 
 class Api::ToolsController < ApplicationController
@@ -8,42 +10,34 @@ class Api::ToolsController < ApplicationController
 
 	# load_and_authorize_resource
 	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags, :get_ratings, :update_ratings, :get_comments, :get_attributes]
-	
+
 	def index
-		# @tools = Tool.all
-		params[:query] ||= "*";
 		params[:page] ||= 1;
 		per_page = 10;
 		
-		# Working with xapian
-		# @tools = Tool.search params[:query], per_page: per_page, page: 1
-		# docs = Tool.search params[:query], per_page: per_page, page: params[:page]
-		# @tools = [];
-		# docs.each do |doc|
-		# 	@tools.push(doc.indexed_object);
-		# end
-
-		# respond_to do |format|		
-		# 	format.json {render json: @tools, root: "tools", meta: {count: Tool.search(params[:query]).size}, status: :ok}
-		# end
-
-		if params[:attribute_values] && params[:attribute_values].length > 0
-
-			attribute_values = []
-			params[:attribute_values].split(",").each do |value|				
-				attribute_values.push(value.to_i)
-			end
-			
-			filter_string = "attribute_value_id = " + attribute_values.join(" or attribute_value_id = ")
-		
-			@tools = Tool.order(:name).select("tools.*, count(tools.id) as total").joins(:tool_attributes).where(filter_string).group("tools.id").having("total = ?", attribute_values.length);
-		
+		if not params[:query] or params[:query] == ""
+			query = "*"
 		else 
-			@tools = Tool.order(:name).where(is_hidden: false);
+			query = params[:query]
 		end
-		respond_to do |format|			
-			format.json {render json: @tools.limit(per_page).offset((params[:page].to_i - 1) * per_page), root: "tools", meta: {count: @tools.length}, status: :ok}
+
+		if params[:attribute_values] and params[:attribute_values].length > 0
+			params[:attribute_values].split(",").each do |value|				
+				query += ' attribute_value_ids:-' + value + '-'
+			end
 		end
+
+		docs = Tool.search query, page: params[:page], per_page: per_page, order: [:name]
+
+		tools = []
+		docs.each do |doc|
+			tools.push (doc.attributes);
+		end
+
+		respond_to do |format|
+			format.json {render json: tools, root: "tools", meta: {count: docs.hits}, status: :ok}
+		end
+
 	end
 
 	def show 
@@ -116,10 +110,10 @@ class Api::ToolsController < ApplicationController
 
 
 	def featured
-		@featured_tools = FeaturedTool.order(index: :asc)
+		featured_tools = FeaturedTool.order(index: :asc)
 
 		tools = []
-		@featured_tools.each do |featured|
+		featured_tools.each do |featured|
 			tools.push(featured.tool)			
 		end
 
@@ -206,6 +200,7 @@ class Api::ToolsController < ApplicationController
 					if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"						
 						@tool.image_url = save_image(params[:image_url])
 						@tool.save
+						XapianDb.reindex @tool
 					end
 
 					
@@ -377,6 +372,7 @@ class Api::ToolsController < ApplicationController
 					begin
 
 						# main tool content
+						save_tool = false;
 						@tool.name = safe_params[:name].strip;
 						@tool.detail = ActionController::Base.helpers.sanitize(safe_params[:detail]).strip;
 						@tool.url = safe_params[:url].strip
@@ -391,8 +387,9 @@ class Api::ToolsController < ApplicationController
 							@tool.last_updated = Time.now();
 						end
 
-						@tool.save()			
-
+						# @tool.save()			
+						# XapianDb.reindex @tool
+						save_tool = true;
 						# tags
 						# if params[:tool_tags] and params[:tool_tags][:tags] and params[:tool_tags][:tags] != ""
 
@@ -416,8 +413,14 @@ class Api::ToolsController < ApplicationController
 							new_url_path = save_image(params[:image_url])
 							@tool.image_url = new_url_path
 							@tool.last_updated = Time.now()
-							@tool.save()
+							# @tool.save()
+							# XapianDb.reindex @tool
+							save_tool = true;
 
+						end
+
+						if save_tool
+							@tool.save()							
 						end
 
 						# managed comments (changing pinned and hidden status)
@@ -526,7 +529,7 @@ class Api::ToolsController < ApplicationController
 				@tool_rating.update(stars: params[:stars]);				
 			end
 			@tool.star_average = @tool.tool_ratings.average("stars");
-			@tool.save()
+			@tool.save()			
 		end
 
 

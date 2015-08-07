@@ -19,6 +19,17 @@ app.factory('toolListServices', ['$http', '$q', function($http, $q){
 			});	
 			return deferred.promise;
 		},
+		get_featured_tool_lists : function() {
+			var deferred = $q.defer();
+			$http.get("/api/tool_lists/featured")
+				.success(function(data){
+					deferred.resolve(data);
+				})
+				.error(function(){
+					deferred.reject("Error getting featured lists")
+				});
+			return deferred.promise;
+		}
 	}
 
 }]);
