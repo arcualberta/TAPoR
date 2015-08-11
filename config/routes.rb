@@ -55,7 +55,8 @@ Rails.application.routes.draw do
 
   match "api" => proc { [404, {}, ['Invalid API endpoint']] }, via: [:get, :post]
   match "api/*path" => proc { [404, {}, ['Invalid API endpoint']] }, via: [:get, :post]
-  match "/*path" => redirect("/?goto=%{path}"), via: [:get, :post]
+  # match "/*path" => redirect("/?goto=%{path}"), via: [:get, :post]
+  match "/*path", to: 'home#redirect', via: [:get, :post]
   
 
   # You can have the root of your site routed with "root"
