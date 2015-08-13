@@ -17,15 +17,14 @@ app.config(['$routeProvider', '$locationProvider',
         templateUrl: "<%= asset_path('tapor/index.html') %>",        
         redirectTo: function(current, path, query){
           if(query.goto){
-          // if we were passed in a query param, and it has a path
-          // to redirect to, then redirect to that path
-            console.log(current)
-            console.log(path)
-            console.log(query)
-
             var result = "/" + query.goto;
-            if (angular.isDefined(query.page)) {
-              result += '?page=2' + query.page;
+            if (Object.keys(query).length > 1) {
+              result += '?';
+              angular.forEach(query, function(v, k){
+                if (k != 'goto') {
+                  result += k + "=" + v;
+                }
+              });
             }
             return result;
           }

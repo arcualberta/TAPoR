@@ -2,7 +2,7 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 
 	return {
 		// this helper requires 
-		// $scope.page = 1;
+		// $scope.page = 2;
 		// $scope.attribute_values = [];
 		// $scope.query = ""
 
@@ -28,12 +28,11 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 			var get_page = function() {
 
 				var search = $location.search();
-				console.log('search')
-				console.log(search)
-				$scope.page = angular.isDefined(search['page']) ? search['page'] : 1;
+				var page = search['page'] ? search['page'] : 1;
+				// $scope.page = search['page'] ? search['page'] : 1;
+				console.log($scope.page)
 				query = search['query'];
 
-				console.log("inside " + $scope.page)
 				var attribute_values;
 				if (angular.isDefined(search['attribute_values'])) {
 					attribute_values = search['attribute_values'].split(',');
@@ -42,15 +41,15 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 				$scope.query = query;
 				// $scope.page = page;
 
-				toolServices.list_page($scope.page, attribute_values, query).then(
+				toolServices.list_page(page, attribute_values, query).then(
 					function(data) {
 						$scope.tools_page = data;
 						angular.forEach($scope.tools_page.tools, function(v, i){
 							v.thumb_url = v.image_url.replace(/\.png$/, "-thumb.png");
 						})
-						if ($scope.on_page_change) {
-							$scope.on_page_change();
-						}
+						// if ($scope.on_page_change) {
+						// 	$scope.on_page_change();
+						// }
 					},
 					function(errorMessage) {
 						$scope.error = errorMessage;
@@ -59,12 +58,27 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 			}
 
 			$scope.pageChanged = function() {
+				console.log("pageChanged");
+
+				// console.log($scope.page)
 				var search = $location.search();
-				console.log("pageChanged " + $scope.page)
 				search['page'] = $scope.page;
 				$location.search(search);
-				// get_page();
-			}	
+				
+
+				// var search = $location.search();
+				// search['page'] = $scope.page;
+				// $location.search(search);
+				// $scope.page = $location.search()['page'];
+			}
+
+			// $scope.pageChanged = function() {
+			// 	var search = $location.search();
+			// 	console.log("pageChanged " + $scope.page)
+			// 	search['page'] = $scope.page;
+			// 	// $location.search(search);
+			// 	// get_page();
+			// }	
 
 			$scope.update_query_filter = function() {
 				var search = $location.search();
@@ -90,8 +104,9 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 
 
 			}
-
+			console.log($scope.page)
 			get_page();
+			console.log($scope.page)
 		}
 	}
 

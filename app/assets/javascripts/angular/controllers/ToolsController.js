@@ -1,6 +1,16 @@
 
-app.controller('ToolsIndexController', ['$scope', 'services', function($scope, services) {
-	services.helper.setup_tool_pagination_faceted_browsing($scope);
+app.controller('ToolsIndexController', ['$scope', 'services', '$timeout', '$location', function($scope, services, $timeout, $location) {
+  var search = $location.search();
+  
+
+
+  services.helper.setup_tool_pagination_faceted_browsing($scope);
+
+
+  
+  $timeout(function(){
+    $scope.page = search['page'] ? search['page'] : 1;
+  })
 }]);
 
 app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routeParams', '$anchorScroll', '$timeout', 'services', function($scope, $http, $location, $routeParams, $anchorScroll, $timeout, services) {

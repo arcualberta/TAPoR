@@ -1,43 +1,43 @@
 <div ng-controller='ToolsIndexController' class='tapor-container'>
 
-<!-- search -->
-<div class="row">
-	<div class="col-md-12">
-		<form class="form-inline">
-			<div class="form-group">				
-				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Search for..." ng-model='query'>
-					<span class="input-group-btn">
-						<button class="btn btn-default" type="button" ng-click='update_query_filter()'>Go</button>
-					</span>
+	<!-- search -->
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline">
+				<div class="form-group">				
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search for..." ng-model='query'>
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="button" ng-click='update_query_filter()'>Go</button>
+						</span>
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
 	</div>
-</div>
 
-<!-- faceting -->
-<div class="row">
-	<div class="col-md-12">
-		<form class="form-inline">
-			<span ng-repeat="attribute in attributes">
-				<div class="form-group">		
-					<label>{{attribute.name}}</label>
-					<select class='form-control' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
-						<option selected name=''></option>
-					</select>
-				</div>
-			</span>
-		</form>
+	<!-- faceting -->
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline">
+				<span ng-repeat="attribute in attributes">
+					<div class="form-group">		
+						<label>{{attribute.name}}</label>
+						<select class='form-control' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
+							<option selected name=''></option>
+						</select>
+					</div>
+				</span>
+			</form>
+		</div>
 	</div>
-</div>
 
-<!-- pagination -->
-<div class="row">
-	<div class="col-md-12">
-		<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
+	<!-- pagination -->
+	<div class="row">
+		<div class="col-md-12">
+			<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
+		</div>
 	</div>
-</div>
 
 	
 	<!-- tools -->
