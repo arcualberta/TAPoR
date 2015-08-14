@@ -114,6 +114,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 			}
 
 			$scope.$on("$destroy", function(){
+				$location.replace();
 				$location.search('');
 			});
 
