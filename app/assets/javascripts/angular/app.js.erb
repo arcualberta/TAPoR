@@ -59,6 +59,7 @@ app.config(['$routeProvider', '$locationProvider',
       // Tools
       .when('/tools', {
         templateUrl: "<%= asset_path('tools/index.html') %>",
+        reloadOnSearch: false
       })
       .when('/tools/new', {
         templateUrl: "<%= asset_path('tools/edit.html') %>",

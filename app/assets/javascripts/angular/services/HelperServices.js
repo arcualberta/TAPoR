@@ -1,4 +1,4 @@
-app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServices', function($location, attributeTypeServices, toolServices){
+app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices', 'toolServices', function($location, $timeout, attributeTypeServices, toolServices){
 
 	return {
 		// this helper requires 
@@ -38,6 +38,10 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 					attribute_values = search['attribute_values'].split(',');
 				}
 
+				// if ($scope.query != query) {
+
+				// }
+
 				$scope.query = query;
 				// $scope.page = page;
 
@@ -55,6 +59,9 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 						$scope.error = errorMessage;
 					}
 				);	
+				$timeout(function(){
+    			$scope.page = search['page'] ? search['page'] : 1;
+  			});
 			}
 
 			$scope.pageChanged = function() {
@@ -64,7 +71,7 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 				var search = $location.search();
 				search['page'] = $scope.page;
 				$location.search(search);
-				
+				// get_page();
 
 				// var search = $location.search();
 				// search['page'] = $scope.page;
@@ -77,12 +84,13 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 			// 	console.log("pageChanged " + $scope.page)
 			// 	search['page'] = $scope.page;
 			// 	// $location.search(search);
-			// 	// get_page();
+				// get_page();
 			// }	
 
 			$scope.update_query_filter = function() {
 				var search = $location.search();
 				search['query'] = $scope.query;
+				search['page'] = 1;
 				$location.search(search);
 				// get_page();	
 			}
@@ -104,9 +112,16 @@ app.factory('helperServices', ['$location', 'attributeTypeServices', 'toolServic
 
 
 			}
-			console.log($scope.page)
+
+			$scope.$on("$destroy", function(){
+				$location.search('');
+			});
+
+			$scope.$watch(function () {return $location.absUrl()}, function(oldUrl, newUrl){
+				get_page();
+			})
+
 			get_page();
-			console.log($scope.page)
 		}
 	}
 

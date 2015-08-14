@@ -28,14 +28,13 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 
 			if (angular.isUndefined(attribute_values)){
 				attribute_values = [];
-			}
+			}			
 
 			if (angular.isUndefined(query)) {
 				query = '';
 			}
-			
+
 			var deferred = $q.defer();
-				// $http.get('/api/tools?page='+ page)
 
 				$http({
     			url: '/api/tools', 
