@@ -73,7 +73,6 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 
   	services.tool.get_sorted_comments($scope.id, $scope.current_user).then(
 	  	function(data) {
-        console.log(data);
 	  		$scope.data.comments = data;        
         $timeout(function() {
           $anchorScroll();

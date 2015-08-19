@@ -2,7 +2,17 @@
 	<div class="col-md-2">
 		<div class="tapor-logo" ng-click="go_to('/')"><h1>TAPoR 3</h1></div>
 	</div>
-	<div class="col-md-10 tapor-blue" id="tapor-tagline">
+	<div class="col-md-8 tapor-blue" id="tapor-tagline">
 		<h1>Discover research tools for studying texts.</h1>
+	</div>
+	<div class="col-md-2 tapor-blue" id="tapor-search">
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Search" ng-model="query">
+			<span class="input-group-btn">
+				<button class="btn btn-default" type="button" ng-click="header_search()">
+					<span class='glyphicon glyphicon-search'></span>
+				</button>
+			</span>
+		</div>
 	</div>
 </div>

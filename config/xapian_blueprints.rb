@@ -12,6 +12,7 @@ end
 XapianDb::DocumentBlueprint.setup(:Tool) do |blueprint|
   blueprint.attribute :name, weight: 10, as: :string
   blueprint.attribute :detail, weight: 5, as: :string
+  blueprint.attribute :created_at, as: :date
 	blueprint.attribute :tool_attributes, as: :json
 	blueprint.attribute :attribute_value_ids do
 		result = '-'

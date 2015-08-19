@@ -29,31 +29,23 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 
 				var search = $location.search();
 				var page = search['page'] ? search['page'] : 1;
-				// $scope.page = search['page'] ? search['page'] : 1;
-				console.log($scope.page)
 				query = search['query'];
+				var order = search['order'];
+				var sort = search['sort'];
 
 				var attribute_values;
 				if (angular.isDefined(search['attribute_values'])) {
 					attribute_values = search['attribute_values'].split(',');
 				}
 
-				// if ($scope.query != query) {
-
-				// }
-
 				$scope.query = query;
-				// $scope.page = page;
 
-				toolServices.list_page(page, attribute_values, query).then(
+				toolServices.list_page(page, attribute_values, query, order, sort).then(
 					function(data) {
 						$scope.tools_page = data;
 						angular.forEach($scope.tools_page.tools, function(v, i){
 							v.thumb_url = v.image_url.replace(/\.png$/, "-thumb.png");
 						})
-						// if ($scope.on_page_change) {
-						// 	$scope.on_page_change();
-						// }
 					},
 					function(errorMessage) {
 						$scope.error = errorMessage;
@@ -64,35 +56,17 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
   			});
 			}
 
-			$scope.pageChanged = function() {
-				console.log("pageChanged");
-
-				// console.log($scope.page)
+			$scope.pageChanged = function() {				
 				var search = $location.search();
 				search['page'] = $scope.page;
 				$location.search(search);
-				// get_page();
-
-				// var search = $location.search();
-				// search['page'] = $scope.page;
-				// $location.search(search);
-				// $scope.page = $location.search()['page'];
 			}
-
-			// $scope.pageChanged = function() {
-			// 	var search = $location.search();
-			// 	console.log("pageChanged " + $scope.page)
-			// 	search['page'] = $scope.page;
-			// 	// $location.search(search);
-				// get_page();
-			// }	
 
 			$scope.update_query_filter = function() {
 				var search = $location.search();
 				search['query'] = $scope.query;
 				search['page'] = 1;
 				$location.search(search);
-				// get_page();	
 			}
 
 			$scope.update_attributes_filter = function() {
@@ -105,11 +79,8 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 					}
 				});
 				
-				// search['page'] = 1;
 				search['attribute_values'] = attribute_values.join(',');
 				$location.search(search);
-				// get_page();
-
 
 			}
 

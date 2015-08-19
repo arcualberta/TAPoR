@@ -15,7 +15,7 @@ body {
 	vertical-align: center;
 	padding-left: 30px;
 	padding-right: 30px;
-	font-family: 'Rokkitt', serif;
+	/*font-family: 'Rokkitt', serif;*/
 }
 
 #tapor-footer {
@@ -33,17 +33,21 @@ body {
 	color: RGBA(89, 189, 230, 1);	
 }
 
-.tapor-logo {
-	cursor: pointer;
-}
 
 .tapor-blue hr {
     border: 0; 
     border-top: 5px solid RGBA(89, 189, 230, 1);	
     margin-top: 0px
+  
+
+}
+
+#tapor-tagline {
+	font-family: 'Rokkitt', serif;
 }
 
 .tapor-logo {
+	cursor: pointer;
 	font-family: 'Rokkitt', serif;
 }
 
@@ -176,6 +180,10 @@ body {
 
 .list-tool-area {
 	min-height: 190px;
+}
+
+#tapor-search {
+	margin-top: 20px;
 }
 
 #tapor-nav {

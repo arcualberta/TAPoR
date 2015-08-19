@@ -4,6 +4,7 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 
 	$scope.current_user = null;
 	$scope.is_logged_in = false;
+	$scope.query = "";
 
 	$scope.checkUser = function() {
 		$http.get('/api/users/current')
@@ -16,6 +17,25 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 	$scope.go_to = function(page) {
 		$location.path(page)
 	}
+
+	$scope.header_search = function() {
+		// console.log($scope.query)
+		// console.log($location.url())
+		var path = $location.path();
+		console.log(path)
+		if (path != '/tools') {
+			$location.url('/tools/?page=1&query=' + $scope.query);
+		} else {
+			// $scope.update_query_filter();
+			var search = $location.search();
+			search['query'] = $scope.query;
+			search['page'] = 1;
+			$location.search(search);
+		}
+	
+
+	}
+
 
 }]);
 

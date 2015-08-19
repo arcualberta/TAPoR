@@ -27,7 +27,24 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
-		docs = Tool.search query, page: params[:page], per_page: per_page, order: [:name]
+
+		order = [:name]
+		if params[:order]
+			if params[:order] == "star_average"
+				order[0] = :star_average
+			elsif params[:order] == "created_at"
+				order[0] = :created_at
+			elsif params[:order] == "id"
+				order[0] = :id				
+			end
+		end
+
+		descending  = false		
+		if params[:sort] and params[:sort] == "desc"
+			descending = true
+		end
+
+		docs = Tool.search query, page: params[:page], per_page: per_page, order: order, sort_decending: descending
 
 		tools = []
 		docs.each do |doc|

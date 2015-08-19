@@ -14,17 +14,23 @@ app.config(['$routeProvider', '$locationProvider',
 
     $routeProvider
       .when('/', {
+        reloadOnSearch: false,
         templateUrl: "<%= asset_path('tapor/index.html') %>",        
         redirectTo: function(current, path, query){
           if(query.goto){
             var result = "/" + query.goto;
             if (Object.keys(query).length > 1) {
               result += '?';
+              var removeLast = false;
               angular.forEach(query, function(v, k){
                 if (k != 'goto') {
-                  result += k + "=" + v;
+                  result += k + "=" + v + '&';
+                  removeLast = true;
                 }
               });
+            }
+            if (removeLast) {
+              result = result.substring(0, result.length - 1);
             }
             return result;
           }
