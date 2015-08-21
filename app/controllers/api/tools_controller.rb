@@ -331,6 +331,7 @@ class Api::ToolsController < ApplicationController
 	def get_ratings
 		response = {
 			system: @tool.star_average,
+			rating_count: @tool.tool_ratings.count
 		}
 
 		if current_user

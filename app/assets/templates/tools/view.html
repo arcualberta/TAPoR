@@ -4,7 +4,8 @@
 		<!-- left content -->
 		<div class="col-md-9">
 			<!-- tool main content -->
-			<div class="row">
+			
+			<div class="row" itemscope itemtype="http://schema.org/SoftwareApplication">
 				<div class="col-md-12">
 					<div class="media">
   					<div class="media-left">
@@ -13,16 +14,27 @@
 						<div class="media-body">
 							<div class="row">
 							<div class="col-md-10">
-								<h4 class="media-heading">{{data.tool.name}}</h4>
+								<h4 class="media-heading" itemprop="name">{{data.tool.name}}</h4>
 								<ul>
 									<li>Last updated: {{data.tool.last_updated}}</li>
 									<li>Site: <a href="{{data.tool.url}}" ng-click="updateToolView()">{{data.url}}</a></li>
 								</ul>	
 							</div>
+
+							<div hidden>
+								<link itemprop="applicationCategory" href="http://schema.org/ToolApplication"/>
+								<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+									
+									<span itemprop="ratingValue">{{data.ratings.system}}</span>
+									<span itemprop="ratingCount">{{data.ratings.rating_count}}</span>
+								</div>
+							</div>
+
+
 							<div class="col-md-1">
 							 <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.tool.id}}" role="button">Edit</a>
 							</div>
-
+							
 								
 							</div>
 							<div ng-bind-html="data.tool.detail"></div>
@@ -30,6 +42,7 @@
 					</div>									
 				</div>
 			</div>
+
 			<!-- tool documentation attributes tags -->
 			<div class="row">
 				<div class="col-md-4">

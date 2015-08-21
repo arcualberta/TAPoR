@@ -56,3 +56,4 @@ gem 'byebug', '~> 3.5.1', group: [:development, :test]
 gem 'to_boolean', '~> 1.0.2'
 gem 'xapian'
 gem 'xapian_db', git: 'https://github.com/garaio/xapian_db.git'
+gem 'resque'
