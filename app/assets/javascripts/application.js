@@ -13,7 +13,7 @@
 //= require jquery/dist/jquery
 //= require bootstrap/dist/js/bootstrap
 //= require ace-builds/src-min-noconflict/ace
-//= require tinymce/tinymce.min
+//= require tinymce-dist/tinymce.min
 //= require angular/angular
 //= require angular-resource/angular-resource
 //= require angular-route/angular-route

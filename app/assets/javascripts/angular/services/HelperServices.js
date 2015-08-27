@@ -8,22 +8,8 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 
 		setup_tool_pagination_faceted_browsing : function($scope) {
 
-			// var page;
 			var query;
 			$scope.data = $scope.data || {};
-
-			attributeTypeServices.list().then(
-				function(data) {
-					angular.forEach(data, function(v, i){
-						data[i].model = {id:"",name:"",index:""};
-					});
-					$scope.attributes = data;
-
-				},
-				function(errorMessage) {
-					$scope.error = errorMessage
-				}
-			)
 
 			var get_page = function() {
 
@@ -36,7 +22,27 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 				var attribute_values;
 				if (angular.isDefined(search['attribute_values'])) {
 					attribute_values = search['attribute_values'].split(',');
+					console.log("here")
+					
+					// set attribute values on drop downs
+					// XXX can be improved
+										
+					angular.forEach($scope.attributes, function(attribute){
+						var is_found = false;
+						angular.forEach(attribute.attribute_values, function(att_val){							
+							angular.forEach(attribute_values, function(att_id){
+								if (att_id == att_val.id) {
+									attribute.model = att_val;
+									is_found = true;
+								}
+							});							
+						});
+						if (!is_found) {
+							attribute.model = null
+						}
+					});
 				}
+
 
 				$scope.query = query;
 
@@ -51,6 +57,8 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 						$scope.error = errorMessage;
 					}
 				);	
+
+
 				$timeout(function(){
     			$scope.page = search['page'] ? search['page'] : 1;
   			});
@@ -93,7 +101,21 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 				get_page();
 			})
 
-			get_page();
+
+			attributeTypeServices.list().then(
+				function(data) {
+					angular.forEach(data, function(v, i){
+						data[i].model = {id:"",name:"",index:""};
+					});
+					$scope.attributes = data;
+					get_page();
+
+				},
+				function(errorMessage) {
+					$scope.error = errorMessage
+				}
+			)
+
 		}
 	}
 
