@@ -29,16 +29,20 @@ class Api::ToolListsController < ApplicationController
 
 	def show 
 		respond_to do |format|
-			@tool_list = ToolList.find(params[:id]);
+			tool_list = ToolList.find(params[:id]);
+			if not tool_list.is_hidden
 			# format.json { render json: @tool, include_comments: params[:include_comments] }			
-			format.json { render json: @tool_list, status: :ok}			
+				format.json { render json: tool_list, status: :ok}			
+			else
+				format.json {{status: :unauthorized}}			
+			end
 		end
 	end
 	
 	def by_curator
 		respond_to do |format|
 			result = []
-			ToolList.where(user_id: params[:id], is_public: true).each do |list|
+			ToolList.where(user_id: params[:id], is_public: true, is_hidden: false).each do |list|
 				if (list[:id] != params[:exclude].to_i)
 					result.push({
 						id: list[:id],
@@ -53,7 +57,7 @@ class Api::ToolListsController < ApplicationController
 
 	def latest
 		respond_to do |format|
-			format.json { render json: ToolList.limit(10).reverse_order, status: :ok}			
+			format.json { render json: ToolList.where(is_hidden: false).limit(10).reverse_order, status: :ok}			
 		end
 	end
 
@@ -63,7 +67,9 @@ class Api::ToolListsController < ApplicationController
 			params[:limit] ||= 10000; #need to paginate
 			ToolListItem.where(tool_id: params[:id]).limit(params[:limit]).each do |item|
 				tool_list = ToolList.find(item[:tool_list_id]);
-				result.push(tool_list);
+				if not tool_list.is_hidden
+					result.push(tool_list);
+				end
 			end
 			format.json { render json: result, status: :ok}			
 		end
@@ -80,7 +86,6 @@ class Api::ToolListsController < ApplicationController
 				# other_lists = ToolList.joins(:tool_list_items).where.not(id: @tool_list[:id]).where('tool_list_item.id = ?', item[:id])			
 				other_lists = ToolList.joins(:tool_list_items).where("`tool_lists`.`id` != ? AND `tool_list_items`.`tool_id` = ?", @tool_list[:id], item[:tool_id])
 				other_lists.each do |other|
-					puts "JERE " + other.tool_list_items.to_s
 					need_add = true;
 
 					response.each do |list|
@@ -90,11 +95,11 @@ class Api::ToolListsController < ApplicationController
 						end
 					end
 
-					if need_add
-						puts "adding " + other[:id].to_s
+					if need_add and not other.is_hidden
+						# puts "adding " + other[:id].to_s
 						response.push(other)
 					else
-						puts "not adding " + other[:id].to_s
+						# puts "not adding " + other[:id].to_s
 					end
 
 
@@ -188,7 +193,7 @@ class Api::ToolListsController < ApplicationController
 	end
 
 	def featured
-		featured_lists = ToolList.where(is_featured: true).where(is_hidden: false).where(is_public: true);
+		featured_lists = ToolList.where(is_featured: true, is_hidden: false, is_public: true);
 		respond_to do |format|
 			format.json { render json: featured_lists, status: :ok}
 		end

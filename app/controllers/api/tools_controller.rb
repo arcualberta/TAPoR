@@ -21,6 +21,8 @@ class Api::ToolsController < ApplicationController
 			query = params[:query]
 		end
 
+		# query += " is_hidden=false ";
+
 		if params[:attribute_values] and params[:attribute_values].length > 0
 			params[:attribute_values].split(",").each do |value|				
 				query += ' attribute_value_ids:-' + value + '-'
@@ -59,8 +61,12 @@ class Api::ToolsController < ApplicationController
 
 	def show 
 		respond_to do |format|
-			@tool = Tool.find_by(id: params[:id]);			
-			format.json { render json: @tool, status: :ok}			
+			@tool = Tool.find_by(id: params[:id]);	
+			if not @tool.is_hidden
+				format.json { render json: @tool, status: :ok}			
+			else 
+				format.json {{status: :unauthorized}}			
+			end
 		end
 	end
 
@@ -97,10 +103,13 @@ class Api::ToolsController < ApplicationController
 		respond_to do |format|
 			result = []
 			@tool.suggested_tools.each do |suggested|
-				result.push(Tool.find(suggested[:suggested_tool_id]));
-				if result.length == 5
-					break;
-				end			
+				tool = Tool.find(suggested[:suggested_tool_id]);
+				if not tool.is_hidden
+					result.push();
+					if result.length == 5
+						break;
+					end
+				end
 			end
 
 			format.json { render json: result};
@@ -115,9 +124,12 @@ class Api::ToolsController < ApplicationController
 			initialMetrics.each do |metric|
 				@nextMetric = ToolUseMetric.where("user_id = ? AND created_at > ? ", metric[:user_id], metric[:created_at]).take();
 				if @nextMetric					
-					result.push(Tool.find(@nextMetric.tool_id));
-					if result.length == 5
-						break;
+					tool = Tool.find(@nextMetric.tool_id);
+					if not tool.is_hidden
+						result.push(tool);
+						if result.length == 5
+							break;
+						end
 					end
 				end
 			end
@@ -131,7 +143,9 @@ class Api::ToolsController < ApplicationController
 
 		tools = []
 		featured_tools.each do |featured|
-			tools.push(featured.tool)			
+			if not featured.tool.is_hidden
+				tools.push(featured.tool)			
+			end
 		end
 
 
@@ -376,7 +390,7 @@ class Api::ToolsController < ApplicationController
 	def latest
 		respond_to do |format|
 			response = [];
-			@tools = Tool.limit(4).reverse_order
+			@tools = Tool.where(is_hidden: false).limit(4).reverse_order
 			@tools.each do |tool|
 				response.push(tool);
 			end
