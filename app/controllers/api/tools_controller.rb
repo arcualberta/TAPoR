@@ -255,9 +255,9 @@ class Api::ToolsController < ApplicationController
 
 				response_type[:attribute_values].push(response_value);			
 				if response_type[:is_multiple]
-					@this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id], attribute_value_id: response_value[:id])	
-					if @this_model
-						@value = AttributeValue.find(@this_model.attribute_value_id);
+					this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id], attribute_value_id: response_value[:id])	
+					if this_model
+						@value = AttributeValue.find(this_model.attribute_value_id);
 						response_type[:selected].push({
 							id: @value.id,
 						});
@@ -269,7 +269,7 @@ class Api::ToolsController < ApplicationController
 
 			if not response_type[:is_multiple]
 				this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id]);
-				if this_model
+				if this_model and puts this_model.attribute_value_id
 					@value = AttributeValue.find(this_model.attribute_value_id)
 					response_type[:selected] = [{
 						id: @value.id,						
