@@ -493,16 +493,16 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 	$http.get('/api/tools')
 	.success(function(data, status, headers, config){
 		$scope.tools = data;
-	})
+	});
 	
   
-	$scope.deleteTool = function(id) {
+	$scope.deleteTool = function(id) {        
 		$http.delete("/api/tools/"+id)
-		.success(function(data, status, headers, config){
-			$('#deleteModal').modal('hide');
-			$location.path('/tools/');
-		}); 
-	}
+		.success(function(data, status, headers, config){      
+      $('#deleteModal').modal('hide');   
+      $location.url('/tools/');   
+		});     
+	};
 
   $scope.createOrUpdateTool = function() {
   	

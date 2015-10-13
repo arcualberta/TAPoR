@@ -124,7 +124,7 @@
   
 
 <!-- modal -->
-  <div class="modal fade" id="deleteModal">
+  <div class="modal" id="deleteModal">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -136,7 +136,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button ng-if="is_editing" type="button" class="btn btn-primary" ng-click="deleteToolList(data.id)">Confirm</button>
+          <button ng-if="is_editing" data-dismiss="modal" type="button" class="btn btn-primary" ng-click="deleteToolList(data.id)">Confirm</button>
         </div>
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
