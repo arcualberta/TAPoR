@@ -32,6 +32,18 @@
 		</div>
 	</div>
 
+	<!-- sort by -->
+
+	<div class="row">
+		<div class="col-md-12">
+			<form class="form-inline">
+				<button class='btn btn-primary' ng-click='order("name")'>Name <span class='glyphicon glyphicon-arrow-down'></span></button>
+				<button class='btn btn-default' ng-click='order("rating")'>Rating</button>
+				<button class='btn btn-default' ng-click='order("date")'>Date</button>
+			</form>
+		</div>
+	</div>
+
 	<!-- pagination -->
 	<div class="row">
 		<div class="col-md-12">
@@ -58,10 +70,23 @@
 					<div star-rating rating-value="tool.star_average" max="5" is-interactive="false"></div>
 				</div>
 			</div>
+			<div class="row">
+			<div class="col-md-12">
+				<ul>
+					<li ng-if="tool.creators_name != ''">Creator(s): {{tool.creators_name}}</li>
+					<li ng-if="tool.creators_url != ''">Url: {{tool.creators_url}}</li>
+				</ul>
+			</div>
 		</div>
 		<div class="row">
-			<div ng-bind-html="tool.detail"></div>				
+			<div class="col-md-12">
+				<div ng-bind-html="tool.detail"></div>
+			</div>
 		</div>
+		</div>
+
+		
+
 	</div>
 	
 	</div>

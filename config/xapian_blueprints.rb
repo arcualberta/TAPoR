@@ -25,8 +25,10 @@ XapianDb::DocumentBlueprint.setup(:Tool) do |blueprint|
 	blueprint.attribute :star_average, as: :number
 	blueprint.attribute :image_url, as: :string
 	blueprint.attribute :id, as: :number
+	blueprint.attribute :creators_name, prefixed: false
+	blueprint.attribute :creators_url, prefixed: false
+
 	blueprint.natural_sort_order :name
-	
  	blueprint.base_query do
  		Tool.includes(:tool_attributes)
  	end

@@ -22,6 +22,12 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   services.tool.get_tool($scope.named_id).then(
   	function(data){
   		$scope.data.tool = data;
+
+      $scope.aceOption = {
+        mode: $scope.data.tool.language,
+        useWrapMode : true
+      };
+
   		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
 
   		$scope.id = $scope.data.tool.id;

@@ -1,7 +1,9 @@
-body {
+body, html {
 	/*background: RGBA(244, 240, 235, 1);*/
 	background: RGBA(255, 255, 255, 1);
+	height: 100%;
 }
+
 
 #tapor-navigation {
 	background: RGBA(77, 77, 77, 1);

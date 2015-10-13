@@ -11,6 +11,9 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 			var query;
 			$scope.data = $scope.data || {};
 
+			var order_by = "";
+			var sort_asc = false;
+
 			var get_page = function() {
 
 				var search = $location.search();
@@ -22,7 +25,6 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 				var attribute_values;
 				if (angular.isDefined(search['attribute_values'])) {
 					attribute_values = search['attribute_values'].split(',');
-					console.log("here")
 					
 					// set attribute values on drop downs
 					// XXX can be improved
@@ -34,6 +36,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 								if (att_id == att_val.id) {
 									attribute.model = att_val;
 									is_found = true;
+									return;
 								}
 							});							
 						});
@@ -51,7 +54,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 						$scope.tools_page = data;
 						angular.forEach($scope.tools_page.tools, function(v, i){
 							v.thumb_url = v.image_url.replace(/\.png$/, "-thumb.png");
-						})
+						});
 					},
 					function(errorMessage) {
 						$scope.error = errorMessage;
@@ -90,6 +93,18 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 				search['attribute_values'] = attribute_values.join(',');
 				$location.search(search);
 
+			}
+
+			$scope.order = function(order_column) {
+				if (order_by == order_column) {
+					sort_asc = !sort_asc;
+				} else {
+					order_by = order_column;
+					sort_asc = false;
+				}
+
+				console.log(order_by);
+				console.log(sort_asc);
 			}
 
 			$scope.$on("$destroy", function(){

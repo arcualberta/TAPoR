@@ -121,6 +121,24 @@
 
 				</div>
 			</div>
+
+			<div class="row" ng-if="data.tool.nature === 'code'">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">Code</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-12">
+									<div ui-ace="aceOption" ng-model="data.tool.code"></div>
+								</div>
+							</div>
+						</div>				
+					</div>
+				</div>
+			</div>
+
 			<!-- Tool appears on lists -->
 			<div class="row">
 				<div class="col-md-12">
