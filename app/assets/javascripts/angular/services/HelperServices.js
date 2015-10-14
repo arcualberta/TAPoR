@@ -83,7 +83,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 			$scope.update_attributes_filter = function() {
 				var search = $location.search();
 
-				var attribute_values = []			
+				var attribute_values = [];
 				angular.forEach($scope.attributes, function(v, i){
 					if (v.model && v.model.id) {
 						attribute_values.push(v.model.id)
