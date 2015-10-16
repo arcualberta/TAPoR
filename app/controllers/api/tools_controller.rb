@@ -378,12 +378,42 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
-
-
 	def update_comments
 		respond_to do |format|
 			process_update_comments()
 			format.json {render json: {status: "OK"}, status: :ok}
+		end
+	end
+
+	def by_analysis
+
+		attribute_type = AttributeType.find_by(name: "Type of analysis")
+		attribute_values = AttributeValue.select("id, name").where attribute_type_id: attribute_type.id
+
+		tools = Tool
+			.select("tool_id, name, tool_attributes.id, GROUP_CONCAT(tool_attributes.attribute_value_id) AS attribute_value_ids")
+  		.joins(:tool_attributes)
+  		.where("tool_attributes.attribute_type_id = ?", attribute_type.id)
+  		.group("tool_id")
+
+
+		tools.each do |tool|
+			if tool.attribute_value_ids
+				tool.attribute_value_ids = tool.attribute_value_ids.split(",")
+			else
+				tool.attribute_value_ids = []
+			end
+		end
+
+		result = {
+			attribute_values: attribute_values,
+			tools: tools
+		}
+
+
+
+		respond_to do |format|
+			format.json {render json: result, status: :ok}
 		end
 	end
 

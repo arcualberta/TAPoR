@@ -260,6 +260,18 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			deferred.reject("Error getting featured tools")
 		});
 		return deferred.promise;
+	},
+
+	get_tools_by_analysis : function() {
+		var deferred = $q.defer();
+		$http.get("/api/tools/by_analysis")
+		.success(function(data){
+			deferred.resolve(data);
+		})
+		.error(function(){
+			deferred.reject("Error getting tools by analysis")
+		});
+		return deferred.promise;
 	}
 
 	}

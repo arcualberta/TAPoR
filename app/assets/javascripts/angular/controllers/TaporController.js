@@ -46,6 +46,10 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', f
 	$scope.latest_comments = [];
 	$scope.latest_lists = [];
 	$scope.latest_tools = [];
+	$scope.tools_by_analysis = {
+		attribute_values: [],
+		tools: []
+	};
 
 	$http.get('/api/tools/featured')
 	.success(function(data, status, headers, config) {
@@ -125,6 +129,16 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', f
 		},
 		function(errorMessage){
 			$scope.error = errorMessage;
+		}
+	);
+
+	services.tool.get_tools_by_analysis().then(
+		function(data) {
+			$scope.tools_by_analysis = data;
+			console.log(data);
+		},
+		function(errorMessage) {
+			$scope.error = errorMessage;	
 		}
 	);
 

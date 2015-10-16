@@ -15,7 +15,7 @@
 /log/*.log
 /tmp
 /vendor/assets/components
-public/images/tools/2*
+public/images/tools/*
 config/application.yml
 config/database.yml
 /*.sublime-workspace

@@ -176,6 +176,11 @@ body, html {
 	color: RGBA(77, 77, 77, 1);	
 }
 
+.tool-win {
+    height: 550px;
+    width: 290px;
+}
+
 .no-list {
 	list-style-type: none;
 }
@@ -209,3 +214,4 @@ body, html {
 .mce-tinymce {
 	height: 400px
 }
+

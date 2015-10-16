@@ -49,11 +49,6 @@ app.controller('AttributesEditController', ['$scope', '$location', '$routeParams
 	  	});
 	  }
 	}
-
-
-
-
-
 }]);
 
 

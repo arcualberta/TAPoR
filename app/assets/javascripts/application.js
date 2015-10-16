@@ -19,6 +19,7 @@
 //= require angular-route/angular-route
 //= require angular-ui-ace/ui-ace
 //= require angular-ui-tinymce/src/tinymce
+//= require d3/d3.js
 //= require microplugin/src/microplugin
 //= require sifter/sifter
 //= require selectize/dist/js/selectize
