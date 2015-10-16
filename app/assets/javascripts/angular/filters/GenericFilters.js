@@ -4,9 +4,9 @@ angular.module('genericFilters', [])
     	return String(input).replace(/<[^>]+>/gm, '');
   	};
 	})
-	.filter('max100', function() {
-		return function(input) {
-			return String(input).substring(0, 100);
+	.filter('maxN', function() {
+		return function(input, n) {
+			return String(input).substring(0, n);
 		}
 	})
 

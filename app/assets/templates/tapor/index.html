@@ -13,7 +13,7 @@
 	      		<div class="row">
 	      			<div class="col-md-12">
 
-	      			<div class="break-content tapor-tool-detail" ng-bind-html="tool.detail"></div>
+	      			<div class="break-content tapor-tool-detail"> {{ tool.detail| htmlToPlaintext | maxN: 500}} </div>
 	      			
 	      			</div>
 	      		</div>
@@ -38,8 +38,10 @@
 	      </div>
 
 	      <div class="row tapor-featured-name-row">
-		      <div class="col-md-3 col-md-offset-9 tapor-featured-name">
-		      	<h1>{{tool.name}}</h1>
+		      <div class="col-md-12">
+		      	<div class="tapor-featured-name">
+		      		<h1>{{tool.name}}</h1>	
+		      	</div>		      	
 		      </div>	
 	      </div>
 <!-- 
@@ -162,17 +164,12 @@
 		</div>
 		<!-- right content -->
 		<div class="col-md-3">
-			<div class="row">
-				<div class="col-md-12" id="tapor-bubble-counter">
-				<!-- <h1>233</h1> -->
-				</div>
-			</div>
 			<div class="row" id="tapor-comments-column">
 				<div class="col-md-12">
 					<div class="tapor-title">Comments</div>
 					<div ng-repeat="comment in latest_comments" class="tapor-comment">
 						<strong><a href='/users/{{comment.user.id}}'>{{comment.user.name}}</a> on <a href="/tools/{{comment.tool.id}}"> {{comment.tool.name}}</a>:</strong>
-						<span class="break-content">{{comment.content | htmlToPlaintext | max100}} <a href="/tools/{{comment.tool.id}}#{{comment.id}}">[...]</a></span>
+						<span class="break-content">{{comment.content | htmlToPlaintext | maxN: 100}} <a href="/tools/{{comment.tool.id}}#{{comment.id}}">[...]</a></span>
 					</div>
 
 				</div>

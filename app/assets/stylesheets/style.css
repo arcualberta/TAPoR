@@ -126,15 +126,11 @@ body, html {
 
 .tapor-featured-name {
 	background: RGBA(77, 77, 77, 1);
-	border-radius: 10px 10px 0px 0px;
+	border-radius: 10px 10px 10px 10px;
 	color: #FFF;
 	font-family: 'Rokkitt', serif;
-	margin-top: 72px;
+	/*margin-top: 72px;*/
 	
-}
-
-.tapor-featured-name-row {
-
 }
 
 .tapor-tool-detail {
