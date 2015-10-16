@@ -7,12 +7,13 @@ app.directive('toolList', function () {
         templateNamespace: 'svg',
         replace: 'true',
         require: 'ngModel',
+        transclude: 'true',
         scope: {
             ngModel: "=",
             categoryList: "=",
             elementClick: "="
         },
-        link: function ($scope, $element, attrs, ngModel) {
+        link: function ($scope, $element, attrs, ngModel, transclude) {
             var debug = attrs["debug"];
             if (debug !== undefined && debug !== null && debug === "true") {
                 debug = true;
@@ -38,7 +39,7 @@ app.directive('toolList', function () {
             var baseFontHeight = 12;
             var basePadding = 5;
             var cellHeight = baseFontHeight + basePadding + basePadding;
-            var total = $scope.ngModel.length;
+            var total = 0;
             var totalWidth = Math.floor((total + "").length * baseFontHeight * 0.75);
             var currentElements = [];
             var emptyArray = [];
@@ -277,6 +278,13 @@ app.directive('toolList', function () {
                 dot.on("click", function () {
                     $scope.elementClick(element);
                 });
+
+                // Create the popup
+                var newScope = $scope.$new(true);
+                newScope.element = element;
+                /*transclude(newScope, function (clone, scope) {
+                    $element.append(clone);
+                });*/
             };
 
             var createDots = function (width, height) {
@@ -329,9 +337,7 @@ app.directive('toolList', function () {
 
                 // Add all of the text
                 writeCategory(0, {id: "", name: ""});
-                i = $scope.categoryList.length - 1;
-                
-                while ( i-- < 0) {
+                for (i = $scope.categoryList.length - 1; i >= 0; --i) {
                     writeCategory(i + 1, $scope.categoryList[i]);
                 }
 
@@ -373,30 +379,42 @@ app.directive('toolList', function () {
                 }).text(total);
             };
 
-            // Initialize the system
-            i = $scope.categoryList.length - 1;
-            console.log(i);
-            
-            while (i > 0) {
-              category = $scope.categoryList[i];
-              categories[category.id] = [];
-              --i;
-            }
+            var initialize = function (value) {
+                if (value) {
+                    var catId;
 
-            i = total - 1;
-            while (i > 0) {
-              element = $scope.ngModel[i];
-              category = element[attrs["elementCategories"]];
-              j = category.length - 1;
-              if (j >= 0) {
-                  do {
-                      categories[category[j]].push(i);
-                  } while (j--);
-              }
-              --i;
-            } 
 
-            resize();
+                    // Set the global variables
+                    categories = {};
+                    total = value.length;
+                    totalWidth = Math.floor((total + "").length * baseFontHeight * 0.75);
+                    svg.html("");
+                    textGroup = svg.append("g");
+                    dotGroup = svg.append("g").attr("fill", "white");
+                    totalText = svg.append("text").text(total);
+
+                    for (i = total - 1; i >= 0; --i) {
+                        element = value[i];
+                        category = element[attrs["elementCategories"]];
+                        for (j = category.length - 1; j >= 0; --j) {
+                            catId = category[j];
+
+                            if (catId in categories) {
+                                categories[catId].push(i);
+                            } else {
+                                categories[catId] = [i];
+                            }
+                        }
+                    }
+
+                    resize();
+                }
+            };
+
+            // Add watches
+            $scope.$watch(function () {
+                return $scope.ngModel;
+            }, initialize);
         }
     };
 });
