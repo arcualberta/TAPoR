@@ -73,13 +73,7 @@ app.controller("UsersViewController", ['$scope', '$location', '$routeParams','se
 
 	services.user.get_tool_lists($routeParams.id).then(
 		function(data){
-			$scope.tool_lists = [];
-
-			for(var i = 0; i < data.length; ++i){
-				if(!data[i].is_hidden){
-					$scope.tool_lists.push(data[i]);
-				}
-			}
+		    $scope.tool_lists = data;
 		},
 		function(errorMessage) {
 			$scope.error = errorMessage;
