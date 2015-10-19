@@ -40,7 +40,7 @@ app.directive('toolList', function () {
             var basePadding = 5;
             var cellHeight = baseFontHeight + basePadding + basePadding;
             var total = 0;
-            var totalWidth = Math.floor((total + "").length * baseFontHeight * 0.75);
+            var totalWidth = Math.floor((total + "").length * baseFontHeight);
             var currentElements = [];
             var emptyArray = [];
             var currentElementsDim = [0, 0, 1, 1];
@@ -332,8 +332,10 @@ app.directive('toolList', function () {
             };
 
             var resize = function () {
-                var width = $element.attr("width");
-                var height = $element.attr("height");
+                var width = $element.innerWidth();
+                var height = $element.innerHeight();
+                
+                svg.attr("viewBox", "0 0 " + width + " " + height);
 
                 if (width === undefined || width === null) {
                     width = $element.width();
@@ -357,7 +359,7 @@ app.directive('toolList', function () {
                             width: width - totalWidth,
                             height: cellHeight
                         });
-                var select = foreignObject.append("xhtml:select");
+                var select = foreignObject.append("xhtml:select").style("max-width", (width - totalWidth - 60) + "px");
                 createCategoryOption(select, {id: "", name: ""});
                 for (i = $scope.categoryList.length - 1; i >= 0; --i) {
                     createCategoryOption(select, $scope.categoryList[i]);
