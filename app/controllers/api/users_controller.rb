@@ -56,7 +56,8 @@ class Api::UsersController < ApplicationController
 		# puts params
 		# puts @user
 		respond_to do |format|
-			format.json { render json: @user.tool_lists, status: :ok }
+			@tool_lists = ToolList.where('user_id = ? AND is_public = ? AND is_hidden = ?', @user.id, true, false);
+			format.json { render json: @tool_lists, status: :ok }
 		end
 	end
 
