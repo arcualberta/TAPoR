@@ -68,7 +68,7 @@ app.directive('toolList', function () {
                 return -1;
             };
 
-            var clickCategory = function (categoryName, textField) {
+            $scope.clickCategory = function (categoryName, textField) {
                 var d, hDots, vDots;
                 var innerRad, rad, pad, d, x, y, element;
                 var div1, div2;
@@ -82,11 +82,13 @@ app.directive('toolList', function () {
                             fill: "white"
                         });
 
-                textField.transition()
-                        .attr({
-                            "font-size": cellHeight + "px",
-                            fill: selectColor
-                        });
+                if (textField) {
+                    textField.transition()
+                            .attr({
+                                "font-size": cellHeight + "px",
+                                fill: selectColor
+                            });
+                }
 
                 var categoryList = emptyArray; // Used to avaoid the recration of arrays.
 
@@ -188,17 +190,25 @@ app.directive('toolList', function () {
                 }
 
                 i = categoryName !== "" ? currentElements.length : total;
-                /*totalText.data(i)
-                 .transition()
-                 .duration(1000)
-                 .tween("text", function (d) {
-                 var value = d3.interpolate(this.textContent, d);
-                 
-                 return function (t) {
-                 this.textContent = Math.round(value(t));
-                 };
-                 });*/
                 totalText.text(i);
+            };
+
+            var createCategoryOption = function (select, category) {
+                var isSelected = category.id === selected;
+                var count = category.id !== "" ? categories[category.id].length : total;
+                var name = category.name !== "" ? category.name : "All";
+
+                var option = select.append("option")
+                        .attr("value", category.id)
+                        .text(name);
+
+                if (isSelected) {
+                    option.attr("selected", "true");
+                }
+
+                option.on("click", function () {
+                    $scope.clickCategory(category.id);
+                });
             };
 
             var writeCategory = function (index, category) {
@@ -236,7 +246,7 @@ app.directive('toolList', function () {
 
                 g.style("cursor", "pointer");
                 g.on("click", function () {
-                    clickCategory(category.id, text);
+                    $scope.clickCategory(category.id, text);
                 });
 
                 return g;
@@ -283,8 +293,8 @@ app.directive('toolList', function () {
                 var newScope = $scope.$new(true);
                 newScope.element = element;
                 /*transclude(newScope, function (clone, scope) {
-                    $element.append(clone);
-                });*/
+                 $element.append(clone);
+                 });*/
             };
 
             var createDots = function (width, height) {
@@ -336,14 +346,31 @@ app.directive('toolList', function () {
                 $element.innerHtml = "";
 
                 // Add all of the text
-                writeCategory(0, {id: "", name: ""});
+                /*writeCategory(0, {id: "", name: ""});
+                 for (i = $scope.categoryList.length - 1; i >= 0; --i) {
+                 writeCategory(i + 1, $scope.categoryList[i]);
+                 }*/
+                var foreignObject = textGroup.append("foreignObject")
+                        .attr({
+                            x: 0,
+                            y: 0,
+                            width: width - totalWidth,
+                            height: cellHeight
+                        });
+                var select = foreignObject.append("xhtml:select");
+                createCategoryOption(select, {id: "", name: ""});
                 for (i = $scope.categoryList.length - 1; i >= 0; --i) {
-                    writeCategory(i + 1, $scope.categoryList[i]);
+                    createCategoryOption(select, $scope.categoryList[i]);
                 }
+                select.on("change", function(){
+                    $scope.clickCategory(this.value);
+                });
 
                 // Calculate placement
                 var textTop = height - textGroup.node().getBBox().height;
                 textGroup.attr("transform", "translate(0, " + textTop + ")");
+                
+                textTop = Math.min(textTop, height - 48);
 
                 // Calculate the location of the tool circles.
                 var heightSpace = textTop >> 1;
