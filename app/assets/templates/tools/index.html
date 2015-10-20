@@ -4,7 +4,7 @@
 		<div class="col-md-12">
 			<form class="form-inline">
 					<div class="form-group col-xs-4" ng-repeat="attribute in attributes">		
-						<label class="col-sm-6 text-right">{{attribute.name}}</label>
+						<label class="col-sm-6 text-right" style="margin-top: 10px">{{attribute.name}}</label>
 						<select class='form-control col-sm-6 search-field' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
 							<option selected name=''></option>
 						</select>
