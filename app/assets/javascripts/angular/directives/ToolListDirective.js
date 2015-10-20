@@ -5,9 +5,9 @@ app.directive('toolList', function () {
         restrict: 'E',
         template: '<svg></svg>',
         templateNamespace: 'svg',
-        replace: 'true',
+        replace: true,
         require: 'ngModel',
-        transclude: 'true',
+        transclude: true,
         scope: {
             ngModel: "=",
             categoryList: "=",
@@ -35,6 +35,7 @@ app.directive('toolList', function () {
             var textGroup = svg.append("g");
             var dotGroup = svg.append("g").attr("fill", "white");
             var totalText = svg.append("text").text(total);
+            var toolTip = svg.append("g").attr("visibility", "hidden");
             var selectColor = "#29abe2";
             var baseFontHeight = 12;
             var basePadding = 5;
@@ -45,6 +46,7 @@ app.directive('toolList', function () {
             var emptyArray = [];
             var currentElementsDim = [0, 0, 1, 1];
             var elementsDim = [0, 0];
+            $scope.element = null;
 
             // An index of function for sorted arrays. This allows for a major speed boost.
             var indexOfSortedDesc = function (array, check) {
@@ -287,14 +289,25 @@ app.directive('toolList', function () {
                 dot.style("cursor", "pointer");
                 dot.on("click", function () {
                     $scope.elementClick(element);
+                    $element.blur();
                 });
 
                 // Create the popup
-                var newScope = $scope.$new(true);
-                newScope.element = element;
-                /*transclude(newScope, function (clone, scope) {
-                 $element.append(clone);
-                 });*/
+                dot.on("mouseover", function () {
+                    toolTip.current = index;
+
+                    $scope.$apply(function () {
+                        $scope.element = element;
+                    });
+
+                    toolTip.attr("visibility", "visible");
+                });
+
+                dot.on("mouseout", function () {
+                    if (toolTip.current === index) {
+                        toolTip.attr("visibility", "hidden");
+                    }
+                });
             };
 
             var createDots = function (width, height) {
@@ -334,7 +347,7 @@ app.directive('toolList', function () {
             var resize = function () {
                 var width = $element.innerWidth();
                 var height = $element.innerHeight();
-                
+
                 svg.attr("viewBox", "0 0 " + width + " " + height);
 
                 if (width === undefined || width === null) {
@@ -364,14 +377,14 @@ app.directive('toolList', function () {
                 for (i = $scope.categoryList.length - 1; i >= 0; --i) {
                     createCategoryOption(select, $scope.categoryList[i]);
                 }
-                select.on("change", function(){
+                select.on("change", function () {
                     $scope.clickCategory(this.value);
                 });
 
                 // Calculate placement
                 var textTop = height - textGroup.node().getBBox().height;
                 textGroup.attr("transform", "translate(0, " + textTop + ")");
-                
+
                 textTop = Math.min(textTop, height - 48);
 
                 // Calculate the location of the tool circles.
@@ -412,7 +425,6 @@ app.directive('toolList', function () {
                 if (value) {
                     var catId;
 
-
                     // Set the global variables
                     categories = {};
                     total = value.length;
@@ -421,6 +433,19 @@ app.directive('toolList', function () {
                     textGroup = svg.append("g");
                     dotGroup = svg.append("g").attr("fill", "white");
                     totalText = svg.append("text").text(total);
+                    toolTip = svg.append("foreignObject").attr("visibility", "hidden").attr({
+                        x: 0,
+                        y: 0,
+                        width: 128,
+                        height: 64
+                    });
+
+                    /* TEMP */
+                    transclude($scope, function (clone) {
+                        if (clone.length > 1) {
+                            toolTip.node().appendChild(clone[1]);
+                        }
+                    }, toolTip.node());
 
                     for (i = total - 1; i >= 0; --i) {
                         element = value[i];
@@ -444,6 +469,36 @@ app.directive('toolList', function () {
             $scope.$watch(function () {
                 return $scope.ngModel;
             }, initialize);
+
+            // Add Events
+            $element.mousemove(function (event) {
+                var pad = 10;
+                var dim = toolTip.node().getBBox()
+                var x = event.offsetX;
+                var y = event.offsetY;
+                var newX = x + pad;
+                var newY = y + pad;
+
+                // Check if we are in the window
+                if (newX + dim.width > $element.innerWidth()) {
+                    x -= dim.width + pad;
+                } else {
+                    x = newX;
+                }
+
+                if (newY + dim.height > $element.innerHeight()) {
+                    y -= dim.height + pad;
+                } else {
+                    y = newY;
+                }
+
+                toolTip.attr("transform", "translate(" + x + ", " + y + ")");
+            });
+
+            $element.bind("mouseleave focuslost", function (event) {
+                toolTip.attr("visibility", "hidden");
+                toolTip.current = null;
+            });
         }
     };
 });
