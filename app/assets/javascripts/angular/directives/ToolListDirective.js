@@ -207,7 +207,7 @@ app.directive('toolList', function () {
                 }
 
                 option.on("click", function () {
-                    $scope.clickCategory(category.id);
+                    $scope.clickCategory(category.id);    
                 });
             };
 
@@ -287,6 +287,7 @@ app.directive('toolList', function () {
                 dot.style("cursor", "pointer");
                 dot.on("click", function () {
                     $scope.elementClick(element);
+                    $element.blur();
                 });
 
                 // Create the popup
