@@ -135,7 +135,6 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 
 	services.tool.get_tools_by_analysis().then(
 		function(data) {
 			$scope.tools_by_analysis = data;
-			console.log(data);
 		},
 		function(errorMessage) {
 			$scope.error = errorMessage;	
