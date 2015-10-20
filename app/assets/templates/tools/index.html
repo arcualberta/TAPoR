@@ -1,33 +1,14 @@
 <div ng-controller='ToolsIndexController' class='tapor-container'>
-
-	<!-- search -->
-	<div class="row">
-		<div class="col-md-12">
-			<form class="form-inline">
-				<div class="form-group">				
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Search for..." ng-model='query' custom-enter="update_query_filter()">
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" ng-click='update_query_filter()'><span class='glyphicon glyphicon-search'></span></button>
-						</span>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
-
 	<!-- faceting -->
 	<div class="row">
 		<div class="col-md-12">
 			<form class="form-inline">
-				<span ng-repeat="attribute in attributes">
-					<div class="form-group">		
-						<label>{{attribute.name}}</label>
-						<select class='form-control' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
+					<div class="form-group col-xs-4" ng-repeat="attribute in attributes">		
+						<label class="col-sm-6 text-right">{{attribute.name}}</label>
+						<select class='form-control col-sm-6 search-field' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
 							<option selected name=''></option>
 						</select>
 					</div>
-				</span>
 			</form>
 		</div>
 	</div>
