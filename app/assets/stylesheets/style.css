@@ -212,3 +212,11 @@ body, html {
 	height: 400px
 }
 
+.edit-tool-list-row {
+	display: flex;
+}
+
+.edit-tool-list-column {
+	flex: 1;
+}
+
