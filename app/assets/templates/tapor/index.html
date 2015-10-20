@@ -58,7 +58,9 @@
 		</div>
 		<div class="col-md-4" style="padding: 5px; background-color: #333;">
 			
-				<tool-list class="tool-win" ng-model="tools_by_analysis.tools" category-list="tools_by_analysis.attribute_values" element-categories="attribute_value_ids" element-click="elementClick" ></tool-list>
+			<tool-list class="tool-win" ng-model="tools_by_analysis.tools" category-list="tools_by_analysis.attribute_values" element-categories="attribute_value_ids" element-click="elementClick" >
+				<div style="background-color: #C3C3C3;padding: 5px;">{{element.name}}</div>
+			</tool-list>
 
 
 		</div>
