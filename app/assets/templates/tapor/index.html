@@ -3,7 +3,7 @@
 	<div class="row" >
 		<div class="col-md-8" id="tapor-featured-carrousel">
 			
-			<carousel interval="5000000" class="tapor-carousel">
+			<carousel interval="5000" class="tapor-carousel">
 	      <slide ng-repeat="tool in featured" active="slide.active" class="tapor-slide">
 	  
 
@@ -13,7 +13,7 @@
 	      		<div class="row">
 	      			<div class="col-md-12">
 
-	      			<div class="break-content tapor-tool-detail"> {{ tool.detail| htmlToPlaintext | maxN: 500}} </div>
+	      			<div class="break-content tapor-tool-detail"> {{ tool.detail| htmlToPlaintext | maxN: 300}} </div>
 	      			
 	      			</div>
 	      		</div>
@@ -32,7 +32,7 @@
 	      	</div>	
 	      	<div class="col-md-9">
 	      		<a href="/tools/{{tool.id}}">
-							<img ng-src="{{tool.image_url}}" style="margin:auto;" height="440" width="550">	      
+							<img ng-src="{{tool.image_url}}" height="400" width="500">	      
 						</a>		
 	      	</div>
 	      </div>
