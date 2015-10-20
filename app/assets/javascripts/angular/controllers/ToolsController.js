@@ -506,7 +506,6 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	
 
   	if ($('#tool_form')[0].checkValidity()) {			
-  		console.log("ccc")
   		console.log($scope.data);
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
