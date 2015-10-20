@@ -32,9 +32,9 @@ class Api::ToolsController < ApplicationController
 
 		order = [:name]
 		if params[:order]
-			if params[:order] == "star_average"
+			if params[:order] == "rating"
 				order[0] = :star_average
-			elsif params[:order] == "created_at"
+			elsif params[:order] == "date"
 				order[0] = :created_at
 			elsif params[:order] == "id"
 				order[0] = :id				

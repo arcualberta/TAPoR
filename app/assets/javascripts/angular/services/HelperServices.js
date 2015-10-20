@@ -95,7 +95,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 
 			}
 
-			$scope.order = function(order_column) {
+			$scope.orderTools = function(order_column) {
 				if (order_by == order_column) {
 					sort_asc = !sort_asc;
 				} else {
@@ -103,8 +103,10 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 					sort_asc = false;
 				}
 
-				console.log(order_by);
-				console.log(sort_asc);
+				var search = $location.search();
+				search['order'] = order_by;
+				search['sort'] = sort_asc ? 'asc' : 'desc';
+				$location.search(search);
 			}
 
 			$scope.$on("$destroy", function(){
