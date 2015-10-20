@@ -39,7 +39,7 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 
 }]);
 
-app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', function($scope, $http, $sce, services) {
+app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 'services', function($scope, $http, $sce, $location, services) {
 
 	$scope.featured = []
 	$scope.system_tags = {};
@@ -141,5 +141,9 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', 'services', f
 			$scope.error = errorMessage;	
 		}
 	);
+
+	$scope.elementClick = function(e) {
+		$location.url('/tools/'+e.tool_id);
+	}
 
 }]);
