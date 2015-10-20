@@ -220,3 +220,7 @@ body, html {
 	flex: 1;
 }
 
+.search-field {
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
