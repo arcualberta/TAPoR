@@ -236,7 +236,12 @@ body, html {
 }
 
 .edit-tool-list-column > .row > .panel > .panel-body {
+	display: flex;
 	flex: 2;
+}
+
+.edit-tool-list-column > .row > .panel > .panel-body > .draggable_place {
+	flex: 1;
 }
 
 .search-field {
