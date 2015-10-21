@@ -217,7 +217,26 @@ body, html {
 }
 
 .edit-tool-list-column {
+	display: flex;
 	flex: 1;
+}
+
+.edit-tool-list-column > .row {
+	display: flex;
+	flex: 1;
+}
+
+.edit-tool-list-column > .row > .panel {
+	display: flex;
+	flex-direction: column;
+	flex: 1;
+}
+
+.edit-tool-list-column > .row > .panel > .panel-heading {
+}
+
+.edit-tool-list-column > .row > .panel > .panel-body {
+	flex: 2;
 }
 
 .search-field {
