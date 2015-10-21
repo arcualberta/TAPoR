@@ -236,7 +236,17 @@ body, html {
 }
 
 .edit-tool-list-column > .row > .panel > .panel-body {
+	display: flex;
 	flex: 2;
+	background-color: #333;
+}
+
+.edit-tool-list-column > .row > .panel > .panel-body > .draggable_place {
+	flex: 1;
+}
+
+.edit-tool-list-column > .row > .panel > .panel-body > .draggable_place > .column_sortable {
+	padding: 5px;
 }
 
 .search-field {
