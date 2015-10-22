@@ -183,7 +183,7 @@ body, html {
 
 .list-tool-area {
 	min-height: 190px;
-	background-color: #333;
+	/*background-color: #333;*/
 }
 
 #tapor-search {
@@ -238,10 +238,21 @@ body, html {
 .edit-tool-list-column > .row > .panel > .panel-body {
 	display: flex;
 	flex: 2;
+	height: 500px;
+	overflow-y: scroll;
 }
 
 .edit-tool-list-column > .row > .panel > .panel-body > .draggable_place {
 	flex: 1;
+}
+
+.available_sortable {
+	height: 200px;
+	overflow: hidden;
+}
+
+.using_sortable {
+
 }
 
 .search-field {

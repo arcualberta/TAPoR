@@ -34,7 +34,7 @@
         </div>
   			<div class="panel-body">
   			<ul class="draggable_place list-tool-area list-unstyled" as-sortable="toolsListener" ng-model="tools">
-          <li class="column_sortable" ng-repeat="tool in tools_page.tools track by $index" as-sortable-item>
+          <li class="column_sortable available_sortable" ng-repeat="tool in tools_page.tools track by $index" as-sortable-item>
             <div as-sortable-item-handle>
             	
             	<div class="row">
@@ -56,15 +56,18 @@
             				<li ng-if="tool.creators_url">
             					{{tool.creators_url}}
             				</li>
+                    <li>
+                      <div ng-bind-html="tool.detail"></div>
+                    </li>
             			</ul>         
               	</div>
             	</div>
-
+<!-- 
             	<div class="row">
             		<div class="col-sm-12">
             			<div ng-bind-html="tool.detail"></div>
             		</div>
-            	</div>
+            	</div> -->
             
             </div>
           </li>
@@ -101,18 +104,51 @@
   				</div> 
           </form>
         </div>
+
   			<div class="panel-body list-tool-area">
   			<ul class="draggable_place list-tool-area list-unstyled" as-sortable="listListener" ng-model="data.tool_list_items">
-          <li class="column_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item>
+          <li class="column_sortable using_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item>
             <div as-sortable-item-handle>
             
-              <img src="{{list_item.tool.thumb_url}}">
-            	{{list_item.tool.name}}
-              
-              <form>
-                <h5>Notes</h5>
-                <textarea class="form-control noresize-textarea " rows="3" ng-model="list_item.notes"></textarea>
-              </form>
+              <div class="row">
+                <div class="col-sm-6 break-content">
+                  <img src="{{list_item.tool.thumb_url}}">
+                </div>
+                <div class="col-sm-6 break-content">
+                  <ul>
+                    <li>
+                      {{list_item.tool.name}}
+                    </li>
+                    <li>
+                    <div star-rating rating-value="list_item.tool.star_average" max="5" is-interactive="false"></div>
+                      
+                    </li>
+                    <li ng-if="list_item.tool.creators_email">
+                      {{list_item.tool.creators_email}}
+                    </li>
+                    <li ng-if="list_item.tool.creators_url">
+                      {{list_item.tool.creators_url}}
+                    </li>
+                    <li>
+                      <form>
+                        <h5>Notes</h5>
+                        <textarea class="form-control noresize-textarea " rows="3" ng-model="list_item.notes"></textarea>
+                       </form>
+                    </li>
+                  </ul>         
+                </div>
+              </div>
+
+<!--               <img src="{{list_item.tool.thumb_url}}">
+            	{{list_item.tool.name}} -->
+              <!-- <div class="row">
+                <div class="col-sm-12">
+                <form>
+                  <h5>Notes</h5>
+                  <textarea class="form-control noresize-textarea " rows="3" ng-model="list_item.notes"></textarea>
+                </form>
+                </div>
+              </div> -->
             </div>
 
           </li>
