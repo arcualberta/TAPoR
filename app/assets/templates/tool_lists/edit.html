@@ -22,6 +22,22 @@
             </div>
           </div> -->
 
+<!-- search -->
+  <div class="row">
+    <div class="col-md-12">
+      <form class="form-inline">
+        <div class="form-group">        
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for..." ng-model='query' custom-enter="update_query_filter()">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click='update_query_filter()'><span class='glyphicon glyphicon-search'></span></button>
+            </span>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
             <!-- faceting -->
   <div class="row">
     <div class="col-md-12">
