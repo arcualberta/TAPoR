@@ -7,7 +7,7 @@
         	<!-- <h1>Filtering and paginating mechanism</h1> -->
           
           <!-- faceting -->
-          <div class="row">
+<!--           <div class="row">
             <div class="col-md-12">
               <form class="form-inline">
                 <span ng-repeat="attribute in attributes">
@@ -20,15 +20,35 @@
                 </span>
               </form>
             </div>
+          </div> -->
+
+            <!-- faceting -->
+  <div class="row">
+    <div class="col-md-12">
+      <form class="form-inline">
+          <div class="form-group col-xs-4" ng-repeat="attribute in attributes">   
+            <label class="col-sm-6 text-right" style="margin-top: 10px">{{attribute.name}}</label>
+            <select class='form-control col-sm-6 search-field' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
+              <option selected name=''></option>
+            </select>
           </div>
+      </form>
+    </div>
+  </div>
 
           <!-- pagination -->
-          <div class="row">
+          <!-- <div class="row">
             <div class="col-md-12">
               <pagination total-items="tools_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> 
             </div>
-          </div>
+          </div> -->
 
+        <!-- pagination -->
+        <div class="row">
+          <div class="col-md-12">
+            <pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> 
+          </div>
+        </div>
 
 
         </div>
