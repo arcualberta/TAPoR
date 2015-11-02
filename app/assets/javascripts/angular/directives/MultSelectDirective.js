@@ -13,9 +13,8 @@ app.directive("multselect", function() {
       					"	</div>"+
 					      "	<div ng-switch-when='false'>"+
 					      "		<select ng-required={{isRequired}} class='form-control' ng-model='model[0]' ng-options='value.name for value in values track by value.id'>"+					      
-					      "			<option ng-if='addEmpty' selected name=''></option>"+
 					      "		</select>"+
-					      "	</div>"+
+					      "</div>"+
 					    	"</div>",
 		scope : {
 			model : "=",
@@ -24,6 +23,16 @@ app.directive("multselect", function() {
 			name : "=",
 			values : "=",
 			addEmpty: "="
+		},
+		link : function(scope, elem, attrs) {
+			console.log(scope.name + " " + scope.addEmpty)
+			if (scope.addEmpty) {
+				scope.values.unshift({
+					id: null,
+					name: '',
+					index: null,
+				});
+			}
 		}
 	};
 });

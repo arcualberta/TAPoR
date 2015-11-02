@@ -412,7 +412,8 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   if ($scope.is_editing) {
 
 		$http.get('/api/tools/' + $routeParams.id)
-		.success(function(data, status, headers, config){			
+		.success(function(data, status, headers, config){		
+      $scope.data = data;	
 			if (data.tags && data.tags.length > 0) {
 			var tags = [];
 			angular.forEach(data.tags, function(v, i){
@@ -502,14 +503,31 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 		});     
 	};
 
+  var processToolAttributes = function() {
+ 
+    angular.forEach($scope.data.tool_attributes, function(att, index) {
+      if (att.is_multiple) {
+        var newModel = [];
+        angular.forEach(att.model, function(shouldAdd, index){        
+          if (shouldAdd) {
+            newModel.push(att.attribute_values[index]);
+          }
+        });
+        att.model = newModel;
+      } 
+    });
+
+  }
+
   $scope.createOrUpdateTool = function() {
   	
 
-  	if ($('#tool_form')[0].checkValidity()) {			
-  		console.log($scope.data);
+  	if ($('#tool_form')[0].checkValidity()) {  		
+
+      processToolAttributes();
+
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
-				console.log($scope.data)
 				$http.patch('/api/tools/' + $scope.id, $scope.data)
 				.success(function(data, status, headers, config){
 					$location.path('/tools/' + data.id);

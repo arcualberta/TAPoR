@@ -283,7 +283,7 @@ class Api::ToolsController < ApplicationController
 
 			if not response_type[:is_multiple]
 				this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id]);
-				if this_model and puts this_model.attribute_value_id
+				if this_model and this_model.attribute_value_id
 					@value = AttributeValue.find(this_model.attribute_value_id)
 					response_type[:selected] = [{
 						id: @value.id,						
@@ -489,7 +489,6 @@ class Api::ToolsController < ApplicationController
 
 						if params[:managed_comments] and params[:managed_comments][:pinned]  
 							params[:managed_comments][:pinned].each do |this_comment|
-								puts this_comment
 								@comment = Comment.find_by(id: this_comment[:id])
 								@comment.index = this_comment[:index];
 								@comment.is_pinned = true;
@@ -615,7 +614,6 @@ class Api::ToolsController < ApplicationController
 				tags = params[:tags];
 				tag_ids = []
 				tags.each do |tag|
-					puts tag
 					@currentTag = Tag.find_or_create_by text: tag
 					tag_ids.push(@currentTag)
 				end	
@@ -627,7 +625,6 @@ class Api::ToolsController < ApplicationController
 				tag_ids.each do |tag_id|
 					found = false;
 					@tool_tags.each do |tool_tag|
-						puts tool_tag.tag_id.to_s + " " + tag_id.id.to_s
 						if tool_tag.tag_id == tag_id.id
 							found = true;
 							break;
@@ -662,14 +659,17 @@ class Api::ToolsController < ApplicationController
 		def save_attributes()
 			tool_attributes = params[:tool_attributes]			
 			if tool_attributes
+				puts "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
+				puts @tool 
+				puts tool_attributes
+				puts @tool.tool_attributes
+
 				@tool.tool_attributes.destroy_all()
 				@tool.update(last_updated: Time.now())				
 				tool_attributes.each do |attribute|
-					puts ">>>>" + attribute.to_s
 					if attribute[:model] != nil
 						attribute[:model].each do |value|
-							saved_value = attribute[:is_multiple] ? value : value[:id];
-							puts "++++ "  + saved_value.to_s			 
+							saved_value = value[:id]
 							@tool.tool_attributes.create({
 								attribute_type_id: attribute[:id],
 								attribute_value_id: saved_value
