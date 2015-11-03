@@ -131,7 +131,6 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
       content: $scope.data.newComment,
       tool_id: $scope.id
     }
-    console.log(sending);
     services.comment.save(sending).then(
       function(data){
         get_sorted_comments();
@@ -144,8 +143,6 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   }
 
   $scope.update_comment = function(comment) {
-    console.log("updating")
-    console.log(comment)
     services.comment.update(comment).then(
       function(data){
         get_sorted_comments();
@@ -192,7 +189,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 	$scope.updateToolView = function() {
   	$http.post('/api/tools/view/' + $scope.id)
   	.success(function(data, status, headers, config){
-  		console.log(data)
+  		
   	})
 
   }
@@ -316,7 +313,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	}
   	$http.patch('/api/comments/' + id, data)
 		.success(function(data, status, headers, config){
-			console.log("success");
+			
 		});
   }
 
@@ -326,7 +323,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	}
   	$http.patch('/api/comments/' + id, data)
 		.success(function(data, status, headers, config){
-			console.log("success");
+			
 		});
   }
 
@@ -413,7 +410,27 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 		$http.get('/api/tools/' + $routeParams.id)
 		.success(function(data, status, headers, config){		
+      
       $scope.data = data;	
+
+
+      angular.forEach($scope.possible_nature, function(nature, i){        
+        if (nature.value == $scope.data.nature) {
+          $scope.data.nature = [$scope.possible_nature[i]];
+
+        }
+      });
+
+      angular.forEach($scope.possible_language, function(language, i){
+        if (language.value == $scope.data.language) {
+          $scope.data.language = [$scope.possible_language[i]];
+          $scope.aceOption.mode = $scope.data.language[0].mode;
+        }
+      });
+
+      // $scope.data.nature = [{value: $scope.data.nature}];
+      // $scope.data.nature = [{"name":"Code","value":"code","id":1}];
+      // $scope.data.language = [{mode: $scope.data.language}];
 			if (data.tags && data.tags.length > 0) {
 			var tags = [];
 			angular.forEach(data.tags, function(v, i){
@@ -453,7 +470,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 				
 				services.tool.get_attributes($routeParams.id, $scope.is_editing).then(
 		  		function(data){
-		  			console.log(data);
+
 		  			$scope.data.tool_attributes = data;
 		  		},
 		  		function(errorMesssage) {		  			
@@ -470,7 +487,6 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	$scope.data.attribute_types = [];
 	  $http.get("/api/attribute_types")
 	  .success(function(data, status, headers, config){
-	  	console.log(data);
 	  	$scope.data.tool_attributes = data;
 	  	angular.forEach($scope.data.tool_attributes, function(v, i){
 	  		var len = v.is_multiple ? v.attribute_values.length : 1 ;
@@ -538,7 +554,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 					$location.path('/tools/' + data.id);
 				})
 				.error(function(data, status, headers, config) {
-					console.log("error")
+					
 				});	
 			}
 
@@ -547,7 +563,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 			$http.post('/api/tools/' + $scope.id + "/suggested", {id: $scope.id, suggested: $scope.data.suggested_tools})
 			.success(function(data, status, headers, config){
-				console.log("saved suggested");
+				// console.log("saved suggested");
 			});
 			
 		}
