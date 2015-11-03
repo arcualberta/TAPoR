@@ -25,7 +25,6 @@ app.directive("multselect", function() {
 			addEmpty: "="
 		},
 		link : function(scope, elem, attrs) {
-			console.log(scope.name + " " + scope.addEmpty)
 			if (scope.addEmpty) {
 				scope.values.unshift({
 					id: null,
