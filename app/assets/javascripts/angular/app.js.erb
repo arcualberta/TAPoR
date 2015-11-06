@@ -15,7 +15,7 @@ app.config(['$routeProvider', '$locationProvider',
     $routeProvider
       .when('/', {
         reloadOnSearch: false,
-        templateUrl: "<%= asset_path('tapor/index.html') %>",        
+        // templateUrl: "<%= asset_path('tapor/index.html') %>",        
         redirectTo: function(current, path, query){
           if(query.goto){
             var result = "/" + query.goto;
@@ -23,7 +23,7 @@ app.config(['$routeProvider', '$locationProvider',
               result += '?';
               var removeLast = false;
               angular.forEach(query, function(v, k){
-                if (k != 'goto') {
+                if (k !== 'goto') {
                   result += k + "=" + v + '&';
                   removeLast = true;
                 }
@@ -33,8 +33,14 @@ app.config(['$routeProvider', '$locationProvider',
               result = result.substring(0, result.length - 1);
             }
             return result;
+          } else {
+            return '/home';
           }
         }
+      })
+      .when('/home', {
+        reloadOnSearch: false,
+        templateUrl: "<%= asset_path('tapor/index.html') %>", 
       })
       .when('/signin', {
         templateUrl: "<%= asset_path('tapor/signin.html') %>",

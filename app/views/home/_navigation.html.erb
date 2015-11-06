@@ -16,25 +16,25 @@
 			<li>
 				<a href='#' ng-click="go_to('/pages/tour')">Tour</a>
 			</li>
-			<li>
+		<!-- 	<li>
 				<a href='#' ng-click="go_to('/pages/tutorials')">Tutorials</a>
-			</li>
+			</li> -->
 			<li>
 				<a href='#' ng-click="go_to('/pages/useful_links')">Useful links</a>
 			</li>
-			<li ng-if="current_user == null">
+			<li ng-if="current_user === null">
 				<a href='#' ng-click="go_to('/signin')">Login</a>
 			</li>
-			<li ng-if="current_user != null">
+			<li ng-if="current_user !== null">
 				<a href='/users/{{current_user.id}}'>Profile</a>
 			</li>
-			<li ng-if="current_user != null">
+			<li ng-if="current_user !== null">
 				<a href='#' ng-click="go_to('/tools/new')">Add tool</a>
 			</li>
-			<li ng-if="current_user != null">
+			<li ng-if="current_user !== null">
 				<a href='#' ng-click="go_to('/tool_lists/new')">Add list</a>
 			</li>
-			<li ng-if="current_user != null">
+			<li ng-if="current_user !== null">
 				<a href='/sign_out'>Logout</a>
 			</li>
 		</ul>

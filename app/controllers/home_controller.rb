@@ -3,6 +3,13 @@ class HomeController < ApplicationController
 	end
 
 	def redirect
-		redirect_to "/?goto=" + request.path[1..-1] + "&" + request.query_string
+
+		path = request.path[1..-1];
+
+		if path != "home"
+			redirect_to "/?goto=" + path + "&" + request.query_string
+		else
+			redirect_to "/"
+		end
 	end
 end

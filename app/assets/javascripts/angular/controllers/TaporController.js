@@ -1,7 +1,7 @@
 
 
 app.controller('TaporMainController',['$scope', '$http', '$location', function($scope, $http, $location){
-
+	console.log("main");
 	$scope.current_user = null;
 	$scope.is_logged_in = false;
 	$scope.query = "";
@@ -40,7 +40,7 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 }]);
 
 app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 'services', function($scope, $http, $sce, $location, services) {
-
+	console.log("index");
 	$scope.featured = []
 	$scope.system_tags = {};
 	$scope.latest_comments = [];
