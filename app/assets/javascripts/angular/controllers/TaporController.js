@@ -48,12 +48,10 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 
 		tools: []
 	};
 	$scope.systemTags = [];
-	$scope.tagsLoaded = false;
 
 	services.tag.list().then(
 		function(data){
 			$scope.systemTags = data;
-			$scope.tagsLoaded = true;
 		},
 		function(errorMessage) {
 			scope.error = errorMessage;

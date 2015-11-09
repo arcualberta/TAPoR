@@ -5,7 +5,7 @@
 app.directive('wordCloud', function(services) {
 	return {
 		restrict: 'E',
-		template: '<div><span ng-style="{fontSize: tag.size}" ng-repeat="tag in tags | orderBy: \'text\' ">{{tag.text}} </span></div>',
+		template: '<div><span ng-style="{fontSize: tag.size}" ng-repeat="tag in tagsMin | orderBy: \'text\' ">{{tag.text}} </span></div>',
 		scope: {
 			maxSize: '=',
 			minSize: '=',
@@ -13,14 +13,16 @@ app.directive('wordCloud', function(services) {
 			tags: '='
 		},
 		link: function(scope, elem, attrs) {
-
+			scope.tagsMin = [];
+			var updateTags = function() {
+				scope.tagsMin = scope.tags;
 			// scope.$watch("tags", function(){
 				// get tags
-				scope.tags.sort(function(a, b){
+				scope.tagsMin.sort(function(a, b){
 					return b.weight - a.weight;
 				});
 				// cut by maxCount
-				scope.tags = scope.tags.slice(0, scope.maxCount);
+				scope.tagsMin = scope.tagsMin.slice(0, scope.maxCount);
 
 				// set size in px
 
@@ -29,7 +31,7 @@ app.directive('wordCloud', function(services) {
 				var maxWeight = -1;
 				var minWeight = Number.POSITIVE_INFINITY;
 
-				angular.forEach(scope.tags, function(v, i){
+				angular.forEach(scope.tagsMin, function(v, i){
 					if (v.weight > maxWeight) {
 						maxWeight = v.weight;
 					}
@@ -38,10 +40,15 @@ app.directive('wordCloud', function(services) {
 					}
 				});
 
-				angular.forEach(scope.tags, function(v, i){
+				angular.forEach(scope.tagsMin, function(v, i){
 					var t = 1.0 * (v.weight - minWeight) / (maxWeight - minWeight);
 					v.size = t * (scope.maxSize - scope.minSize) + scope.minSize;
 				});
+			}
+
+			scope.$watch('tags', function(oldVal, newVal){
+				updateTags();
+			});
 			// });
 
 			
