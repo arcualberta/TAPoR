@@ -55,7 +55,7 @@ body, html {
 
 #tapor-tagcloud {
 	background: RGBA(77, 77, 77, 1);
-	height: 145px;
+	/*height: 145px;*/
 	padding: 0px;
 	margin-top: 10px;	
 }

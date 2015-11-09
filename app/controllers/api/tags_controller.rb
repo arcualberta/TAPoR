@@ -18,7 +18,8 @@ class Api::TagsController < ApplicationController
 				if weight > 0
 					response.push({
 						text: tag[:text],
-						weight: weight
+						weight: weight,
+						id: tag[:id]
 					})
 				end
 			end

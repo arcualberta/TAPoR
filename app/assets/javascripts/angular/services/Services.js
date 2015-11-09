@@ -5,7 +5,8 @@ app.factory('services', [
 	'commentServices', 
 	'userServices', 
 	'toolListServices', 
-	'helperServices', 
+	'helperServices',
+	'tagServices',
 	function(
 		attributeTypeServices, 
 		toolServices, 
@@ -13,7 +14,8 @@ app.factory('services', [
 		commentServices, 
 		userServices, 
 		toolListServices, 
-		helperServices
+		helperServices,
+		tagServices
 	){
 	return {
 		attribute_type: attributeTypeServices,
@@ -22,7 +24,8 @@ app.factory('services', [
 		comment: commentServices,
 		user: userServices,
 		tool_list: toolListServices,
-		helper: helperServices
+		helper: helperServices,
+		tag: tagServices
 	};
 }]);
 

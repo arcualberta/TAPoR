@@ -1,7 +1,6 @@
 
 
 app.controller('TaporMainController',['$scope', '$http', '$location', function($scope, $http, $location){
-	console.log("main");
 	$scope.current_user = null;
 	$scope.is_logged_in = false;
 	$scope.query = "";
@@ -40,9 +39,7 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 }]);
 
 app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 'services', function($scope, $http, $sce, $location, services) {
-	console.log("index");
 	$scope.featured = []
-	$scope.system_tags = {};
 	$scope.latest_comments = [];
 	$scope.latest_lists = [];
 	$scope.latest_tools = [];
@@ -50,6 +47,19 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 
 		attribute_values: [],
 		tools: []
 	};
+	$scope.systemTags = [];
+	$scope.tagsLoaded = false;
+
+	services.tag.list().then(
+		function(data){
+			$scope.systemTags = data;
+			$scope.tagsLoaded = true;
+		},
+		function(errorMessage) {
+			scope.error = errorMessage;
+		}
+	);
+
 
 	$http.get('/api/tools/featured')
 	.success(function(data, status, headers, config) {
@@ -86,11 +96,6 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 
 		
 		
 	});
-
-	$http.get('/api/tags')
-	.success(function(data, status, headers, config){
-		$scope.system_tags = data;
-	})
 
 	$http.get('/api/comments/latest')
 	.success(function(data, status, headers, config){
