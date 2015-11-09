@@ -179,9 +179,9 @@
 		<div class="col-md-12" id="tapor-tagcloud">
 			<!-- XXX rearrange with modified width -->
 			<!-- <jqcloud words="system_tags" width="1170" height="145" steps="7" shape="rectangular"></jqcloud> -->
-			<div ng-if="tagsLoaded">
-				<word-cloud tags="systemTags" max-size="30", min-size="10", max-count="100"></word-cloud>
-			</div>
+			
+				<word-cloud ng-if="tagsLoaded" tags="systemTags" max-size="30", min-size="10", max-count="100"></word-cloud>
+			
 		</div>
 	</div>
 </div>

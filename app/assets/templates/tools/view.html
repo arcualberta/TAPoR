@@ -101,7 +101,9 @@
 								</dt>
 								<dd>
 									
-									<jqcloud words="data.tags.system" width="230" height="200" steps="7"></jqcloud>
+									<word-cloud ng-if="data.tagsLoaded" tags="data.tags.system" max-size="30", min-size="10", max-count="30"></word-cloud>
+
+									<!-- <jqcloud words="data.tags.system" width="230" height="200" steps="7"></jqcloud> -->
 
 								</dd>
 								<dt ng-if="current_user">

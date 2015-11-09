@@ -9,6 +9,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 	$scope.named_id = $routeParams.named_id;
 	$scope.data = {};  
   $scope.data.newComment = "";
+  $scope.data.tagsLoaded = false;
 
 	$scope.tinymceOptions = {
   	menubar : false,
@@ -43,6 +44,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 			services.tool.get_tags($scope.id).then(
 				function(data){
 					$scope.data.tags = data;
+          $scope.data.tagsLoaded = true;
 				},
 				function(errorMesssage){
 					$scope.error = errorMesssage
