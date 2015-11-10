@@ -13,7 +13,7 @@
                 <span ng-repeat="attribute in attributes">
                   <div class="form-group">    
                     <label>{{attribute.name}}</label>
-                    <select class='form-control' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
+                    <select class='form-control' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='updateAttributesFilter()'>
                       <option selected name=''></option>
                     </select>
                   </div>
@@ -40,7 +40,7 @@
 
           <div class="form-group col-md-12" ng-repeat="attribute in attributes">   
             <label class="col-md-6 text-right" style="margin-top: 10px">{{attribute.name}}</label>
-            <select class='form-control col-sm-6 search-field' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='update_attributes_filter()'>
+            <select class='form-control col-sm-6 search-field' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='updateAttributesFilter()'>
               <option selected name=''></option>
             </select>
           </div>

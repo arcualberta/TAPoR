@@ -69,16 +69,16 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 				$scope.data.suggested_tools = data;
 			});
 
-			get_sorted_comments();
+			getSortedComments();
   	},
   	function(errorMessage){
   		$scope.error = errorMessage;
   	}
   );
 
-  var get_sorted_comments = function() {
+  var getSortedComments = function() {
 
-  	services.tool.get_sorted_comments($scope.id, $scope.current_user).then(
+  	services.tool.getSortedComments($scope.id, $scope.current_user).then(
 	  	function(data) {
 	  		$scope.data.comments = data;        
         $timeout(function() {
@@ -134,7 +134,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
     }
     services.comment.save(sending).then(
       function(data){
-        get_sorted_comments();
+        getSortedComments();
         $scope.data.newComment = "";
       },
       function(errorMesssage){
@@ -146,7 +146,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   $scope.update_comment = function(comment) {
     services.comment.update(comment).then(
       function(data){
-        get_sorted_comments();
+        getSortedComments();
         $timeout(function() {
           $anchorScroll(comment.id);
         });       
@@ -582,7 +582,7 @@ app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$
 		featured : []
 	}
 
-	var get_page = function() {
+	var getPage = function() {
 		services.tool.list_page($scope.current_page).then(
 			function(data) {
 				// remove items already on featured list
@@ -603,43 +603,18 @@ app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$
 	}
 
 	$scope.pageChanged = function() {
-		get_page();
+		getPage();
 	}
-
-
-	
-
 
 	services.tool.get_featured_tools().then(
 		function(data){
 			$scope.data.featured = data;
-			get_page();
+			getPage();
 		},
 		function(errorMessage){
 			$scope.error = errorMessage;
 		}
 	);
-	// $http.get("/api/tools")
-	// .success(function(data, status, headers, config){
-	// 	var tools = data	
-	// 	$http.get("/api/tools/featured")
-	// 	.success(function(data, status, headers, config){
-	// 		$scope.data.featured = data		
-
-	// 		for( var i =tools.length - 1; i>=0; i--){
-	// 			for( var j=0; j<$scope.data.featured.length; j++){
-	// 				if(tools[i].id === $scope.data.featured[j].id){
-	// 					tools.splice(i, 1);
-	// 				}
-	// 			}
-	// 		}
-
-	// 		$scope.tools = tools			
-	// 	});
-	
-	// });
-
-	
 
 	$scope.toolsListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},

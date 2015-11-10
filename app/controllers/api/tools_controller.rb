@@ -659,11 +659,6 @@ class Api::ToolsController < ApplicationController
 		def save_attributes()
 			tool_attributes = params[:tool_attributes]			
 			if tool_attributes
-				puts "VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV"
-				puts @tool 
-				puts tool_attributes
-				puts @tool.tool_attributes
-
 				@tool.tool_attributes.destroy_all()
 				@tool.update(last_updated: Time.now())				
 				tool_attributes.each do |attribute|

@@ -27,6 +27,7 @@ XapianDb::DocumentBlueprint.setup(:Tool) do |blueprint|
 	blueprint.attribute :id, as: :number
 	blueprint.attribute :creators_name, prefixed: false
 	blueprint.attribute :creators_url, prefixed: false
+	blueprint.attribute :tool_tags, as: :json
 
 	blueprint.natural_sort_order :name
  	blueprint.base_query do

@@ -14,7 +14,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 			var order_by = "";
 			var sort_asc = false;
 
-			var get_page = function() {
+			var getPage = function() {
 
 				var search = $location.search();
 				var page = search['page'] ? search['page'] : 1;
@@ -80,7 +80,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 				$location.search(search);
 			}
 
-			$scope.update_attributes_filter = function() {
+			$scope.updateAttributesFilter = function() {
 				var search = $location.search();
 
 				var attribute_values = [];
@@ -115,7 +115,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 			});
 
 			$scope.$watch(function () {return $location.absUrl()}, function(oldUrl, newUrl){
-				get_page();
+				getPage();
 			})
 
 
@@ -125,7 +125,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 						data[i].model = {id:"",name:"",index:""};
 					});
 					$scope.attributes = data;
-					get_page();
+					getPage();
 
 				},
 				function(errorMessage) {

@@ -3,7 +3,7 @@
 	
 	$scope.current_page = 1;
 
-	var get_page = function() {
+	var getPage = function() {
 		services.user.list_page($scope.current_page).then(
 			function(data) {
 				$scope.users_page = data;
@@ -37,10 +37,10 @@
 	};
 	
 	$scope.pageChanged = function() {
-		get_page();
+		getPage();
 	}
 	
-	get_page();
+	getPage();
 	
 
 }]);
