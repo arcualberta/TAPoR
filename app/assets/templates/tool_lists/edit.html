@@ -44,6 +44,12 @@
               <option selected name=''></option>
             </select>
           </div>
+          <div class="form-group col-md-12">
+            <label class="col-md-6 text-right" style="margin-top: 10px">Tag</label>
+            <select class='form-control col-md-6 search-field' ng-model='tags.model' ng-options='value.text for value in tags.values track by value.id' ng-change='updateTagsFilter()'>
+              <option selected name=''></option>
+            </select>
+          </div>
       </form>
     </div>
   </div>
