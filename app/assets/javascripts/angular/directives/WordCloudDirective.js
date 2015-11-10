@@ -5,7 +5,7 @@
 app.directive('wordCloud', function(services) {
 	return {
 		restrict: 'E',
-		template: '<div><span ng-style="{fontSize: tag.size}" ng-repeat="tag in tagsMin | orderBy: \'text\' ">{{tag.text}} </span></div>',
+		template: '<div><span ng-style="{fontSize: tag.size}" ng-repeat="tag in tagsMin | orderBy: \'text\' "><a href="/tools?tag_values={{tag.id}}">{{tag.text}}</a> </span></div>',
 		scope: {
 			maxSize: '=',
 			minSize: '=',

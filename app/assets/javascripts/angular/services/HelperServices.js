@@ -1,4 +1,4 @@
-app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices', 'toolServices', function($location, $timeout, attributeTypeServices, toolServices){
+app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServices', 'toolServices', 'tagServices', function($location, $timeout, $q, attributeTypeServices, toolServices, tagServices){
 
 	return {
 		// this helper requires 
@@ -21,7 +21,7 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 				query = search['query'];
 				var order = search['order'];
 				var sort = search['sort'];
-
+				var tag_values;
 				var attribute_values;
 				if (angular.isDefined(search['attribute_values'])) {
 					attribute_values = search['attribute_values'].split(',');
@@ -47,9 +47,28 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 				}
 
 
+				if (angular.isDefined(search['tag_values'])) {
+					tag_values = search['tag_values'];
+
+					// set drop down value
+					if ($scope.tags) {
+						var is_found = false
+						angular.forEach($scope.tags.values, function(v, i){
+							if (tag_values == v.id) {
+								$scope.tags.model = v;
+								is_found = true;
+								return;
+							}
+						});
+						if (!is_found) {
+							$scope.tags.model = null;
+						}
+					}
+				}
+
 				$scope.query = query;
 
-				toolServices.list_page(page, attribute_values, query, order, sort).then(
+				toolServices.list_page(page, attribute_values, tag_values, query, order, sort).then(
 					function(data) {
 						$scope.tools_page = data;
 						angular.forEach($scope.tools_page.tools, function(v, i){
@@ -82,18 +101,26 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 
 			$scope.updateAttributesFilter = function() {
 				var search = $location.search();
-
 				var attribute_values = [];
 				angular.forEach($scope.attributes, function(v, i){
 					if (v.model && v.model.id) {
 						attribute_values.push(v.model.id)
 					}
-				});
-				
+				});				
 				search['attribute_values'] = attribute_values.join(',');
 				$location.search(search);
 
-			}
+			};
+
+			$scope.updateTagsFilter = function() {
+				var search = $location.search();
+				if ($scope.tags.model !== null) {					
+					search['tag_values'] = $scope.tags.model.id;					
+				} else {
+					search['tag_values'] = ""
+				}
+				$location.search(search);
+			};
 
 			$scope.orderTools = function(order_column) {
 				if (order_by == order_column) {
@@ -116,22 +143,29 @@ app.factory('helperServices', ['$location', '$timeout', 'attributeTypeServices',
 
 			$scope.$watch(function () {return $location.absUrl()}, function(oldUrl, newUrl){
 				getPage();
-			})
+			});
 
+			$q.all([
+				attributeTypeServices.list(),
+				tagServices.list()
+			])
+			.then(function(data){
+				
+				angular.forEach(data[0], function(v, i){
+					data[0][i].model = {id:"",name:"",index:""};
+				});
+				$scope.attributes = data[0];
+				
 
-			attributeTypeServices.list().then(
-				function(data) {
-					angular.forEach(data, function(v, i){
-						data[i].model = {id:"",name:"",index:""};
-					});
-					$scope.attributes = data;
-					getPage();
-
-				},
-				function(errorMessage) {
-					$scope.error = errorMessage
-				}
-			)
+				data[1].sort(function(a, b) {
+					return a.text.localeCompare(b.text);
+				});
+				$scope.tags = {
+					model: {},
+					values: data[1]
+				};
+				getPage();
+			});
 
 		}
 	}

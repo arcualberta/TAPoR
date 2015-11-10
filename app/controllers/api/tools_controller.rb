@@ -21,6 +21,7 @@ class Api::ToolsController < ApplicationController
 			query = params[:query]
 		end
 
+		# XXX Check
 		# query += " is_hidden=false ";
 
 		if params[:attribute_values] and params[:attribute_values].length > 0
@@ -29,6 +30,11 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
+		if params[:tag_values] and params[:tag_values].length > 0
+			params[:tag_values].split(",").each do |value|				
+				query += ' tag_value_ids:-' + value + '-'
+			end
+		end
 
 		order = [:name]
 		if params[:order]
@@ -313,9 +319,12 @@ class Api::ToolsController < ApplicationController
 		sum_tags = {};
 		@tool.tool_tags.each do |tool_tag|								
 			if sum_tags.has_key?(tool_tag.tag.text)
-				sum_tags[tool_tag.tag.text] += 1;
+				sum_tags[tool_tag.tag.text][:weight] += 1;
 			else 
-				sum_tags[tool_tag.tag.text] = 1;
+				sum_tags[tool_tag.tag.text] = {
+					id: tool_tag.tag.id,
+					weight: 1
+				};
 			end
 
 			if current_user and current_user[:id] == tool_tag.user_id
@@ -327,7 +336,8 @@ class Api::ToolsController < ApplicationController
 		sum_tags.each do |key, value|
 			response[:system].push({
 				text: key,
-				weight: value
+				weight: value[:weight],
+				id: value[:id]
 			})
 		end
 

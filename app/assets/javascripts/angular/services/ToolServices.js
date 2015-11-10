@@ -20,7 +20,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 
 	return {		
 
-		list_page : function(page, attribute_values, query, order, sort) {
+		list_page : function(page, attribute_values, tag_values, query, order, sort) {
 
 			if (angular.isUndefined(page)){
 				page = 1;
@@ -28,7 +28,11 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 
 			if (angular.isUndefined(attribute_values)){
 				attribute_values = [];
-			}			
+			}
+			
+			if (angular.isUndefined(tag_values)){
+				tag_values = [];
+			}		
 
 			if (angular.isUndefined(query)) {
 				query = '';
@@ -42,6 +46,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
     			params: {
     				page: page,
     				attribute_values: attribute_values.join(","),
+    				tag_values: tag_values,
     				query: query,
     				order: order,
     				sort: sort
