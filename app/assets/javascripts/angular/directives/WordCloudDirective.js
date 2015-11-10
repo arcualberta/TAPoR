@@ -2,7 +2,7 @@
 
 // a word cloud based directly on the tags result from TAPoR api
 
-app.directive('wordCloud', function(services) {
+app.directive('wordCloud', function() {
 	return {
 		restrict: 'E',
 		template: '<div><span ng-style="{fontSize: tag.size}" ng-repeat="tag in tagsMin | orderBy: \'text\' "><a href="/tools?tag_values={{tag.id}}">{{tag.text}}</a> </span></div>',
