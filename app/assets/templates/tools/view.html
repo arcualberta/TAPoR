@@ -17,7 +17,7 @@
 								<h4 class="media-heading" itemprop="name">{{data.tool.name}}</h4>
 								<ul>
 									<li>Last updated: {{data.tool.last_updated}}</li>
-									<li>Site: <a href="{{data.tool.url}}" ng-click="updateToolView()">{{data.url}}</a></li>
+									<li>Site: <a href="{{data.tool.url}}" ng-click="updateToolView()">{{data.tool.url}}</a></li>
 								</ul>	
 							</div>
 
@@ -63,7 +63,7 @@
 									Creator's site
 								</dt>
 								<dd>
-									{{data.tool.creators_url}}
+									<a href="{{data.tool.creators_url}}">{{data.tool.creators_url}}</a>
 								</dd>
 								<dt>
 									Creator's email
