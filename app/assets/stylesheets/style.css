@@ -260,3 +260,9 @@ body, html {
 	margin-top: 5px;
 	max-width: 50%;
 }
+
+.tool-list-entry {
+	border-bottom: 2px solid #eee;
+	margin-bottom: 20px;
+	padding-bottom: 20px;
+}
