@@ -1,4 +1,4 @@
-app.directive("renderAttributes", ['$sce', function($sce) {
+app.directive("renderAttributes", [function() {
 	return {
 		restrict : "A",
 		template : 	"<div>" +

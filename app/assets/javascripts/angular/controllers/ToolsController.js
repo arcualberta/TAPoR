@@ -199,7 +199,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 
 }]);
 
-app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
+app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routeParams', '$sce', 'services', function($scope, $http, $location, $routeParams, $sce, services) {
   
   $scope.id = $routeParams.id;
 	$scope.data = {};
@@ -460,6 +460,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 				.success(function(data, status, headers, config){
 
 					angular.forEach(data, function(v, i){
+            v.content = $sce.trustAsHtml(v.content);
 						if (v.is_pinned) {
 							$scope.data.managed_comments.pinned.push(v);
 						} else {					
