@@ -34,7 +34,6 @@ app.directive("renderAttributes", [function() {
 			scope.get_selected_name = function(id, values) {
 				var result = ""
 				angular.forEach(values, function(val, j){
-					console.log(id + " " + val.id + " " +val.name);
 					if (val.id == id) {
 						result = val.name;
 						return ;
