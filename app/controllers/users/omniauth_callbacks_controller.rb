@@ -10,7 +10,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       update_user()     
       sign_in_and_redirect @user, :event => :authentication
     else
-      puts "NOT persisted"      
       update_user()
       sign_in @user
       redirect_to '/users/' + @user[:id].to_s

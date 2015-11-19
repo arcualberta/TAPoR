@@ -145,7 +145,7 @@
                 <li class="column_sortable" ng-repeat="comment in data.managed_comments.not_pinned" as-sortable-item>
                   <div as-sortable-item-handle>
                     <div>
-                      <img src="{{comment.user.image_url}}" class="img-circle">
+                      <img src="{{comment.user.image_url}}" class="img-circle user-image-url">
                     </div>
                     <div>
                       {{comment.user.name}}
@@ -176,7 +176,7 @@
               <li class="column_sortable" ng-repeat="comment in data.managed_comments.pinned" as-sortable-item>
                 <div as-sortable-item-handle>
                   <div>            
-                    <img src="{{comment.user.image_url}}" class="img-circle">
+                    <img src="{{comment.user.image_url}}" class="img-circle user-image-url">
                   </div>
                   <div>
                     {{comment.user.name}}

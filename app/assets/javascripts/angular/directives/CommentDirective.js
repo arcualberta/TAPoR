@@ -6,7 +6,7 @@ app.directive("comment", ['$sce', function($sce) {
 			'<div class="col-md-12">',
 				'<div class="media">',
 					'<div class="media-left">',
-						'<img src="{{model.user.image_url}}" class="img-circle">',
+						'<img src="{{model.user.image_url}}" class="img-circle user-image-url">',
 					'</div>',
 					'<div class="media-body">',
 						'<h4 class="media-heading">{{model.user.name}}</h4>',						
