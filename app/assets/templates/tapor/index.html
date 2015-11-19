@@ -78,7 +78,7 @@
 					</p>
 				</div>
 
-				<div class="col-md-4">
+			<!-- 	<div class="col-md-4">
 					<div class="tapor-title tapor-blue">
 						<h1 class=""><strong>new</strong> in TAPoR 3.0</h1>
 						<hr>
@@ -91,7 +91,27 @@
 							Code as tools - Upload and access code directly from TAPoR. Use completed code others have uploaded, or take parts that suit your research.
 						</li>
 					</ul>
+				</div> -->
+
+				<div class="col-md-4">
+									<!-- latest lists -->
+				
+					<div>
+						<h1 class="tapor-title">Latest Lists</h1>
+						<div class='row' ng-repeat='list in latest_lists'>
+							<div class="col-md-12">
+								<div clas="row">
+									<div class='col-md-12'>
+										<a href="/tool_lists/{{list.id}}">
+											{{list.name}} - {{list.tool_list_items.length}} tools
+										</a>
+									</div>
+								</div>								
+							</div>
+						</div>					
+					</div>
 				</div>
+
 
 			</div>
 			<!-- featured lists -->
@@ -123,34 +143,14 @@
 			</div>
 			
 			<div class="row">
-				<!-- latest lists -->
-				
-				<div class="col-md-4">
-					<h1 class="tapor-title">Latest Lists</h1>
-					<div class='row' ng-repeat='list in latest_lists'>
-						<div class="col-md-12">
-							<div clas="row">
-								<div class='col-md-12'>
-									<a href="/tool_lists/{{list.id}}">
-										{{list.name}} - {{list.tool_list_items.length}} tools
-									</a>
-								</div>
-							</div>
-							<div clas="row">
-								<div class='col-md-12'>
-									{{list.detail}}
-								</div>
-							</div>
-						</div>
-					</div>					
-				</div>
+
 
 				<!-- latest reviews -->
-				<div class="col-md-4">
+				<div class="col-md-6">
 					
 				</div>
 				<!-- latest methods -->
-				<div class="col-md-4">
+				<div class="col-md-6">
 					
 				</div>
 			</div>

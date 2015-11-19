@@ -266,3 +266,16 @@ body, html {
 	margin-bottom: 20px;
 	padding-bottom: 20px;
 }
+
+
+.pagination {
+	display: inline;
+	padding-left: 0;
+	margin: 20px 0px 20px 0px;
+	border-radius: 4px;
+}
+
+.pagination-row {
+	margin: 20px 0px 20px 0px;
+
+}

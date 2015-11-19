@@ -21,7 +21,7 @@
 
 	<!-- sort by -->
 
-	<div class="row">
+<!-- 	<div class="row">
 		<div class="col-md-12">
 			<form class="form-inline">
 				<button class='btn' ng-click='orderTools("name")'>Name <span class='glyphicon glyphicon-arrow-down'></span></button>
@@ -29,12 +29,20 @@
 				<button class='btn' ng-click='orderTools("date")'>Date</button>
 			</form>
 		</div>
-	</div>
+	</div> -->
 
 	<!-- pagination -->
-	<div class="row">
-		<div class="col-md-12">
-			<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
+	<div class="row pagination-row">
+		<div class="col-md-6">
+			<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> of {{tools_page.meta.count}}
+		</div>
+
+		<div class="col-md-6">
+			<form class="form-inline">
+				<button class='btn' ng-click='orderTools("name")'>Name <span class='glyphicon glyphicon-arrow-down'></span></button>
+				<button class='btn' ng-click='orderTools("rating")'>Rating</button>
+				<button class='btn' ng-click='orderTools("date")'>Date</button>
+			</form>
 		</div>
 	</div>
 
