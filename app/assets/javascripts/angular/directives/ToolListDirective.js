@@ -345,10 +345,13 @@ app.directive('toolList', function () {
             };
 
             var resize = function () {
+
+                var heightPadding = -25;
+
                 var width = $element.innerWidth();
                 var height = $element.innerHeight();
 
-                svg.attr("viewBox", "0 0 " + width + " " + height);
+                svg.attr("viewBox", "0 " + heightPadding + " " + width + " " + (height - heightPadding));
 
                 if (width === undefined || width === null) {
                     width = $element.width();
@@ -365,11 +368,22 @@ app.directive('toolList', function () {
                  for (i = $scope.categoryList.length - 1; i >= 0; --i) {
                  writeCategory(i + 1, $scope.categoryList[i]);
                  }*/
+
+
+                var selectSectionText = svg.append('text')
+                    .attr({
+                        x: 3,
+                        y: -7
+                    })
+                    .text("Select category")
+                    .attr("fill", "white");
+
+
                 var foreignObject = textGroup.append("foreignObject")
                         .attr({
-                            x: 0,
-                            y: 0,
-                            width: width - totalWidth,
+                            x: 180,
+                            y: -height,
+                            width: 100,//width - totalWidth,
                             height: cellHeight
                         });
                 var select = foreignObject.append("xhtml:select").style("max-width", (width - totalWidth - 60) + "px");
@@ -414,7 +428,7 @@ app.directive('toolList', function () {
                 // Create the total text
                 totalText.attr({
                     x: width,
-                    y: height,
+                    y: height - 10,
                     "text-anchor": "end",
                     "font-size": 48,
                     fill: selectColor
