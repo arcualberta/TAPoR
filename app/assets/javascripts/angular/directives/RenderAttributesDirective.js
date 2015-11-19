@@ -1,4 +1,4 @@
-app.directive("renderAttributes", function() {
+app.directive("renderAttributes", ['$sce', function($sce) {
 	return {
 		restrict : "A",
 		template : 	"<div>" +
@@ -7,7 +7,9 @@ app.directive("renderAttributes", function() {
 								"			<label>" +
 								"				{{type.name}}:"+
 								"			</label>" +
-								"			<span>{{get_selected_names(type)}}</span>" +
+								"				<span ng-repeat='att in type.selected'>" +
+								"				<a href='http://localhost:3000/tools?attribute_values={{att.id}}'>{{get_selected_name(att.id, type.attribute_values)}}</a>"+
+								"				</span>" +
 								"		</li>" +								
 								"	</ul>" +
 								"</div>",
@@ -28,7 +30,22 @@ app.directive("renderAttributes", function() {
 				});
 				return result.join(", ");
 			}
+
+			scope.get_selected_name = function(id, values) {
+				var result = ""
+				angular.forEach(values, function(val, j){
+					console.log(id + " " + val.id + " " +val.name);
+					if (val.id == id) {
+						result = val.name;
+						return ;
+					}
+
+				});
+				return result;
+				
+			}
+
 		}
 	};
-})
+}]);
 
