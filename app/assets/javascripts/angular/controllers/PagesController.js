@@ -53,7 +53,6 @@ app.controller('PagesEditController', ['$scope', '$routeParams', '$location', 's
 	$scope.is_rich_editing = true;
 
 	$scope.is_editing = $location.path().indexOf("edit") != -1;
-
 	if ($scope.is_editing) {
 		services.page.get($routeParams.name).then(
 			function(data){
@@ -66,9 +65,9 @@ app.controller('PagesEditController', ['$scope', '$routeParams', '$location', 's
 	}
 
 	$scope.save = function() {
-		services.page.save($scope.data).then(
+		services.page.save($scope.data).then(			
 			function(data){
-				$location.path("/pages/" + $scope.data.name);
+				$location.path("/pages/" + $scope.data.named_id);
 			},
 			function(errorMessage) {
 				$scope.error = errorMessage;

@@ -30,7 +30,7 @@ app.controller('ListsContributingController', ['$scope', '$http', function($scop
 
 }]);
 
-app.controller('ListsEditController', ['$scope', '$http', '$location', '$routeParams', 'services', function($scope, $http, $location, $routeParams, services) {
+app.controller('ListsEditController', ['$scope', '$http', '$location', '$routeParams', '$compile', 'services', function($scope, $http, $location, $routeParams, $compile, services) {
 	
 	
 
@@ -74,7 +74,16 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 				notes : "",
 				tool : event.source.itemScope.tool
 			}
-			$scope.on_page_change();
+			// $scope.on_page_change();
+			console.log('moved');
+			console.log(event.dest.index);
+			var index = event.dest.index;
+			console.log($scope.data.tool_list_items[index])
+
+			var template = '<button class="btn btn-danger" ng-click="removeItem(list_item)">Remove</button>';
+			var comp = $compile(template)($scope);
+			console.log(comp);
+			angular.element(document.getElementById('ttt')).append(comp);
 		},
 		orderChanged: function(event){}
 	}
@@ -122,6 +131,13 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 		.success(function(data, status, headers, config){
 			$scope.data = data;
 		})
+	}
+
+	$scope.removeItem = function(item) {
+		console.log('clicked');
+		// var index = $scope.data.indexOf(item);
+		// $scope.data.splice(index, 1);     
+		// console.log("removing " + index);
 	}
 	
 

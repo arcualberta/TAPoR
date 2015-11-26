@@ -30,17 +30,10 @@ class Api::PagesController < ApplicationController
 	def update
 
 		if current_user and current_user.is_admin?
-			puts "HERE"
-			puts params
 			@page = Page.find_or_create_by( name: params[:name]);
 			respond_to do |format|
 				Page.transaction do
-					begin
-						# @page = Page.update({
-						# 	name: safe_params[:name],
-						# 	content: safe_params[:content]
-						# })
-						
+					begin					
 						@page.name = params[:name]
 						@page.content = params[:content]
 						@page.save();
@@ -50,7 +43,10 @@ class Api::PagesController < ApplicationController
 					end
 				end
 			end
+		else
+			raise ActionController::RoutingError.new('Not Found')
 		end
+
 	end
 
 	def show
@@ -66,7 +62,7 @@ class Api::PagesController < ApplicationController
 	private 
 		def set_page
 			puts params[:name]
-			@page = Page.where(name: params[:id]).take
+			@page = Page.where(named_id: params[:id]).take
 		end
 
 		def safe_params

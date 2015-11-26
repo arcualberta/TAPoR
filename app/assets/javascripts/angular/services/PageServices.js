@@ -18,6 +18,7 @@ app.factory('pageServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			var deferred = $q.defer();
 			$http.get('/api/pages/' + id)
 			.success(function(data){
+				console.log(id);
 				data.clean_content = $sce.trustAsHtml(data.content);
 				deferred.resolve(data)
 			})
@@ -33,7 +34,7 @@ app.factory('pageServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 				data.name = data.title.toLowerCase().replace(' ', '_');
 			}			
 			var deferred = $q.defer();
-			$http.patch('/api/pages/' + data.name, data)
+			$http.patch('/api/pages/' + data.named_id, data)
 			.success(function(data){
 				deferred.resolve(data)
 			})
