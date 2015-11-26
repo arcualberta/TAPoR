@@ -34,33 +34,7 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	
 	
 
-	// $scope.tools_page = {};	
-	// $scope.data = {
-	// 	name: "",
-	// 	detail: "",
-	// 	is_public: true,
-	// 	tool_list_items: [],
-	// };
-	
-	// $scope.is_editing = $location.path().indexOf("edit") != -1;
-
-	// // pagination and faceting
-
-	// $scope.on_page_change = function() {
-	// 	for (var i=0; i<$scope.tools_page.tools.length; ++i) {
-	// 		for (var j=0; j<$scope.data.tool_list_items.length; ++j) {
-	// 			var tool = $scope.tools_page.tools[i];
-	// 			var item = $scope.data.tool_list_items[j];
-
-	// 			if (tool && tool.id == item.tool.id) {
-	// 				$scope.tools_page.tools.splice(i--,1);
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// $scope.current_page = 1;
-	// $scope.attribute_values = [];
+	$scope.is_editing = $location.path().indexOf("edit") != -1;
 	services.helper.setup_tool_pagination_faceted_browsing($scope);
 
 
