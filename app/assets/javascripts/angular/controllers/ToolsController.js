@@ -229,52 +229,59 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   // $scope.possible_language = ["python", "php", "r", "javascript", "java", "mathematica", "other"]
   
   $scope.possible_language = [
+    {
+      id: 0,
+      name: "Other",
+      mode: "plain_text",
+      value: "other"
+    },
   	{
-  		id: 0,
+  		id: 1,
   		name: "Python",
   		mode: "python",
   		value: "python"
   	},
   	{
-  		id: 1,
+  		id: 2,
   		name: "PHP",
   		mode: "php",
   		value: "php"
   	},
   	{
-  		id: 2,
+  		id: 3,
   		name: "R",
   		mode: "r",
   		value: "r"
   	},
   	{
-  		id: 3,
+  		id: 4,
   		name: "Javascript",
   		mode: "javascript",
   		value: "javascript"
   	},
   	{
-  		id: 4,
+  		id: 5,
   		name: "Java",
   		mode: "java",
   		value: "java"
   	},
   	{
-  		id: 5,
+  		id: 6,
   		name: "Mathematica",
   		mode: "plain_text",
   		value: "mathematica"
   	},
   	{
-  		id: 6,
-  		name: "Other",
-  		mode: "plain_text",
-  		value: "other"
+  		id: 7,
+  		name: "HTML",
+  		mode: "html",
+  		value: "html"
   	},
+
   ]
 
 
-  $scope.data.language = [$scope.possible_language[6]];
+  $scope.data.language = [$scope.possible_language[0]];
   
   $scope.data.code = "";
   $scope.data.repository = ""
