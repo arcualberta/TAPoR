@@ -35,14 +35,11 @@ XapianDb::DocumentBlueprint.setup(:Tool) do |blueprint|
 		result
 	end
 
+
 	blueprint.natural_sort_order :name
  	blueprint.base_query do
  		Tool.includes(:tool_attributes)
  	end
-
-	blueprint.dependency :ToolAttribute, when_changed: %i(attribute_value) do |att|
-		Tool.joins{ tool_attribute }.where{ tool.id == tool_attribute.tool_id }
-	end
 
   blueprint.ignore_if {is_approved == false}
   blueprint.ignore_if {is_hidden == true}

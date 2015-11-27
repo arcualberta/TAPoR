@@ -308,6 +308,7 @@ class Api::ToolsController < ApplicationController
 
 	def update_tags
 		process_update_tags();
+		XapianDb.reindex(@tool);
 		get_tags();
 	end
 
