@@ -36,12 +36,21 @@
 		<div class="col-md-6">
 			<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> of {{tools_page.meta.count}}
 		</div>
-
+<!-- glyphicon-arrow-down -->
 		<div class="col-md-6">
 			<form class="form-inline">
-				<button class='btn' ng-click='orderTools("name")'>Name <span class='glyphicon glyphicon-arrow-down'></span></button>
-				<button class='btn' ng-click='orderTools("rating")'>Rating</button>
-				<button class='btn' ng-click='orderTools("date")'>Date</button>
+				<button class='btn' ng-class="{'btn-primary': order_by=='name'}" ng-click='orderTools("name")'>
+					Name 
+					<span class='glyphicon' ng-class="{'glyphicon-arrow-down': order_by=='name' && sort_asc==true, 'glyphicon-arrow-up': order_by=='name' && sort_asc==false}" ></span>
+				</button>
+				<button class='btn' ng-class="{'btn-primary': order_by=='rating'}" ng-click='orderTools("rating")'>
+					Rating
+					<span class='glyphicon' ng-class="{'glyphicon-arrow-down': order_by=='rating' && sort_asc==true, 'glyphicon-arrow-up': order_by=='rating' && sort_asc==false}" ></span>
+				</button>
+				<button class='btn' ng-class="{'btn-primary': order_by=='date'}" ng-click='orderTools("date")'>
+					Date
+					<span class='glyphicon' ng-class="{'glyphicon-arrow-down': order_by=='date' && sort_asc==true, 'glyphicon-arrow-up': order_by=='date' && sort_asc==false}" ></span>
+				</button>
 			</form>
 		</div>
 	</div>

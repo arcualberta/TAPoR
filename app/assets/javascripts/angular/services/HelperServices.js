@@ -11,8 +11,8 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 			var query;
 			$scope.data = $scope.data || {};
 
-			var order_by = "";
-			var sort_asc = false;
+			$scope.order_by = "name";
+			$scope.sort_asc = true;
 
 			var getPage = function() {
 
@@ -123,16 +123,16 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 			};
 
 			$scope.orderTools = function(order_column) {
-				if (order_by == order_column) {
-					sort_asc = !sort_asc;
+				if ($scope.order_by == order_column) {
+					$scope.sort_asc = !$scope.sort_asc;
 				} else {
-					order_by = order_column;
-					sort_asc = false;
+					$scope.order_by = order_column;
+					$scope.sort_asc = false;
 				}
 
 				var search = $location.search();
-				search['order'] = order_by;
-				search['sort'] = sort_asc ? 'asc' : 'desc';
+				search['order'] = $scope.order_by;
+				search['sort'] = $scope.sort_asc ? 'asc' : 'desc';
 				$location.search(search);
 			}
 
