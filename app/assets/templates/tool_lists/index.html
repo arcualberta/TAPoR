@@ -17,7 +17,7 @@
 	            <a href="/tool_lists/{{tool_list.id}}"><label>{{tool_list.name}}</label></a>
 
 							<div class="checkbox">
-								<label>
+								<label ng-if="current_user.is_admin">
 									<input type="checkbox" ng-model='tool_list.is_featured' ng-change='setFeatureTool(tool_list)'> Featured
 								</label>
 							</div>

@@ -162,7 +162,6 @@ app.controller('ListsViewController', ['$scope', '$http', '$routeParams', functi
 app.controller('ListsIndexController', ['$scope', '$http', 'services', function($scope, $http, services){
 
 	$scope.current_page = 1;
-
 	$scope.pageChanged = function() {
 		services.tool_list.get_tool_list_page($scope.current_page).then(
 			function(data){
