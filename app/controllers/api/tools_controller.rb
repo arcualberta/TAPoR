@@ -578,31 +578,11 @@ class Api::ToolsController < ApplicationController
 			finalHeight = 440;
 			# image.resize_to_fill!(finalWidth);
 			image.resize_to_fit!(finalWidth, finalHeight);
-			img = Image.new(550, 440) {
+			img = Image.new(finalWidth, finalHeight) {
 				self.background_color = 'white';
  			}
  			img.composite!(image, Magick::CenterGravity, Magick::AtopCompositeOp);
  			image = img;
-
-			# image.change_geometry!("550<x440");
-			# image.geometry = "550x440";
-			# image.y_resolution = 440;
-			# image.resize!(finalWidth, finalHeight);
-
-
-
-
-			# original_size = img.size
-			# # resize
-			# inter_height = (original_size[0] * final_height) / final_width
-			# img.resize(final_width, inter_height)
-			
-			# img.transform(resize="550<x440")
-			# img.transform(crop="550x440")
-
-			# crop
-			# image = image.extent(finalWidth, finalHeight);						
-			# image.background_color = "#FFF";
 			image.write(path.to_s);
 
 			# thumb
