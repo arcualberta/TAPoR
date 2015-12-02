@@ -21,6 +21,10 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 				query = search['query'];
 				var order = search['order'];
 				var sort = search['sort'];
+
+				// $scope.order_by = order;
+				// $scope.sort_asc = sort;
+
 				var tag_values;
 				var attribute_values;
 				if (angular.isDefined(search['attribute_values'])) {
@@ -127,7 +131,7 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 					$scope.sort_asc = !$scope.sort_asc;
 				} else {
 					$scope.order_by = order_column;
-					$scope.sort_asc = false;
+					$scope.sort_asc = true;
 				}
 
 				var search = $location.search();
