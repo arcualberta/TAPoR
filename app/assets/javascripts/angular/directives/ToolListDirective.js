@@ -388,7 +388,8 @@ app.directive('toolList', function () {
                         });
                 var select = foreignObject.append("xhtml:select").style("max-width", (width - totalWidth - 60) + "px");
                 createCategoryOption(select, {id: "", name: ""});
-                for (i = $scope.categoryList.length - 1; i >= 0; --i) {
+                // for (i = $scope.categoryList.length - 1; i >= 0; --i) {
+                for (i = 0; i <$scope.categoryList.length; ++i) {
                     createCategoryOption(select, $scope.categoryList[i]);
                 }
                 select.on("change", function () {

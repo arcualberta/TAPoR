@@ -399,7 +399,11 @@ class Api::ToolsController < ApplicationController
 	def by_analysis
 
 		attribute_type = AttributeType.find_by(name: "Type of analysis")
-		attribute_values = AttributeValue.select("id, name").where attribute_type_id: attribute_type.id
+		attribute_values = AttributeValue
+			.select("id, name")
+			.where(attribute_type_id: attribute_type.id)
+			.sort_by { |att| att[:name] }
+		
 
 		tools = Tool
 			.select("tool_id, name, tool_attributes.id, GROUP_CONCAT(tool_attributes.attribute_value_id) AS attribute_value_ids")
