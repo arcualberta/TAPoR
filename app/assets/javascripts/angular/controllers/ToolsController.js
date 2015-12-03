@@ -226,11 +226,11 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.nature = [$scope.possible_nature[0]];
   
   $scope.possible_language = [
-    {
-      id: 0,
-      name: "Other",
-      mode: "plain_text",
-      value: "other"
+    {      
+      id: 0, 
+      name: "Other", 
+      mode: "plain_text", 
+      value: "other" 
     },
   	{
   		id: 1,
