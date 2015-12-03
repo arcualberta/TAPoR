@@ -224,9 +224,6 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	},
   ];
   $scope.data.nature = [$scope.possible_nature[0]];
-
-  
-  // $scope.possible_language = ["python", "php", "r", "javascript", "java", "mathematica", "other"]
   
   $scope.possible_language = [
     {
