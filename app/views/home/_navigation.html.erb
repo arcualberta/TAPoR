@@ -40,6 +40,9 @@
 			<li ng-if="current_user.is_admin">
 				<a href='#' ng-click="go_to('/attributes')">Attributes</a>
 			</li>
+			<li ng-if="current_user.is_admin">
+				<a href='#' ng-click="go_to('/users')">Users</a>
+			</li>
 			<li ng-if="current_user !== null">
 				<a href='/sign_out'>Logout</a>
 			</li>

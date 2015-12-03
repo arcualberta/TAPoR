@@ -592,6 +592,7 @@ app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$
 			function(data) {
 				// remove items already on featured list
 				angular.forEach(data.tools, function(v, i){
+          v.thumb_url = v.image_url.replace(/\.png$/, "-thumb.png");
 					angular.forEach($scope.data.featured, function(tool, index){
 						if (data.tools[i].id == tool.id) {
 							data.tools.splice(i,1);

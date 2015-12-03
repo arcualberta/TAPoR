@@ -17,27 +17,31 @@
           <li class="column_sortable" ng-repeat="tool in tools_page.tools" as-sortable-item>
             <div as-sortable-item-handle>
             	
-            	<div class="row">
-            		<div class="col-sm-6">
-              		<img src="{{tool.thumb_url}}">
-              	</div>
-            		<div class="col-sm-6 break-content">
-            			<ul>
-            				<li>
-            					{{tool.name}}
-            				</li>
-            				<li>
-            					{{tool.star_average}}
-            				</li>
-            				<li ng-if="tool.creators_email">
-            					{{tool.creators_email}}
-            				</li>
-            				<li ng-if="tool.creators_url">
-                      <a href="{{tool.creators_url}}"> {{tool.creators_url}}</a>  
-            				</li>
-            			</ul>         
-              	</div>
-            	</div>
+              <div class="row">
+                <div class="col-sm-6 break-content">
+                  <img src="{{tool.thumb_url}}">
+                </div>
+                <div class="col-sm-6 break-content">
+                  <ul>
+                    <li>
+                      {{tool.name}}
+                    </li>
+                    <li>
+                    <div star-rating rating-value="tool.star_average" max="5" is-interactive="false"></div>
+                      
+                    </li>
+                    <li ng-if="tool.creators_email">
+                      {{tool.creators_email}}
+                    </li>
+                    <li ng-if="tool.creators_url">
+                      {{tool.creators_url}}
+                    </li>
+                    <li>
+                      <div ng-bind-html="tool.detail"></div>
+                    </li>
+                  </ul>         
+                </div>
+              </div>
 
 <!--             	<div class="row">
             		<div class="col-sm-12">
@@ -74,27 +78,31 @@
           <li class="column_sortable" ng-repeat="tool in data.featured" as-sortable-item>
             <div as-sortable-item-handle>
             	
-            	<div class="row">
-            		<div class="col-sm-6">
-              		<img src="{{tool.thumb_url}}">
-              	</div>
-            		<div class="col-sm-6">
-            			<ul>
-            				<li>
-            					{{tool.name}}
-            				</li>
-            				<li>
-            					{{tool.star_average}}
-            				</li>
-            				<li ng-if="tool.creators_email">
-            					{{tool.creators_email}}
-            				</li>
-            				<li ng-if="tool.creators_url">
-            					<a href="{{tool.creators_url}}"> {{tool.creators_url}}</a>
-            				</li>
-            			</ul>         
-              	</div>
-            	</div>
+              <div class="row">
+                <div class="col-sm-6 break-content">
+                  <img src="{{tool.thumb_url}}">
+                </div>
+                <div class="col-sm-6 break-content">
+                  <ul>
+                    <li>
+                      {{tool.name}}
+                    </li>
+                    <li>
+                    <div star-rating rating-value="tool.star_average" max="5" is-interactive="false"></div>
+                      
+                    </li>
+                    <li ng-if="tool.creators_email">
+                      {{tool.creators_email}}
+                    </li>
+                    <li ng-if="tool.creators_url">
+                      {{tool.creators_url}}
+                    </li>
+                    <li>
+                      <div ng-bind-html="tool.detail"></div>
+                    </li>
+                  </ul>         
+                </div>
+              </div>
 
 <!--             	<div class="row">
             		<div class="col-sm-12">
