@@ -66,8 +66,6 @@ app.directive("comment", ['$sce', function($sce) {
 
 			scope.toggle_editing = function() {
 				if (scope.is_editing) {
-					console.log("ttt")
-					console.log(scope.model.content);
 					scope.update(scope.model);
 					set_edit_button();
 
