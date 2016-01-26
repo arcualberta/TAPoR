@@ -217,11 +217,7 @@ class Api::ToolsController < ApplicationController
 
 					});
 
-					if params[:nature][0][:value] == 'code'
-						@tool.update(language: params[:language][0][:value])
-						@tool.update(code: params[:code])
-						@tool.update(repository: params[:repository])
-					end
+					save_code();
 					
 
 					if current_user.is_admin?
@@ -474,10 +470,15 @@ class Api::ToolsController < ApplicationController
 
 						# comment
 
-						process_update_comments
+						process_update_comments();
 
 						# attributes
 						save_attributes();
+
+						# code 
+
+						save_code();
+
 						# XXX update tool
 						# image
 
@@ -671,6 +672,14 @@ class Api::ToolsController < ApplicationController
 				end
 			else
 				@tool.tool_tags.where( user_id: current_user[:id]).destroy_all();
+			end
+		end
+
+		def save_code()
+			if params[:nature][0][:value] == 'code'
+				@tool.update(language: params[:language][0][:value])
+				@tool.update(code: params[:code])
+				@tool.update(repository: params[:repository])
 			end
 		end
 
