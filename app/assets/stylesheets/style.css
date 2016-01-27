@@ -288,3 +288,27 @@ body, html {
 .overflow-hidden {
 	overflow: hidden;
 }
+
+.taporml-code {
+	font-family: monospace;
+	white-space: pre;
+}
+
+.taporml-h1 {
+	font-size: 1.5em;
+	font-weight: bold;
+}
+
+.taporml-h2 {
+	font-size: 1.2em;
+	font-weight: bold;
+}
+
+.taporml-p {
+
+}
+
+.taporml-container {
+
+}
+

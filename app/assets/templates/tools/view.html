@@ -133,13 +133,15 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-md-12">
-									<div ui-ace="aceOption" ng-model="data.tool.code"></div>
+									<div ng-if="data.tool.language !== 'other'" ui-ace="aceOption" ng-model="data.tool.code"></div>
+									<div ng-if="data.tool.language === 'other'" ng-bind-html="data.tool.processedCode"></div>
 								</div>
 							</div>
 						</div>				
 					</div>
 				</div>
 			</div>
+
 
 			<!-- Tool appears on lists -->
 			<div class="row">

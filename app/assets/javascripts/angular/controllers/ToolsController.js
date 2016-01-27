@@ -3,7 +3,7 @@ app.controller('ToolsIndexController', ['$scope', 'services', function($scope, s
   services.helper.setup_tool_pagination_faceted_browsing($scope);
 }]);
 
-app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routeParams', '$anchorScroll', '$timeout', 'services', function($scope, $http, $location, $routeParams, $anchorScroll, $timeout, services) {
+app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routeParams', '$anchorScroll', '$timeout', '$sce', 'services', function($scope, $http, $location, $routeParams, $anchorScroll, $timeout, $sce, services) {
 	// alert($routeParams.toolId)
 	
 	$scope.named_id = $routeParams.named_id;
@@ -19,6 +19,51 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 		toolbar: "undo redo | bold italic | link",
 		valid_elements : "a[href|target=_blank],strong/b,em/i,div[align],br,p"
   };
+
+  var processTaporMLCode = function(tool) {
+
+    var xmlDoc = $.parseXML('<tapor>' + tool.code + '</tapor>')
+    var xml = $(xmlDoc);
+
+    var resultXmlDoc = $.parseXML('<div class="taporml-container"></div>');
+    var resultXml = $(resultXmlDoc) ;
+    var root = resultXml.find('.taporml-container');
+
+    // var getTagWithClass = function(cssClass, text) {
+    //   return "<div class='"+cssClass+"'>"+text+"</div>"
+    // }
+
+    xml.find("tapor").contents().each(function() {
+      // $(this).html($(this).innerText);
+      var tagName = $(this).prop("nodeName");
+      var innerText = $(this).text();
+      var toAppend = "";
+
+      switch (tagName) {
+        case 'h1':
+          toAppend = "<div class='taporml-h1'>"+innerText+"</div>";
+          break;
+        case 'h2':
+          toAppend = "<div class='taporml-h2'>"+innerText+"</div>";
+          break; 
+        case 'code':
+          toAppend = "<div class='well taporml-code'>"+innerText+"</div>";
+          break;
+        default:          
+          innerText = innerText.replace(/\n/g, "<br />");
+          toAppend = "<div class='taporml-p'>"+innerText+"</div>";
+          break;
+      }
+
+      if (toAppend !== "") {
+        root.append(toAppend);
+      }
+    
+    });
+
+    tool.processedCode = $sce.trustAsHtml(resultXml.find('div').html());
+
+  }
 
   services.tool.get_tool($scope.named_id).then(
   	function(data){
@@ -58,6 +103,8 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 					$scope.error = errorMesssage
 				}
 			);
+
+      processTaporMLCode($scope.data.tool);
 
 			$http.get('/api/tool_lists/related_by_tool/' + $scope.id + '?limit=4')
 			.success(function(data, status, headers, config) {

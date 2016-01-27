@@ -566,6 +566,8 @@ class Api::ToolsController < ApplicationController
 			params.require(:tool).permit(:name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code, :repository);
 		end
 
+		protected
+
 		def save_image(base_image)
 			name = @tool.id.to_s + ".png"
 			pathDirectory = (@tool.id / 500).to_i;
@@ -673,7 +675,7 @@ class Api::ToolsController < ApplicationController
 			else
 				@tool.tool_tags.where( user_id: current_user[:id]).destroy_all();
 			end
-		end
+		end		
 
 		def save_code()
 			if params[:nature][0][:value] == 'code'

@@ -23,4 +23,13 @@ class Tool < ActiveRecord::Base
 	enum language: [ :python, :php, :r, :javascript, :java, :mathematica, :other ]
 
 	accepts_nested_attributes_for :tool_ratings
+
+	# before_save :sanitize_other_code, if: :paid_with_card?
+	before_validation :sanitize_other_code #, if: self.nature == :code and self.language == :other
+
+
+	protected
+		def sanitize_other_code
+			self.code = ActionController::Base.helpers.sanitize(self.code, tags: ['h1', 'h2', 'code'])
+		end
 end
