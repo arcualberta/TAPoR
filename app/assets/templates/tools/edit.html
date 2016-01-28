@@ -65,12 +65,23 @@
       </div>
     </div>
     <!-- code -->
-    <div class="form-group" ng-if="data.nature[0].value == 'code';">
+    <div class="form-group" ng-if="data.nature[0].value === 'code';">
       <label for="inputCode" class="col-sm-2 control-label">Code</label>
       <div class="col-sm-6">
       <!-- XXX set ui-ace mode dinamycally -->
       <div ui-ace="aceOption" ng-model="data.code">
       </div>
+      
+      <div ng-if="data.language[0].value === 'other';">
+        This language option supports TAPoR-ML 
+        <a tabindex="0" role="button" href="#" id="taporml-info"><i class='fa fa-info-circle'></i></a>
+      </div>
+      
+
+
+
+
+      
 
       </div>
     </div>

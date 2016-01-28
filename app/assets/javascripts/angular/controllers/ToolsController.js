@@ -622,6 +622,30 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 		}
   }
 
+  $scope.$watchGroup(['data.nature[0].value','data.language[0].value'], function(newValues, oldValues, scope){
+    if (newValues[0] === "code" && newValues[1] === "other") {
+      console.log("set pop");
+      $('#taporml-info').popover({
+        html: true,
+        trigger: "focus",
+         container: 'body',
+        content:
+          "<div>TAPoR-ML follows a tagging format. Text inside the enabled tags will be formatted accordingly. the following elements are the available tags: </div><br />"+
+          "<dl>"+
+          "<dt>h1</dt>"+
+          "<dd>Header font</dd>"+
+          "<dt>h2</dt>"+
+          "<dd>Subheader font</dd>"+
+          "<dt>code</dt>"+
+          "<dd>White space will be respected and text will appear with monospaced font</dd>"+
+          "</dl>"+
+          "<div>Everything else will be treated as standard text.</div>"
+          ,     
+
+      });
+    }
+  });
+
 }]);
 
 
