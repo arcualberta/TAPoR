@@ -135,8 +135,9 @@ body, html {
 
 .tapor-tool-detail {
 	text-align: left;
-	height: 400px;
-	overflow: scroll;
+	height: 350px;
+	width: 200px;
+	overflow: hidden;
 }
 
 .tapor-block-content {
