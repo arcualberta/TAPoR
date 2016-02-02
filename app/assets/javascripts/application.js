@@ -13,6 +13,7 @@
 //= require jquery/dist/jquery
 //= require bootstrap/dist/js/bootstrap
 //= require ace-builds/src-min-noconflict/ace
+//= require ace-builds/src-min-noconflict/mode-html 
 //= require tinymce-dist/tinymce.min
 //= require angular/angular
 //= require angular-resource/angular-resource
@@ -35,4 +36,3 @@
 //= require_tree ./angular/services
 //= require_tree ./angular/directives
 //= require_tree ./angular/controllers
-

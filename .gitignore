@@ -21,3 +21,6 @@ config/database.yml
 /*.sublime-workspace
 db/xapian_db/*
 public/assets/*
+!public/assets/themes
+!public/assets/plugins
+!public/assets/skins
