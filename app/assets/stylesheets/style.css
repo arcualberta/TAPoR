@@ -13,10 +13,10 @@ body, html {
 	background: RGBA(38, 38, 38, 1);
 	border-top: thick solid RGBA(255, 255, 255, 1);
 	color: RGBA(255, 255, 255, 1);
-	height: 80px;
+	/*height: 80px;*/
 	vertical-align: center;
-	padding-left: 30px;
-	padding-right: 30px;
+	padding: 10px;
+	
 	/*font-family: 'Rokkitt', serif;*/
 }
 
