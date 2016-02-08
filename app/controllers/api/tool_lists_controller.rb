@@ -129,11 +129,9 @@ class Api::ToolListsController < ApplicationController
 					if is_editor
 						# save intrinsic info
 						@tool_list.update(safe_params)
-						# delete all items
-						# XXX check if this is needed
-						# ToolListItem.where(tool_list_id: @tool_list.id).destroy_all;
-						# save items
-						# save_tool_items();
+						# delete all items						
+						ToolListItem.where(tool_list_id: @tool_list.id).destroy_all;
+						save_tool_items();
 					end
 
 					format.json { render json: @tool_list, status: :accepted }
