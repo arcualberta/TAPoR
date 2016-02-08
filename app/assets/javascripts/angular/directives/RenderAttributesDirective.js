@@ -8,7 +8,7 @@ app.directive("renderAttributes", [function() {
 								"				{{type.name}}:"+
 								"			</label>" +
 								"				<span ng-repeat='att in type.selected'>" +
-								"				<a href='http://localhost:3000/tools?attribute_values={{att.id}}'>{{get_selected_name(att.id, type.attribute_values)}}</a>"+
+								"				<a href='/tools?attribute_values={{att.id}}'>{{get_selected_name(att.id, type.attribute_values)}}</a>"+
 								"				</span>" +
 								"		</li>" +								
 								"	</ul>" +
