@@ -46,7 +46,12 @@
 }]);
 
 app.controller("UsersViewController", ['$scope', '$location', '$routeParams','services', function($scope, $location, $routeParams, services){
-	$scope.is_editable = $routeParams.id == $scope.current_user.id;
+	$scope.is_editable = false;
+
+	if ($scope.current_user) {
+		$scope.is_editable = $routeParams.id == $scope.current_user.id;	
+	}
+	
 	// $scope.current_user = $scope.current_user;
 
 	services.user.get_user($routeParams.id).then(
