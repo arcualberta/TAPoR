@@ -2,6 +2,7 @@ require 'fileutils'
 require 'base64'
 require 'RMagick'
 require 'xapian'
+require 'htmlentities'
 
 include Magick
 
@@ -146,10 +147,11 @@ class Api::ToolsController < ApplicationController
 
 	def featured
 		featured_tools = FeaturedTool.order(index: :asc)
-
+		coder = HTMLEntities.new
 		tools = []
 		featured_tools.each do |featured|
 			if not featured.tool.is_hidden
+				featured.tool['detail'] = coder.decode(featured.tool['detail'])
 				tools.push(featured.tool)			
 			end
 		end
