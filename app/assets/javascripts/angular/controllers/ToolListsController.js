@@ -41,34 +41,42 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 
 	// draggable listeners
 
+	function addToolRemoveButtons() {
+		var template = '<button class="btn btn-danger" ng-click="removeItem($event)"><i class="glyphicon glyphicon-remove"></i></button>';
+		var comp = $compile(template)($scope);
+		var elements = $('.tapor-tool-list-element');
+		angular.element(elements).html(comp);	
+		
+	}
+
 	$scope.toolsListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
 		itemMoved: function(event){
-			$scope.data.tool_list_items[event.dest.index] = {
+			var index = event.dest.index;
+			$scope.data.tool_list_items[index] = {
 				notes : "",
 				tool : event.source.itemScope.tool
 			}
-			// $scope.on_page_change();
-			console.log('moved');
-			console.log(event.dest.index);
-			var index = event.dest.index;
-			console.log($scope.data.tool_list_items[index])
-
-			var template = '<button class="btn btn-danger" ng-click="removeItem(list_item)">Remove</button>';
-			var comp = $compile(template)($scope);
-			console.log(comp);
-			angular.element(document.getElementById('ttt')).append(comp);
+			addToolRemoveButtons();
 		},
 		orderChanged: function(event){}
 	}
+
 
 	$scope.listListener = {
 		accept: function(sourceItemHandleScope, destSortableScope) {return true},
 		itemMoved: function(event){						
-			$scope.tools_page.tools[event.dest.index] = event.source.itemScope.tool
+			// $scope.tools_page.tools[event.dest.index] = event.source.itemScope.tool;
 		},
-		orderChanged: function(event){}
+		orderChanged: function(event){
+			addToolRemoveButtons();
+		}
 	}
+
+	// $scope.$watch('data.tool_list_items.length', function() {
+	// 	console.log('here')
+	// 	addToolRemoveButtons();
+	// })
 
 	$scope.deleteToolList = function(id) {
 		$http.delete("/api/tool_lists/"+id)
@@ -107,11 +115,10 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 		})
 	}
 
-	$scope.removeItem = function(item) {
-		console.log('clicked');
-		// var index = $scope.data.indexOf(item);
-		// $scope.data.splice(index, 1);     
-		// console.log("removing " + index);
+	$scope.removeItem = function($event) {	
+		var id = angular.element($event.currentTarget).parent().attr('id');
+		var index = id.replace("tapor-tool-list-element-", "");
+		$scope.data.tool_list_items.splice(index, 1);
 	}
 	
 

@@ -72,7 +72,7 @@
         </div>
   			<div class="panel-body">
   			<ul class="draggable_place list-tool-area list-unstyled" as-sortable="toolsListener" ng-model="tools">
-          <li class="column_sortable available_sortable" ng-repeat="tool in tools_page.tools track by $index" as-sortable-item>
+          <li class="column_sortable available_sortable" ng-repeat="tool in tools_page.tools" as-sortable-item>
             <div as-sortable-item-handle>
             	
             	<div class="row">
@@ -145,7 +145,7 @@
         </div>
 
   			<div class="panel-body list-tool-area">
-  			<ul class="draggable_place list-tool-area list-unstyled" as-sortable="listListener" ng-model="data.tool_list_items">
+  			<ul id="tapor-edit-list" class="draggable_place list-tool-area list-unstyled" as-sortable="listListener" ng-model="data.tool_list_items">
           <li class="column_sortable using_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item>
             <div as-sortable-item-handle>
             
@@ -155,8 +155,10 @@
                 </div>
                 <div class="col-sm-6 break-content">
                   <ul>
-                    <li id ="ttt">
+                    <li >
                       {{list_item.tool.name}} 
+                    </li>
+                    <li id="tapor-tool-list-element-{{$index}}" class="tapor-tool-list-element"> 
                     </li>
                     <li>
                     <div star-rating rating-value="list_item.tool.star_average" max="5" is-interactive="false"></div>
