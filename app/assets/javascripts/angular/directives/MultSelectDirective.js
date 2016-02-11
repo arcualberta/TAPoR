@@ -29,7 +29,7 @@ app.directive("multselect", function() {
 				scope.values.unshift({
 					id: null,
 					name: '',
-					index: null,
+					index: -1,
 				});
 			}
 		}
