@@ -146,7 +146,7 @@
 
   			<div class="panel-body list-tool-area">
   			<ul id="tapor-edit-list" class="draggable_place list-tool-area list-unstyled" as-sortable="listListener" ng-model="data.tool_list_items">
-          <li class="column_sortable using_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item>
+          <li class="column_sortable using_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item template-loop-callback="addToolRemoveButtons()">
             <div as-sortable-item-handle>
             
               <div class="row">

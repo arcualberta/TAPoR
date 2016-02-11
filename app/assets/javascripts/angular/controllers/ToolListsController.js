@@ -41,12 +41,11 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 
 	// draggable listeners
 
-	function addToolRemoveButtons() {
+	$scope.addToolRemoveButtons = function() {
 		var template = '<button class="btn btn-danger" ng-click="removeItem($event)"><i class="glyphicon glyphicon-remove"></i></button>';
 		var comp = $compile(template)($scope);
 		var elements = $('.tapor-tool-list-element');
 		angular.element(elements).html(comp);	
-		
 	}
 
 	$scope.toolsListener = {
@@ -57,7 +56,6 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 				notes : "",
 				tool : event.source.itemScope.tool
 			}
-			addToolRemoveButtons();
 		},
 		orderChanged: function(event){}
 	}
@@ -69,14 +67,9 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 			// $scope.tools_page.tools[event.dest.index] = event.source.itemScope.tool;
 		},
 		orderChanged: function(event){
-			addToolRemoveButtons();
+			$scope.addToolRemoveButtons();
 		}
 	}
-
-	// $scope.$watch('data.tool_list_items.length', function() {
-	// 	console.log('here')
-	// 	addToolRemoveButtons();
-	// })
 
 	$scope.deleteToolList = function(id) {
 		$http.delete("/api/tool_lists/"+id)
