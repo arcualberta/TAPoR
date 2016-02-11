@@ -121,6 +121,7 @@ app.config(['$routeProvider', '$locationProvider',
       })
       .when('/tool_lists/edit/:id', {
         templateUrl: "<%= asset_path('tool_lists/edit.html') %>",
+        reloadOnSearch: false
       })
       .when('/tool_lists/:id', {
         templateUrl: "<%= asset_path('tool_lists/view.html') %>",

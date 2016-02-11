@@ -18,10 +18,8 @@ app.controller('TaporMainController',['$scope', '$http', '$location', function($
 	}
 
 	$scope.header_search = function() {
-		// console.log($scope.query)
-		// console.log($location.url())
+
 		var path = $location.path();
-		console.log(path)
 		if (path != '/tools') {
 			$location.url('/tools/?page=1&query=' + $scope.query);
 		} else {

@@ -18,7 +18,6 @@ app.factory('pageServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			var deferred = $q.defer();
 			$http.get('/api/pages/' + id)
 			.success(function(data){
-				console.log(id);
 				data.clean_content = $sce.trustAsHtml(data.content);
 				deferred.resolve(data)
 			})
