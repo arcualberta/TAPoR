@@ -22,7 +22,7 @@
 
 		$http.patch('/api/users/' + id, data)
 		.success(function(data, status, headers, config){
-			console.log("success");
+			// console.log("success");
 		});
 	};
 
@@ -32,7 +32,7 @@
 
 		$http.patch('/api/users/' + id, data)
 		.success(function(data, status, headers, config){
-			console.log("success");
+			// console.log("success");
 		});
 	};
 	

@@ -61,10 +61,10 @@ app.controller('AttributesIndexController', ['$scope', '$location', 'services', 
 		services.attribute_type.list().then(
 			function(data){
 				$scope.data = data;
-				console.log(data)
+				// console.log(data)
 			},
 			function(errorMessage) {
-				console.log(errorMessage)
+				// console.log(errorMessage)
 				$scope.error = errorMessage
 			}
 		)

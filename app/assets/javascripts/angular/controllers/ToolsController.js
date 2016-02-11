@@ -624,7 +624,6 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
   $scope.$watchGroup(['data.nature[0].value','data.language[0].value'], function(newValues, oldValues, scope){
     if (newValues[0] === "code" && newValues[1] === "other") {
-      console.log("set pop");
       $('#taporml-info').popover({
         html: true,
         trigger: "focus",

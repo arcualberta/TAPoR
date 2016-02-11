@@ -3,7 +3,6 @@ app.factory('commentServices', ['$http', '$q', '$sce', function($http, $q, $sce)
 		save : function(comment) {
 			var deferred = $q.defer();
 			var callUrl = "/api/comments";
-			console.log(comment);
 			$http.post(callUrl, comment).success(function(data){
 				deferred.resolve(data);
 			})
