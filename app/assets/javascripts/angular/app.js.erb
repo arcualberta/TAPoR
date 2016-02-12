@@ -81,6 +81,7 @@ app.config(['$routeProvider', '$locationProvider',
       })
       .when('/tools/featured', {
         templateUrl: "<%= asset_path('tools/featured.html') %>",
+        reloadOnSearch: false,
       })
       .when('/tools/:named_id', {
         templateUrl: "<%= asset_path('tools/view.html') %>",

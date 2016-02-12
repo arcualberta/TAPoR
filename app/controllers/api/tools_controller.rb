@@ -149,10 +149,12 @@ class Api::ToolsController < ApplicationController
 		featured_tools = FeaturedTool.order(index: :asc)
 		coder = HTMLEntities.new
 		tools = []
-		featured_tools.each do |featured|
-			if not featured.tool.is_hidden
-				featured.tool['detail'] = coder.decode(featured.tool['detail'])
-				tools.push(featured.tool)			
+		if featured_tools
+			featured_tools.each do |featured|
+				if not featured.tool.is_hidden
+					featured.tool['detail'] = coder.decode(featured.tool['detail'])
+					tools.push(featured.tool)			
+				end
 			end
 		end
 
@@ -167,9 +169,9 @@ class Api::ToolsController < ApplicationController
 			
 			if current_user.is_admin?
 				FeaturedTool.destroy_all()
-				params[:featured].each_with_index do |tool, index|
+				params[:tool_list_items].each_with_index do |item, index|
 					FeaturedTool.create({
-						tool_id: tool[:id],
+						tool_id: item[:tool][:id],
 						index: index
 					});
 				end

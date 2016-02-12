@@ -649,54 +649,54 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 
 
-app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$http', function($scope, $location, services, $http) {
+app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$http', '$sce', function($scope, $location, services, $http, $sce) {
 
-	$scope.current_page = 1;
-	$scope.tools_page = [];
+	// $scope.current_page = 1;
+	// $scope.tools_page = [];
 	$scope.data = {
-		featured : []
+		tool_list_items : []
 	}
 
-	var getPage = function() {
-		services.tool.list_page($scope.current_page).then(
-			function(data) {
-				// remove items already on featured list
-				angular.forEach(data.tools, function(v, i){
-          v.thumb_url = v.image_url.replace(/\.png$/, "-thumb.png");
-					angular.forEach($scope.data.featured, function(tool, index){
-						if (data.tools[i].id == tool.id) {
-							data.tools.splice(i,1);
-						}
-					})
-				});
+  $scope.toolsListener = {
+    accept: function(sourceItemHandleScope, destSortableScope) {return true},
+    itemMoved: function(event){
+      var index = event.dest.index;
+      $scope.data.tool_list_items[index] = {
+        notes : "",
+        tool : event.source.itemScope.tool
+      }
+    },
+    orderChanged: function(event){}
+  }
 
-				$scope.tools_page = data;
-			},
-			function(errorMessage) {
-				$scope.error = errorMessage;
-			}
-		);	
-	}
 
-	$scope.pageChanged = function() {
-		getPage();
-	}
+  $scope.listListener = {
+    accept: function(sourceItemHandleScope, destSortableScope) {return true},
+    itemMoved: function(event){           
+      // $scope.tools_page.tools[event.dest.index] = event.source.itemScope.tool;
+    },
+    orderChanged: function(event){
+      $scope.addToolRemoveButtons();
+    }
+  }
 
-	services.tool.get_featured_tools().then(
-		function(data){
-			$scope.data.featured = data;
-			getPage();
-		},
-		function(errorMessage){
-			$scope.error = errorMessage;
-		}
-	);
+  services.tool.get_featured_tools().then(
+   function(data){
+     $scope.data.tool_list_items = [];
+     angular.forEach(data, function(v, i){
+      v.detail = $sce.trustAsHtml(v.detail);
+      $scope.data.tool_list_items.push({
+        tool: v
+      });
+     });
 
-	$scope.toolsListener = {
-		accept: function(sourceItemHandleScope, destSortableScope) {return true},
-		itemMoved: function(event){},
-		orderChanged: function(event){}
-	}
+   },
+   function(errorMessage){
+     $scope.error = errorMessage;
+   }
+  );
+
+  services.helper.setup_tool_pagination_faceted_browsing($scope);
 
 	$scope.saveFeaturedTools = function() {
 		$http.post('/api/tools/featured', $scope.data)

@@ -38,7 +38,6 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 	services.helper.setup_tool_pagination_faceted_browsing($scope);
 
 
-
 	// draggable listeners
 
 	$scope.addToolRemoveButtons = function() {
