@@ -649,13 +649,27 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 
 
-app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$http', '$sce', function($scope, $location, services, $http, $sce) {
+app.controller('ToolsFeaturedController', ['$scope', '$location', 'services', '$http', '$sce', '$compile', function($scope, $location, services, $http, $sce, $compile) {
 
 	// $scope.current_page = 1;
 	// $scope.tools_page = [];
 	$scope.data = {
 		tool_list_items : []
 	}
+
+  $scope.addToolRemoveButtons = function() {
+    var template = '<button class="btn btn-danger" ng-click="removeItem($event)"><i class="glyphicon glyphicon-remove"></i></button>';
+    var comp = $compile(template)($scope);
+    var elements = $('.tapor-tool-list-element');
+    angular.element(elements).html(comp); 
+  }
+
+  $scope.removeItem = function($event) {  
+    var id = angular.element($event.currentTarget).parent().attr('id');
+    var index = id.replace("tapor-tool-list-element-", "");
+    $scope.data.tool_list_items.splice(index, 1);
+  }
+  
 
   $scope.toolsListener = {
     accept: function(sourceItemHandleScope, destSortableScope) {return true},
