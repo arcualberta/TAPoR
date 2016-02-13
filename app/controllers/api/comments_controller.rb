@@ -12,17 +12,13 @@ class Api::CommentsController < ApplicationController
 	end
 
 	def latest
-		@comments = Comment.last(5)
+		@comments = Comment.where(is_hidden: false).last(5)
 		respond_to do |format|			
 			format.json {render json: @comments, status: :ok}
 		end
 	end
 
-	def create
-		puts "SSSSSS"
-		puts params
-		puts safe_params
-		puts "SSSSSS"
+	def create		
 		respond_to do |format|
 			comment = Comment.new({
 				tool_id: params[:tool_id],
