@@ -178,14 +178,14 @@
 						<div class="panel-body">
 							<!-- pinned -->
 							<div ng-if="data.comments.system.pinned.length">
-								<h1 class="tapr-logo">Pinned</h1>
+								<!-- <h1 class="tapr-logo">Pinned</h1> -->
 								<div class="row" ng-repeat="comment in data.comments.system.pinned">
 									<div comment model='comment' user='current_user' update='update_comment'></div>
 								</div>
 							</div>
 							<!-- chronological -->
 							<div ng-if="data.comments.system.chronological.length">
-								<h1 class="tapr-logo">Chronological</h1>
+								<!-- <h1 class="tapr-logo">Chronological</h1> -->
 								<div class="row" ng-repeat="comment in data.comments.system.chronological">
 									<div comment model='comment' user='current_user' update='update_comment'></div>
 								</div>
