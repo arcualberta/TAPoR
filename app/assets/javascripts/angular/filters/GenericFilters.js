@@ -9,22 +9,23 @@ angular.module('genericFilters', [])
 			return String(input).substring(0, n);
 		}
 	})
+	.filter('maxWords', function() {
+		return function(input, n) {
+			var wordArray = input.split(" ");
+			var result = wordArray.slice(0, n).join(" ");
+			if (n < wordArray.length) {
+				result += " ..."
+			} 
+			return result;
+		}
+	})
+	.filter('cutEllipsis', function() {
+		return function(input, n) {
+			var result = input.substring(0, n);
+			if (input.length > n) {
+				result += '...';
+			}
 
-// var myAppModule = angular.module('taporApp', []);
-
-// configure the module.
-// in this example we will create a greeting filter
-// myAppModule.filter('htmlToPlaintext', function() {
-//  return function(name) {
-//     return String(text).replace(/<[^>]+>/gm, '');
-//   };
-// });
-
-
-// angular.module('taporApp.filters', []).
-//   filter('htmlToPlaintext', function() {
-//     return function(text) {
-//       return String(text).replace(/<[^>]+>/gm, '');
-//     };
-//   }
-// );
+			return result;
+		}
+	})
