@@ -24,3 +24,4 @@ public/assets/*
 !public/assets/themes
 !public/assets/plugins
 !public/assets/skins
+dump.rdb
