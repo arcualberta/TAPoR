@@ -23,12 +23,18 @@ class Api::ToolsController < ApplicationController
 		end
 
 		# XXX Check
-		# query += " is_hidden=false ";
+		
 
 		if params[:attribute_values] and params[:attribute_values].length > 0
 			params[:attribute_values].split(",").each do |value|				
 				query += ' attribute_value_ids:-' + value + '-'
 			end
+		end
+
+
+		if not current_user.is_admin?
+			query += " is_hidden:false ";
+			query += " is_approved:true ";
 		end
 
 		if params[:tag_values] and params[:tag_values].length > 0
@@ -53,7 +59,7 @@ class Api::ToolsController < ApplicationController
 			descending = true
 		end
 
-		docs = Tool.search query, page: params[:page], per_page: per_page, order: order, sort_decending: descending
+		docs = Tool.search query , page: params[:page], per_page: per_page, order: order, sort_decending: descending
 
 		tools = []
 		docs.each do |doc|
@@ -151,7 +157,7 @@ class Api::ToolsController < ApplicationController
 		tools = []
 		if featured_tools
 			featured_tools.each do |featured|
-				if not featured.tool.is_hidden
+				if not featured.tool.is_hidden and featured.tool.is_approved
 					featured.tool['detail'] = coder.decode(featured.tool['detail'])
 					tools.push(featured.tool)			
 				end
@@ -435,7 +441,7 @@ class Api::ToolsController < ApplicationController
 	def latest
 		respond_to do |format|
 			response = [];
-			@tools = Tool.where(is_hidden: false).limit(4).reverse_order
+			@tools = Tool.where(is_approved: true).where(is_hidden: false).limit(4).reverse_order
 			@tools.each do |tool|
 				response.push(tool);
 			end
