@@ -312,3 +312,8 @@ body, html {
 .taporml-container {
 
 }
+
+.pagination-label{
+	margin-top: 6px;
+	margin-left: 10px;
+}

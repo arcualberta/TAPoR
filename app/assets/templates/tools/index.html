@@ -41,7 +41,8 @@
 	<!-- pagination -->
 	<div class="row pagination-row">
 		<div class="col-md-6">
-			<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> of {{tools_page.meta.count}}
+			<pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> 
+				<label class="pagination-label"> of {{tools_page.meta.count}}</label>
 		</div>
 <!-- glyphicon-arrow-down -->
 		<div class="col-md-6">
