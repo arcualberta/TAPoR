@@ -13,6 +13,12 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 
 			$scope.order_by = "name";
 			$scope.sort_asc = true;
+			$scope.nature = "";
+			$scope.nature_values = [
+				{value: 'tool', text: 'Tool'},
+				{value: 'code', text: 'Code'}
+			];
+			
 
 			var getPage = function() {
 
@@ -21,6 +27,7 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 				query = search['query'];
 				var order = search['order'];
 				var sort = search['sort'];
+				var nature = search['nature'];
 
 				// $scope.order_by = order;
 				// $scope.sort_asc = sort;
@@ -72,7 +79,7 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 
 				$scope.query = query;
 
-				toolServices.list_page(page, attribute_values, tag_values, query, order, sort).then(
+				toolServices.list_page(page, attribute_values, tag_values, query, order, sort, nature).then(
 					function(data) {
 						$scope.tools_page = data;
 						angular.forEach($scope.tools_page.tools, function(v, i){
@@ -123,6 +130,18 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 				} else {
 					search['tag_values'] = ""
 				}
+				$location.search(search);
+			};
+
+			$scope.updateNatureFilter = function() {
+				var search = $location.search();
+				// XXX Test code
+				if ($scope.nature) {
+					search['nature'] = $scope.nature.value;	
+				} else {
+					search['nature'] = '';
+				}
+				
 				$location.search(search);
 			};
 

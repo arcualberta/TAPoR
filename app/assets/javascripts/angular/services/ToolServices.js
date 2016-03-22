@@ -20,7 +20,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 
 	return {		
 
-		list_page : function(page, attribute_values, tag_values, query, order, sort) {
+		list_page : function(page, attribute_values, tag_values, query, order, sort, nature) {
 
 			if (angular.isUndefined(page)){
 				page = 1;
@@ -49,7 +49,8 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
     				tag_values: tag_values,
     				query: query,
     				order: order,
-    				sort: sort
+    				sort: sort,
+    				nature: nature
     			}
  				})
 				.success(function(data){

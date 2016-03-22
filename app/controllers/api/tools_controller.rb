@@ -31,6 +31,13 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
+		if params[:nature]
+			if params[:nature] == 'tool'
+				query += " nature:'tool' "
+			elsif params[:nature] == 'code'
+				query += " nature:'code' "
+			end
+		end
 
 		if not current_user.is_admin?
 			query += " is_hidden:false ";
