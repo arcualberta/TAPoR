@@ -135,8 +135,8 @@ body, html {
 
 .tapor-tool-detail {
 	text-align: left;
-	height: 350px;
-	width: 200px;
+	/*height: 350px;*/
+	/*width: 200px;*/
 	overflow: hidden;
 }
 
@@ -161,6 +161,11 @@ body, html {
 
 .tapor-rightaligned-list li{
 	padding-right: .6em;
+}
+
+.carousel-rating {
+	/*position: absolute;*/
+	/*bottom: 5%;*/
 }
 
 .carousel-control.right {
@@ -317,3 +322,4 @@ body, html {
 	margin-top: 6px;
 	margin-left: 10px;
 }
+
