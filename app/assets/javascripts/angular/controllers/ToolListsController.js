@@ -105,6 +105,8 @@ app.controller('ListsEditController', ['$scope', '$http', '$location', '$routePa
 		.success(function(data, status, headers, config){
 			$scope.data = data;
 		})
+	} else {
+		$scope.data.is_public = true;
 	}
 
 	$scope.removeItem = function($event) {	

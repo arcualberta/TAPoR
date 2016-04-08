@@ -6,7 +6,7 @@ class ToolListSerializer < ActiveModel::Serializer
   def detail
     result = ""
     
-    if object.detail != nil
+    if not object.detail.nil?
       result = object.detail
     end
 

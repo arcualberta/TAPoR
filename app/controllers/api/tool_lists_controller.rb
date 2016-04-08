@@ -57,7 +57,7 @@ class Api::ToolListsController < ApplicationController
 
 	def latest
 		respond_to do |format|
-			format.json { render json: ToolList.where(is_hidden: false).limit(10).reverse_order, status: :ok}			
+			format.json { render json: ToolList.where(is_public: true, is_hidden: false).limit(10).reverse_order, status: :ok}			
 		end
 	end
 
