@@ -3,6 +3,17 @@ class ToolListSerializer < ActiveModel::Serializer
   has_many :tool_list_items
   has_many :tool_list_user_roles
 
+  def detail
+    result = ""
+    
+    if object.detail != nil
+      result = object.detail
+    end
+
+    return result
+
+  end
+
   def tool_list_items
   	result = []
 
