@@ -104,6 +104,15 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 				}
 			);
 
+      services.tool.get_also($scope.id).then(
+        function(data){
+          $scope.data.also = data;
+        },
+        function(errorMesssage){
+          $scope.error = errorMesssage
+        }
+      );
+
       processTaporMLCode($scope.data.tool);
 
 			$http.get('/api/tool_lists/related_by_tool/' + $scope.id + '?limit=4')
@@ -235,12 +244,10 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 
 
 	$scope.updateToolView = function() {
-  	$http.post('/api/tools/view/' + $scope.id)
-  	.success(function(data, status, headers, config){
-  		
+  	$http.post('/api/tools/' + $scope.id + '/view')
+  	.success(function(data, status, headers, config){  		
   	})
-
-  }
+  };
 
 
 
