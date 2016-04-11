@@ -58,11 +58,10 @@ class Api::AttributeTypesController < ApplicationController
 							is_required: safe_params[:is_required]
 						});
 
-						# find missing
+						new_values = params[:attribute_values]
+						old_values = AttributeValue.where attribute_type_id: @attribute_type[:id]
 
-						# add not in list
-
-						# find if indexes moved
+						update_attribute_values(old_values, new_values)
 
 						format.json { render json: @attribute_type, status: :ok }
 					rescue ActiveRecord::RecordInvalid
@@ -86,4 +85,34 @@ class Api::AttributeTypesController < ApplicationController
 		def set_attribute_type
 			@attribute_type = AttributeType.find(params[:id])
 		end
+
+		def update_attribute_values(old_values, new_values)
+
+			for new_value in new_values
+				if not new_value.has_key?(:id)
+					# new
+					AttributeValue.create({
+						name: new_value[:name],
+						attribute_type_id: @attribute_type[:id]
+					})
+				else
+					found_match = false
+					for old_value in old_values
+						if old_value[:id]	== new_value[:id]
+							found_match = true
+							if old_value[:name] != new_value[:name]
+								old_value[:name] = new_value[:name]
+								old_value.save
+							end
+						end
+					end
+					if not found_match
+						# remove
+						old_value.delete()
+					end
+				end
+			end
+
+		end
+
 end
