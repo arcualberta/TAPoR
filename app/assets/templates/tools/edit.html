@@ -212,27 +212,61 @@
 
 
     <!-- suggested tools -->
-
-      <div ng-if="is_editing">
+      <div nf-if="current_user.is_admin">
 
       <div class="form-group">
         <label for="inputCreatorsURL" class="col-sm-2 control-label">Suggested tools</label>
 
-        <!-- All tools -->
-       <div class="col-sm-3">
+
+        <div class="col-md-6">
           <div class="panel panel-default">
             <div class="panel-heading">
               Tools
             </div>
             <div class="panel-body">
-              <ul class="draggable_place" as-sortable="toolDragListeners" ng-model="tools">
+
+            <div>
+            <form>
+  
+              <div class="form-group row">
+                <label for="inputPassword" class="col-sm-2 form-control-label">Search</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputQuery" placeholder="Query" ng-model="data.tool_query">
+                </div>
+              </div>
+              </form>
+            </div>
+
+              <div class="select-suggested-viewport">
+
+                <div class="row" ng-repeat="tool in data.query_tools">                  
+                  <div class="col-md-12">
+                    <input type="checkbox" name="suggested-{{tool.id}}" value="suggested-{{tool.id}}" id="input-suggested-{{tool.id}}" ng-model="tool.is_suggested" ng-click="set_suggested_tool(tool)">
+                    {{tool.name}}
+                  </div>                  
+                </div>
+              </div>
+
+            </div>
+          </div>            
+        </div>
+      </div>
+      </div>
+    
+<!--        <div class="col-sm-3">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Tools
+            </div>
+            <div class="panel-body">
+              <ul class="draggable_place" as-sortable="toolDragListeners" ng-model="data.query_tools">
                 <li class="column_sortable" ng-repeat="tool in tools" as-sortable-item>
                   <div as-sortable-item-handle>
 
                   <div>
                     
                     <img width="100" src="{{tool.image_url}}">
-                    
+                    {{tool}}
                   </div>
 
               
@@ -243,7 +277,7 @@
             </div>
         </div>
       
-      <!-- Suggested -->
+      
       <div class="col-sm-3">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -266,7 +300,7 @@
       </div>
     
       </div>
-    </div>
+    </div> -->
 
     <!-- attributes -->
 

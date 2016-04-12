@@ -14,7 +14,7 @@ class Api::ToolsController < ApplicationController
 
 	def index
 		params[:page] ||= 1;
-		per_page = 10;
+		params[:per_page] ||= 10;
 		
 		if not params[:query] or params[:query] == ""
 			query = "*"
@@ -66,7 +66,7 @@ class Api::ToolsController < ApplicationController
 			descending = true
 		end
 
-		docs = Tool.search query , page: params[:page], per_page: per_page, order: order, sort_decending: descending
+		docs = Tool.search query , page: params[:page], per_page: params[:per_page], order: order, sort_decending: descending
 
 		tools = []
 		docs.each do |doc|
@@ -107,12 +107,14 @@ class Api::ToolsController < ApplicationController
 	
 	def update_suggested
 		respond_to do |format|
-			@tool.suggested_tools.destroy_all
-			if params[:suggested]
-				params[:suggested].each do |suggested|
-					@tool.suggested_tools.create({
-						suggested_tool_id: suggested[:id]
-					});
+			if current_user and current_user.is_admin?
+				@tool.suggested_tools.destroy_all
+				if params[:suggested]
+					params[:suggested].each do |suggested|
+						@tool.suggested_tools.create({
+							suggested_tool_id: suggested[:id]
+						});
+					end
 				end
 			end
 			format.json {render json: {status: "OK"}, status: :ok }
@@ -122,13 +124,11 @@ class Api::ToolsController < ApplicationController
 	def suggested
 		respond_to do |format|
 			result = []
+
 			@tool.suggested_tools.each do |suggested|
-				tool = Tool.find(suggested[:suggested_tool_id]);
-				if not tool.is_hidden
-					result.push();
-					if result.length == 5
-						break;
-					end
+				found = Tool.find suggested[:suggested_tool_id]
+				if not found.is_hidden
+					result.push(found)
 				end
 			end
 

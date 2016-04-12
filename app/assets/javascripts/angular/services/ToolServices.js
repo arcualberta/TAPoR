@@ -20,7 +20,7 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 
 	return {		
 
-		list_page : function(page, attribute_values, tag_values, query, order, sort, nature) {
+		list_page : function(page, attribute_values, tag_values, query, order, sort, nature, per_page) {
 
 			if (angular.isUndefined(page)){
 				page = 1;
@@ -38,6 +38,10 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 				query = '';
 			}
 
+			if (angular.isUndefined(per_page)) {
+				per_page = 10;
+			}
+
 			var deferred = $q.defer();
 
 				$http({
@@ -50,7 +54,8 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
     				query: query,
     				order: order,
     				sort: sort,
-    				nature: nature
+    				nature: nature,
+    				per_page: per_page
     			}
  				})
 				.success(function(data){
@@ -287,7 +292,19 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			deferred.resolve(data);
 		})
 		.error(function(){
-			deferred.reject("Error getting tools by analysis")
+			deferred.reject("Error getting also used by")
+		});
+		return deferred.promise;
+	},
+
+	get_suggested : function(id) {
+		var deferred = $q.defer();
+		$http.get('/api/tools/' + id + '/suggested')
+		.success(function(data){
+			deferred.resolve(data);
+		})
+		.error(function(){
+			deferred.reject("Error getting suggested tools")
 		});
 		return deferred.promise;
 	}

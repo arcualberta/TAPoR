@@ -323,3 +323,7 @@ body, html {
 	margin-left: 10px;
 }
 
+.select-suggested-viewport {
+	overflow-x: hidden;
+	height: 200px;
+}

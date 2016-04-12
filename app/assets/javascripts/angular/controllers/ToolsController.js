@@ -253,7 +253,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 
 }]);
 
-app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routeParams', '$sce', 'services', function($scope, $http, $location, $routeParams, $sce, services) {
+app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routeParams', '$sce', '$timeout', 'services', function($scope, $http, $location, $routeParams, $sce, $timeout, services) {
   
   $scope.id = $routeParams.id;
 	$scope.data = {};
@@ -417,17 +417,17 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   }
 
 
-  $scope.suggestedDragListeners = {
-   	accept: function (sourceItemHandleScope, destSortableScope) {return true},
-   	itemMoved: function (event) {},
-  	orderChanged: function (event) {}
-  }
+  // $scope.suggestedDragListeners = {
+  //  	accept: function (sourceItemHandleScope, destSortableScope) {return true},
+  //  	itemMoved: function (event) {},
+  // 	orderChanged: function (event) {}
+  // }
 
-  $scope.toolDragListeners = {
-  	accept: function (sourceItemHandleScope, destSortableScope) {return true},
-  	itemMoved: function (event) {},
-  	orderChanged: function (event) {}
-  }
+  // $scope.toolDragListeners = {
+  // 	accept: function (sourceItemHandleScope, destSortableScope) {return true},
+  // 	itemMoved: function (event) {},
+  // 	orderChanged: function (event) {}
+  // }
 
 	var tag_load = function(query, callback) {
   	if (query != "") {
@@ -438,6 +438,53 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 	  	})	
   	}
   	
+  }
+
+  var update_query_promise;
+  $scope.data.tool_query = "";
+
+  
+  var update_query_list = function() {
+    // toolServices.list_page(page, attribute_values, tag_values, query, order, sort, nature).then(
+    services.tool.list_page(1, [], [], $scope.data.tool_query, "asc", "name", "", 1000).then(
+    // services.tool.list().then(
+      function(data){
+        $scope.data.query_tools = data['tools'];
+        angular.forEach($scope.data.query_tools, function(query_tool){
+          angular.forEach($scope.data.suggested_tools, function(suggested_tool){
+            if (suggested_tool.id == query_tool.id) {
+              query_tool.is_suggested = true;
+            }
+          })
+
+        });
+      }
+    );
+  }
+
+  $scope.$watch("data.tool_query", function(newValue){
+    $timeout.cancel(update_query_promise); 
+    update_query_promise = $timeout(function(){
+      update_query_list();
+    }, 500);
+  });
+
+  $scope.set_suggested_tool = function(tool) {  
+    
+    var found_index = -1;
+    angular.forEach($scope.data.suggested_tools, function(value, i){
+      if (value.id == tool.id) {
+        found_index = i;
+        return;
+      }
+    });
+
+    if (tool.is_suggested && found_index === -1) {
+      $scope.data.suggested_tools.push(tool);
+    } else if (! tool.is_suggested && found_index !== -1) {
+      $scope.data.suggested_tools.splice(found_index, 1);
+    }
+
   }
 
 	$scope.tag_options = [];
@@ -462,6 +509,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   }
 
   $scope.data.suggested_tools = [];
+  $scope.data.query_tools = [];
 
   // get attribute types
 
@@ -504,11 +552,22 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
 			// get suggested tools
 				
-				$http.get('/api/tools/' + $scope.id + '/suggested')
-				.success(function(data, status, headers, config){
-					$scope.data.suggested_tools = data;
-				});
+				// $http.get('/api/tools/' + $scope.id + '/suggested')
+				// .success(function(data, status, headers, config){
+				// 	$scope.data.suggested_tools = data;
+				// });
 
+
+      services.tool.get_suggested($scope.id)
+      .then(function(data){
+        $scope.data.suggested_tools = data;
+        console.log($scope.data.suggested_tools)
+      })
+      .then(function(){
+        update_query_list();        
+      })
+
+       
 					// get comments
 					
 
