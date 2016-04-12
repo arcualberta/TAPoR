@@ -253,16 +253,18 @@
 						</div>
 						<div class="panel-body">
 							<div class="row" ng-repeat="tool in data.suggested_tools">
-								<div class="media">
-									<div class="media-right">
-										<a href="/tools/{{tool.id}}">
-											<img class="media-object" src="{{tool.thumb_url}}">
-										</a>
-									</div>
-									<div class="media-body">
-									<h5 class="media-heading">{{tool.name}}</h5>
-									</div>
-								</div>
+							
+							<div class="col-md-12">
+							<div>
+							<a href="/tools/{{tool.id}}">
+								<img class="img-responsive" src="{{tool.thumb_url}}">
+							</a>
+							</div>
+							<div>
+							<h5 class="">{{tool.name}}</h5>
+							</div>
+							</div>
+							
 							</div>
 						</div>
 					</div>
@@ -278,16 +280,18 @@
 						</div>
 						<div class="panel-body">
 							<div class="row" ng-repeat="tool in data.also">
-								<div class="media">
-									<div class="media-right">
-										<a href="/tools/{{tool.id}}">
-											<img class="media-object" src="{{tool.thumb_url}}">
-										</a>
-									</div>
-									<div class="media-body">
-									<h5 class="media-heading">{{tool.name}}</h5>
-									</div>
-								</div>
+								
+								<div class="col-md-12">
+							<div>
+							<a href="/tools/{{tool.id}}">
+								<img class="img-responsive" src="{{tool.thumb_url}}">
+							</a>
+							</div>
+							<div>
+							<h5 class="">{{tool.name}}</h5>
+							</div>
+							</div>
+
 							</div>
 						</div>
 					</div>

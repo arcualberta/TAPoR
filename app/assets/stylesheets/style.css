@@ -5,6 +5,7 @@ body, html {
 }
 
 
+
 #tapor-navigation {
 	background: RGBA(77, 77, 77, 1);
 }
@@ -39,9 +40,15 @@ body, html {
 .tapor-blue hr {
     border: 0; 
     border-top: 5px solid RGBA(89, 189, 230, 1);	
-    margin-top: 0px
-  
+    margin-top: 0px;
+}
 
+.tapor-home {
+	padding: 0px !important;
+}
+
+.tapor-container {
+	padding-top: 15px;
 }
 
 #tapor-tagline {
