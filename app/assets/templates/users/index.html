@@ -33,11 +33,14 @@
 				</th>
 			</tr>
 			<tr ng-repeat="user in users_page.users track by $index">
-				<td>
+
+				<td>				
 					<img src="{{user.image_url}}" class="img-circle user-image-url">
 				</td>
 				<td>
-					{{user.name}}
+					<a href="/users/{{user.id}}">
+						{{user.name}}
+					</a>
 				</td>
 				<td>
 					{{user.email}}
