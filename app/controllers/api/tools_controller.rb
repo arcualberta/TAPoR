@@ -422,6 +422,7 @@ class Api::ToolsController < ApplicationController
 			.select("tool_id, name, tool_attributes.id, GROUP_CONCAT(tool_attributes.attribute_value_id) AS attribute_value_ids")
   		.joins(:tool_attributes)
   		.where("tool_attributes.attribute_type_id = ?", attribute_type.id)
+  		.where("is_hidden = false AND is_approved = true")
   		.group("tool_id")
 
 
