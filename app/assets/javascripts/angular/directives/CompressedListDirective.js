@@ -14,7 +14,7 @@ app.directive("compressedList", function() {
 								'										<p><h6>Curated by {{list.user.name}}</h6></p>'+
 								'									</div>'+
 								'								</div>'+
-								'								<p>{{list.detail}}</p>'+
+								'								<p><span class="break-content">{{list.detail | htmlToPlaintext | limitTo: 100}} <a href="/tools/{{list.id}}">[...]</a></span></p>'+
 								'								<p>Viewing {{list.tool_list_items.length}} of {{list.total_items}}</p>'+
 								'							</div>'+
 								'							<div class=\"col-md-3\" ng-repeat=\"item in list.tool_list_items\">'+
@@ -22,14 +22,6 @@ app.directive("compressedList", function() {
 								'									<a href=\"/tools/{{item.tool.id}}\"> <img src=\"{{item.tool.thumb_url}}\" width=\"160px\"></a>'+
 								'									<p><h6>{{item.tool.name}}</h6></p>'+
 								'								</div>'+
-								// '								<div class=\"panel panel-default\">'+
-								// '									<div class=\"panel-heading\">'+
-								// '										<h3 class=\"panel-title\">{{item.tool.name}}</h3>'+
-								// '									</div>'+
-								// '								  <div class=\"panel-body\">'+
-								// '										<a href=\"/tools/{{item.tool.id}}\"> <img src=\"{{item.tool.thumb_url}}\" width=\"145px\"></a>'+
-								// '									</div>'+
-								// '								</div>'+
 								'							</div>'+
 								'						</div>'+
 								'					</div>'+
@@ -37,6 +29,12 @@ app.directive("compressedList", function() {
 								,
 		scope : {
 			list : '='
+		},
+		link : function(scope, elem, attrs) {
+			scope.list.total_items = scope.list.tool_list_items.length;
+			if (scope.list.tool_list_items.length > 3) {
+				scope.list.tool_list_items.length = 3;
+			}
 		}
 	};
 });
