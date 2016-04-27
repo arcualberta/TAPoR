@@ -39,7 +39,7 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
-		if not current_user.is_admin?
+		if not current_user && current_user.is_admin?
 			query += " is_hidden:false ";
 			query += " is_approved:true ";
 		end
