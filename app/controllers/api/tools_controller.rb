@@ -33,9 +33,9 @@ class Api::ToolsController < ApplicationController
 
 		if params[:nature]
 			if params[:nature] == 'tool'
-				query += " nature:'tool' "
+				query += " nature:tool "
 			elsif params[:nature] == 'code'
-				query += " nature:'code' "
+				query += " nature:code "
 			end
 		end
 

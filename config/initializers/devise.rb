@@ -233,7 +233,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], client_options: {ssl: {ca_file: '/usr/local/etc/openssl/cert.pem'}}
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], skip_jwt: true, client_options: {ssl: {ca_file: '/usr/local/etc/openssl/cert.pem'}}
   config.omniauth :twitter, ENV["TWITTER_CLIENT_ID"], ENV["TWITTER_CLIENT_SECRET"], { }
   config.omniauth :yahoo, ENV["YAHOO_CLIENT_ID"], ENV["YAHOO_CLIENT_SECRET"], { }
   # ==> Warden configuration
