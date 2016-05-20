@@ -20,6 +20,9 @@ class Api::ToolsController < ApplicationController
 			query = "*"
 		else 
 			query = params[:query]
+			if query[-1, 1] != " "
+				query += "*"
+			end
 		end
 
 		# XXX Check
@@ -61,12 +64,12 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
-		descending  = false		
+		decending = false		
 		if params[:sort] and params[:sort] == "desc"
-			descending = true
+			decending = true
 		end
 
-		docs = Tool.search query , page: params[:page], per_page: params[:per_page], order: order, sort_decending: descending
+		docs = Tool.search query , page: params[:page], per_page: params[:per_page], order: order, sort_decending: decending
 
 		tools = []
 		docs.each do |doc|

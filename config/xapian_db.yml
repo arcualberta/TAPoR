@@ -3,6 +3,7 @@ defaults: &defaults
   adapter:  active_record
   language: en
   writer:   direct
+  enable_query_flags: FLAG_WILDCARD, FLAG_BOOLEAN, FLAG_BOOLEAN_ANY_CASE, FLAG_SPELLING_CORRECTION, FLAG_PARTIAL
 
 development:
   database: db/xapian_db/development
@@ -11,7 +12,6 @@ development:
 test:
   database: ":memory:"
   <<: *defaults
-
 
 production:
   database:     db/xapian_db/production
