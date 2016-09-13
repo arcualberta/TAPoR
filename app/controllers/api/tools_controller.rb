@@ -20,6 +20,9 @@ class Api::ToolsController < ApplicationController
 			query = "*"
 		else 
 			query = params[:query]
+			if query[-1, 1] != " "
+				query += "*"
+			end
 		end
 
 		# XXX Check
@@ -33,9 +36,9 @@ class Api::ToolsController < ApplicationController
 
 		if params[:nature]
 			if params[:nature] == 'tool'
-				query += " nature:'tool' "
+				query += " nature:tool "
 			elsif params[:nature] == 'code'
-				query += " nature:'code' "
+				query += " nature:code "
 			end
 		end
 
@@ -50,9 +53,11 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
-		order = [:name]
+		order = []
 		if params[:order]
-			if params[:order] == "rating"
+			if params[:order] == "name"
+				order[0] = :name
+			elsif params[:order] == "rating"
 				order[0] = :star_average
 			elsif params[:order] == "date"
 				order[0] = :created_at
@@ -61,12 +66,12 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 
-		descending  = false		
+		decending = false		
 		if params[:sort] and params[:sort] == "desc"
-			descending = true
+			decending = true
 		end
 
-		docs = Tool.search query , page: params[:page], per_page: params[:per_page], order: order, sort_decending: descending
+		docs = Tool.search query , page: params[:page], per_page: params[:per_page], order: order, sort_decending: decending
 
 		tools = []
 		docs.each do |doc|
@@ -727,3 +732,4 @@ class Api::ToolsController < ApplicationController
 			end
 		end
 end
+
