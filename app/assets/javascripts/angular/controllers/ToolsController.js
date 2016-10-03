@@ -68,7 +68,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   services.tool.get_tool($scope.named_id).then(
   	function(data){
   		$scope.data.tool = data;
-
+      $scope.data.tool.languageName = services.tool.get_code_name_by_value($scope.data.tool.language);
       $scope.aceOption = {
         mode: $scope.data.tool.language,
         useWrapMode : true
@@ -279,58 +279,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   ];
   $scope.data.nature = [$scope.possible_nature[0]];
   
-  $scope.possible_language = [
-    {      
-      id: 0, 
-      name: "Other", 
-      mode: "plain_text", 
-      value: "other" 
-    },
-  	{
-  		id: 1,
-  		name: "Python",
-  		mode: "python",
-  		value: "python"
-  	},
-  	{
-  		id: 2,
-  		name: "PHP",
-  		mode: "php",
-  		value: "php"
-  	},
-  	{
-  		id: 3,
-  		name: "R",
-  		mode: "r",
-  		value: "r"
-  	},
-  	{
-  		id: 4,
-  		name: "Javascript",
-  		mode: "javascript",
-  		value: "javascript"
-  	},
-  	{
-  		id: 5,
-  		name: "Java",
-  		mode: "java",
-  		value: "java"
-  	},
-  	{
-  		id: 6,
-  		name: "Mathematica",
-  		mode: "plain_text",
-  		value: "mathematica"
-  	},
-  	{
-  		id: 7,
-  		name: "HTML",
-  		mode: "html",
-  		value: "html"
-  	},
-
-  ]
-
+  $scope.possible_language = services.tool.get_code_languages();
 
   $scope.data.language = [$scope.possible_language[0]];
   

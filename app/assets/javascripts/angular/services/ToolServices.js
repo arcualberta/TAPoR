@@ -18,6 +18,65 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 		return deferred.promise;
 	}
 
+	var code_languages = [
+    {      
+      id: 0, 
+      name: "Other", 
+      mode: "plain_text", 
+      value: "other" 
+    },
+  	{
+  		id: 1,
+  		name: "Python",
+  		mode: "python",
+  		value: "python"
+  	},
+  	{
+  		id: 2,
+  		name: "PHP",
+  		mode: "php",
+  		value: "php"
+  	},
+  	{
+  		id: 3,
+  		name: "R",
+  		mode: "r",
+  		value: "r"
+  	},
+  	{
+  		id: 4,
+  		name: "Javascript",
+  		mode: "javascript",
+  		value: "javascript"
+  	},
+  	{
+  		id: 5,
+  		name: "Java",
+  		mode: "java",
+  		value: "java"
+  	},
+  	{
+  		id: 6,
+  		name: "Mathematica",
+  		mode: "plain_text",
+  		value: "mathematica"
+  	},
+  	{
+  		id: 7,
+  		name: "HTML",
+  		mode: "html",
+  		value: "html"
+  	},
+
+  ];
+
+  var reverse_language_name = {};
+
+  angular.forEach(code_languages, function(language){
+  	reverse_language_name[language.value] = language.name;
+  });
+
+
 	return {		
 
 		list_page : function(page, attribute_values, tag_values, query, order, sort, nature, per_page) {
@@ -307,6 +366,14 @@ app.factory('toolServices', ['$http', '$q', '$sce', function($http, $q, $sce){
 			deferred.reject("Error getting suggested tools")
 		});
 		return deferred.promise;
+	},
+
+	get_code_languages : function() {
+		return code_languages;
+	},
+
+	get_code_name_by_value : function(value) {
+		return reverse_language_name[value];
 	}
 
 	}
