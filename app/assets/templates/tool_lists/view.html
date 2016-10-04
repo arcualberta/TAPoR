@@ -25,15 +25,20 @@
 			  		<div class="col-md-12">
 			  		<div class="media">	  					
 			  			<div class="media-left">
+
+			  				<a href="/tools/{{item.tool.id}}">
 								<img src='{{item.tool.thumb_url}}'>
-							</div>
-							<div class="media-body">							
-								<h4 class="media-heading">
-									{{item.tool.name}}			
-								</h4>										
+							</a>
+						</div>
+						<div class="media-body">							
+							<h4 class="media-heading">
+								<a href="/tools/{{item.tool.id}}">
+									{{item.tool.name}}
+								</a>
+							</h4>										
 <!-- 								<div star-rating rating-value="item.tool.star_average" max="5" is-interactive="false"></div> -->
-								{{item.notes}}
-							</div>
+							{{item.notes}}
+						</div>
 						</div>
 						</div>	
 						</div>
