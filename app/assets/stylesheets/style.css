@@ -27,13 +27,13 @@ body, html {
 	border-top: thick solid RGBA(255, 255, 255, 1);
 	vertical-align: center;
 	height: 70px;
-  line-height: 70px;
-  padding-left: 30px;
-  padding-right: 30px;
+  	line-height: 70px;
+  	padding-left: 30px;
+  	padding-right: 30px;
 }
 
 .tapor-blue {
-	color: RGBA(89, 189, 230, 1);	
+	color: RGBA(89, 189, 230, 1);		
 }
 
 
@@ -61,10 +61,18 @@ body, html {
 }
 
 #tapor-tagcloud {
-	background: RGBA(77, 77, 77, 1);
+	background: RGBA(77, 77, 77, 1);	
 	/*height: 145px;*/
 	padding: 0px;
 	margin-top: 10px;	
+}
+
+#tapor-tagcloud a:hover,
+#tapor-tagcloud a:visited,
+#tapor-tagcloud a:active,
+#tapor-tagcloud a:link
+{
+	color: RGBA(89, 189, 230, 1);	
 }
 
 #tapor-bubble-counter {
@@ -196,7 +204,6 @@ body, html {
 
 .list-tool-area {
 	min-height: 190px;
-	/*background-color: #333;*/
 }
 
 #tapor-search {
