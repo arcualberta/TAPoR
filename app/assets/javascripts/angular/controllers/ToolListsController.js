@@ -166,8 +166,6 @@ app.controller('ListsIndexController', ['$scope', '$http', 'services', function(
 	$scope.pageChanged = function() {
 		services.tool_list.get_tool_list_page($scope.current_page).then(
 			function(data){
-				// $scope.tool_lists = data.tool_lists;
-				// $scope.tool_lists_count = data.meta.count;
 				$scope.tool_lists_page = data;
 			},
 			function(errorMessage){

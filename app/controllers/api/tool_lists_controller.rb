@@ -23,7 +23,7 @@ class Api::ToolListsController < ApplicationController
 
 		respond_to do |format|			
 			# format.json {render json: @tool_lists}
-			format.json {render json: @tool_lists.limit(per_page).offset((params[:page].to_i - 1) * per_page), root: "tool_lists", meta: {count: @tool_lists.length}, status: :ok}
+			format.json {render json: @tool_lists.limit(per_page).offset((params[:page].to_i - 1) * per_page), root: "tool_lists", meta: {count: @tool_lists.length, page_count: @tool_lists.length / per_page + 1}, status: :ok}
 		end
 	end
 

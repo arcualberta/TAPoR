@@ -3,7 +3,8 @@
 
 <div class="row">
 	<div class="col-md-12">
-		<pagination total-items="tool_lists_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>	
+		<pagination total-items="tool_lists_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>
+		<label class="pagination-label"> of {{tool_lists_page.meta.page_count}}</label>
 	</div>
 </div>
 

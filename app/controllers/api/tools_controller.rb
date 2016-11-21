@@ -77,9 +77,9 @@ class Api::ToolsController < ApplicationController
 		docs.each do |doc|
 			tools.push (doc.attributes);
 		end
-
+				
 		respond_to do |format|
-			format.json {render json: tools, root: "tools", meta: {count: docs.hits}, status: :ok}
+			format.json {render json: tools, root: "tools", meta: {count: docs.hits, page_count: docs.hits/ params[:per_page].to_i + 1}, status: :ok}
 		end
 
 	end
