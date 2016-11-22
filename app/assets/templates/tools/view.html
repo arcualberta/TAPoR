@@ -71,6 +71,12 @@
 								<dd>
 									{{data.tool.creators_email}}
 								</dd>
+								<dt ng-if="data.tool.repository != null">
+									Repository
+								</dt>
+								<dd ng-if="data.tool.repository != null">
+									{{data.tool.repository}}
+								</dd>
 							</dl>
 						</div>
 					</div>

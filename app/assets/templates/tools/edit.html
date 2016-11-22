@@ -11,7 +11,7 @@
       </div>
     </div>
     
-    <!-- name -->
+    <!-- url -->
     <div class="form-group">
       <label for="inputName" class="col-sm-2 control-label">URL</label>
       <div class="col-sm-6">
@@ -85,15 +85,6 @@
 
       </div>
     </div>
-    <!-- repository -->
-
-    <div class="form-group" ng-if="data.nature[0].value == 'code';">
-      <label for="inputRepository" class="col-sm-2 control-label">Repository</label>
-      <div class="col-sm-6">
-        <input type="url" class="form-control" id="inputRepository" placeholder="URL" ng-model="data.repository">
-      </div>
-    </div>
-
 
     <!-- creator name -->
 
@@ -119,6 +110,15 @@
       <label for="inputCreatorsURL" class="col-sm-2 control-label">Creator's URL</label>
       <div class="col-sm-6">
         <input type="url" class="form-control" id="inputCreatorsURL" placeholder="URL" ng-model="data.creators_url">
+      </div>
+    </div>
+
+    <!-- repository -->
+
+    <div class="form-group">
+      <label for="inputRepository" class="col-sm-2 control-label">Repository</label>
+      <div class="col-sm-6">
+        <input type="url" class="form-control" id="inputRepository" placeholder="URL" ng-model="data.repository">
       </div>
     </div>
 

@@ -233,6 +233,7 @@ class Api::ToolsController < ApplicationController
 						creators_name: safe_params[:creators_name].strip,
 						creators_email: safe_params[:creators_email].strip,
 						creators_url: safe_params[:creators_url].strip,
+						repository: safe_params[:repository].strip,
 						last_updated: Time.now(),
 						nature: params[:nature][0][:value],
 						user_id: current_user[:id]
@@ -474,7 +475,8 @@ class Api::ToolsController < ApplicationController
 						@tool.url = safe_params[:url].strip
 						@tool.creators_name = safe_params[:creators_name].strip;
 						@tool.creators_email = safe_params[:creators_email].strip;
-						@tool.creators_url = safe_params[:creators_url].strip;					
+						@tool.creators_url = safe_params[:creators_url].strip;	
+						@tool.repository = safe_params[:repository].strip				
 						if current_user.is_admin?
 							@tool.is_approved = safe_params[:is_approved];
 						end
@@ -704,7 +706,6 @@ class Api::ToolsController < ApplicationController
 			if params[:nature][0][:value] == 'code'
 				@tool.update(language: params[:language][0][:value])
 				@tool.update(code: params[:code])
-				@tool.update(repository: params[:repository])
 			end
 		end
 
