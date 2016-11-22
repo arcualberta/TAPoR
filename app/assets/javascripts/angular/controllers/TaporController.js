@@ -109,11 +109,6 @@ app.controller('TaporIndexController', ['$scope', '$http', '$sce', '$location', 
 	$http.get('/api/tool_lists/latest')
 	.success(function(data, status, headers, config){
 		$scope.latest_lists = data;
-
-		angular.forEach(data, function(v, i){
-			$scope.latest_lists[i].total_items = v.tool_list_items.length;
-			$scope.latest_lists[i].tool_list_items = $scope.latest_lists[i].tool_list_items.slice(0, 3);
-		});
 	})
 
 

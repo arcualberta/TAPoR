@@ -23,23 +23,8 @@
 
  	      <div class="row">
 	      	<div class="col-xs-3">
-	      		
-	      		
-
-	      			<div class="break-content tapor-tool-detail"> {{ tool.detail| htmlToPlaintext | limitTo: 300}} </div>
-	      			<div star-rating rating-value="tool.ratings.system" max="5" is-interactive="false" class=""></div>
-	      		
-<!-- 	      		<div class="row">
-	      			<div class="col-md-12">
-	      			</div>
-	      		</div> -->
-
-<!-- 	      		<div class="row">
-	      			<div class="col-md-12">
-	      				<div star-rating rating-value="tool.ratings.system" max="5" is-interactive="false"></div>
-	      			</div>
-	      		</div> -->
-
+	  			<div class="break-content tapor-tool-detail"> {{ tool.detail| htmlToPlaintext | limitTo: 300}} </div>
+	  			<div star-rating rating-value="tool.ratings.system" max="5" is-interactive="false" class=""></div>
 	      	</div>	
 	      	<div class="col-xs-9">
 	      		<a href="/tools/{{tool.id}}">
@@ -54,15 +39,6 @@
 		      	</div>		      	
 		      </div>	
 	      </div>
-<!-- 
-	      <div class="row tapor-featured-bottom">
-	      	
-	      </div> -->
-
-	        <!-- <img ng-src="{{tool.image_url}}" style="margin:auto;" height="440" width="550"> -->
-<!-- 	        <div class="carousel-caption">
-	        	<h3>{{tool.name}}</h3>
-	        </div> -->
 	      </slide>
    	 </carousel>
 		</div>
