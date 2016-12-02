@@ -293,20 +293,23 @@ app.directive('toolList', function () {
                 });
 
                 // Create the popup
-                dot.on("mouseover", function () {
-                    toolTip.current = index;
+                dot
+                .on("mouseover", function () {
+                    // toolTip.current = index;
 
                     $scope.$apply(function () {
                         $scope.element = element;
                     });
 
-                    toolTip.attr("visibility", "visible");
+                    toolTip
+                    .attr("visibility", "visible");
+                    // .attr("x", "100")
+                    // .attr("y", "100");
                 });
 
-                dot.on("mouseout", function () {
-                    if (toolTip.current === index) {
-                        toolTip.attr("visibility", "hidden");
-                    }
+                dot
+                .on("mouseout", function () {
+                    toolTip.attr("visibility", "hidden");
                 });
             };
 
@@ -381,9 +384,9 @@ app.directive('toolList', function () {
 
                 var foreignObject = textGroup.append("foreignObject")
                         .attr({
-                            x: 180,
-                            y: -height,
-                            width: 100,//width - totalWidth,
+                            x: 147,
+                            y: - height,
+                            width: width - totalWidth,
                             height: cellHeight
                         });
                 var select = foreignObject.append("xhtml:select").style("max-width", (width - totalWidth - 60) + "px");
@@ -487,10 +490,12 @@ app.directive('toolList', function () {
 
             // Add Events
             $element.mousemove(function (event) {
+                // console.log(event.pageX)
                 var pad = 10;
-                var dim = toolTip.node().getBBox()
-                var x = event.offsetX;
-                var y = event.offsetY;
+                var dim = toolTip.node().getBBox();
+                var position = $("#home-page-tool-win").position();
+                var x = event.pageX - position.left;
+                var y = event.pageY - position.top;
                 var newX = x + pad;
                 var newY = y + pad;
 
