@@ -73,7 +73,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
         mode: $scope.data.tool.language,
         useWrapMode : true
       };
-
+      console.log($scope.current_user);
   		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
 
   		$scope.id = $scope.data.tool.id;
@@ -510,7 +510,6 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
       services.tool.get_suggested($scope.id)
       .then(function(data){
         $scope.data.suggested_tools = data;
-        console.log($scope.data.suggested_tools)
       })
       .then(function(){
         update_query_list();        
