@@ -7,14 +7,14 @@
     "angular-resource": "~1.4.3",
     "angular-route": "~1.4.3",
     "font-awesome": "~4.2.0",
-    "d3": "~3.5.6",
     "angular-selectize2": "~1.1.2",
     "ng-sortable": "~1.1.9",
     "angular-ui-ace": "~0.2.3",
     "angular-ui-tinymce": "~0.0.5",
     "bootstrap-toggle": "~2.2.0",
     "ui.bootstrap": "~0.12.1",
-    "angular-jqcloud": "~1.0.1"
+    "angular-jqcloud": "~1.0.1",
+    "d3": "^4.7.4"
   },
   "resolutions": {
     "angular": "~1.4.3"

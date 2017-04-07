@@ -15,40 +15,8 @@
 <div ng-controller='TaporIndexController' class='tapor-container tapor-home'>
 	<!-- featured -->
 	<div class="row" >
-		<div class="col-md-8" id="tapor-featured-carrousel">
-			
-			<carousel interval="8000000" class="tapor-carousel">
-	      <slide ng-repeat="tool in featured" active="slide.active" class="tapor-slide">
-	  
-
- 	      <div class="row">
-	      	<div class="col-xs-3">
-	  			<div class="break-content tapor-tool-detail"> {{ tool.detail| htmlToPlaintext | limitTo: 300}} </div>
-	  			<div star-rating rating-value="tool.ratings.system" max="5" is-interactive="false" class=""></div>
-	      	</div>	
-	      	<div class="col-xs-9">
-	      		<a href="/tools/{{tool.id}}">
-							<img class="img-responsive" ng-src="{{tool.image_url}}">
-						</a>		
-	      	</div>
-	      </div>
-	      <div class="row tapor-featured-name-row">
-		      <div class="col-md-12">
-		      	<div class="tapor-featured-name">
-		      		<h1>{{tool.name}}</h1>	
-		      	</div>		      	
-		      </div>	
-	      </div>
-	      </slide>
-   	 </carousel>
-		</div>
-		<div class="col-md-4" style="padding: 5px; background-color: #333;">
-			
-			<tool-list id="home-page-tool-win" class="tool-win" ng-model="tools_by_analysis.tools" category-list="tools_by_analysis.attribute_values" element-categories="attribute_value_ids" element-click="elementClick" >
-				<div style="background-color: #C3C3C3;padding: 5px;">{{element.name}}</div>
-			</tool-list>
-
-
+		<div class="col-md-12">
+			<tool-category-view></tool-category-view>
 		</div>
 	</div>
 
@@ -182,7 +150,7 @@ TAPoR 3 was developed with support from the <a href="http://novel-tm.ca/">Text M
 			</div>
 		</div>
 	</div>
-
+	
 	<!-- tags -->
 	<div class="row">
 		<div class="col-md-12" id="tapor-tagcloud">
