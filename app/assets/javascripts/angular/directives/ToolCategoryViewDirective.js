@@ -8,168 +8,191 @@ app.directive("toolCategoryView", function() {
 		// require: ngModel,
 		transclude: true,
 		scope: {
-			// ngModel: "="
+			tools: "="
 		},
-		link: function($scope, $element, attrs, ngModel, transclude) {
-			var toolsByAnalysis = {"attribute_values":[{"id":59,"name":"Annotation"},{"id":60,"name":"Bibliographic"},{"id":61,"name":"Collaboration"},{"id":62,"name":"Comparison"},{"id":2,"name":"Concording"},{"id":3,"name":"Editing"},{"id":8,"name":"Miscellaneous"},{"id":63,"name":"Natural Language Processing"},{"id":64,"name":"Network Analysis"},{"id":58,"name":"Programming Language"},{"id":65,"name":"Publishing"},{"id":66,"name":"RDF"},{"id":1,"name":"Search"},{"id":67,"name":"Sentiment Analysis"},{"id":68,"name":"Sequence Analysis"},{"id":69,"name":"Social Media Analysis"},{"id":5,"name":"Statistical"},{"id":7,"name":"Text Cleaning"},{"id":6,"name":"Text Gathering"},{"id":4,"name":"Visualization"}],"tools":[{"tool_id":1,"name":"List Words - HTML (TAPoRware)","id":136,"attribute_value_ids":["5"]},{"tool_id":4,"name":"Wordle","id":3,"attribute_value_ids":["4"]},{"tool_id":5,"name":"OrlandoVision (OVis)","id":10,"attribute_value_ids":["4"]},{"tool_id":8,"name":"Voyant Cirrus","id":17,"attribute_value_ids":["4"]},{"tool_id":9,"name":"Voyant Links","id":23,"attribute_value_ids":["4","5"]},{"tool_id":10,"name":"Voyant Bubblelines","id":30,"attribute_value_ids":["4","5"]},{"tool_id":11,"name":"Voyant Bubbles","id":36,"attribute_value_ids":["4"]},{"tool_id":12,"name":"Voyant Corpus Grid","id":40,"attribute_value_ids":["5"]},{"tool_id":13,"name":"Voyant Corpus Summary","id":44,"attribute_value_ids":["5"]},{"tool_id":14,"name":"Voyant Corpus Term Frequencies","id":49,"attribute_value_ids":["5"]},{"tool_id":15,"name":"Voyant Document Term Frequencies","id":54,"attribute_value_ids":["5"]},{"tool_id":16,"name":"Voyant Document KWICs","id":59,"attribute_value_ids":["5","2"]},{"tool_id":17,"name":"Voyant Knots","id":64,"attribute_value_ids":["4","8"]},{"tool_id":18,"name":"Voyant Lava","id":70,"attribute_value_ids":["4"]},{"tool_id":19,"name":"Voyant Reader","id":75,"attribute_value_ids":["1","6"]},{"tool_id":20,"name":"Voyant ScatterPlot","id":81,"attribute_value_ids":["4","5"]},{"tool_id":21,"name":"Voyant Term Frequencies Chart","id":87,"attribute_value_ids":["4","5"]},{"tool_id":22,"name":"Voyant Term Fountain (beta)","id":92,"attribute_value_ids":["4"]},{"tool_id":23,"name":"Voyant Mandala","id":96,"attribute_value_ids":["1","4","5"]},{"tool_id":24,"name":"Orlando Degrees of Separation","id":103,"attribute_value_ids":["1"]},{"tool_id":25,"name":"Orlando Breadboard","id":107,"attribute_value_ids":["1"]},{"tool_id":26,"name":"Voyant Flowerbed (beta)","id":113,"attribute_value_ids":["4","62"]},{"tool_id":27,"name":"Voyant FeatureClusters (beta)","id":120,"attribute_value_ids":["4"]},{"tool_id":28,"name":"Voyant Translate Skin (beta)","id":127,"attribute_value_ids":["4"]},{"tool_id":29,"name":"List Words - XML (TAPoRware)","id":142,"attribute_value_ids":["5"]},{"tool_id":30,"name":"List Words - Plain Text (TAPoRware)","id":148,"attribute_value_ids":["5"]},{"tool_id":31,"name":"List Tags - HTML (TAPoRware)","id":154,"attribute_value_ids":["5"]},{"tool_id":32,"name":"List XML Elements (TAPoRware)","id":160,"attribute_value_ids":["8","5"]},{"tool_id":33,"name":"Extract Text - HTML (TAPoRware)","id":167,"attribute_value_ids":["7"]},{"tool_id":34,"name":"Extract Text - XML (TAPoRware)","id":173,"attribute_value_ids":["7"]},{"tool_id":35,"name":"Concordance - HTML (TAPoRware)","id":178,"attribute_value_ids":["2","1"]},{"tool_id":36,"name":"Concordance - XML (TAPoRware)","id":185,"attribute_value_ids":["2","1"]},{"tool_id":37,"name":"Concordance - Plain Text (TAPoRware)","id":193,"attribute_value_ids":["2","1"]},{"tool_id":38,"name":"Co-Occurrence - HTML (TAPoRware)","id":200,"attribute_value_ids":["1"]},{"tool_id":39,"name":"Co-Occurrence - XML (TAPoRware)","id":206,"attribute_value_ids":["1"]},{"tool_id":40,"name":"Co-Occurrence - Plain Text (TAPoRware)","id":212,"attribute_value_ids":["1"]},{"tool_id":41,"name":"Collocation - HTML (TAPoRware)","id":218,"attribute_value_ids":["1","5"]},{"tool_id":42,"name":"Collocation - XML (TAPoRware)","id":225,"attribute_value_ids":["1","5"]},{"tool_id":43,"name":"Collocation - Plain Text (TAPoRware)","id":232,"attribute_value_ids":["1","5"]},{"tool_id":44,"name":"Tokenize - HTML (TAPoR)","id":239,"attribute_value_ids":["8","1"]},{"tool_id":45,"name":"Tokenize - XML (TAPoR)","id":246,"attribute_value_ids":["8"]},{"tool_id":46,"name":"Tokenize - Plain Text (TAPoR)","id":252,"attribute_value_ids":["8"]},{"tool_id":47,"name":"Fixed Phrase - HTML (TAPoRware)","id":257,"attribute_value_ids":["1","5"]},{"tool_id":48,"name":"Fixed Phrase - XML (TAPoRware)","id":263,"attribute_value_ids":["1","5"]},{"tool_id":49,"name":"Fixed Phrase - Plain Text (TAPoRware)","id":269,"attribute_value_ids":["1","5"]},{"tool_id":50,"name":"Date Finder - HTML (TAPoRware)","id":275,"attribute_value_ids":["8","1"]},{"tool_id":51,"name":"Date Finder - XML (TAPoRware)","id":281,"attribute_value_ids":["8","1"]},{"tool_id":52,"name":"Date Finder - Plain Text (TAPoRware)","id":287,"attribute_value_ids":["8","1"]},{"tool_id":53,"name":"Summarizer - HTML (TAPoRware)","id":293,"attribute_value_ids":["1","5"]},{"tool_id":54,"name":"Summarizer - XML (TAPoRware)","id":299,"attribute_value_ids":["1","5"]},{"tool_id":55,"name":"Summarizer - Plain Text (TAPoRware)","id":306,"attribute_value_ids":["1","5"]},{"tool_id":56,"name":"Distribution Graph - HTML (TAPoRware)","id":313,"attribute_value_ids":["1","5","4"]},{"tool_id":57,"name":"Distribution Graph - XML (TAPoRware)","id":321,"attribute_value_ids":["1","5","4"]},{"tool_id":58,"name":"Distribution Graph - Plain Text (TAPoRware)","id":329,"attribute_value_ids":["1","5","4"]},{"tool_id":59,"name":"Comparator - HTML (TAPoRware)","id":337,"attribute_value_ids":["1","6","62","2"]},{"tool_id":60,"name":"Comparator - XML (TAPoRware)","id":343,"attribute_value_ids":["1","6","62","2"]},{"tool_id":61,"name":"Comparator - Plain Text (TAPoRware)","id":350,"attribute_value_ids":["1","6","62","2"]},{"tool_id":62,"name":"Link Extractor - HTML (TAPoRware)","id":357,"attribute_value_ids":["8"]},{"tool_id":63,"name":"Hypergraph - XML (TAPoRware)","id":363,"attribute_value_ids":["8"]},{"tool_id":64,"name":"Transformer - XML (TAPoRware)","id":368,"attribute_value_ids":["8"]},{"tool_id":65,"name":"Speech Tagger - Plain Text (TAPoRware)","id":3135,"attribute_value_ids":["63"]},{"tool_id":66,"name":"Aggregator - Other (TAPoRware)","id":379,"attribute_value_ids":["6"]},{"tool_id":68,"name":"Raining Words - Other (TAPoR)","id":391,"attribute_value_ids":["4"]},{"tool_id":69,"name":"Raw Grep - Other (TAPoRware)","id":397,"attribute_value_ids":["1"]},{"tool_id":70,"name":"Tagger - Other (TAPoRware)","id":403,"attribute_value_ids":["8"]},{"tool_id":72,"name":"Weighted Centroid - Other (TAPoRware)","id":415,"attribute_value_ids":["4"]},{"tool_id":73,"name":"List Word Pairs - Beta (TAPoRware)","id":421,"attribute_value_ids":["8"]},{"tool_id":74,"name":"Principal Components Analysis on Plain Text - Beta (TAPoRware)","id":428,"attribute_value_ids":["8"]},{"tool_id":75,"name":"Word Cloud - Beta (TAPoRware)","id":435,"attribute_value_ids":["5","4"]},{"tool_id":76,"name":"Get TEI Meta Data - Beta (TAPoRware)","id":443,"attribute_value_ids":["8","7"]},{"tool_id":78,"name":"Extract Text From HTML - Beta (TAPoRware)","id":458,"attribute_value_ids":["7"]},{"tool_id":79,"name":"Acronym Finder - Beta (TAPoRware)","id":465,"attribute_value_ids":["8"]},{"tool_id":80,"name":"Word Brush - Beta (TAPoRware)","id":472,"attribute_value_ids":["8","4"]},{"tool_id":81,"name":"CAPs Finder - Beta (TAPoRware)","id":481,"attribute_value_ids":["8"]},{"tool_id":82,"name":"Keywords Finder - Beta (TAPoRware)","id":488,"attribute_value_ids":["8","1"]},{"tool_id":83,"name":"Compare With Control - Beta (TAPoRware)","id":496,"attribute_value_ids":["5"]},{"tool_id":84,"name":"Web Page Cleaner - Beta (TAPoRware)","id":503,"attribute_value_ids":["7"]},{"tool_id":85,"name":"CHNM: Scribe","id":530,"attribute_value_ids":["1","6","60"]},{"tool_id":86,"name":"Anthologize","id":536,"attribute_value_ids":["6","65"]},{"tool_id":87,"name":"Flamenco Search","id":541,"attribute_value_ids":["1"]},{"tool_id":88,"name":"Commentpress (Future of the Book)","id":548,"attribute_value_ids":["3","59","65"]},{"tool_id":89,"name":"TILE (Text Image Linking Environment)","id":554,"attribute_value_ids":["6","3","65"]},{"tool_id":90,"name":"MONK (Metadata Offer New Knowledge)","id":561,"attribute_value_ids":["1","5","6","4","63"]},{"tool_id":91,"name":"MorphAdorner","id":569,"attribute_value_ids":["3","7","59","63"]},{"tool_id":92,"name":"NLTK 2.0 (Natural Language Toolkit)","id":3020,"attribute_value_ids":["63"]},{"tool_id":93,"name":"WordHoard","id":579,"attribute_value_ids":["2","1","5","6","59","63"]},{"tool_id":94,"name":"PhiloGL","id":587,"attribute_value_ids":["4"]},{"tool_id":95,"name":"RiTa","id":593,"attribute_value_ids":["5","63"]},{"tool_id":96,"name":"RoSE","id":600,"attribute_value_ids":["3","1","6","4","60"]},{"tool_id":97,"name":"Scripto","id":607,"attribute_value_ids":["3","6"]},{"tool_id":98,"name":"Citeline","id":2973,"attribute_value_ids":["60","65"]},{"tool_id":99,"name":"SIMILE Widgets: Exhibit 3.0","id":619,"attribute_value_ids":["1","4","65"]},{"tool_id":100,"name":"SIMILE Widgets: Gadget","id":624,"attribute_value_ids":["8","1"]},{"tool_id":101,"name":"SIMILE Widgets: JsTeX","id":630,"attribute_value_ids":["8","58"]},{"tool_id":102,"name":"SIMILE Widgets: Timeline","id":4655,"attribute_value_ids":["4"]},{"tool_id":103,"name":"SIMILE Widgets: Timeplot","id":642,"attribute_value_ids":["4"]},{"tool_id":104,"name":"Stanford NLP Group: CoreNLP","id":648,"attribute_value_ids":["5","63"]},{"tool_id":105,"name":"Stanford NLP Group: Named Entity Recognizer","id":653,"attribute_value_ids":["1","63"]},{"tool_id":106,"name":"Stanford NLP Group: Part-of-Speech Tagger","id":658,"attribute_value_ids":["1","63"]},{"tool_id":107,"name":"Stanford NLP Group: Stanford Parser","id":663,"attribute_value_ids":["5","63"]},{"tool_id":108,"name":"Stanford NLP Group: Stanford Phrasal","id":3030,"attribute_value_ids":["63"]},{"tool_id":109,"name":"Stanford NLP Group: Stanford Tokenizer","id":3021,"attribute_value_ids":["63"]},{"tool_id":110,"name":"Stanford NLP Group: Stanford Topic Modelling Toolbox","id":3031,"attribute_value_ids":["63"]},{"tool_id":111,"name":"Stanford NLP Group: Stanford Tregex and Tsurgeon","id":680,"attribute_value_ids":["1","63"]},{"tool_id":112,"name":"Stanford Vis Group: d3.js - Data Driven Documents","id":685,"attribute_value_ids":["4","58"]},{"tool_id":113,"name":"Stanford Vis Group: Data Wrangler","id":692,"attribute_value_ids":["3","5"]},{"tool_id":114,"name":"Stanford Vis Group: Protovis","id":697,"attribute_value_ids":["4"]},{"tool_id":115,"name":"TagCrowd","id":701,"attribute_value_ids":["5","4"]},{"tool_id":116,"name":"TextArc","id":708,"attribute_value_ids":["2","4"]},{"tool_id":117,"name":"University of Maryland HCI Group: FeatureLens","id":714,"attribute_value_ids":["5","6","4"]},{"tool_id":118,"name":"Versioning Machine","id":722,"attribute_value_ids":["3","6","62"]},{"tool_id":119,"name":"WordSmith","id":727,"attribute_value_ids":["2","1","63"]},{"tool_id":120,"name":"Apache Open NLP","id":3022,"attribute_value_ids":["63"]},{"tool_id":121,"name":"Apache UIMA","id":738,"attribute_value_ids":["1","63"]},{"tool_id":122,"name":"Cytoscape","id":744,"attribute_value_ids":["4","64"]},{"tool_id":123,"name":"DocuBurst","id":748,"attribute_value_ids":["4","62","5"]},{"tool_id":124,"name":"EURAC: Comparison Arcs","id":754,"attribute_value_ids":["1","4","62","63"]},{"tool_id":125,"name":"EURAC: Corpus Clouds","id":762,"attribute_value_ids":["1","4"]},{"tool_id":126,"name":"EURAC: Double Tree","id":768,"attribute_value_ids":["2","1","4"]},{"tool_id":127,"name":"EURAC: End to End","id":774,"attribute_value_ids":["1","4","64"]},{"tool_id":128,"name":"JavaScript InfoVis Toolkit","id":3290,"attribute_value_ids":["4"]},{"tool_id":129,"name":"Letter-Pairs Analysis","id":784,"attribute_value_ids":["5","4"]},{"tool_id":130,"name":"Processing","id":790,"attribute_value_ids":["4","58"]},{"tool_id":131,"name":"RapidMiner","id":797,"attribute_value_ids":["5","4"]},{"tool_id":132,"name":"SEASR: OpenNLP Entities To Protovis Network Graph","id":805,"attribute_value_ids":["4","63"]},{"tool_id":133,"name":"SEASR: Date Entities to Simile Timeline","id":810,"attribute_value_ids":["1","4","63"]},{"tool_id":134,"name":"SEASR: Flesch-Kincaid Readability Test","id":815,"attribute_value_ids":["5","63"]},{"tool_id":135,"name":"SEASR: Google Search To Entities To Protovis Network Graph","id":819,"attribute_value_ids":["1","6","4"]},{"tool_id":136,"name":"SEASR: Location Entities To Google Map","id":825,"attribute_value_ids":["1","4","63"]},{"tool_id":137,"name":"SEASR: NGram Tag Cloud Viewer","id":830,"attribute_value_ids":["5","4"]},{"tool_id":138,"name":"SEASR: Tag Cloud Viewer With Stemming","id":835,"attribute_value_ids":["5","4"]},{"tool_id":139,"name":"Stanford HCI Group: PaperToolkit","id":841,"attribute_value_ids":["1","4"]},{"tool_id":140,"name":"Stanford Mobisocial Lab: Muse","id":849,"attribute_value_ids":["6","4","67","69"]},{"tool_id":141,"name":"Stanford HCI Group: Gigapixel","id":855,"attribute_value_ids":["7","61"]},{"tool_id":142,"name":"Stanford NLP Group: Stanford Word Segmenter","id":3045,"attribute_value_ids":["63"]},{"tool_id":143,"name":"Stanford NLP Group: Classifier","id":863,"attribute_value_ids":["5","63"]},{"tool_id":144,"name":"CommentSpace","id":868,"attribute_value_ids":["1","6","69"]},{"tool_id":145,"name":"GeoTime","id":873,"attribute_value_ids":["4"]},{"tool_id":146,"name":"Graphviz","id":877,"attribute_value_ids":["4"]},{"tool_id":147,"name":"Laurence Anthony: AntCLAWS-GUI","id":882,"attribute_value_ids":["8"]},{"tool_id":148,"name":"Laurence Anthony: AntConc","id":886,"attribute_value_ids":["2","1","5"]},{"tool_id":149,"name":"Laurence Anthony: AntWordProfiler","id":892,"attribute_value_ids":["1","5"]},{"tool_id":150,"name":"CLAWS Part-of-Speech Tagger","id":3139,"attribute_value_ids":["63"]},{"tool_id":151,"name":"CHNM: Timeline Builder (Beta)","id":900,"attribute_value_ids":["4"]},{"tool_id":152,"name":"IBM: Many Eyes","id":906,"attribute_value_ids":["5","4"]},{"tool_id":153,"name":"INKE: Dynamic Table of Contexts","id":911,"attribute_value_ids":["4","3"]},{"tool_id":154,"name":"Mandala Browser","id":915,"attribute_value_ids":["4"]},{"tool_id":155,"name":"Voyant Skin Builder","id":921,"attribute_value_ids":["8"]},{"tool_id":156,"name":"Visualizing Literature: Words in Context","id":927,"attribute_value_ids":["2","1"]},{"tool_id":157,"name":"Visualizing Literature: Sentiment","id":935,"attribute_value_ids":["5","4","67"]},{"tool_id":158,"name":"Visualizing Literature: Virtue and Vice","id":943,"attribute_value_ids":["5","4","66"]},{"tool_id":159,"name":"Visualizing Literature: Adjectives in the Book","id":950,"attribute_value_ids":["4"]},{"tool_id":160,"name":"Visualizing Literature: Adjectives and Character (Treemap)","id":957,"attribute_value_ids":["1","4"]},{"tool_id":161,"name":"Old Bailey Data Warehousing Interface","id":1000,"attribute_value_ids":["2","1","5","4"]},{"tool_id":162,"name":"I Write Like","id":3163,"attribute_value_ids":["63","5"]},{"tool_id":163,"name":"Bookworm","id":1014,"attribute_value_ids":["1","5","4"]},{"tool_id":164,"name":"brat rapid annotation tool","id":2954,"attribute_value_ids":["59","61"]},{"tool_id":165,"name":"CATMA (Computer Aided Textual Markup and Analysis)","id":1026,"attribute_value_ids":["1","59","61"]},{"tool_id":166,"name":"Edit Flow","id":2975,"attribute_value_ids":["61"]},{"tool_id":167,"name":"PhiloLogic","id":1072,"attribute_value_ids":["1","6","63"]},{"tool_id":168,"name":"FromThePage","id":1036,"attribute_value_ids":["3","7","61"]},{"tool_id":169,"name":"GapVis","id":1970,"attribute_value_ids":["1","4"]},{"tool_id":170,"name":"Pundit","id":2952,"attribute_value_ids":["59","61"]},{"tool_id":171,"name":"Gephi","id":1047,"attribute_value_ids":["5","4","69"]},{"tool_id":172,"name":"Juxta","id":1053,"attribute_value_ids":["6","4","62","68"]},{"tool_id":173,"name":"Orange","id":1059,"attribute_value_ids":["1","5","4"]},{"tool_id":174,"name":"ORBIS: Stanford Geospatial Network Model of the Roman World","id":1067,"attribute_value_ids":["1","4"]},{"tool_id":175,"name":"Sophie","id":1077,"attribute_value_ids":["3","6","61","65"]},{"tool_id":176,"name":"T-PEN","id":1083,"attribute_value_ids":["3"]},{"tool_id":177,"name":"Textalyser","id":1088,"attribute_value_ids":["5"]},{"tool_id":178,"name":"TextSTAT","id":1092,"attribute_value_ids":["2","5"]},{"tool_id":179,"name":"TokenX","id":1098,"attribute_value_ids":["5","4"]},{"tool_id":180,"name":"WEAVE (Web-based Analysis and Visualization Environment)","id":1103,"attribute_value_ids":["4"]},{"tool_id":181,"name":"Apache Xalan","id":1108,"attribute_value_ids":["8"]},{"tool_id":182,"name":"XSugar","id":1113,"attribute_value_ids":["8"]},{"tool_id":183,"name":"Yutzu","id":1118,"attribute_value_ids":["4","61","65"]},{"tool_id":184,"name":"ATLAS.ti","id":1122,"attribute_value_ids":["4","5"]},{"tool_id":185,"name":"CollateX","id":1127,"attribute_value_ids":["6"]},{"tool_id":186,"name":"cue.language","id":1132,"attribute_value_ids":["1","63"]},{"tool_id":187,"name":"CulturalAnalytics","id":1136,"attribute_value_ids":["5","4"]},{"tool_id":188,"name":"Diction","id":1141,"attribute_value_ids":["5","63","67"]},{"tool_id":189,"name":"DiscoverText","id":1145,"attribute_value_ids":["5","6","68","69"]},{"tool_id":190,"name":"Improvise","id":1150,"attribute_value_ids":["4"]},{"tool_id":191,"name":"Pressbooks","id":1154,"attribute_value_ids":["3","6","65"]},{"tool_id":192,"name":"Tesseract OCR","id":4627,"attribute_value_ids":["8"]},{"tool_id":193,"name":"Timeline JS","id":4649,"attribute_value_ids":["4","69"]},{"tool_id":194,"name":"TXM","id":1169,"attribute_value_ids":["1","5","2","3","4"]},{"tool_id":195,"name":"VARD 2","id":1175,"attribute_value_ids":["7"]},{"tool_id":196,"name":"Wmatrix","id":1180,"attribute_value_ids":["2","5","62"]},{"tool_id":197,"name":"Mallet","id":1187,"attribute_value_ids":["5","63"]},{"tool_id":198,"name":"Abbot","id":1192,"attribute_value_ids":["8"]},{"tool_id":199,"name":"TACT (Text Analysis Computing Tools)","id":1199,"attribute_value_ids":["1","5"]},{"tool_id":200,"name":"SimpleTCT","id":1205,"attribute_value_ids":["3","62"]},{"tool_id":201,"name":"TUSTEP","id":1210,"attribute_value_ids":["2","5","6","3","63"]},{"tool_id":202,"name":"Concordance","id":1217,"attribute_value_ids":["2","1","5"]},{"tool_id":203,"name":"GINGER II","id":1223,"attribute_value_ids":["5","63"]},{"tool_id":204,"name":"Pattern (CLiPS)","id":1227,"attribute_value_ids":["4","69","63"]},{"tool_id":205,"name":"INTEX","id":1232,"attribute_value_ids":["2","1","63"]},{"tool_id":206,"name":"NETMET","id":3064,"attribute_value_ids":["63"]},{"tool_id":207,"name":"Micro-EYEBALL","id":1242,"attribute_value_ids":["5","63"]},{"tool_id":208,"name":"Collate: Interactive Collation of Large Textual Traditions","id":1247,"attribute_value_ids":["6"]},{"tool_id":209,"name":"XTRACT","id":3151,"attribute_value_ids":["63"]},{"tool_id":210,"name":"JConcorder","id":1257,"attribute_value_ids":["2","5"]},{"tool_id":211,"name":"PC-KIMMO","id":3047,"attribute_value_ids":["63"]},{"tool_id":212,"name":"URICA! II","id":1267,"attribute_value_ids":["7","62","6"]},{"tool_id":213,"name":"VINCI","id":3044,"attribute_value_ids":["63"]},{"tool_id":214,"name":"Micro-OCP","id":1277,"attribute_value_ids":["2","5"]},{"tool_id":215,"name":"FINNMORF","id":1284,"attribute_value_ids":["1"]},{"tool_id":216,"name":"WordCruncher","id":1288,"attribute_value_ids":["2","63","1"]},{"tool_id":217,"name":"DV-COLL (Donne Variorum Textual Collation Program)","id":1294,"attribute_value_ids":["6","62"]},{"tool_id":218,"name":"CLOC","id":1299,"attribute_value_ids":["2"]},{"tool_id":219,"name":"WORDS","id":3152,"attribute_value_ids":["63","5"]},{"tool_id":220,"name":"KLIC (Key Letter in Context)","id":3172,"attribute_value_ids":["62","2"]},{"tool_id":221,"name":"LEXICO","id":1314,"attribute_value_ids":["2","3","63"]},{"tool_id":222,"name":"COCOA","id":1319,"attribute_value_ids":["2","5"]},{"tool_id":223,"name":"SELECT (Sum and Evaluate the Largest Exponentiated Correlation Terms)","id":3174,"attribute_value_ids":["63"]},{"tool_id":224,"name":"Meandre","id":1328,"attribute_value_ids":["3","4","58"]},{"tool_id":225,"name":"Massive Pixel Environment","id":1335,"attribute_value_ids":["4"]},{"tool_id":226,"name":"Kaleidoscope","id":2996,"attribute_value_ids":["62"]},{"tool_id":227,"name":"Meld","id":2997,"attribute_value_ids":["62"]},{"tool_id":228,"name":"WordSeer","id":1348,"attribute_value_ids":["2","1","4"]},{"tool_id":229,"name":"GATE (General Architecture for Text Engineering)","id":1356,"attribute_value_ids":["1","6","4"]},{"tool_id":230,"name":"FRANTEXT / Stella","id":1376,"attribute_value_ids":["1","63"]},{"tool_id":231,"name":"TACTweb 1.0","id":1369,"attribute_value_ids":["1","63"]},{"tool_id":232,"name":"Flemm v3.1: Analyseur Flexionnel du français pour des corpus étiquetés","id":3234,"attribute_value_ids":["63"]},{"tool_id":233,"name":"CNRTL Extension for Firefox","id":1385,"attribute_value_ids":["1"]},{"tool_id":234,"name":"Pompamo","id":1389,"attribute_value_ids":["1","63"]},{"tool_id":235,"name":"DériF (Dérivation en Français)","id":3176,"attribute_value_ids":["63"]},{"tool_id":236,"name":"FastKwic","id":1397,"attribute_value_ids":["2"]},{"tool_id":237,"name":"GRIPHOS (General Retrieval and Information Processor for Humanities Oriented Studies)","id":1403,"attribute_value_ids":["8","1"]},{"tool_id":238,"name":"R","id":1410,"attribute_value_ids":["5","7","4","58"]},{"tool_id":239,"name":"Trend Miner","id":1417,"attribute_value_ids":["6","63","69"]},{"tool_id":240,"name":"Textal","id":1425,"attribute_value_ids":["5","4","69"]},{"tool_id":241,"name":"Transana","id":1431,"attribute_value_ids":["1","4"]},{"tool_id":242,"name":"NVivo","id":1437,"attribute_value_ids":["6","4","59","69"]},{"tool_id":243,"name":"English Metrics","id":1445,"attribute_value_ids":["8"]},{"tool_id":244,"name":"The Scandroid 1.1","id":3177,"attribute_value_ids":["63"]},{"tool_id":245,"name":"Prose (Virtual Muse)","id":3233,"attribute_value_ids":["63"]},{"tool_id":246,"name":"Concord, the Interactive Concordance Generator (Virtual Muse)","id":1461,"attribute_value_ids":["2"]},{"tool_id":247,"name":"InTEXT","id":1466,"attribute_value_ids":["1","63"]},{"tool_id":248,"name":"MAXQDA","id":1470,"attribute_value_ids":["5","4"]},{"tool_id":249,"name":"LIWC (Linguistic Inquiry and Word Count)","id":1475,"attribute_value_ids":["5","63","67"]},{"tool_id":250,"name":"General Inquirer","id":3065,"attribute_value_ids":["63"]},{"tool_id":251,"name":"WORDij","id":1484,"attribute_value_ids":["5","4","64"]},{"tool_id":252,"name":"UCINET","id":1489,"attribute_value_ids":["6","64","69"]},{"tool_id":253,"name":"CATPAC","id":3232,"attribute_value_ids":["63"]},{"tool_id":254,"name":"TextQuest","id":1496,"attribute_value_ids":["2","63"]},{"tool_id":255,"name":"Minnesota Contextul Content Analysis (MCCA)","id":1502,"attribute_value_ids":["5"]},{"tool_id":256,"name":"WordStat","id":1506,"attribute_value_ids":["1","63"]},{"tool_id":257,"name":"Profiler Plus","id":3027,"attribute_value_ids":["63","67"]},{"tool_id":258,"name":"Crawdad Text Analysis Software","id":1513,"attribute_value_ids":["5","4","63"]},{"tool_id":259,"name":"Tropes","id":1519,"attribute_value_ids":["4","63"]},{"tool_id":260,"name":"Yoshikoder","id":1523,"attribute_value_ids":["2","5"]},{"tool_id":261,"name":"Lexa","id":3180,"attribute_value_ids":["63"]},{"tool_id":262,"name":"TABARI (Text Analysis By Augmented Replacement Instructions)","id":3181,"attribute_value_ids":["63"]},{"tool_id":263,"name":"Ethnograph","id":1541,"attribute_value_ids":["1","5","6","63"]},{"tool_id":264,"name":"SALT (Statistic Analysis of Language Transcripts)","id":1547,"attribute_value_ids":["1","5","63"]},{"tool_id":265,"name":"Voyant RezoViz","id":1554,"attribute_value_ids":["4"]},{"tool_id":266,"name":"TEXTPACK V","id":3183,"attribute_value_ids":["2","5"]},{"tool_id":267,"name":"INRAC Language Compiler","id":3025,"attribute_value_ids":["63"]},{"tool_id":268,"name":"Parser 1.0","id":3146,"attribute_value_ids":["63"]},{"tool_id":269,"name":"FANGORN","id":3062,"attribute_value_ids":["63"]},{"tool_id":270,"name":"STASEL (Stylistic Treatment at the Sentence Level)","id":3051,"attribute_value_ids":["63"]},{"tool_id":271,"name":"Morfogen, Morffile/Morfword, Inflword (Version 2.0)","id":1602,"attribute_value_ids":["1","63"]},{"tool_id":272,"name":"E-Parser","id":3058,"attribute_value_ids":["63"]},{"tool_id":273,"name":"ESTMORF","id":3223,"attribute_value_ids":["63"]},{"tool_id":274,"name":"NITE XML Toolkit (NXT)","id":3224,"attribute_value_ids":["1"]},{"tool_id":275,"name":"PL/I","id":1621,"attribute_value_ids":["1","5","58","63"]},{"tool_id":276,"name":"SNAP","id":2724,"attribute_value_ids":["58"]},{"tool_id":277,"name":"SOLAR (A Semantically Oriented Lexical ARchive)","id":3225,"attribute_value_ids":["2","63"]},{"tool_id":278,"name":"OPCOL","id":2261,"attribute_value_ids":["1","6","62"]},{"tool_id":279,"name":"FISHER","id":1638,"attribute_value_ids":["8","58"]},{"tool_id":280,"name":"Icon","id":2684,"attribute_value_ids":["58"]},{"tool_id":281,"name":"REDUX","id":3185,"attribute_value_ids":["63"]},{"tool_id":282,"name":"Linear Modelling Kit","id":1652,"attribute_value_ids":["8"]},{"tool_id":283,"name":"ELSE","id":3186,"attribute_value_ids":["63"]},{"tool_id":284,"name":"Collocate","id":1660,"attribute_value_ids":["2","5"]},{"tool_id":285,"name":"Typical","id":1664,"attribute_value_ids":["5","63"]},{"tool_id":286,"name":"TATOE (Text Analysis Tool with Object Encoding)","id":3228,"attribute_value_ids":["63"]},{"tool_id":287,"name":"SENSE (Self-Expanding linguistic knowledge base from Sense Elicitation)","id":3036,"attribute_value_ids":["63"]},{"tool_id":288,"name":"Prism","id":1674,"attribute_value_ids":["4","61"]},{"tool_id":289,"name":"ARRAS","id":1681,"attribute_value_ids":["2"]},{"tool_id":290,"name":"DM (Digital MappaeMundi)","id":1684,"attribute_value_ids":["6","59"]},{"tool_id":291,"name":"Domeo Annotation Toolkit","id":2951,"attribute_value_ids":["59"]},{"tool_id":292,"name":"Quadrigram","id":1697,"attribute_value_ids":["4"]},{"tool_id":293,"name":"Digitate","id":2961,"attribute_value_ids":["59"]},{"tool_id":294,"name":"AustESE (Australian Electronic Scholarly Editing)","id":1718,"attribute_value_ids":["3","6","65"]},{"tool_id":295,"name":"Circos","id":1708,"attribute_value_ids":["4"]},{"tool_id":296,"name":"OpenRefine","id":1712,"attribute_value_ids":["7","3"]},{"tool_id":297,"name":"Classical Text Editor","id":1725,"attribute_value_ids":["1","6","3"]},{"tool_id":298,"name":"Tesserae","id":3009,"attribute_value_ids":["62"]},{"tool_id":299,"name":"Textexture","id":1736,"attribute_value_ids":["4","64"]},{"tool_id":300,"name":"WordFreak","id":1742,"attribute_value_ids":["2","59"]},{"tool_id":301,"name":"UAM CorpusTool","id":1747,"attribute_value_ids":["3","59"]},{"tool_id":302,"name":"Lexomics","id":1751,"attribute_value_ids":["5"]},{"tool_id":303,"name":"WebLicht","id":2963,"attribute_value_ids":["59"]},{"tool_id":304,"name":"ANNIS (ANNotation of Information Structure)","id":1757,"attribute_value_ids":["4","59"]},{"tool_id":305,"name":"TimeRime","id":1763,"attribute_value_ids":["4"]},{"tool_id":306,"name":"Neatline","id":3218,"attribute_value_ids":["6","4"]},{"tool_id":307,"name":"VisualEyes","id":1773,"attribute_value_ids":["4"]},{"tool_id":308,"name":"LATtice","id":1777,"attribute_value_ids":["4","62"]},{"tool_id":309,"name":"DocuScope","id":1782,"attribute_value_ids":["4"]},{"tool_id":310,"name":"CorpusSearch 2","id":1784,"attribute_value_ids":["1","59"]},{"tool_id":311,"name":"TAMS Analyzer","id":1788,"attribute_value_ids":["8"]},{"tool_id":313,"name":"PAIR (Pairwise Alignment for Intertextual Relations)","id":1799,"attribute_value_ids":["1","68"]},{"tool_id":314,"name":"Google Ngram Viewer","id":1806,"attribute_value_ids":["1","5","4","63"]},{"tool_id":315,"name":"Concordle","id":1813,"attribute_value_ids":["2","5"]},{"tool_id":316,"name":"HyperPo","id":3188,"attribute_value_ids":["63"]},{"tool_id":317,"name":"PRORA","id":1825,"attribute_value_ids":["2"]},{"tool_id":318,"name":"SCAN","id":1828,"attribute_value_ids":["1","5","58"]},{"tool_id":319,"name":"CLAS (Computerized Language Analysis System)","id":1833,"attribute_value_ids":["2","5","63"]},{"tool_id":320,"name":"SATO (Systeme d'analyse des textes par ordinateur)","id":1838,"attribute_value_ids":["2","1","5","62"]},{"tool_id":328,"name":"INL BlackLab","id":1858,"attribute_value_ids":["2","1"]},{"tool_id":333,"name":"The Chicago Homer","id":1867,"attribute_value_ids":["2","1","5"]},{"tool_id":338,"name":"Word and Phrase","id":1886,"attribute_value_ids":["2","1","5"]},{"tool_id":340,"name":"NewRadial (INKE)","id":1901,"attribute_value_ids":["4"]},{"tool_id":341,"name":"TextGrid","id":1908,"attribute_value_ids":["1","61","3","65"]},{"tool_id":342,"name":"Text Variation Explorer (TVE)","id":1915,"attribute_value_ids":["5","4","62"]},{"tool_id":343,"name":"Pliny","id":1921,"attribute_value_ids":["3","6","59"]},{"tool_id":345,"name":"Virtual Lightbox","id":2999,"attribute_value_ids":["62"]},{"tool_id":348,"name":"word2vec","id":1983,"attribute_value_ids":["5","63"]},{"tool_id":349,"name":"BookLamp","id":1989,"attribute_value_ids":["1"]},{"tool_id":350,"name":"BookLamp Labs: Stream Graph Viewer","id":1995,"attribute_value_ids":["1","5"]},{"tool_id":351,"name":"BookLamp Labs: StoryDNA Viewer","id":2004,"attribute_value_ids":["1"]},{"tool_id":352,"name":"BookLamp Labs: Suggestion Viewer","id":2010,"attribute_value_ids":["1","5","4"]},{"tool_id":353,"name":"BookLamp Labs: Sentiment Viewer","id":2017,"attribute_value_ids":["1","5","4","67"]},{"tool_id":354,"name":"Weka (Waikato Environment for Knowledge Analysis)","id":2025,"attribute_value_ids":["5","4"]},{"tool_id":355,"name":"Textometrica","id":2030,"attribute_value_ids":["5","4"]},{"tool_id":356,"name":"SIMILE Widgets: Welkin","id":3097,"attribute_value_ids":["66","4"]},{"tool_id":357,"name":"LodLive","id":2062,"attribute_value_ids":["4","66"]},{"tool_id":358,"name":"Tom Sawyer Perspectives","id":2073,"attribute_value_ids":["5","4"]},{"tool_id":359,"name":"TextDNA","id":2079,"attribute_value_ids":["4","68"]},{"tool_id":360,"name":"Prefuse","id":2083,"attribute_value_ids":["4"]},{"tool_id":362,"name":"NeOn Toolkit ","id":2096,"attribute_value_ids":["5","59"]},{"tool_id":363,"name":"RDF Gravity","id":2102,"attribute_value_ids":["4","66"]},{"tool_id":364,"name":"Visual Browser","id":2107,"attribute_value_ids":["4","64","66"]},{"tool_id":365,"name":"RDF2SVG (Rhizomik)","id":2113,"attribute_value_ids":["4","66"]},{"tool_id":366,"name":"RelFinder","id":2116,"attribute_value_ids":["4","66"]},{"tool_id":367,"name":"W3C RDF Validation Service","id":2119,"attribute_value_ids":["5","4","66"]},{"tool_id":368,"name":"Google Charts","id":2124,"attribute_value_ids":["4","5"]},{"tool_id":370,"name":"EURAC: interHist","id":2137,"attribute_value_ids":["4","2"]},{"tool_id":371,"name":"EURAC: Extended Linguistic Dependency Diagrams (xLDDs)","id":2142,"attribute_value_ids":["4","63"]},{"tool_id":372,"name":"EURAC: Structured Parallel Coordinates","id":2148,"attribute_value_ids":["5","4","62"]},{"tool_id":373,"name":"SplitsTree4","id":2154,"attribute_value_ids":["4","64"]},{"tool_id":374,"name":"CMU-Cambridge Statistical Language Modelling Toolkit","id":3217,"attribute_value_ids":["5"]},{"tool_id":375,"name":"Automatic Mapping Among Lexico-Grammatical Annotation Models (AMALGAM)","id":2959,"attribute_value_ids":["59","63"]},{"tool_id":376,"name":"TnT (Trigrams'n'Tags)","id":2172,"attribute_value_ids":["5","63"]},{"tool_id":377,"name":"YAGO","id":2179,"attribute_value_ids":["3","1","5","6","4"]},{"tool_id":378,"name":"Tableau Public","id":2188,"attribute_value_ids":["4","65"]},{"tool_id":379,"name":"IsaViz","id":2193,"attribute_value_ids":["4","66"]},{"tool_id":380,"name":"ProcessingJS","id":2199,"attribute_value_ids":["4"]},{"tool_id":382,"name":"Pajek","id":2213,"attribute_value_ids":["5","4","64"]},{"tool_id":383,"name":"UMDHMM: Hidden Markov Model Toolkit","id":2219,"attribute_value_ids":["5","63"]},{"tool_id":384,"name":"Apple Pie Parser","id":2224,"attribute_value_ids":["5"]},{"tool_id":385,"name":"Ngram Statistics Package (NSP)","id":2229,"attribute_value_ids":["5"]},{"tool_id":386,"name":"TATOO (ISSCO Tagger Tool)","id":3138,"attribute_value_ids":["63"]},{"tool_id":387,"name":"UVic Image Markup Tool","id":2967,"attribute_value_ids":["59"]},{"tool_id":388,"name":"JEUDEMO","id":2252,"attribute_value_ids":["2","1"]},{"tool_id":389,"name":"RATS (Random-Accessible Text Systems)","id":2258,"attribute_value_ids":["2","5","58"]},{"tool_id":390,"name":"etcML","id":2265,"attribute_value_ids":["1","5","4","67"]},{"tool_id":391,"name":"LitStats","id":2273,"attribute_value_ids":["5"]},{"tool_id":392,"name":"BIBCON","id":2278,"attribute_value_ids":["2"]},{"tool_id":393,"name":"KWIC","id":2282,"attribute_value_ids":["2"]},{"tool_id":394,"name":"CETA Parser","id":3216,"attribute_value_ids":["63"]},{"tool_id":395,"name":"MITRE Syntactic Analysis Procedure","id":3215,"attribute_value_ids":["63"]},{"tool_id":397,"name":"Harvard Predictive Analyser","id":3213,"attribute_value_ids":["63","5"]},{"tool_id":398,"name":"STAP","id":3079,"attribute_value_ids":["63"]},{"tool_id":399,"name":"TEXTAN","id":2301,"attribute_value_ids":["1"]},{"tool_id":400,"name":"T.A.P (Text Analysis Program)","id":2305,"attribute_value_ids":["2","5"]},{"tool_id":401,"name":"UNICORN","id":2310,"attribute_value_ids":["2"]},{"tool_id":402,"name":"AUTHOR","id":2314,"attribute_value_ids":["5"]},{"tool_id":403,"name":"HAWKEYE","id":2318,"attribute_value_ids":["5"]},{"tool_id":404,"name":"LEMMA","id":3191,"attribute_value_ids":["63"]},{"tool_id":405,"name":"UNICON","id":2325,"attribute_value_ids":["2"]},{"tool_id":406,"name":"DISCON","id":2329,"attribute_value_ids":["2"]},{"tool_id":407,"name":"TRICON","id":2337,"attribute_value_ids":["2"]},{"tool_id":408,"name":"Scharfenberg-Smith Concordance Program","id":2336,"attribute_value_ids":["2"]},{"tool_id":409,"name":"WATCON","id":2341,"attribute_value_ids":["2"]},{"tool_id":410,"name":"CONCORD","id":2345,"attribute_value_ids":["2"]},{"tool_id":411,"name":"AUTOSTYL","id":2349,"attribute_value_ids":["5","63"]},{"tool_id":412,"name":"SALEM","id":3028,"attribute_value_ids":["63"]},{"tool_id":413,"name":"BALCON (Bilingual Analytical Literary and Linguistic Concordance)","id":2357,"attribute_value_ids":["2"]},{"tool_id":414,"name":"CRIC-8 CONCORDER (Cross-Reference in Context)","id":2361,"attribute_value_ids":["2"]},{"tool_id":415,"name":"TEXTCORD","id":2365,"attribute_value_ids":["2"]},{"tool_id":416,"name":"COGS-3","id":2369,"attribute_value_ids":["2"]},{"tool_id":417,"name":"Oxford Concordance Program (OCP)","id":2374,"attribute_value_ids":["2"]},{"tool_id":418,"name":"DEREDEC","id":3192,"attribute_value_ids":["63"]},{"tool_id":419,"name":"DISCAN","id":2382,"attribute_value_ids":["2","5"]},{"tool_id":420,"name":"STRAP 2.0","id":2386,"attribute_value_ids":["2","5"]},{"tool_id":421,"name":"FUNES","id":3059,"attribute_value_ids":["63"]},{"tool_id":422,"name":"VOCAB - U - LISTER","id":3194,"attribute_value_ids":["63"]},{"tool_id":423,"name":"SimCA 2.0","id":2397,"attribute_value_ids":["4","69"]},{"tool_id":424,"name":"ABFREQ","id":2400,"attribute_value_ids":["5"]},{"tool_id":425,"name":"PANVS","id":3207,"attribute_value_ids":["63"]},{"tool_id":426,"name":"GERTWOL","id":3208,"attribute_value_ids":["63"]},{"tool_id":427,"name":"Textable","id":2409,"attribute_value_ids":["2","1","5","7","6","4","59"]},{"tool_id":428,"name":"TOSCA","id":3209,"attribute_value_ids":["63"]},{"tool_id":429,"name":"SUSS (Sunderland University SENSEVAL System)","id":3210,"attribute_value_ids":["63"]},{"tool_id":430,"name":"grling-sdm","id":3038,"attribute_value_ids":["63"]},{"tool_id":431,"name":"Wisdom","id":2427,"attribute_value_ids":["5"]},{"tool_id":432,"name":"SCBD (Sentence and Chunk Boundaries Detector)","id":3039,"attribute_value_ids":["63"]},{"tool_id":433,"name":"EXPLEX","id":3035,"attribute_value_ids":["63"]},{"tool_id":434,"name":"IITagger","id":3134,"attribute_value_ids":["63"]},{"tool_id":435,"name":"WinBrill","id":3142,"attribute_value_ids":["63"]},{"tool_id":436,"name":"SRILM (SRI Language Modelling Toolkit)","id":3140,"attribute_value_ids":["63","5"]},{"tool_id":437,"name":"KH Coder","id":2445,"attribute_value_ids":["2","5","4","63"]},{"tool_id":439,"name":"RQDA","id":2454,"attribute_value_ids":["5","63"]},{"tool_id":443,"name":"Annotation Studio","id":2459,"attribute_value_ids":["3","59"]},{"tool_id":448,"name":"Paper Machines","id":2463,"attribute_value_ids":["5","4","60"]},{"tool_id":451,"name":"Overview","id":2485,"attribute_value_ids":["1","5","4","69"]},{"tool_id":452,"name":"RAW","id":2496,"attribute_value_ids":["5","4"]},{"tool_id":453,"name":"SentiStrength","id":3103,"attribute_value_ids":["67"]},{"tool_id":454,"name":"Compare Lists","id":3011,"attribute_value_ids":["62"]},{"tool_id":455,"name":"Google Blogsearch Scraper","id":2513,"attribute_value_ids":["1"]},{"tool_id":456,"name":"Netvizz","id":2519,"attribute_value_ids":["1","69"]},{"tool_id":457,"name":"NetvizzToSentiStrength","id":3106,"attribute_value_ids":["67","69"]},{"tool_id":458,"name":"Google News Scraper","id":2530,"attribute_value_ids":["1"]},{"tool_id":459,"name":"Googlescraper (Lippmannian Device)","id":2536,"attribute_value_ids":["1","6"]},{"tool_id":460,"name":"Issuecrawler","id":2541,"attribute_value_ids":["1","4"]},{"tool_id":461,"name":"Compare Networks Over Time","id":2548,"attribute_value_ids":["5","62","64"]},{"tool_id":462,"name":"Ranked Deep Pages from Core Issue Crawler Network","id":2554,"attribute_value_ids":["5"]},{"tool_id":463,"name":"Issue Discovery","id":2560,"attribute_value_ids":["1","5"]},{"tool_id":464,"name":"Lippmannian Device to Gephi","id":2567,"attribute_value_ids":["4","5"]},{"tool_id":465,"name":"Open Calais Issue Discovery","id":2573,"attribute_value_ids":["5"]},{"tool_id":466,"name":"Twitter Capture and Analysis Toolset (DMI-TCAT)","id":3992,"attribute_value_ids":["1","5","6","69"]},{"tool_id":467,"name":"Netlytic","id":2585,"attribute_value_ids":["5","6","4","64","69"]},{"tool_id":468,"name":"TAGS (Twitter Archiving Google Spreadsheet) v5.1","id":2592,"attribute_value_ids":["1","6","69"]},{"tool_id":469,"name":"Poem Viewer","id":2599,"attribute_value_ids":["4"]},{"tool_id":470,"name":"Macro-Etymological Analyzer","id":2605,"attribute_value_ids":["5","63"]},{"tool_id":471,"name":"Prospéro (PROgramme de Sociologie Pragmatique, Expérimentale et Réflexive sur Ordinateur)","id":2610,"attribute_value_ids":["1","5","62","63"]},{"tool_id":472,"name":"Stanford Sentiment Analysis","id":3060,"attribute_value_ids":["63","67"]},{"tool_id":473,"name":"twXplorer","id":2622,"attribute_value_ids":["1","69"]},{"tool_id":474,"name":"wordsimilarity (Word 2 Word)","id":2626,"attribute_value_ids":["5","4"]},{"tool_id":475,"name":"word tree","id":2633,"attribute_value_ids":["4","2"]},{"tool_id":476,"name":"WordWanderer","id":2638,"attribute_value_ids":["1","4","2","5","62"]},{"tool_id":477,"name":"Version Variation Visualization","id":2647,"attribute_value_ids":["2","6","4"]},{"tool_id":478,"name":"DfR Browser","id":2655,"attribute_value_ids":["1","5","4","6"]},{"tool_id":479,"name":"jsLDA","id":2663,"attribute_value_ids":["1","63"]},{"tool_id":480,"name":"The Networked Corpus","id":2668,"attribute_value_ids":["5","63"]},{"tool_id":481,"name":"Topic Modelling Tool","id":3212,"attribute_value_ids":["63"]},{"tool_id":482,"name":"NodeXL","id":2678,"attribute_value_ids":["5","4","64","69"]},{"tool_id":483,"name":"SNOBOL (String Oriented Symbolic Language)","id":2691,"attribute_value_ids":["58"]},{"tool_id":484,"name":"FORTRAN","id":2698,"attribute_value_ids":["58","5"]},{"tool_id":485,"name":"COMIT","id":2705,"attribute_value_ids":["58","63"]},{"tool_id":486,"name":"COBOL","id":2712,"attribute_value_ids":["58"]},{"tool_id":487,"name":"ALGOL","id":2720,"attribute_value_ids":["58"]},{"tool_id":489,"name":"EULER","id":2732,"attribute_value_ids":["58"]},{"tool_id":490,"name":"PL/C","id":2737,"attribute_value_ids":["58"]},{"tool_id":491,"name":"SPITBOL","id":2742,"attribute_value_ids":["58"]},{"tool_id":492,"name":"ProIcon","id":2747,"attribute_value_ids":["58"]},{"tool_id":493,"name":"AWK","id":2754,"attribute_value_ids":["58"]},{"tool_id":494,"name":"Prolog","id":2761,"attribute_value_ids":["58","63"]},{"tool_id":495,"name":"LISP","id":2767,"attribute_value_ids":["58","63"]},{"tool_id":500,"name":"Umigon","id":3131,"attribute_value_ids":["63","67","69"]},{"tool_id":506,"name":"CheckText","id":2809,"attribute_value_ids":["5","68"]},{"tool_id":507,"name":"Discursis","id":2811,"attribute_value_ids":["5","4"]},{"tool_id":508,"name":"Leximancer","id":2816,"attribute_value_ids":["5","4"]},{"tool_id":509,"name":"Jigsaw","id":2822,"attribute_value_ids":["5","4"]},{"tool_id":510,"name":"Alt.Text","id":2828,"attribute_value_ids":["4","1"]},{"tool_id":511,"name":"Data Desk 7","id":2840,"attribute_value_ids":["5","4"]},{"tool_id":512,"name":"Dataplot","id":2846,"attribute_value_ids":["5","4"]},{"tool_id":513,"name":"Coggle","id":2853,"attribute_value_ids":["4","61"]},{"tool_id":514,"name":"Community Contributed Collection (CoCoCo)","id":2860,"attribute_value_ids":["1","6"]},{"tool_id":515,"name":"Project Quincy","id":3203,"attribute_value_ids":["64"]},{"tool_id":516,"name":"Lexos","id":2873,"attribute_value_ids":["3","7","4"]},{"tool_id":517,"name":"Visual Understanding Environment (VUE)","id":2880,"attribute_value_ids":["1","4","64"]},{"tool_id":518,"name":"NodeBox","id":2886,"attribute_value_ids":["5","4"]},{"tool_id":519,"name":"Qualrus","id":2892,"attribute_value_ids":["5","4","1"]},{"tool_id":520,"name":"ANTHROPAC","id":2898,"attribute_value_ids":["1","5","69"]},{"tool_id":521,"name":"SwiftRiver","id":2903,"attribute_value_ids":["1","6"]},{"tool_id":522,"name":"Siena (Simulation Investigation for Empirical Network Analysis)","id":2910,"attribute_value_ids":["5"]},{"tool_id":523,"name":"RSiena","id":2914,"attribute_value_ids":["5"]},{"tool_id":524,"name":"SARIT (Search and Retrieval of Indic Texts)","id":2920,"attribute_value_ids":["1","2"]},{"tool_id":525,"name":"Carrot2","id":2926,"attribute_value_ids":["1","6"]},{"tool_id":526,"name":"Casual","id":2933,"attribute_value_ids":["1","4"]},{"tool_id":527,"name":"Digress.it","id":2970,"attribute_value_ids":["59"]},{"tool_id":530,"name":"Alveo","id":3246,"attribute_value_ids":["61","63","1","6"]},{"tool_id":532,"name":"SemLens","id":3264,"attribute_value_ids":["66","4"]},{"tool_id":533,"name":"gFacet","id":3269,"attribute_value_ids":["66","4"]},{"tool_id":534,"name":"tFacet","id":3274,"attribute_value_ids":["66","4"]},{"tool_id":536,"name":"minezy","id":3281,"attribute_value_ids":["1","69"]},{"tool_id":574,"name":"Voyant Tools 2.0 (Corpus View)","id":3777,"attribute_value_ids":["1","2","3","4","5"]},{"tool_id":578,"name":"Voyant 2.0: Bubblelines","id":3766,"attribute_value_ids":["62","4"]},{"tool_id":581,"name":"Voyant 2.0: Knots","id":3809,"attribute_value_ids":["4","8"]},{"tool_id":582,"name":"Voyant 2.0: Terms Radio","id":3819,"attribute_value_ids":["62","4"]},{"tool_id":586,"name":"Complex Sentiment Analysis","id":4400,"attribute_value_ids":["4","67","69"]},{"tool_id":593,"name":"YouTube Comment Scraper","id":4013,"attribute_value_ids":["6","69"]},{"tool_id":599,"name":"McGill Characterization Process - Character Parser","id":4404,"attribute_value_ids":["5","63"]},{"tool_id":600,"name":"McGill Characterization Process - Alias Identifier","id":4420,"attribute_value_ids":["1","2"]},{"tool_id":601,"name":"McGill Characterization Process - Collocate Parser","id":4412,"attribute_value_ids":["5","63"]},{"tool_id":602,"name":"McGill Characterization Process - Calculate Character Centrality","id":4436,"attribute_value_ids":["1","2"]},{"tool_id":608,"name":"Textual Geography Analyzer","id":4933,"attribute_value_ids":["4","62"]}]}		
+		link: function(scope, $element, attrs, ngModel, transclude) {
 			
-			var radius = 7,
-				itemArea = 20,
-				c20 = d3.scaleOrdinal(d3.schemeCategory20),
-				colorIndex = {};
+			var toolsByAnalysis = scope.tools;
+			var drawn = false;
 
-			toolsByAnalysis.attribute_values.forEach(function(attribute, i){
-				colorIndex[attribute.id] = i
-			})
+			var drawWidget = function() {
+				var radius = 7,
+					itemArea = 20,
+					c20 = d3.scaleOrdinal(d3.schemeCategory20),
+					colorIndex = {};
 
-			toolsByAnalysis.tools.sort(function(a, b){
-				if (! a.attribute_value_ids.length || ! b.attribute_value_ids.length) {					
+				toolsByAnalysis.attribute_values.forEach(function(attribute, i){
+					colorIndex[attribute.id] = i
+				})
+
+				toolsByAnalysis.tools.sort(function(a, b){
+					if (! a.attribute_value_ids.length || ! b.attribute_value_ids.length) {					
+						return 0
+					}
+					var ai = parseInt(a.attribute_value_ids[0])
+					var	bi = parseInt(b.attribute_value_ids[0])
+					
+					if (ai > bi){
+						return 1
+					}
+					if (ai < bi){
+						return -1
+					}
 					return 0
+				})
+
+				var getBBoxById = function(id) {
+					return document.getElementById(id).getBBox()
 				}
-				var ai = parseInt(a.attribute_value_ids[0])
-				var	bi = parseInt(b.attribute_value_ids[0])
-				
-				if (ai > bi){
-					return 1
+
+				var getLinePoints = function(origin) {
+					var start = d3.select(origin),
+						halfTextWidth = getBBoxById("tool-name").width / 2,
+						pointAfterCircles = getBBoxById("circle-group").height,
+						linePoints = []
+
+					linePoints.push( [start.attr("cx"), parseInt(start.attr("cy")) + itemArea / 2])
+					linePoints.push( [start.attr("cx"), pointAfterCircles + 15])
+					linePoints.push( [40 + halfTextWidth, pointAfterCircles + 15])
+					linePoints.push( [40 + halfTextWidth, pointAfterCircles + 30])
+
+					return linePoints
 				}
-				if (ai < bi){
-					return -1
+
+				var getContainerWidth = function() {
+					return $("#viz").width()
 				}
-				return 0
-			})
 
-			var getBBoxById = function(id) {
-				return document.getElementById(id).getBBox()
-			}
+				var isCenterInBBox = function(point, bBox) {
+					var horizontalPadding = itemArea / 2,
+						horizontalCheck = point.cx + horizontalPadding >= bBox.x && point.cx - horizontalPadding <= bBox.x + bBox.width,
+						verticalCheck = point.cy >= bBox.y && point.cy <= bBox.y + bBox.height
+					
+					if (horizontalCheck && verticalCheck)
+						return true
+					return false
+				}
 
-			var getLinePoints = function(origin) {
-				var start = d3.select(origin),
-					halfTextWidth = getBBoxById("tool-name").width / 2,
-					pointAfterCircles = getBBoxById("circle-group").height,
-					linePoints = []
-
-				linePoints.push( [start.attr("cx"), parseInt(start.attr("cy")) + itemArea / 2])
-				linePoints.push( [start.attr("cx"), pointAfterCircles + 15])
-				linePoints.push( [40 + halfTextWidth, pointAfterCircles + 15])
-				linePoints.push( [40 + halfTextWidth, pointAfterCircles + 30])
-
-				return linePoints
-			}
-
-			var getContainerWidth = function() {
-				return $("#viz").width()
-			}
-
-			var isCenterInBBox = function(point, bBox) {
-				var horizontalPadding = itemArea / 2,
-					horizontalCheck = point.cx + horizontalPadding >= bBox.x && point.cx - horizontalPadding <= bBox.x + bBox.width,
-					verticalCheck = point.cy >= bBox.y && point.cy <= bBox.y + bBox.height
-				
-				if (horizontalCheck && verticalCheck)
-					return true
-				return false
-			}
-
-			var getCenter = function(d, i) {
-				var toolCountBBox = getBBoxById("tool-count")
-				var center = {}
-				while (true) {
-					center = {
-						cx: ((i+circleIndexPadding) % Math.floor(getContainerWidth() / itemArea)) * itemArea + radius,
-						cy: Math.floor((i+circleIndexPadding)*itemArea / getContainerWidth()) * itemArea + radius
+				var getCenter = function(d, i) {
+					var toolCountBBox = getBBoxById("tool-count")
+					var center = {}
+					while (true) {
+						center = {
+							cx: ((i+circleIndexPadding) % Math.floor(getContainerWidth() / itemArea)) * itemArea + radius,
+							cy: Math.floor((i+circleIndexPadding)*itemArea / getContainerWidth()) * itemArea + radius
+						}
+						if (isCenterInBBox(center, toolCountBBox)) {
+							++circleIndexPadding
+						} else {
+							break;
+						}
 					}
-					if (isCenterInBBox(center, toolCountBBox)) {
-						++circleIndexPadding
-					} else {
-						break;
-					}
+					return center
 				}
-				return center
-			}
 
-			var lineFunction = d3.line()
-				.x(function(d){return d[0]})
-				.y(function(d){return d[1]})
+				var lineFunction = d3.line()
+					.x(function(d){return d[0]})
+					.y(function(d){return d[1]})
 
-			var svg = d3.select("#viz")
-				.append("svg")
-				.attr("width", "100%")
-				.attr("height", 250)
+				var svg = d3.select("#viz")
+					.append("svg")
+					.attr("width", "100%")
+					.attr("height", 350)
 
-			var toolCount = svg.append("text")
-				.attr('text-anchor', "end")
-				.attr('id', 'tool-count')
-				.attr("font-size", "70px")
-				.attr("fill", "white")
-				.attr("stroke", "black")
-				.attr("stroke-width", "1.5")
-				.attr("font-weight", "bold")
-				.text(toolsByAnalysis.tools.length)
+				var toolCount = svg.append("text")
+					.attr('text-anchor', "end")
+					.attr('id', 'tool-count')
+					.attr("font-size", "70px")
+					.attr("fill", "white")
+					.attr("stroke", "black")
+					.attr("stroke-width", "1.5")
+					.attr("font-weight", "bold")
+					.text(toolsByAnalysis.tools.length)
 
-			var circleGroup = svg.append("g")
-				.attr("id", "circle-group")
+				var circleGroup = svg.append("g")
+					.attr("id", "circle-group")
 
-			var circleIndexPadding = 0
+				var circleIndexPadding = 0
 
-			var circles = circleGroup.selectAll("circle")
-				.data(toolsByAnalysis.tools, function(d){d.tool_id})
-				.enter()
-				.append("circle")				
-				.attr("r", radius )
-				.attr("fill", function(d,i){ 
-					return c20(colorIndex[d.attribute_value_ids[0]])
-				})
-				.on("mouseover", function(d){
-					d3.select(this)
-						.attr("r", radius*1.5)
-						.attr("stroke", "#ADADAD")
-						.attr("stroke-width", 2)
-						.attr("fill-opacity", 0.7)
-						.attr("stroke-dasharray", ("5,3"))
-					toolName.text(d.name)
-					lineGraph.attr("d", lineFunction( getLinePoints(this) ))
-				})
-				.on("mouseout", function(d){
-					d3.select(this)
-						.attr("r", radius)
-						.attr("stroke", "none")
-						.attr("fill-opacity", 1)
-					lineGraph.attr("d", lineFunction([]))
-					toolName.text("")
-				})
-				.on("click", function(d) {
-					console.log("clicked " + JSON.stringify(d))
-				})
+				var circles = circleGroup.selectAll("circle")
+					.data(toolsByAnalysis.tools, function(d){d.tool_id})
+					.enter()
+					.append("circle")				
+					.attr("r", radius )
+					.attr("fill", function(d,i){ 
+						return c20(colorIndex[d.attribute_value_ids[0]])
+					})
+					.on("mouseover", function(d){
+						d3.select(this)
+							.attr("r", radius*1.5)
+							.attr("stroke", "#ADADAD")
+							.attr("stroke-width", 2)
+							.attr("fill-opacity", 0.7)
+							.attr("stroke-dasharray", ("5,3"))
+						toolName.text(d.name)
+						lineGraph.attr("d", lineFunction( getLinePoints(this) ))
+						toolDetail.text(d.detail)
+					})
+					.on("mouseout", function(d){
+						d3.select(this)
+							.attr("r", radius)
+							.attr("stroke", "none")
+							.attr("fill-opacity", 1)
+						lineGraph.attr("d", lineFunction([]))
+						toolName.text("")
+						toolDetail.text("")
+					})
+					.on("click", function(d) {
+						console.log("clicked " + JSON.stringify(d))
+					})
 
-			var lineGraph = svg.append("path")
-				.attr("d", lineFunction([]))
-				.attr("stroke", "#ADADAD")
-				.attr("stroke-width", 2)
-				.attr("fill", "none")
-				.attr("stroke-dasharray", ("5,3"))
+				var lineGraph = svg.append("path")
+					.attr("d", lineFunction([]))
+					.attr("stroke", "#ADADAD")
+					.attr("stroke-width", 2)
+					.attr("fill", "none")
+					.attr("stroke-dasharray", ("5,3"))
 
-			var toolName = svg.append("text")
-				.attr('id', 'tool-name')
-				.attr("font-size", "20px")
+				var toolName = svg.append("text")
+					.attr('id', 'tool-name')
+					.attr("font-size", "20px")
 
-			var arrangeObjects = function() {
-				toolCount.attr('x', getContainerWidth() - itemArea / 2)
-						.attr('y', 50)
-				circleIndexPadding = 0
-				circles.attrs( function (d, i) {
-					return getCenter(d, i)
-				})
-				toolName.attr('x', 40)
-						.attr('y', getBBoxById("circle-group").height + 50)
-			}
+				var toolDetail = svg.append("foreignObject")
+					.attr("id", 'tool-description')
+					.text("omar")
+					// .attr("font-size", "15px")
 
-			arrangeObjects()
 
-			$(window).on("resize", function() {
+				var arrangeObjects = function() {
+					toolCount.attr('x', getContainerWidth() - itemArea / 2)
+							.attr('y', 50)
+					circleIndexPadding = 0
+					circles.attrs( function (d, i) {
+						return getCenter(d, i)
+					})
+					toolName.attr('x', 40)
+							.attr('y', getBBoxById("circle-group").height + 50)
+					toolDetail.attr('x', 0)
+							.attr('y', getBBoxById("circle-group").height + 60)
+							.attr('width', getContainerWidth())
+				}
+
 				arrangeObjects()
-			})
 
+				$(window).on("resize", function() {
+					arrangeObjects()
+				})
+			}
 
+			scope.$watch('tools', function(oldVal, newVal){
+				toolsByAnalysis = scope.tools;				
+				console.log (toolsByAnalysis)
+				if (drawn) {
+					drawWidget();		
+				}
+				
+				drawn = true;								
+			});
 
 		}
 	}
