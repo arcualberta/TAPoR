@@ -1,6 +1,6 @@
 "use strict";
 
-app.directive("toolCategoryView", function() {
+app.directive("toolCategoryView", ['$location', function($location) {
 	return {
 		restrict: 'E',
 		template: '<div id="viz"></div>',
@@ -145,7 +145,11 @@ app.directive("toolCategoryView", function() {
 						toolImage.attr("xlink:href", "")
 					})
 					.on("click", function(d) {
-						window.location.href = "/tools/" + d.id
+						// window.location.href = "/tools/" + d.id
+						scope.$apply(function(){
+							$location.path( "/tools/" + d.id);	
+						})
+						
 					})
 
 				var lineGraph = svg.append("path")
@@ -204,4 +208,4 @@ app.directive("toolCategoryView", function() {
 
 		}
 	}
-})
+}])
