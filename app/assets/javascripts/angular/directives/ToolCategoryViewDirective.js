@@ -145,7 +145,7 @@ app.directive("toolCategoryView", function() {
 						toolImage.attr("xlink:href", "")
 					})
 					.on("click", function(d) {
-						console.log("clicked " + JSON.stringify(d))
+						window.location.href = "/tools/" + d.id
 					})
 
 				var lineGraph = svg.append("path")
