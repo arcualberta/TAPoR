@@ -158,6 +158,7 @@ app.directive("toolCategoryView", function() {
 				var toolName = svg.append("text")
 					.attr('id', 'tool-name')
 					.attr("font-size", "20px")
+					.attr("fill", "#29ABE2")
 
 				var toolDetail = svg.append("foreignObject")
 					.attr("id", 'tool-description')
@@ -179,7 +180,7 @@ app.directive("toolCategoryView", function() {
 					toolDetail.attr('x', 0)
 							.attr('y', getBBoxById("circle-group").height + 60)
 							.attr('width', getContainerWidth() - 180)
-					toolImage.attr('y', getBBoxById("circle-group").height + 60)
+					toolImage.attr('y', getBBoxById("circle-group").height + 20)
 							.attr('x', getContainerWidth() - 160)
 
 				}

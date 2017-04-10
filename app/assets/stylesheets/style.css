@@ -341,3 +341,10 @@ body, html {
 	overflow-x: hidden;
 	height: 200px;
 }
+
+.bottom-border {
+	border-style: solid;
+    border-color: #4C4C4C;
+    border-width: 0px 0px 10px 0px;
+
+}
