@@ -161,7 +161,6 @@ app.directive("toolCategoryView", function() {
 
 				var toolDetail = svg.append("foreignObject")
 					.attr("id", 'tool-description')
-					.text("omar")
 
 				var toolImage = svg.append("svg:image")
 					.attr("width", "160px")
