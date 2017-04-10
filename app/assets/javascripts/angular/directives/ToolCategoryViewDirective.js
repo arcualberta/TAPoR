@@ -144,12 +144,10 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						toolDetail.text("")
 						toolImage.attr("xlink:href", "")
 					})
-					.on("click", function(d) {
-						// window.location.href = "/tools/" + d.id
+					.on("click", function(d) {						
 						scope.$apply(function(){
-							$location.path( "/tools/" + d.id);	
+							$location.path( "/tools/" + d.tool_id);	
 						})
-						
 					})
 
 				var lineGraph = svg.append("path")
