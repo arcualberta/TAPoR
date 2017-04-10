@@ -132,6 +132,7 @@ app.directive("toolCategoryView", function() {
 						toolName.text(d.name)
 						lineGraph.attr("d", lineFunction( getLinePoints(this) ))
 						toolDetail.text(d.detail)
+						toolImage.attr("xlink:href", d.image_url)
 					})
 					.on("mouseout", function(d){
 						d3.select(this)
@@ -141,6 +142,7 @@ app.directive("toolCategoryView", function() {
 						lineGraph.attr("d", lineFunction([]))
 						toolName.text("")
 						toolDetail.text("")
+						toolImage.attr("xlink:href", "")
 					})
 					.on("click", function(d) {
 						console.log("clicked " + JSON.stringify(d))
@@ -160,7 +162,10 @@ app.directive("toolCategoryView", function() {
 				var toolDetail = svg.append("foreignObject")
 					.attr("id", 'tool-description')
 					.text("omar")
-					// .attr("font-size", "15px")
+
+				var toolImage = svg.append("svg:image")
+					.attr("width", "160px")
+
 
 
 				var arrangeObjects = function() {
@@ -174,7 +179,10 @@ app.directive("toolCategoryView", function() {
 							.attr('y', getBBoxById("circle-group").height + 50)
 					toolDetail.attr('x', 0)
 							.attr('y', getBBoxById("circle-group").height + 60)
-							.attr('width', getContainerWidth())
+							.attr('width', getContainerWidth() - 180)
+					toolImage.attr('y', getBBoxById("circle-group").height + 60)
+							.attr('x', getContainerWidth() - 160)
+
 				}
 
 				arrangeObjects()

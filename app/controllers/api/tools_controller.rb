@@ -3,6 +3,7 @@ require 'base64'
 require 'RMagick'
 require 'xapian'
 require 'htmlentities'
+require 'nokogiri'
 
 include Magick
 
@@ -431,10 +432,8 @@ class Api::ToolsController < ApplicationController
   		.where("is_hidden = false AND is_approved = true")
   		.group("tool_id")
 
-  		coder = HTMLEntities.new
-
 		tools.each do |tool|
-			tool.detail =  coder.decode(tool.detail)
+			tool.detail =  Nokogiri::HTML(tool.detail).text
 			if tool.attribute_value_ids
 				tool.attribute_value_ids = tool.attribute_value_ids.split(",")
 			else
