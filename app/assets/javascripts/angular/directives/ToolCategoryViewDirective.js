@@ -6,11 +6,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 		template: '<div id="viz"></div>',
 		replace: true,
 		// require: ngModel,
-		transclude: true,
+		// transclude: true,
 		scope: {
 			tools: "="
 		},
-		link: function(scope, $element, attrs, ngModel, transclude) {
+		link: function(scope, $element, attrs, ngModel) {
 			
 			var toolsByAnalysis = scope.tools;
 			var drawn = false;
@@ -122,33 +122,46 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					.attr("fill", function(d,i){ 
 						return c20(colorIndex[d.attribute_value_ids[0]])
 					})
-					.on("mouseover", function(d){
-						d3.select(this)
-							.attr("r", radius*1.5)
-							.attr("stroke", "#ADADAD")
-							.attr("stroke-width", 2)
-							.attr("fill-opacity", 0.7)
-							.attr("stroke-dasharray", ("5,3"))
-						toolName.text(d.name)
-						lineGraph.attr("d", lineFunction( getLinePoints(this) ))
-						toolDetail.text(d.detail)
-						toolImage.attr("xlink:href", d.image_url)
+					.on("mouseover", function(d, i){
+						intervalTimer.stop()
+						highlightTool(i)
 					})
 					.on("mouseout", function(d){
-						d3.select(this)
-							.attr("r", radius)
-							.attr("stroke", "none")
-							.attr("fill-opacity", 1)
-						lineGraph.attr("d", lineFunction([]))
-						toolName.text("")
-						toolDetail.text("")
-						toolImage.attr("xlink:href", "")
+						// clearToolHighlight()
+						// restart timer to start highlighting random tools
+						restartTimer()
 					})
 					.on("click", function(d) {						
 						scope.$apply(function(){
 							$location.path( "/tools/" + d.tool_id);	
 						})
 					})
+
+				var clearToolHighlight = function() {
+					circles.attr("r", radius)
+						.attr("stroke", "none")
+						.attr("fill-opacity", 1)
+					lineGraph.attr("d", lineFunction([]))
+					toolName.text("")
+					toolDetail.text("")
+					toolImage.attr("xlink:href", "")
+				}
+
+				var highlightTool = function(index){
+					clearToolHighlight()
+					var d = circles.data()[index],
+						obj = circles.nodes()[index]
+					d3.select(obj)
+						.attr("r", radius*1.5)
+						.attr("stroke", "#ADADAD")
+						.attr("stroke-width", 2)
+						.attr("fill-opacity", 0.7)
+						.attr("stroke-dasharray", ("5,3"))
+					toolName.text(d.name)
+					lineGraph.attr("d", lineFunction( getLinePoints(obj) ))
+					toolDetail.text(d.detail)
+					toolImage.attr("xlink:href", d.image_url)
+				}
 
 				var lineGraph = svg.append("path")
 					.attr("d", lineFunction([]))
@@ -167,8 +180,6 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				var toolImage = svg.append("svg:image")
 					.attr("width", "160px")
-
-
 
 				var arrangeObjects = function() {
 					toolCount.attr('x', getContainerWidth() - itemArea / 2)
@@ -192,15 +203,32 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				$(window).on("resize", function() {
 					arrangeObjects()
 				})
+
+				// start highlighting a random tool to avoid blank canvas
+				var highlightRandomTool = function() {
+					highlightTool(Math.floor((Math.random() * toolsByAnalysis.tools.length)))
+				}
+				highlightRandomTool()
+				
+
+				var intervalTimer;
+				var initialTimer;
+				var restartTimer = function() {
+					intervalTimer;
+					initialTimer = d3.timer(function(){
+						intervalTimer = d3.interval(highlightRandomTool, 3000)
+						initialTimer.stop()
+					}, 3000);
+				}
+				restartTimer();
+
 			}
 
 			scope.$watch('tools', function(oldVal, newVal){
 				toolsByAnalysis = scope.tools;				
-				console.log (toolsByAnalysis)
 				if (drawn) {
 					drawWidget();		
 				}
-				
 				drawn = true;								
 			});
 
