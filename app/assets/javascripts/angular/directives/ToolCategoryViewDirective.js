@@ -21,6 +21,10 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					c20 = d3.scaleOrdinal(d3.schemeCategory20),
 					colorIndex = {};
 
+				var initialTimer;
+				var intervalTimer;
+
+				
 				toolsByAnalysis.attribute_values.forEach(function(attribute, i){
 					colorIndex[attribute.id] = i
 				})
@@ -52,8 +56,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						linePoints = []
 
 					linePoints.push( [start.attr("cx"), parseInt(start.attr("cy")) + itemArea / 2])
-					linePoints.push( [start.attr("cx"), pointAfterCircles + 15])
-					linePoints.push( [40 + halfTextWidth, pointAfterCircles + 15])
+					linePoints.push( [start.attr("cx"), pointAfterCircles + 10])
+					linePoints.push( [40 + halfTextWidth, pointAfterCircles + 10])
 					linePoints.push( [40 + halfTextWidth, pointAfterCircles + 30])
 
 					return linePoints
@@ -123,12 +127,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						return c20(colorIndex[d.attribute_value_ids[0]])
 					})
 					.on("mouseover", function(d, i){
-						intervalTimer.stop()
+						window.clearTimeout(initialTimer)
+						window.clearTimeout(intervalTimer)
 						highlightTool(i)
 					})
 					.on("mouseout", function(d){
-						// clearToolHighlight()
-						// restart timer to start highlighting random tools
 						restartTimer()
 					})
 					.on("click", function(d) {						
@@ -138,7 +141,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					})
 
 				var clearToolHighlight = function() {
-					circles.attr("r", radius)
+					circles.transition().duration(50)
+						.attr("r", radius)
 						.attr("stroke", "none")
 						.attr("fill-opacity", 1)
 					lineGraph.attr("d", lineFunction([]))
@@ -146,12 +150,16 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					toolDetail.text("")
 					toolImage.attr("xlink:href", "")
 				}
-
+				var prev;
 				var highlightTool = function(index){
 					clearToolHighlight()
 					var d = circles.data()[index],
 						obj = circles.nodes()[index]
+
+					prev = obj
 					d3.select(obj)
+						.transition()
+						.duration(50)
 						.attr("r", radius*1.5)
 						.attr("stroke", "#ADADAD")
 						.attr("stroke-width", 2)
@@ -198,29 +206,25 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				}
 
+				var highlightRandomTool = function() {
+					highlightTool(Math.floor((Math.random() * toolsByAnalysis.tools.length)))
+				}
+
+				var restartTimer = function() {
+					// window.clearTimeout(initialTimer)
+					initialTimer = window.setTimeout(function(){					
+						intervalTimer = window.setInterval(highlightRandomTool, 4000)
+					}, 3000)	
+				}
+
 				arrangeObjects()
+				highlightRandomTool()
+				restartTimer();
 
 				$(window).on("resize", function() {
 					arrangeObjects()
 				})
 
-				// start highlighting a random tool to avoid blank canvas
-				var highlightRandomTool = function() {
-					highlightTool(Math.floor((Math.random() * toolsByAnalysis.tools.length)))
-				}
-				highlightRandomTool()
-				
-
-				var intervalTimer;
-				var initialTimer;
-				var restartTimer = function() {
-					intervalTimer;
-					initialTimer = d3.timer(function(){
-						intervalTimer = d3.interval(highlightRandomTool, 3000)
-						initialTimer.stop()
-					}, 3000);
-				}
-				restartTimer();
 
 			}
 
