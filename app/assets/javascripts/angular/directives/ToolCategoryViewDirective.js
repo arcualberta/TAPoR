@@ -17,31 +17,59 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 			var drawWidget = function() {
 				var radius = 7,
-					itemArea = 20,
+					increaseRatio = 1.5,
+					itemArea = 20, // does not work with 22
 					c20 = d3.scaleOrdinal(d3.schemeCategory20),
-					colorIndex = {};
-
-				var initialTimer;
-				var intervalTimer;
+					attributeDataIndex = {},
+					initialTimer,
+					intervalTimer;
 
 				
+				// map attributeIds to c20 colours
 				toolsByAnalysis.attribute_values.forEach(function(attribute, i){
-					colorIndex[attribute.id] = i
+					attributeDataIndex[attribute.id] = {
+						color: i,
+						toolInstances: 0
+					}
 				})
 
+				// toolInstances of item categories is needed to colour least common
+				toolsByAnalysis.tools.forEach(function(tool){
+					tool.attribute_value_ids.forEach(function(attributeId){						
+						attributeDataIndex[attributeId].toolInstances++
+					})
+				})
+
+				// define least common category for each tool
+
+				var getLeastCommonCategory = function(tool) {
+					var least = Number.POSITIVE_INFINITY 
+					var resultId = 0;
+					tool.attribute_value_ids.forEach(function(attributeId){						
+						if (attributeDataIndex[attributeId].toolInstances < least) {
+							least = attributeDataIndex[attributeId].toolInstances
+							resultId = attributeId
+						}
+					})
+					return parseInt(resultId)
+				}
+
+				toolsByAnalysis.tools.forEach(function(tool){
+					tool.leastCommonCategory = getLeastCommonCategory(tool)
+				})
+
+
 				toolsByAnalysis.tools.sort(function(a, b){
-					if (! a.attribute_value_ids.length || ! b.attribute_value_ids.length) {					
-						return 0
-					}
-					var ai = parseInt(a.attribute_value_ids[0])
-					var	bi = parseInt(b.attribute_value_ids[0])
+					var ai = a.leastCommonCategory
+					var	bi = b.leastCommonCategory					
 					
-					if (ai > bi){
+					if (ai > bi) {
 						return 1
-					}
-					if (ai < bi){
+					} 
+					if (ai < bi) {
 						return -1
 					}
+					
 					return 0
 				})
 
@@ -82,7 +110,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					var center = {}
 					while (true) {
 						center = {
-							cx: ((i+circleIndexPadding) % Math.floor(getContainerWidth() / itemArea)) * itemArea + radius,
+							cx: ((i+circleIndexPadding) % Math.floor(getContainerWidth() / itemArea)) * itemArea + radius*increaseRatio,
 							cy: Math.floor((i+circleIndexPadding)*itemArea / getContainerWidth()) * itemArea + radius
 						}
 						if (isCenterInBBox(center, toolCountBBox)) {
@@ -124,7 +152,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					.append("circle")				
 					.attr("r", radius )
 					.attr("fill", function(d,i){ 
-						return c20(colorIndex[d.attribute_value_ids[0]])
+						return c20( attributeDataIndex[d.leastCommonCategory].color )
 					})
 					.on("mouseover", function(d, i){
 						window.clearTimeout(initialTimer)
@@ -160,7 +188,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					d3.select(obj)
 						.transition()
 						.duration(50)
-						.attr("r", radius*1.5)
+						.attr("r", radius*increaseRatio)
 						.attr("stroke", "#ADADAD")
 						.attr("stroke-width", 2)
 						.attr("fill-opacity", 0.7)
