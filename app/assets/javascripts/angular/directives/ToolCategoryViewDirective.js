@@ -178,14 +178,14 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					toolDetail.text("")
 					toolImage.attr("xlink:href", "")
 				}
-				var prev;
+				var prevCircle;
 				var highlightTool = function(index){
 					clearToolHighlight()
-					var d = circles.data()[index],
-						obj = circles.nodes()[index]
+					var d = circles.data()[index];
+					prevCircle = circles.nodes()[index]
 
-					prev = obj
-					d3.select(obj)
+					
+					d3.select(prevCircle)
 						.transition()
 						.duration(50)
 						.attr("r", radius*increaseRatio)
@@ -194,7 +194,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						.attr("fill-opacity", 0.7)
 						.attr("stroke-dasharray", ("5,3"))
 					toolName.text(d.name)
-					lineGraph.attr("d", lineFunction( getLinePoints(obj) ))
+					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
 					toolDetail.text(d.detail)
 					toolImage.attr("xlink:href", d.image_url)
 				}
@@ -215,6 +215,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					.attr("id", 'tool-description')
 
 				var toolImage = svg.append("svg:image")
+					.attr("id", 'tool-image')
 					.attr("width", "160px")
 
 				var arrangeObjects = function() {
@@ -232,6 +233,10 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					toolImage.attr('y', getBBoxById("circle-group").height + 20)
 							.attr('x', getContainerWidth() - 160)
 
+					// give space for circles, image and padding
+					svg.attr("height", getBBoxById("circle-group").height + 170)
+					// console.log( getBBoxById("circle-group"))
+
 				}
 
 				var highlightRandomTool = function() {
@@ -247,10 +252,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				arrangeObjects()
 				highlightRandomTool()
-				restartTimer();
+				restartTimer()
 
 				$(window).on("resize", function() {
 					arrangeObjects()
+					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
 				})
 
 
