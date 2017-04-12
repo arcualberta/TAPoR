@@ -199,9 +199,24 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						.attr("stroke-dasharray", ("5,3"))
 					toolName.text(d.name)
 					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
-					toolDetail.text(d.detail)
+					// toolDetail.text(d.detail)
+					setToolDetailText(d.detail)
 					toolImage.attr("xlink:href", d.image_url)
 				}
+
+				var setToolDetailText = function(text) {
+					var width = toolDetail.attr("width")
+					var height = 130//toolImage.attr("height")					
+					var wordSpace = 200;
+					var maxCharacters = (width*height) / wordSpace;
+					var textDisplay = text;
+					if (text.length > maxCharacters) {
+						textDisplay = text.substring(0, Math.floor(maxCharacters)) + "..."
+					}
+
+					toolDetail.text(textDisplay)
+				}
+				
 
 				var lineGraph = svg.append("path")
 					.attr("d", lineFunction([]))
