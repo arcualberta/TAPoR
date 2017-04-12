@@ -114,7 +114,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						var index = i + circleIndexPadding;
 						center = {
 							cx: (index % circlesHorizontally) * itemArea + radius*increaseRatio,
-							cy: Math.floor(index / circlesHorizontally) * itemArea + radius
+							cy: Math.floor(index / circlesHorizontally) * itemArea + radius*increaseRatio
 							
 						}						
 						if (isCenterInBBox(center, toolCountBBox)) {
