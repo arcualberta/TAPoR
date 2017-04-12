@@ -108,11 +108,15 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var getCenter = function(d, i) {
 					var toolCountBBox = getBBoxById("tool-count")
 					var center = {}
+					var circlesHorizontally = Math.floor(getContainerWidth() / itemArea)
+
 					while (true) {
+						var index = i + circleIndexPadding;
 						center = {
-							cx: ((i+circleIndexPadding) % Math.floor(getContainerWidth() / itemArea)) * itemArea + radius*increaseRatio,
-							cy: Math.floor((i+circleIndexPadding)*itemArea / getContainerWidth()) * itemArea + radius
-						}
+							cx: (index % circlesHorizontally) * itemArea + radius*increaseRatio,
+							cy: Math.floor(index / circlesHorizontally) * itemArea + radius
+							
+						}						
 						if (isCenterInBBox(center, toolCountBBox)) {
 							++circleIndexPadding
 						} else {
@@ -244,7 +248,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				}
 
 				var restartTimer = function() {
-					// window.clearTimeout(initialTimer)
+					window.clearTimeout(initialTimer)
 					initialTimer = window.setTimeout(function(){					
 						intervalTimer = window.setInterval(highlightRandomTool, 4000)
 					}, 3000)	
