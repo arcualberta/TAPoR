@@ -172,11 +172,26 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						})
 					})
 
+				var getStars = function(starAverage) {
+					
+					var result = [0,0,0,0,0]
+					for (var i =0; i<5; i++) {
+						if (starAverage > 0 && starAverage <= 1){
+							result[i] = starAverage
+						} else if (starAverage > 1){
+							result[i] = 1
+						} 
+						--starAverage
+					}
+
+					return result;					
+
+				}
 				
 				var starGroup = svg.append("g")
 					.attr("id", "star-group")
 
-				var starsData = [1,1,0.5,0,0]
+				var starsData = getStars(0)
 								
 				
 
@@ -210,47 +225,17 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				selection.exit()
 					.remove()
 			
-
-				// starsData.pop()
-				// selection.data(starsData)
-				// updateStars(starsData)
 				var updateStars = function(stars) {
 					starsData= getStars(stars)
 					starGroup.selectAll("rect").attr("width", function(d,i){return starsData[i]*25})	
 				}
-				
-				// updateStars(starsData)
-				// starsData.push(1)
-				// updateStars(starsData)
-				// updateStars(starsData)
 					
-
 				var clearToolHighlight = function() {
 					circles.transition().duration(50)
 						.attr("r", radius)
 						.attr("stroke", "none")
 						.attr("fill-opacity", 1)
-					// lineGraph.attr("d", lineFunction([]))
-					// toolName.text("")
-					// toolDetail.text("")
-					// toolImage.attr("xlink:href", "")
-				}
-
-				var getStars = function(starAverage) {
-					
-					var result = [0,0,0,0,0]
-					for (var i =0; i<5; i++) {
-						if (starAverage > 0 && starAverage <= 1){
-							result[i] = starAverage
-						} else if (starAverage > 1){
-							result[i] = 1
-						} 
-						--starAverage
-					}
-
-					return result;					
-
-				}
+				}				
 
 				var prevCircle;
 				var highlightTool = function(index){
