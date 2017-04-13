@@ -172,15 +172,49 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						})
 					})
 
+				
+				var starGroup = svg.append("g")
+					.attr("id", "star-group")
+
+				// var starsData = [1,1,1,0,0]
+				var stars = [1,1,1,0,0]
+				
+				var updateStars = function(data) {
+					var selection = starGroup.selectAll("path")
+									.data(data)
+					selection.enter()
+						.append("path")
+						.attr("fill", function(d){
+							if (d==1) {
+								return "#29ABE2"
+							} else {
+								return "#808080"
+							}
+						})
+						.attr("d", 'M 332.256 385.519 L 217.943 325.583 L 103.763 385.773 L 125.441 258.534 L 32.9138 168.542 L 160.625 149.839 L 217.619 34.0317 L 274.871 149.713 L 402.623 168.131 L 310.296 258.328 L 332.256 385.519 Z')
+						.attr("transform", function(d, i) {
+							return "translate ("+i*25+",0) scale(0.06)"
+						})
+					selection.exit()
+						.remove()
+				}
+				
+				updateStars(stars)				
+			
+					
+				// starsData = [1,0,0,0,0]
+				
+					
+
 				var clearToolHighlight = function() {
 					circles.transition().duration(50)
 						.attr("r", radius)
 						.attr("stroke", "none")
 						.attr("fill-opacity", 1)
-					lineGraph.attr("d", lineFunction([]))
-					toolName.text("")
-					toolDetail.text("")
-					toolImage.attr("xlink:href", "")
+					// lineGraph.attr("d", lineFunction([]))
+					// toolName.text("")
+					// toolDetail.text("")
+					// toolImage.attr("xlink:href", "")
 				}
 				var prevCircle;
 				var highlightTool = function(index){
@@ -198,6 +232,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						.attr("fill-opacity", 0.7)
 						.attr("stroke-dasharray", ("5,3"))
 					toolName.text(d.name)
+					arrageStarGroup()
 					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
 					// toolDetail.text(d.detail)
 					setToolDetailText(d.detail)
@@ -207,7 +242,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var setToolDetailText = function(text) {
 					var width = toolDetail.attr("width")
 					var height = 130//toolImage.attr("height")					
-					var wordSpace = 200;
+					var wordSpace = 220;
 					var maxCharacters = (width*height) / wordSpace;
 					var textDisplay = text;
 					if (text.length > maxCharacters) {
@@ -237,7 +272,16 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					.attr("id", 'tool-image')
 					.attr("width", "160px")
 
-				var arrangeObjects = function() {
+				var arrageStarGroup = function() {
+					starGroup.attr('transform', "translate("+
+						(getBBoxById('tool-name').x + 
+							getBBoxById('tool-name').width / 2 - getBBoxById('star-group').width/2)
+						+","+
+						(getBBoxById("circle-group").height + 55)
+						+")")
+				}
+
+				var arangeObjects = function() {
 					toolCount.attr('x', getContainerWidth() - itemArea / 2)
 							.attr('y', 50)
 					circleIndexPadding = 0
@@ -247,13 +291,15 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					toolName.attr('x', 40)
 							.attr('y', getBBoxById("circle-group").height + 50)
 					toolDetail.attr('x', 0)
-							.attr('y', getBBoxById("circle-group").height + 60)
+							.attr('y', getBBoxById("circle-group").height + 80)
 							.attr('width', getContainerWidth() - 180)
 					toolImage.attr('y', getBBoxById("circle-group").height + 20)
 							.attr('x', getContainerWidth() - 160)
 
 					// give space for circles, image and padding
 					svg.attr("height", getBBoxById("circle-group").height + 170)
+
+					arrageStarGroup()
 					// console.log( getBBoxById("circle-group"))
 
 				}
@@ -269,12 +315,12 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					}, 3000)	
 				}
 
-				arrangeObjects()
+				arangeObjects()
 				highlightRandomTool()
 				restartTimer()
 
 				$(window).on("resize", function() {
-					arrangeObjects()
+					arangeObjects()
 					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
 				})
 
