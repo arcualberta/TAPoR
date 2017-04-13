@@ -84,9 +84,9 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						linePoints = []
 
 					linePoints.push( [start.attr("cx"), parseInt(start.attr("cy")) + itemArea / 2])
-					linePoints.push( [start.attr("cx"), pointAfterCircles + 10])
-					linePoints.push( [40 + halfTextWidth, pointAfterCircles + 10])
-					linePoints.push( [40 + halfTextWidth, pointAfterCircles + 30])
+					linePoints.push( [start.attr("cx"), pointAfterCircles + 15])
+					linePoints.push( [60 + halfTextWidth, pointAfterCircles + 15])
+					linePoints.push( [60 + halfTextWidth, pointAfterCircles + 30])
 
 					return linePoints
 				}
@@ -311,7 +311,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					circles.attrs( function (d, i) {
 						return getCenter(d, i)
 					})
-					toolName.attr('x', 40)
+					toolName.attr('x', 60)
 							.attr('y', getBBoxById("circle-group").height + 50)
 					toolDetail.attr('x', 0)
 							.attr('y', getBBoxById("circle-group").height + 80)
