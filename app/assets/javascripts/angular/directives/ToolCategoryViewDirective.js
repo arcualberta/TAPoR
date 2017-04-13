@@ -113,7 +113,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					while (true) {
 						var index = i + circleIndexPadding;
 						center = {
-							cx: (index % circlesHorizontally) * itemArea + radius*increaseRatio,
+							cx: parseInt(index % circlesHorizontally) * itemArea + radius*increaseRatio,
 							cy: Math.floor(index / circlesHorizontally) * itemArea + radius*increaseRatio
 							
 						}						
@@ -176,34 +176,53 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var starGroup = svg.append("g")
 					.attr("id", "star-group")
 
-				// var starsData = [1,1,1,0,0]
-				var stars = [1,1,1,0,0]
+				var starsData = [1,1,0.5,0,0]
+								
 				
-				var updateStars = function(data) {
-					var selection = starGroup.selectAll("path")
-									.data(data)
-					selection.enter()
-						.append("path")
-						.attr("fill", function(d){
-							if (d==1) {
-								return "#29ABE2"
-							} else {
-								return "#808080"
-							}
-						})
-						.attr("d", 'M 332.256 385.519 L 217.943 325.583 L 103.763 385.773 L 125.441 258.534 L 32.9138 168.542 L 160.625 149.839 L 217.619 34.0317 L 274.871 149.713 L 402.623 168.131 L 310.296 258.328 L 332.256 385.519 Z')
+
+				var starPath = 'M 332.256 385.519 L 217.943 325.583 L 103.763 385.773 L 125.441 258.534 L 32.9138 168.542 L 160.625 149.839 L 217.619 34.0317 L 274.871 149.713 L 402.623 168.131 L 310.296 258.328 L 332.256 385.519 Z'
+				var selection = starGroup.selectAll("path")
+								.data(starsData)
+
+				selection.enter().append("path")
+						.attr("fill", "#808080")
+						.attr("d", starPath)
+						.attr("transform", function(d, i) {
+							return "translate ("+i*25+",0) scale(0.06)"
+						})				
+				selection.enter()						
+					.append("clipPath")
+						.attr("id", function(d, i){return "clip" + i})
+					.append("path")
+						.attr("d", starPath)
 						.attr("transform", function(d, i) {
 							return "translate ("+i*25+",0) scale(0.06)"
 						})
-					selection.exit()
-						.remove()
+				selection.enter()
+					.append("rect")
+						.attr("x", function(d,i){ return i*25})
+						.attr("y", 0)
+						.attr("width", function(d,i){ return d*25})
+						.attr("height", 25)
+						.attr("clip-path", function(d, i){return "url(#clip"+i+")"})
+						.attr("fill", "#29ABE2") 
+
+				selection.exit()
+					.remove()
+			
+
+				// starsData.pop()
+				// selection.data(starsData)
+				// updateStars(starsData)
+				var updateStars = function(stars) {
+					starsData= getStars(stars)
+					starGroup.selectAll("rect").attr("width", function(d,i){return starsData[i]*25})	
 				}
 				
-				updateStars(stars)				
-			
-					
-				// starsData = [1,0,0,0,0]
-				
+				// updateStars(starsData)
+				// starsData.push(1)
+				// updateStars(starsData)
+				// updateStars(starsData)
 					
 
 				var clearToolHighlight = function() {
@@ -216,6 +235,23 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					// toolDetail.text("")
 					// toolImage.attr("xlink:href", "")
 				}
+
+				var getStars = function(starAverage) {
+					
+					var result = [0,0,0,0,0]
+					for (var i =0; i<5; i++) {
+						if (starAverage > 0 && starAverage <= 1){
+							result[i] = starAverage
+						} else if (starAverage > 1){
+							result[i] = 1
+						} 
+						--starAverage
+					}
+
+					return result;					
+
+				}
+
 				var prevCircle;
 				var highlightTool = function(index){
 					clearToolHighlight()
@@ -237,6 +273,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					// toolDetail.text(d.detail)
 					setToolDetailText(d.detail)
 					toolImage.attr("xlink:href", d.image_url)
+					updateStars(d.star_average)
+
 				}
 
 				var setToolDetailText = function(text) {
@@ -300,7 +338,6 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					svg.attr("height", getBBoxById("circle-group").height + 170)
 
 					arrageStarGroup()
-					// console.log( getBBoxById("circle-group"))
 
 				}
 
