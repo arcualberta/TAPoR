@@ -92,7 +92,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				}
 
 				var getContainerWidth = function() {
-					return $("#viz").width()
+					return $("#viz").width();
+				}
+
+				var getMainContainerWidth = function() {
+					return getContainerWidth() - 200;
 				}
 
 				var isCenterInBBox = function(point, bBox) {
@@ -100,15 +104,16 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						horizontalCheck = point.cx + horizontalPadding >= bBox.x && point.cx - horizontalPadding <= bBox.x + bBox.width,
 						verticalCheck = point.cy >= bBox.y && point.cy <= bBox.y + bBox.height
 					
-					if (horizontalCheck && verticalCheck)
+					if (horizontalCheck && verticalCheck) {
 						return true
+					}
 					return false
 				}
 
 				var getCenter = function(d, i) {
 					var toolCountBBox = getBBoxById("tool-count")
 					var center = {}
-					var circlesHorizontally = Math.floor(getContainerWidth() / itemArea)
+					var circlesHorizontally = Math.floor(getMainContainerWidth() / itemArea)
 
 					while (true) {
 						var index = i + circleIndexPadding;
@@ -172,6 +177,63 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						})
 					})
 
+				var categoryGroup = svg.append("g")
+					.attr("id", "category-group")
+
+				// var categoryTitle = categoryGroup.append("text")
+				// 	.text("Categories")
+				// 	.attr('x', getMainContainerWidth() + 5)
+				// 	.attr('y', 30)
+
+
+				var categoryTitle = svg.append("text")
+					.text("Categories")
+					.attr('x', getMainContainerWidth() + 10)
+					.attr('y', 15)
+					.attr("fill", "#29ABE2")
+
+
+				// Needed to highlight all categories by using negative id
+				toolsByAnalysis.attribute_values.unshift({id: -1, name:"All"})
+
+				var categories = categoryGroup.selectAll("text")
+					.data(toolsByAnalysis.attribute_values, function(d){d.id})
+					.enter()
+					.append("text")
+					.text(function(d){return d.name})
+					.attr('x', getMainContainerWidth() + 10)
+					.attr('y', function(d, i){ return i* 18 + 35;})
+					.attr("class", "clickable")
+					.on('click', function(d, i) {
+						highlightCirclesByCategory(d)
+					})
+
+				var highlightCirclesByCategory = function(category) {
+					circles.transition().duration(50)
+					.attr("fill-opacity", function(d, i){
+						// console.log(d.attribute_value_ids)
+						if (category.id === -1) {
+							return 1
+						}
+
+						var opacity = 0.07;
+						d.attribute_value_ids.forEach(function(attributeId) {
+							if (attributeId == category.id) {
+								opacity = 1;
+								return;
+							}
+						})
+						return opacity
+					})
+				}
+
+				// var clearToolHighlight = function() {
+				// 	circles.transition().duration(50)
+				// 		.attr("r", radius)
+				// 		.attr("stroke", "none")
+				// 		.attr("fill-opacity", 1)
+				// }				
+
 				var getStars = function(starAverage) {
 					
 					var result = [0,0,0,0,0]
@@ -234,7 +296,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					circles.transition().duration(50)
 						.attr("r", radius)
 						.attr("stroke", "none")
-						.attr("fill-opacity", 1)
+						// .attr("fill-opacity", 1)
 				}				
 
 				var prevCircle;
@@ -250,7 +312,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						.attr("r", radius*increaseRatio)
 						.attr("stroke", "#ADADAD")
 						.attr("stroke-width", 2)
-						.attr("fill-opacity", 0.7)
+						// .attr("fill-opacity", 0.7)
 						.attr("stroke-dasharray", ("5,3"))
 					toolName.text(d.name)
 					arrageStarGroup()
@@ -275,6 +337,23 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					toolDetail.text(textDisplay)
 				}
 				
+
+				// var getLeftFramePoints = function() {
+				// 	var points = []
+				// 	//  4 puntos
+
+				// 	points.push([getMainContainerWidth(), 10])
+				// 	points.push([getMainContainerWidth() + 7, 10])
+				// 	points.push([getMainContainerWidth() + 7, getBBoxById("circle-group").height])
+				// 	points.push([getMainContainerWidth(), getBBoxById("circle-group").height])					
+				// 	return points
+				// }
+
+				// var leftFrame = svg.append("path")
+				// 	.attr("d", lineFunction([]))
+				// 	.attr("stroke", "#ADADAD")
+				// 	.attr("stroke-width", 2)
+				// 	.attr("fill", "none")
 
 				var lineGraph = svg.append("path")
 					.attr("d", lineFunction([]))
@@ -304,8 +383,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						+")")
 				}
 
-				var arangeObjects = function() {
-					toolCount.attr('x', getContainerWidth() - itemArea / 2)
+				var arrangeObjects = function() {
+					toolCount.attr('x', getMainContainerWidth() - itemArea / 2)
 							.attr('y', 50)
 					circleIndexPadding = 0
 					circles.attrs( function (d, i) {
@@ -315,12 +394,22 @@ app.directive("toolCategoryView", ['$location', function($location) {
 							.attr('y', getBBoxById("circle-group").height + 50)
 					toolDetail.attr('x', 0)
 							.attr('y', getBBoxById("circle-group").height + 80)
-							.attr('width', getContainerWidth() - 180)
+							.attr('width', getMainContainerWidth() - 180)
 					toolImage.attr('y', getBBoxById("circle-group").height + 20)
-							.attr('x', getContainerWidth() - 160)
+							.attr('x', getMainContainerWidth() - 160)
+					// leftFrame.attr("d", lineFunction(getLeftFramePoints()))
 
 					// give space for circles, image and padding
-					svg.attr("height", getBBoxById("circle-group").height + 170)
+					var categoryHeight = getBBoxById("category-group").height
+					var circlesHeight = getBBoxById("circle-group").height
+
+					var svgHeight = circlesHeight > categoryHeight ? circlesHeight + 180 : categoryHeight + 40;
+
+					svg.attr("height", svgHeight)
+
+					// reset categories places
+					categories.attr('x', getMainContainerWidth() + 10)
+						.attr('y', function(d, i){ return i* 18 + 35;})
 
 					arrageStarGroup()
 
@@ -337,12 +426,12 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					}, 3000)	
 				}
 
-				arangeObjects()
+				arrangeObjects()
 				highlightRandomTool()
 				restartTimer()
 
 				$(window).on("resize", function() {
-					arangeObjects()
+					arrangeObjects()
 					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
 				})
 

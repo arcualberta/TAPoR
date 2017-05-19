@@ -348,3 +348,13 @@ body, html {
     border-width: 0px 0px 10px 0px;
 
 }
+
+.clickable {
+	cursor: pointer;
+}
+
+#category-group {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 200px;
+}
