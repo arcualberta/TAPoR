@@ -20,10 +20,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					increaseRatio = 1.5,
 					itemArea = 20, // does not work with 22
 					c20 = d3.scaleOrdinal(d3.schemeCategory20),
-					attributeDataIndex = {},
-					initialTimer,
-					intervalTimer;
-
+					attributeDataIndex = {};
+					// initialTimer;
+					var initialTimer = d3.timeout(restartIntervalTimer , 2000);
+					var intervalTimer = d3.interval( highlightRandomTool, 4000);
+					intervalTimer.stop();
 				
 				// map attributeIds to c20 colours
 				toolsByAnalysis.attribute_values.forEach(function(attribute, i){
@@ -164,8 +165,10 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						return c20( attributeDataIndex[d.leastCommonCategory].color )
 					})
 					.on("mouseover", function(d, i){
-						window.clearTimeout(initialTimer)
-						window.clearTimeout(intervalTimer)
+						// window.clearTimeout(initialTimer)
+						// window.clearTimeout(intervalTimer)
+						initialTimer.stop();
+						intervalTimer.stop();
 						highlightTool(i)
 					})
 					.on("mouseout", function(d){
@@ -419,11 +422,19 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					highlightTool(Math.floor((Math.random() * toolsByAnalysis.tools.length)))
 				}
 
+				var restartIntervalTimer = function() {
+					initialTimer.stop()
+					intervalTimer = d3.interval( highlightRandomTool, 4000);
+				}
+
 				var restartTimer = function() {
-					window.clearTimeout(initialTimer)
-					initialTimer = window.setTimeout(function(){					
-						intervalTimer = window.setInterval(highlightRandomTool, 4000)
-					}, 3000)	
+					// window.clearTimeout(initialTimer)
+					initialTimer.stop;
+					initialTimer.restart(restartIntervalTimer, 2000);
+					// initialTimer = window.setTimeout(function(){					
+					// 	// intervalTimer = window.setInterval(highlightRandomTool, 4000)
+					// 	intervalTimer = d3.interval( highlightRandomTool, 4000);
+					// }, 2000)	
 				}
 
 				arrangeObjects()
