@@ -209,8 +209,6 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						highlightCirclesByCategory(d)
 						highlightCategory(this, i)
 						highlightRandomTool()
-
-						console.log(highlitableTools)					
 					})
 				
 				var highlightCategory = function(element) {
