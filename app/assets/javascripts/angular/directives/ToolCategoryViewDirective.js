@@ -5,8 +5,6 @@ app.directive("toolCategoryView", ['$location', function($location) {
 		restrict: 'E',
 		template: '<div id="viz"></div>',
 		replace: true,
-		// require: ngModel,
-		// transclude: true,
 		scope: {
 			tools: "="
 		},
@@ -14,17 +12,19 @@ app.directive("toolCategoryView", ['$location', function($location) {
 			
 			var toolsByAnalysis = scope.tools;
 			var drawn = false;
+			
 
 			var drawWidget = function() {
 				var radius = 7,
 					increaseRatio = 1.5,
-					itemArea = 20, // does not work with 22
+					itemArea = 20, 
 					c20 = d3.scaleOrdinal(d3.schemeCategory20),
-					attributeDataIndex = {};
-					// initialTimer;
-					var initialTimer = d3.timeout(restartIntervalTimer , 2000);
-					var intervalTimer = d3.interval( highlightRandomTool, 4000);
-					intervalTimer.stop();
+					attributeDataIndex = {},
+					highlitableTools = toolsByAnalysis.tools.map(function(tool, i){ return i;})
+
+				var initialTimer = d3.timeout(restartIntervalTimer , 2000);
+				var intervalTimer = d3.interval( highlightRandomTool, 4000);
+				intervalTimer.stop();
 				
 				// map attributeIds to c20 colours
 				toolsByAnalysis.attribute_values.forEach(function(attribute, i){
@@ -165,8 +165,6 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						return c20( attributeDataIndex[d.leastCommonCategory].color )
 					})
 					.on("mouseover", function(d, i){
-						// window.clearTimeout(initialTimer)
-						// window.clearTimeout(intervalTimer)
 						initialTimer.stop();
 						intervalTimer.stop();
 						highlightTool(i)
@@ -181,8 +179,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					})
 
 				var categoryGroup = svg.append("g")
-					.attr("id", "category-group")
-
+					.attr("id", "category-group")				
 				// var categoryTitle = categoryGroup.append("text")
 				// 	.text("Categories")
 				// 	.attr('x', getMainContainerWidth() + 5)
@@ -204,38 +201,69 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					.enter()
 					.append("text")
 					.text(function(d){return d.name})
-					.attr('x', getMainContainerWidth() + 10)
-					.attr('y', function(d, i){ return i* 18 + 35;})
+					.attr('x', getMainContainerWidth() + 20)
+					.attr('y', function(d, i){ return i * 18 + 35;})
 					.attr("class", "clickable")
 					.on('click', function(d, i) {
+						highlitableTools = [];
 						highlightCirclesByCategory(d)
-					})
+						highlightCategory(this, i)
+						highlightRandomTool()
 
-				var highlightCirclesByCategory = function(category) {
-					circles.transition().duration(50)
-					.attr("fill-opacity", function(d, i){
-						// console.log(d.attribute_value_ids)
-						if (category.id === -1) {
-							return 1
-						}
-
-						var opacity = 0.07;
-						d.attribute_value_ids.forEach(function(attributeId) {
-							if (attributeId == category.id) {
-								opacity = 1;
-								return;
-							}
-						})
-						return opacity
+						console.log(highlitableTools)					
 					})
+				
+				var highlightCategory = function(element) {
+					drawCategoryHighlightingObject(element)
+				}		
+
+				var getCategoryHighlightPoints = function(element) {
+					var points = [];
+					var bBox = element.getBBox()
+					points.push([bBox.x - 12, bBox.y + bBox.height/2.0]);
+					points.push([bBox.x - 2, bBox.y + bBox.height/2.0]);
+
+					return points;
 				}
 
-				// var clearToolHighlight = function() {
-				// 	circles.transition().duration(50)
-				// 		.attr("r", radius)
-				// 		.attr("stroke", "none")
-				// 		.attr("fill-opacity", 1)
-				// }				
+				var highlightCategoryPath = svg.append("path")
+					.attr("d", lineFunction([]))
+					.attr("stroke", "#ADADAD")
+					.attr("stroke-width", 2)
+					.attr("fill", "none")
+
+				var drawCategoryHighlightingObject = function(element) {
+					highlightCategoryPath.attr("d", lineFunction(getCategoryHighlightPoints(element)))
+						.attr("stroke", "#ADADAD")
+						.attr("stroke-width", 2)
+						.attr("fill", "none")
+				}				
+
+				var highlightCirclesByCategory = function(category) {
+					circles
+					.attr("fill-opacity", function(d, i){
+					
+						var opacity = 0.07;
+
+						if (category.id === -1) {
+							highlitableTools.push(i)
+							opacity = 1;
+						} else {
+							d.attribute_value_ids.forEach(function(attributeId) {
+								if (attributeId == category.id) {
+									opacity = 1;
+									return;
+								}
+							})	
+						}
+
+						if (opacity === 1) {
+							highlitableTools.push(i)
+						}
+
+						return opacity
+					})					
+				}				
 
 				var getStars = function(starAverage) {
 					
@@ -296,10 +324,9 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				}
 					
 				var clearToolHighlight = function() {
-					circles.transition().duration(50)
-						.attr("r", radius)
+					circles.attr("r", radius)
 						.attr("stroke", "none")
-						// .attr("fill-opacity", 1)
+						
 				}				
 
 				var prevCircle;
@@ -310,12 +337,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 					
 					d3.select(prevCircle)
-						.transition()
-						.duration(50)
+						// .transition()
+						// .duration(50)
 						.attr("r", radius*increaseRatio)
 						.attr("stroke", "#ADADAD")
 						.attr("stroke-width", 2)
-						// .attr("fill-opacity", 0.7)
 						.attr("stroke-dasharray", ("5,3"))
 					toolName.text(d.name)
 					arrageStarGroup()
@@ -341,22 +367,21 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				}
 				
 
-				// var getLeftFramePoints = function() {
-				// 	var points = []
-				// 	//  4 puntos
+				var getLeftFramePoints = function() {
+					var points = []
+					points.push([getMainContainerWidth(), 25])
+					points.push([getMainContainerWidth() + 7, 25])
+					//  180 height increase to account for tool description
+					points.push([getMainContainerWidth() + 7, getBBoxById("circle-group").height + 180])
+					points.push([getMainContainerWidth(), getBBoxById("circle-group").height + 180])					
+					return points
+				}
 
-				// 	points.push([getMainContainerWidth(), 10])
-				// 	points.push([getMainContainerWidth() + 7, 10])
-				// 	points.push([getMainContainerWidth() + 7, getBBoxById("circle-group").height])
-				// 	points.push([getMainContainerWidth(), getBBoxById("circle-group").height])					
-				// 	return points
-				// }
-
-				// var leftFrame = svg.append("path")
-				// 	.attr("d", lineFunction([]))
-				// 	.attr("stroke", "#ADADAD")
-				// 	.attr("stroke-width", 2)
-				// 	.attr("fill", "none")
+				var leftFrame = svg.append("path")
+					.attr("d", lineFunction([]))
+					.attr("stroke", "#ADADAD")
+					.attr("stroke-width", 2)
+					.attr("fill", "none")
 
 				var lineGraph = svg.append("path")
 					.attr("d", lineFunction([]))
@@ -400,7 +425,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 							.attr('width', getMainContainerWidth() - 180)
 					toolImage.attr('y', getBBoxById("circle-group").height + 20)
 							.attr('x', getMainContainerWidth() - 160)
-					// leftFrame.attr("d", lineFunction(getLeftFramePoints()))
+					leftFrame.attr("d", lineFunction(getLeftFramePoints()))
 
 					// give space for circles, image and padding
 					var categoryHeight = getBBoxById("category-group").height
@@ -411,7 +436,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					svg.attr("height", svgHeight)
 
 					// reset categories places
-					categories.attr('x', getMainContainerWidth() + 10)
+					categories.attr('x', getMainContainerWidth() + 20)
 						.attr('y', function(d, i){ return i* 18 + 35;})
 
 					arrageStarGroup()
@@ -419,7 +444,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				}
 
 				var highlightRandomTool = function() {
-					highlightTool(Math.floor((Math.random() * toolsByAnalysis.tools.length)))
+					var toolIndex = highlitableTools[Math.floor((Math.random() * highlitableTools.length))]
+					highlightTool(toolIndex)
 				}
 
 				var restartIntervalTimer = function() {
@@ -428,18 +454,14 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				}
 
 				var restartTimer = function() {
-					// window.clearTimeout(initialTimer)
 					initialTimer.stop;
 					initialTimer.restart(restartIntervalTimer, 2000);
-					// initialTimer = window.setTimeout(function(){					
-					// 	// intervalTimer = window.setInterval(highlightRandomTool, 4000)
-					// 	intervalTimer = d3.interval( highlightRandomTool, 4000);
-					// }, 2000)	
 				}
 
 				arrangeObjects()
 				highlightRandomTool()
 				restartTimer()
+				highlightCategory(categories._groups[0][0]);
 
 				$(window).on("resize", function() {
 					arrangeObjects()
