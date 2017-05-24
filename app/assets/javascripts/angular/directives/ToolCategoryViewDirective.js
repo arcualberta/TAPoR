@@ -165,9 +165,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						return c20( attributeDataIndex[d.leastCommonCategory].color )
 					})
 					.on("mouseover", function(d, i){
-						initialTimer.stop();
-						intervalTimer.stop();
-						highlightTool(i)
+						if (highlitableTools.indexOf(i) !== -1) {
+							initialTimer.stop();
+							intervalTimer.stop();
+							highlightTool(i)
+						}
 					})
 					.on("mouseout", function(d){
 						restartTimer()
