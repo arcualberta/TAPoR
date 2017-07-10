@@ -113,7 +113,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
         }
       );
 
-      processTaporMLCode($scope.data.tool);
+      // processTaporMLCode($scope.data.tool);
 
 			$http.get('/api/tool_lists/related_by_tool/' + $scope.id + '?limit=4')
 			.success(function(data, status, headers, config) {
