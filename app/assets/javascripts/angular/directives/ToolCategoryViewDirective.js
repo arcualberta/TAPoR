@@ -427,6 +427,10 @@ app.directive("toolCategoryView", ['$location', function($location) {
 							.attr('x', getMainContainerWidth() - 160)
 					leftFrame.attr("d", lineFunction(getLeftFramePoints()))
 
+					categoryTitle.attr('x', getMainContainerWidth() + 10)
+								 
+
+
 					// give space for circles, image and padding
 					var categoryHeight = getBBoxById("category-group").height
 					var circlesHeight = getBBoxById("circle-group").height
