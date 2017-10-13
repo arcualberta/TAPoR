@@ -13,8 +13,9 @@
 						</div>
 						<div class="media-body">
 							<div class="row">
-							<div class="col-md-10">
-								<h4 class="media-heading" itemprop="name">{{data.tool.name}}</h4>
+							<div class="col-md-11 break-content">
+								<span class="media-heading tool-name" itemprop="name">{{data.tool.name}}</span>
+								<a ng-if='is_editable' class="" href="/tools/edit/{{data.tool.id}}" role="button">Edit</a>
 								<ul>
 									<li>Last updated: {{data.tool.last_updated}}</li>
 									<li>Site: <a href="{{data.tool.url}}" ng-click="updateToolView()">{{data.tool.url}}</a></li>
@@ -28,12 +29,7 @@
 									<span itemprop="ratingValue">{{data.ratings.system}}</span>
 									<span itemprop="ratingCount">{{data.ratings.rating_count}}</span>
 								</div>
-							</div>
-
-
-							<div class="col-md-1">
-							 <a ng-if='is_editable' class="btn btn-default" href="/tools/edit/{{data.tool.id}}" role="button">Edit</a>
-							</div>
+							</div>							
 							
 								
 							</div>
@@ -51,7 +47,7 @@
 						<div class="panel-heading">
 							<h3 class="panel-title">Documentation</h3>
 						</div>
-						<div class="panel-body">
+						<div class="panel-body break-content">
 							<dl>
 								<dt>
 									Creator(s)

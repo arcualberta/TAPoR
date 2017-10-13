@@ -358,3 +358,8 @@ body, html {
 	overflow-y: scroll;
 	height: 200px;
 }
+
+.tool-name {
+	font-size: 1.2em;
+    font-weight: bold;
+}
