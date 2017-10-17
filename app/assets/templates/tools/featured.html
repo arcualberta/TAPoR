@@ -1,10 +1,92 @@
 <div ng-controller='ToolsFeaturedController' class='tapor-container'>
 
-	<div class="row">
-  	<div class="col-sm-6">
+	<div class="row edit-tool-list-row">
+
+    <div class="col-sm-6 edit-tool-list-column">
+      <div class="row">
+        <div class="panel panel-default">
+          <div class="panel-heading list-editing-column">
+            
+            <div class="row">
+              <div class="col-md-12">
+                <form class="form-inline">
+                  
+                  <div class="form-group col-md-12">
+                    <label class="col-md-6 text-right" style="margin-top: 10px">Search</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" placeholder="Search for..." ng-model='query' custom-enter="update_query_filter()">
+                      <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click='update_query_filter()'><span class='glyphicon glyphicon-search'></span></button>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="form-group col-md-12" ng-repeat="attribute in attributes">   
+                    <label class="col-md-6 text-right" style="margin-top: 10px">{{attribute.name}}</label>
+                    <select class='form-control col-sm-6 search-field' ng-model='attribute.model' ng-options='value.name for value in attribute.attribute_values track by value.id' ng-change='updateAttributesFilter()'>
+                      <option selected name=''></option>
+                    </select>
+                  </div>
+                  
+                </form>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>  of {{tools_page.meta.page_count}}
+              </div>
+            </div>
+
+          </div>
+
+          <div class="panel-body">
+            <ul class="draggable_place list-tool-area list-unstyled" as-sortable="toolsListener" ng-model="tools">
+              <li class="column_sortable" ng-repeat="tool in tools_page.tools" as-sortable-item>
+                <div as-sortable-item-handle>
+              
+                  <div class="row">
+                    <div class="col-sm-6 break-content">
+                      <img src="{{tool.thumb_url}}">
+                     </div>
+                    <div class="col-sm-6 break-content">
+                      <ul>
+                        <li>
+                          {{tool.name}}
+                        </li>
+                        <li>
+                          <div star-rating rating-value="tool.star_average" max="5" is-interactive="false"></div>                      
+                        </li>
+                        <li ng-if="tool.creators_email">
+                          {{tool.creators_email}}
+                        </li>
+                        <li ng-if="tool.creators_url">
+                          {{tool.creators_url}}
+                        </li>
+                        
+                        <!-- <li>
+                          <div ng-bind-html="tool.detail"></div>
+                        </li>
+                         -->
+                      </ul>         
+                    </div>
+                  </div>            
+                </div>
+              </li>
+            </ul>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+  <!-- vvv	
+   <div class="col-sm-6 edit-tool-list-column">
   		<div class="row">
   		<div class="panel panel-default">
-  			<!-- 
+  			XXX 
         <div class="panel-heading list-editing-column">
         	<h1>Filtering & paginating mechanism</h1>
           <div class="row">
@@ -12,7 +94,8 @@
               <pagination total-items="tools_page.meta.count" ng-model="current_page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination> 
             </div>
           </div>
-        </div> -->
+        </div> 
+        XXX
         <div class="row">
           <div class="col-md-12">
             <form class="form-inline">
@@ -42,7 +125,7 @@
           </div>
         </div>
 
-        <!-- pagination -->
+        <XXX-- pagination --XXX>
         <div class="row">
           <div class="col-md-12">
             <pagination total-items="tools_page.meta.count" ng-model="page" max-size="5" boundary-links="true" rotate="false" ng-change="pageChanged()"></pagination>  of {{tools_page.meta.page_count}}
@@ -79,12 +162,6 @@
                   </ul>         
                 </div>
               </div>
-
-<!--             	<div class="row">
-            		<div class="col-sm-12">
-            			{{tool.detail}}
-            		</div>
-            	</div> -->
             
             </div>
           </li>
@@ -92,17 +169,20 @@
         </div>
         </div>
   		</div>
-  	</div>
+  	</div> 
+    ^^^ -->
 
 
 
 
-  	<div class="col-sm-6">
+  	<div class="col-sm-6 edit-tool-list-column">
   		<div class="row">
   		<div class="panel panel-default">
   			<div class="panel-heading list-editing-column">
         	<div class="row">
-        		<h1>Featured tools</h1>
+            <div class="col-md-12">
+        		  <h1>Featured tools</h1>
+            </div>
         	</div>
         	<div class="row">
         		<div class="col-sm-1 col-sm-offset-10">
@@ -111,15 +191,17 @@
         	</div>
         </div>
   
-   			<div class="panel-body">
+   			<div class="panel-body list-tool-area">
   			<ul class="draggable_place list-tool-area list-unstyled" as-sortable="toolsListener" ng-model="data.tool_list_items">
 
-          <li class="column_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item template-loop-callback="addToolRemoveButtons()">
+          <li class="column_sortable using_sortable" ng-repeat="list_item in data.tool_list_items" as-sortable-item template-loop-callback="addToolRemoveButtons()">
             <div as-sortable-item-handle>
             	
               <div class="row">
                 <div class="col-sm-6 break-content">
-                  <img src="{{list_item.tool.thumb_url}}">
+                
+
+                <img src="{{list_item.tool.thumb_url}}">
                 </div>
                 <div class="col-sm-6 break-content">
                   <ul>                  
@@ -137,20 +219,16 @@
                     <li ng-if="list_item.tool.creators_url">
                       {{list_item.tool.creators_url}}
                     </li>
-                    <li>      
-                      <div ng-bind-html="list_item.tool.detail"></div>
-                     
+
+                    <!-- <li>      
+                      <div ng-bind-html="list_item.tool.detail"></div>                     
                     </li>
+                     -->
                   </ul>         
                 </div>
               </div>
 
 
-<!--             	<div class="row">
-            		<div class="col-sm-12">
-            			{{tool.detail}}
-            		</div>
-            	</div> -->
             
             </div>
           </li>
