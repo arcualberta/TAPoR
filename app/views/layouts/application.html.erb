@@ -17,9 +17,17 @@
 			  "@type" : "WebSite",
 			  "name" : "TAPoR",
 			  "alternateName" : "Text Analysis Portal for Research",
-			  "url" : "http://www.tapor.ca"
+			  "url" : "http://www.tapor.ca",
+			  "potentialAction": {
+				"@type": "SearchAction",
+    			"target": "http://tapor.ca/tools?query={search_term_string}",
+    			"query-input": "required name=search_term_string"
+  			  }
 			}
+
+
 		</script>
+
 		<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
 	</head>
 	<body>
