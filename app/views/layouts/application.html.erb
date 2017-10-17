@@ -11,7 +11,20 @@
 		<link href='http://fonts.googleapis.com/css?family=Rokkitt:400,700' rel='stylesheet' type='text/css'>
 		<%= csrf_meta_tags %>
 
-
+		<script type="application/ld+json">
+			{
+			  "@context" : "http://schema.org",
+			  "@type" : "WebSite",
+			  "name" : "TAPoR",
+			  "alternateName" : "Text Analysis Portal for Research",
+			  "url" : "http://www.tapor.ca",
+			  "potentialAction": {
+				"@type": "SearchAction",
+    			"target": "http://tapor.ca/tools?query={search_term_string}",
+    			"query-input": "required name=search_term_string"
+  			  }
+			}
+		</script>
 
 		<script src="https://d3js.org/d3-selection-multi.v1.min.js"></script>
 	</head>
