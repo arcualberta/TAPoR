@@ -1,26 +1,4 @@
-<!--  
-<PageMap>
-	<DataObject type="document">
-		<Attribute name="title">
-			{{data.tool.name}}
-		</Attribute>
-        <Attribute name="author">
-        	{{data.tool.creators_name}}
-        </Attribute>
-        <Attribute name="description">
-        	{{data.tool.detail}}
-    	</Attribute>        
-		<Attribute name="rating">
-			{{data.ratings.system}}
-		</Attribute>      
-	</DataObject>
-	<DataObject type="thumbnail">
-		<Attribute name="src" value="{{data.tool.thumb_url}}" />
-		<Attribute name="width" value="275" />
-		<Attribute name="height" value="220" />
-	</DataObject>
-</PageMap>
--->
+
 <div ng-controller='ToolsViewController' class='tapor-container'>
 
 	<div class="row">
@@ -28,7 +6,7 @@
 		<div class="col-md-9">
 			<!-- tool main content -->
 			
-			<div class="row" itemscope itemtype="http://schema.org/SoftwareApplication">
+			<div class="row" itemscope itemtype="http://schema.org/Product">
 				<div class="col-md-12">
 					<div class="media">
   					<div class="media-left">
@@ -56,7 +34,7 @@
 							
 								
 							</div>
-							<div ng-bind-html="data.tool.detail"></div>
+							<div itemprop="description" ng-bind-html="data.tool.detail"></div>
 						</div>
 					</div>									
 				</div>
