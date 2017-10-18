@@ -23,9 +23,10 @@
 								</ul>	
 							</div>
 
-							<div hidden>
-								<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+							<div hidden ng-if="data.ratings.rating_count != 0">
+								<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">									
 									<span itemprop="ratingValue">{{data.ratings.system}}</span>
+									<span itemprop="ratingCount">{{data.ratings.rating_count}}</span>
 								</div>
 							</div>							
 							
