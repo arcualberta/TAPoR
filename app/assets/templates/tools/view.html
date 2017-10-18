@@ -18,15 +18,15 @@
 								<span class="media-heading tool-name" itemprop="name">{{data.tool.name}}</span>
 								<a ng-if='is_editable' class="" href="/tools/edit/{{data.tool.id}}" role="button">Edit</a>
 								<ul>
-									<li>Last updated:<span itemprop="last_update">{{data.tool.last_updated}}</span></li>
+									<li>Last updated: {{data.tool.last_updated}}</li>
 									<li>Site: <a href="{{data.tool.url}}" ng-click="updateToolView()">{{data.tool.url}}</a></li>
 								</ul>	
 							</div>
 
 							<div hidden ng-if="data.ratings.rating_count != 0">
-								<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">		
+								<div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">									
 									<span itemprop="ratingValue">{{data.ratings.system}}</span>
-									<span itemprop="ratingCount">{{data.ratings.rating_count}}</span>						
+									<span itemprop="ratingCount">{{data.ratings.rating_count}}</span>		
 								</div>
 							</div>							
 							
