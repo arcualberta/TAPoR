@@ -11,14 +11,14 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
   $scope.data.newComment = "";
   $scope.data.tags = {system:[]};
 
-	$scope.tinymceOptions = {
-  	menubar : false,
-  	height : 200,
-		resize: false,
-		plugins: ["autolink link anchor"],
-		toolbar: "undo redo | bold italic | link",
-		valid_elements : "a[href|target=_blank],strong/b,em/i,div[align],br,p"
-  };
+	// $scope.tinymceOptions = {
+ //  	menubar : false,
+ //  	height : 200,
+	// 	resize: false,
+	// 	plugins: ["autolink link anchor"],
+	// 	toolbar: "undo redo | bold italic | link",
+	// 	valid_elements : "a[href|target=_blank],strong/b,em/i,div[align],br,p"
+ //  };
 
   var processTaporMLCode = function(tool) {
 
@@ -73,7 +73,8 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
         mode: $scope.data.tool.language,
         useWrapMode : true
       };
-      console.log($scope.current_user);
+      $scope.data.tool.recipes = $sce.trustAsHtml($scope.data.tool.recipes);
+  
   		$scope.is_editable = $scope.current_user && ( $scope.current_user.is_admin || $scope.current_user.id == data.user_id);
 
   		$scope.id = $scope.data.tool.id;
@@ -126,6 +127,7 @@ app.controller('ToolsViewController', ['$scope', '$http', '$location', '$routePa
 			});
 
 			getSortedComments();
+
   	},
   	function(errorMessage){
   		$scope.error = errorMessage;
@@ -264,6 +266,18 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.creators_email = "";
   $scope.data.creators_url = "";
   $scope.data.url = "";
+  $scope.data.code = "";
+  $scope.data.repository = "";
+  $scope.data.recipes = "";
+
+  $scope.tinymceOptions = {
+    menubar : false,
+    height : 200,
+    resize: false,
+    plugins: ["autolink link anchor"],
+    // toolbar: "undo redo | bold italic | link | justifyleft justifycenter justifyright justifyfull bullist,numlist",
+    // valid_elements : "a[href|target=_blank],strong/b,em/i,div[align],br,p,ul,li,ol"
+  };
 
   $scope.possible_nature = [
   	{
@@ -283,8 +297,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
   $scope.data.language = [$scope.possible_language[0]];
   
-  $scope.data.code = "";
-  $scope.data.repository = ""
+
 
 	// $scope.data.tool_ratings = [{"stars" : 0}];  
   
@@ -608,7 +621,8 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	if ($('#tool_form')[0].checkValidity()) {  		
 
       processToolAttributes();
-
+      console.log("eere")
+      console.log($scope.data)
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
 				$http.patch('/api/tools/' + $scope.id, $scope.data)

@@ -235,6 +235,7 @@ class Api::ToolsController < ApplicationController
 						creators_email: safe_params[:creators_email].strip,
 						creators_url: safe_params[:creators_url].strip,
 						repository: safe_params[:repository].strip,
+						recipes: safe_params[:recipes].strip,
 						last_updated: Time.now(),
 						nature: params[:nature][0][:value],
 						user_id: current_user[:id]
@@ -477,7 +478,8 @@ class Api::ToolsController < ApplicationController
 						@tool.creators_name = safe_params[:creators_name].strip;
 						@tool.creators_email = safe_params[:creators_email].strip;
 						@tool.creators_url = safe_params[:creators_url].strip;	
-						@tool.repository = safe_params[:repository].strip				
+						@tool.repository = safe_params[:repository].strip	
+						@tool.recipes = safe_params[:recipes].strip			
 						if current_user.is_admin?
 							@tool.is_approved = safe_params[:is_approved];
 						end
@@ -589,7 +591,7 @@ class Api::ToolsController < ApplicationController
 		def safe_params
 			# params.require(:tool).permit(:name, :detail, :tool_ratings => [:id, :stars]);
 			 # params.require(:tool).permit(:name, :detail, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code, :repository);
+			params.require(:tool).permit(:id, :name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code, :repository, :recipes, :user_id, :star_average, :last_updated, :nature);
 		end
 
 		protected
