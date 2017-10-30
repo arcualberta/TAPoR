@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171030170522) do
+ActiveRecord::Schema.define(version: 20171030210158) do
 
   create_table "attribute_types", force: true do |t|
     t.string   "name"
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 20171030170522) do
     t.integer  "nature",            default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "recipes"
+    t.text     "recipes",                           null: false
   end
 
   add_index "tools", ["user_id"], name: "index_tools_on_user_id", using: :btree
