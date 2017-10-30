@@ -591,7 +591,7 @@ class Api::ToolsController < ApplicationController
 		def safe_params
 			# params.require(:tool).permit(:name, :detail, :tool_ratings => [:id, :stars]);
 			 # params.require(:tool).permit(:name, :detail, tool_ratings: :stars);
-			params.require(:tool).permit(:name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code, :repository, :recipes);
+			params.require(:tool).permit(:id, :name, :detail, :is_approved, :creators_name, :creators_email, :creators_url, :url, :image_url, :nature, :language, :code, :repository, :recipes, :user_id, :star_average, :last_updated, :nature);
 		end
 
 		protected

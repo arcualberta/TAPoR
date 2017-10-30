@@ -266,7 +266,9 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   $scope.data.creators_email = "";
   $scope.data.creators_url = "";
   $scope.data.url = "";
-
+  $scope.data.code = "";
+  $scope.data.repository = "";
+  $scope.data.recipes = "";
 
   $scope.tinymceOptions = {
     menubar : false,
@@ -295,9 +297,7 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
   $scope.data.language = [$scope.possible_language[0]];
   
-  $scope.data.code = "";
-  $scope.data.repository = ""
-  $scope.data.recipes = ""
+
 
 	// $scope.data.tool_ratings = [{"stars" : 0}];  
   
@@ -621,7 +621,8 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
   	if ($('#tool_form')[0].checkValidity()) {  		
 
       processToolAttributes();
-      
+      console.log("eere")
+      console.log($scope.data)
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
 				$http.patch('/api/tools/' + $scope.id, $scope.data)
