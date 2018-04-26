@@ -8,6 +8,7 @@ class Stage
 
   def initialize()
     @tapor_user = User.first
+    @previous_tags = {}
   end
 
   def clean_up_names
@@ -87,12 +88,38 @@ class Stage
     tool.recipes = update_value_if_needed(tool.recipes, '')
   end
 
+  def get_tag(tag_text)
+    tag = @previous_tags[tag_text]
+
+    if tag == nil
+      tag = Tag.where(text: tag_text).first
+      if tag == nil
+        tag = Tag.create({text: tag_text})
+      end
+    end
+    # puts tag.text
+    @previous_tags[tag_text] = tag
+    
+  end
+
+  def update_tool_tags(tool, tags)
+
+    tags.each do |tag|      
+      tapor_tag = get_tag(tag)
+
+      unless tool.tags.include? tapor_tag
+        tool.tags << tapor_tag
+      end
+
+    end
+  end
+  
   def update_tool(tool, dirt_entry)
     # update description if it is empty, otherwise save to external program
     # add values if missing and merge otherwise
 
     update_tool_single_values(tool, dirt_entry)
-
+    update_tool_tags(tool, dirt_entry[:tags])
 
     tool.save
     # puts tool.inspect
