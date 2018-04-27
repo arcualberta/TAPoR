@@ -92,10 +92,11 @@ class Stage
     tag = @previous_tags[tag_text]
 
     if tag == nil
-      tag = Tag.where(text: tag_text).first
-      if tag == nil
-        tag = Tag.create({text: tag_text})
-      end
+      # tag = Tag.where(text: tag_text).first
+      # if tag == nil
+      #   tag = Tag.create({text: tag_text})
+      # end
+      tag = Tag.find_or_create_by! text: tag_text
     end
     # puts tag.text
     @previous_tags[tag_text] = tag
@@ -134,6 +135,15 @@ class Stage
     return result
   end
 
+  def newline_to_paragraph(text)    
+    result = ''
+    if text 
+      lines = text.split(/\n/)
+      lines.each { |line| result << '<p>' << line << '</p>' }    
+    end
+    return result
+  end
+
   def clean_dirt_entry(row)
     # 0 Title
     # 1 Description
@@ -154,9 +164,11 @@ class Stage
       end
     end
 
+    # puts row['Code license']
+
     tool_reference = {
       name: row['Title'],
-      description: row['Description'],
+      description: newline_to_paragraph(row['Description']),
       web_page: row['Web page'],
       tadirah: split_values(row['TaDiRAH goals & methods']),
       code_license: row['Code license'],
