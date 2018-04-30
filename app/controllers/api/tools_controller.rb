@@ -638,7 +638,8 @@ class Api::ToolsController < ApplicationController
 			else
 				@tool_rating.update(stars: params[:stars]);				
 			end
-			@tool.star_average = @tool.tool_ratings.average("stars");
+			@tool.star_average = @tool.tool_ratings.average("stars") || 0
+			
 			@tool.save()			
 		end
 
