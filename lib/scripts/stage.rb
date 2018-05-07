@@ -52,11 +52,100 @@ class Stage
       # This update goes through tools from the csv, you need to loop through 
       # the rest to be able to add the tadirah attributes from existing tools
       update_tool(tool, dirt_entry)
+    end
 
+    # Run through all saved tools to populate new attribute values
+    add_new_analysis()
+    # XXX Run this line for final test
+    remove_analysis_old
+
+  end
+
+  def add_new_analysis
+    Tool.all.each do |tool|
+
+      # new_analysis_from_old(tool)
+      # new_analysis_from_tadirah(tool)
+      new_analysis_from_old_and_tadirah(tool)
+      tool.save
+    end
+  end
+
+  def get_tool_attributes(tool, attribute_name)
+    result = Set[]
+    at = AttributeType.where(name: attribute_name).first
+    att_joins = tool.tool_attributes.where attribute_type_id: at.id
+
+    att_joins.each do |att_join|      
+      result << AttributeValue.find(att_join.attribute_value_id).name
+    end
+
+    return result
+  end
+
+  def new_analysis_from_old_and_tadirah(tool)
+    # at = AttributeType.where(name: "Type of analysis").first
+    new_attributes = Set[]
+    attributes = get_tool_attributes(tool, "Type of analysis")
+    attributes.each do |attribute|
+      # puts "vvv"
+      # puts tool.name
+      # puts "---"
+      # puts attribute
+      # puts "---"
+      # puts @analysis_old_to_analysis_new[attribute]&.inspect
+      # puts "---"
+      # puts @tadirah_to_analysis_new[attribute]&.inspect
+      # puts "^^^"
+
+
+      new_attribute = Set[]
+      new_attribute.merge(@analysis_old_to_analysis_new[attribute] || [])
+      # new_attribute.merge(@tadirah_to_analysis_new[attribute] || [])      
+      new_attributes.merge(new_attribute)
+    end
+
+
+    attributes = get_tool_attributes(tool, "TaDiRAH goals & methods")
+
+    attributes.each do |attribute|
+      new_attribute = Set[]
+      new_attribute.merge(@tadirah_to_analysis_new[attribute] || [])
+      new_attributes.merge(new_attribute)
 
     end
-    # XXX Run this line for final test
-    # remove_analysis_old
+
+    puts "VVV"
+    puts tool.name    
+    puts new_attributes.inspect
+    puts "^^^"
+    update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
+  end
+
+  # def new_analysis_from_old(tool)
+  #   # at = AttributeType.where(name: "Type of analysis").first
+  #   new_attributes = Set[]
+  #   attributes = get_tool_attributes(tool, "Type of analysis")
+
+  #   attributes.each do |attribute|
+  #     # puts "vvv"
+  #     # puts tool.name
+  #     # puts "---"
+  #     # puts attribute
+  #     # puts "---"
+  #     # puts @analysis_old_to_analysis_new[attribute]
+  #     # puts "^^^"
+  #     new_attribute = @analysis_old_to_analysis_new[attribute]
+  #     new_attributes.merge(new_attribute) if new_attribute != nil
+      
+  #   end
+
+  #   update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
+  # end
+     
+
+  def new_analysis_from_tadirah(tool)
+    # XXX ultimo paso aqui
 
   end
 
