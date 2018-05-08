@@ -360,7 +360,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				var setToolDetailText = function(text) {
 					var width = toolDetail.attr("width")
-					var height = 30//toolImage.attr("height")					
+					var height = 200//toolImage.attr("height")					
 					var wordSpace = 220;
 					var maxCharacters = (width*height) / wordSpace;
 					var textDisplay = text;
