@@ -372,8 +372,13 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					points.push([getMainContainerWidth(), 25])
 					points.push([getMainContainerWidth() + 7, 25])
 					//  180 height increase to account for tool description
-					points.push([getMainContainerWidth() + 7, getBBoxById("circle-group").height + 180])
-					points.push([getMainContainerWidth(), getBBoxById("circle-group").height + 180])					
+
+					// what is taller, circle group or type of analysis list?
+					// var circleGroupHeight = getBBoxById("circle-group").height
+					// var categoryGroupHeight
+					var categoryGroupHeight = getBBoxById("category-group").height + 20
+					points.push([getMainContainerWidth() + 7, categoryGroupHeight])
+					points.push([getMainContainerWidth(), categoryGroupHeight])					
 					return points
 				}
 

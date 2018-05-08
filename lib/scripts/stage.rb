@@ -122,33 +122,6 @@ class Stage
     update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
   end
 
-  # def new_analysis_from_old(tool)
-  #   # at = AttributeType.where(name: "Type of analysis").first
-  #   new_attributes = Set[]
-  #   attributes = get_tool_attributes(tool, "Type of analysis")
-
-  #   attributes.each do |attribute|
-  #     # puts "vvv"
-  #     # puts tool.name
-  #     # puts "---"
-  #     # puts attribute
-  #     # puts "---"
-  #     # puts @analysis_old_to_analysis_new[attribute]
-  #     # puts "^^^"
-  #     new_attribute = @analysis_old_to_analysis_new[attribute]
-  #     new_attributes.merge(new_attribute) if new_attribute != nil
-      
-  #   end
-
-  #   update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
-  # end
-     
-
-  def new_analysis_from_tadirah(tool)
-    # XXX ultimo paso aqui
-
-  end
-
   def update_value_if_needed(current_value, new_value)
     current_value == nil || current_value.to_s().strip == "" ? new_value : current_value
   end
@@ -210,7 +183,7 @@ class Stage
   def remove_analysis_old
     @analysis_old.each do |analysis|
       unless @new_analysis_type_attributes.include? analysis
-        get_attribute("Type of analysis", analysis)[:value].destroy!
+        get_attribute("Type of analysis", analysis)[:value].destroy
       end
     end
   end
