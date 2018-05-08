@@ -335,7 +335,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					var d = circles.data()[index];
 					prevCircle = circles.nodes()[index]
 
-					
+					console.log(d)
 					d3.select(prevCircle)
 						// .transition()
 						// .duration(50)
@@ -348,9 +348,14 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
 					// toolDetail.text(d.detail)
 					setToolDetailText(d.detail)
-					toolImage.attr("xlink:href", d.image_url)
+					// toolImage.attr("xlink:href", d.image_url)
+					toolImage.attr("xlink:href", lazyThumb(d.image_url))
 					updateStars(d.star_average)
 
+				}
+
+				var lazyThumb = function(imageUrl) {
+					return imageUrl.replace(".png", "-thumb.png")
 				}
 
 				var setToolDetailText = function(text) {
@@ -408,6 +413,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var toolImage = svg.append("svg:image")
 					.attr("id", 'tool-image')
 					.attr("width", "160px")
+					.attr("height", "128px")
 
 				var arrangeStarGroup = function() {
 					starGroup.attr('transform', "translate("+
@@ -429,13 +435,10 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					toolDetail.attr('x', 0)
 							.attr('y', getBBoxById("circle-group").height + 80)
 							.attr('width', getMainContainerWidth() - 180)
-
-					// toolDetail.attr('x', 0)
-					// 		.attr('y', 0)
-					// 		.attr('width', 500)
+							.attr('height', 180)
 
 					toolImage.attr('y', getBBoxById("circle-group").height + 20)
-							.attr('x', getMainContainerWidth() - 160)
+							   .attr('x', getMainContainerWidth() - 180)
 					leftFrame.attr("d", lineFunction(getLeftFramePoints()))
 
 					categoryTitle.attr('x', getMainContainerWidth() + 10)
