@@ -46,7 +46,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var getLeastCommonCategory = function(tool) {
 					var least = Number.POSITIVE_INFINITY 
 					var resultId = 0;
-					tool.attribute_value_ids.forEach(function(attributeId){						
+					tool.attribute_value_ids.forEach(function(attributeId){
 						if (attributeDataIndex[attributeId].toolInstances < least) {
 							least = attributeDataIndex[attributeId].toolInstances
 							resultId = attributeId
@@ -344,7 +344,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						.attr("stroke-width", 2)
 						.attr("stroke-dasharray", ("5,3"))
 					toolName.text(d.name)
-					arrageStarGroup()
+					// arrangeStarGroup()
 					lineGraph.attr("d", lineFunction( getLinePoints(prevCircle) ))
 					// toolDetail.text(d.detail)
 					setToolDetailText(d.detail)
@@ -355,7 +355,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				var setToolDetailText = function(text) {
 					var width = toolDetail.attr("width")
-					var height = 130//toolImage.attr("height")					
+					var height = 30//toolImage.attr("height")					
 					var wordSpace = 220;
 					var maxCharacters = (width*height) / wordSpace;
 					var textDisplay = text;
@@ -374,11 +374,13 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					//  180 height increase to account for tool description
 
 					// what is taller, circle group or type of analysis list?
-					// var circleGroupHeight = getBBoxById("circle-group").height
+					var circleGroupHeight = getBBoxById("circle-group").height
 					// var categoryGroupHeight
 					var categoryGroupHeight = getBBoxById("category-group").height + 20
-					points.push([getMainContainerWidth() + 7, categoryGroupHeight])
-					points.push([getMainContainerWidth(), categoryGroupHeight])					
+					var height = circleGroupHeight > categoryGroupHeight ? circleGroupHeight : categoryGroupHeight
+
+					points.push([getMainContainerWidth() + 7, height])
+					points.push([getMainContainerWidth(), height])					
 					return points
 				}
 
@@ -407,10 +409,9 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					.attr("id", 'tool-image')
 					.attr("width", "160px")
 
-				var arrageStarGroup = function() {
+				var arrangeStarGroup = function() {
 					starGroup.attr('transform', "translate("+
-						(getBBoxById('tool-name').x + 
-							getBBoxById('tool-name').width / 2 - getBBoxById('star-group').width/2)
+						60
 						+","+
 						(getBBoxById("circle-group").height + 55)
 						+")")
@@ -428,6 +429,11 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					toolDetail.attr('x', 0)
 							.attr('y', getBBoxById("circle-group").height + 80)
 							.attr('width', getMainContainerWidth() - 180)
+
+					// toolDetail.attr('x', 0)
+					// 		.attr('y', 0)
+					// 		.attr('width', 500)
+
 					toolImage.attr('y', getBBoxById("circle-group").height + 20)
 							.attr('x', getMainContainerWidth() - 160)
 					leftFrame.attr("d", lineFunction(getLeftFramePoints()))
@@ -440,7 +446,10 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					var categoryHeight = getBBoxById("category-group").height
 					var circlesHeight = getBBoxById("circle-group").height
 
-					var svgHeight = circlesHeight > categoryHeight ? circlesHeight + 180 : categoryHeight + 40;
+					console.log(categoryHeight)
+					console.log(circlesHeight)
+
+					var svgHeight = circlesHeight > categoryHeight ? circlesHeight + 180 : categoryHeight + 200;
 
 					svg.attr("height", svgHeight)
 
@@ -448,7 +457,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					categories.attr('x', getMainContainerWidth() + 20)
 						.attr('y', function(d, i){ return i* 18 + 35;})
 
-					arrageStarGroup()
+					arrangeStarGroup()
 
 				}
 
