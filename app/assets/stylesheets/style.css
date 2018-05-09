@@ -25,12 +25,20 @@ body, html {
 	color: RGBA(255, 255, 255, 1);
 	background: RGBA(77, 77, 77, 1);
 	border-top: thick solid RGBA(255, 255, 255, 1);
-	vertical-align: center;
-	height: 70px;
-  	line-height: 70px;
-  	padding-left: 30px;
-  	padding-right: 30px;
+	/*vertical-align: center;*/
+	/*height: 70px;*/
+  	/*line-height: 70px;*/
+  	padding: 10px;
+  	
+  	/*padding-left: 30px;
+  	padding-right: 30px;*/
 }
+
+#tapor-footer a {
+	color: #FFF;
+}
+
+
 
 .tapor-blue {
 	color: RGBA(89, 189, 230, 1);		
