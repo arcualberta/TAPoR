@@ -63,9 +63,6 @@ class Stage
 
   def add_new_analysis
     Tool.all.each do |tool|
-
-      # new_analysis_from_old(tool)
-      # new_analysis_from_tadirah(tool)
       new_analysis_from_old_and_tadirah(tool)
       tool.save
     end
@@ -84,24 +81,11 @@ class Stage
   end
 
   def new_analysis_from_old_and_tadirah(tool)
-    # at = AttributeType.where(name: "Type of analysis").first
     new_attributes = Set[]
     attributes = get_tool_attributes(tool, "Type of analysis")
     attributes.each do |attribute|
-      # puts "vvv"
-      # puts tool.name
-      # puts "---"
-      # puts attribute
-      # puts "---"
-      # puts @analysis_old_to_analysis_new[attribute]&.inspect
-      # puts "---"
-      # puts @tadirah_to_analysis_new[attribute]&.inspect
-      # puts "^^^"
-
-
       new_attribute = Set[]
       new_attribute.merge(@analysis_old_to_analysis_new[attribute] || [])
-      # new_attribute.merge(@tadirah_to_analysis_new[attribute] || [])      
       new_attributes.merge(new_attribute)
     end
 
@@ -114,11 +98,6 @@ class Stage
       new_attributes.merge(new_attribute)
 
     end
-
-    puts "VVV"
-    puts tool.name    
-    puts new_attributes.inspect
-    puts "^^^"
     update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
   end
 
@@ -207,25 +186,10 @@ class Stage
     update_tool_attribute_values(tool, 'Web usable', [dirt_entry[:platform]])
     update_tool_attribute_values(tool, 'Warning', [dirt_entry[:status]])    
     update_tool_attribute_values(tool, 'Type of license', tool_licenses)
-    # feed list of captured values
-
-
-    # Add tadirah types based on incoming values
 
     update_tool_attribute_values(tool, "TaDiRAH goals & methods", dirt_entry[:tadirah])
-
-    # Add new analysis types
-    # Esto debe de ir aparte para considerar tadirah y old atts
-    # types = get_new_analysis_types(tool)
-    # update_tool_attribute_values(tool, 'Type of analysis', types)
-
-    # Add new tadirah types
-    # Add new analysis types to new
   
     tool.save
-  end
-
-  def get_new_analysis_types_from_tadira(tool)
   end
 
   def get_new_analysis_types_from_old_atts(tool)
@@ -258,8 +222,6 @@ class Stage
 
   def get_attribute(attribute_type, attribute_value)
     
-    # return nil if attribute_value == "" || 
-
     if attribute_value.strip == ""
       return nil 
     end
