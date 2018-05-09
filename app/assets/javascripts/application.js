@@ -14,7 +14,7 @@
 //= require bootstrap/dist/js/bootstrap
 //= require ace-builds/src-min-noconflict/ace
 //= require ace-builds/src-min-noconflict/mode-html 
-//= require tinymce-dist/tinymce.min
+//= require tinymce/tinymce.min
 //= require angular/angular
 //= require angular-resource/angular-resource
 //= require angular-route/angular-route
