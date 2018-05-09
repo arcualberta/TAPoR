@@ -113,7 +113,7 @@ ActiveRecord::Schema.define(version: 20171030210158) do
 
   create_table "tool_lists", force: true do |t|
     t.integer  "user_id"
-    t.string   "name",        default: ""
+    t.string   "name"
     t.text     "detail"
     t.boolean  "is_public",   default: true
     t.boolean  "is_hidden",   default: false

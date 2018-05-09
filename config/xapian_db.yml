@@ -6,7 +6,7 @@ defaults: &defaults
   enable_query_flags: FLAG_WILDCARD, FLAG_BOOLEAN, FLAG_BOOLEAN_ANY_CASE, FLAG_SPELLING_CORRECTION, FLAG_PARTIAL
 
 development:
-  database: db/xapian_db/development
+  database: db/xapian_db/tapor
   <<: *defaults
 
 test:
@@ -14,9 +14,9 @@ test:
   <<: *defaults
 
 production:
-  database:     db/xapian_db/production
+  database:     db/xapian_db/tapor
   writer:       resque
-  resque_queue: my_queue
+  resque_queue: production_test_queue
   <<: *defaults
 
 # production:
@@ -25,3 +25,32 @@ production:
 #   # writer:   beanstalk
 #   # beanstalk_daemon: localhost:11300
 #   <<: *defaults
+
+
+# # default config
+# defaults: &defaults
+#   adapter:  active_record
+#   language: en
+#   writer:   direct
+#   enable_query_flags: FLAG_WILDCARD, FLAG_BOOLEAN, FLAG_BOOLEAN_ANY_CASE, FLAG_SPELLING_CORRECTION, FLAG_PARTIAL
+
+# development:
+#   database: db/xapian_db/development
+#   <<: *defaults
+
+# test:
+#   database: ":memory:"
+#   <<: *defaults
+
+# production:
+#   database:     db/xapian_db/production
+#   writer:       resque
+#   resque_queue: my_queue
+#   <<: *defaults
+
+# # production:
+# #   # Make sure the beanstalk daemon and the beanstalk worker are running
+# #   database: db/xapian_db/production
+# #   # writer:   beanstalk
+# #   # beanstalk_daemon: localhost:11300
+# #   <<: *defaults
