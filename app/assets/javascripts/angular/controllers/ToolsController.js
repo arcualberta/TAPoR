@@ -615,37 +615,32 @@ app.controller('ToolsEditController', ['$scope', '$http', '$location', '$routePa
 
   }
 
+
+  var succesfullyUpdateSuggestedTools = function(data, status, headers, config) {
+    $http.post('/api/tools/' + data.id + "/suggested", {id: data.id, suggested: $scope.data.suggested_tools})
+      // .success(function(data, status, headers, config){
+      // })
+      // .error(function(data){
+      // }); 
+    $location.path('/tools/' + data.id);         
+  }
+
   $scope.createOrUpdateTool = function() {
   	
 
   	if ($('#tool_form')[0].checkValidity()) {  		
 
       processToolAttributes();
-      console.log("eere")
-      console.log($scope.data)
 			if ($scope.is_editing) {
 				$scope.id = $routeParams.id;
 				$http.patch('/api/tools/' + $scope.id, $scope.data)
-				.success(function(data, status, headers, config){
-					$location.path('/tools/' + data.id);
-				});
+				.success(succesfullyUpdateSuggestedTools);
 			} else {
 				$http.post("/api/tools", $scope.data)
-				.success(function(data, status, headers, config) {									
-					$location.path('/tools/' + data.id);
-				})
-				.error(function(data, status, headers, config) {
-					
-				});	
+				.success(succesfullyUpdateSuggestedTools)
 			}
 
 
-			// set suggested tools
-
-			$http.post('/api/tools/' + $scope.id + "/suggested", {id: $scope.id, suggested: $scope.data.suggested_tools})
-			.success(function(data, status, headers, config){
-				// console.log("saved suggested");
-			});
 			
 		}
   }
