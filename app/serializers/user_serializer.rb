@@ -7,4 +7,8 @@ class UserSerializer < ActiveModel::Serializer
   	end
   	return "";
   end
+
+  def image_url
+    return object.image_url ? object.image_url : "/img/missing-person.png";
+  end
 end
