@@ -66,6 +66,7 @@ body, html {
 .tapor-logo {
 	cursor: pointer;
 	font-family: 'Rokkitt', serif;
+	padding-top: 13px;
 }
 
 #tapor-tagcloud {
