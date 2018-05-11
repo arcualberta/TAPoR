@@ -372,3 +372,7 @@ body, html {
 	font-size: 1.2em;
     font-weight: bold;
 }
+
+.media {
+	padding-bottom: 20px;
+}
