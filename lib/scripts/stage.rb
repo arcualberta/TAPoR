@@ -36,12 +36,14 @@ class Stage
   end
 
   def ingest(filename)
+    puts "Start"
     filepath = File.expand_path(File.dirname(__FILE__)) + "/" + filename
   
+    puts "Cleaning up names"
     clean_up_names
     add_new_multiple_attribute("Type of analysis", @new_analysis_type_attributes)
     add_new_multiple_attribute("TaDiRAH goals & methods", @tadirah_attributes)
-
+    puts "Initial DiRT ingestion"
     CSV.foreach(filepath, {headers: :first_row}) do |row|
       tool_name = row[0]
       tool = Tool.where(name: tool_name).first
@@ -53,7 +55,7 @@ class Stage
       # the rest to be able to add the tadirah attributes from existing tools
       update_tool(tool, dirt_entry)
     end
-
+    puts "Updating existing tools"
     # Run through all saved tools to populate new attribute values
     add_new_analysis()
     # XXX Run this line for final test
@@ -93,11 +95,19 @@ class Stage
     attributes = get_tool_attributes(tool, "TaDiRAH goals & methods")
 
     attributes.each do |attribute|
-      new_attribute = Set[]
-      new_attribute.merge(@tadirah_to_analysis_new[attribute] || [])
-      new_attributes.merge(new_attribute)
-
+      if @new_analysis_type_attributes.include? attribute
+        new_attributes.add(attribute)
+      end
     end
+
+    # attributes.each do |attribute|
+    #   new_attribute = Set[]
+    #   new_attribute.merge(@tadirah_to_analysis_new[attribute] || [])
+    #   new_attributes.merge(new_attribute)
+
+    # end
+
+
     update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
   end
 
