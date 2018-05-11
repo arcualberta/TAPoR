@@ -84,13 +84,14 @@ class Stage
 
   def new_analysis_from_old_and_tadirah(tool)
     new_attributes = Set[]
+    new_tadirah = Set[]
     attributes = get_tool_attributes(tool, "Type of analysis")
     attributes.each do |attribute|
       new_attribute = Set[]
       new_attribute.merge(@analysis_old_to_analysis_new[attribute] || [])
+      new_tadirah.merge(@analysis_old_to_tadirah[attribute] || [])
       new_attributes.merge(new_attribute)
     end
-
 
     attributes = get_tool_attributes(tool, "TaDiRAH goals & methods")
 
@@ -109,6 +110,8 @@ class Stage
 
 
     update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
+    update_tool_attribute_values(tool, "TaDiRAH goals & methods", new_tadirah.to_a)
+
   end
 
   def update_value_if_needed(current_value, new_value)
@@ -118,7 +121,8 @@ class Stage
   def update_tool_single_values(tool, dirt_entry)
     tool.user_id = update_value_if_needed(tool.user_id, @tapor_user.id)
     tool.is_approved = true
-    tool.is_hidden = false;
+    tool.is_hidden = false
+    tool.image_url = "/images/tools/missing.png"
 
     tool.name = update_value_if_needed(tool.name, 
       dirt_entry[:name]).strip
@@ -128,6 +132,7 @@ class Stage
       dirt_entry[:web_page])
     tool.creators_name = update_value_if_needed(tool.creators_name, 
       dirt_entry[:developer])
+
 
     today = Date.today
 
