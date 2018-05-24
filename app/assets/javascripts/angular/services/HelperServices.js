@@ -83,7 +83,14 @@ app.factory('helperServices', ['$location', '$timeout', '$q', 'attributeTypeServ
 					function(data) {
 						$scope.tools_page = data;
 						angular.forEach($scope.tools_page.tools, function(v, i){
-							v.thumb_url = v.image_url.replace(/\.png$/, "-thumb.png");
+							
+							if (v.image_url != "") {
+								v.thumb_url = v.image_url.replace(/\.png$/, "-thumb.png");		
+							} else {
+								// XXX This should come from the back end
+								v.thumb_url = "images/tools/missing-thumb.png";	
+							}						
+							
 						});
 					},
 					function(errorMessage) {

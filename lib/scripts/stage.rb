@@ -17,6 +17,7 @@ class Stage
     @new_analysis_type_attributes = Set[]
     @tadirah_attributes = Set[]
     @analysis_old = Set[]
+    @report_tools_merged = []
 
     initialize_licenses
     initialize_analysis_old_to_analysis_new
@@ -36,28 +37,61 @@ class Stage
   end
 
   def ingest(filename)
+    puts "Start"
     filepath = File.expand_path(File.dirname(__FILE__)) + "/" + filename
   
+    puts "Cleaning up names"
     clean_up_names
     add_new_multiple_attribute("Type of analysis", @new_analysis_type_attributes)
     add_new_multiple_attribute("TaDiRAH goals & methods", @tadirah_attributes)
+    puts "Initial DiRT ingestion"
 
     CSV.foreach(filepath, {headers: :first_row}) do |row|
       tool_name = row[0]
       tool = Tool.where(name: tool_name).first
       dirt_entry = clean_dirt_entry row
 
-      tool = Tool.create!(recipes: "") unless tool      
+
+      if tool
+        @report_tools_merged << tool.name
+      else
+        tool = Tool.create!(recipes: "")
+      end
+      
 
       # This update goes through tools from the csv, you need to loop through 
       # the rest to be able to add the tadirah attributes from existing tools
       update_tool(tool, dirt_entry)
     end
 
+    puts "Updating existing tools"
     # Run through all saved tools to populate new attribute values
     add_new_analysis()
     # XXX Run this line for final test
     remove_analysis_old
+
+    puts "Writing reports"
+    write_reports()
+
+  end
+
+  def write_reports()
+    tools_no_analysis_type = []
+    tools_no_tadirah = []
+    Tool.all.each do |tool|
+
+      tadirah = get_tool_attributes(tool, "TaDiRAH goals & methods")
+      types_of_analysis = get_tool_attributes(tool, "Type of analysis")
+      
+      tools_no_tadirah << tool.name if tadirah.length == 0
+      tools_no_analysis_type << tool.name if types_of_analysis.length == 0      
+    end
+
+    #  write 3 reports
+
+    File.write("report_tools_merged.txt", @report_tools_merged.sort.join("\n"))
+    File.write("report_tools_no_analysis_type.txt", tools_no_analysis_type.sort.join("\n"))
+    File.write("report_tools_no_tadirah.txt", tools_no_tadirah.sort.join("\n"))
 
   end
 
@@ -82,23 +116,35 @@ class Stage
 
   def new_analysis_from_old_and_tadirah(tool)
     new_attributes = Set[]
+    new_tadirah = Set[]
     attributes = get_tool_attributes(tool, "Type of analysis")
     attributes.each do |attribute|
       new_attribute = Set[]
       new_attribute.merge(@analysis_old_to_analysis_new[attribute] || [])
+      new_tadirah.merge(@analysis_old_to_tadirah[attribute] || [])
       new_attributes.merge(new_attribute)
     end
-
 
     attributes = get_tool_attributes(tool, "TaDiRAH goals & methods")
 
     attributes.each do |attribute|
-      new_attribute = Set[]
-      new_attribute.merge(@tadirah_to_analysis_new[attribute] || [])
-      new_attributes.merge(new_attribute)
-
+      
+      if @new_analysis_type_attributes.include? attribute
+        new_attributes << attribute
+      end
     end
+
+    # attributes.each do |attribute|
+    #   new_attribute = Set[]
+    #   new_attribute.merge(@tadirah_to_analysis_new[attribute] || [])
+    #   new_attributes.merge(new_attribute)
+
+    # end
+
+
     update_tool_attribute_values(tool, "Type of analysis", new_attributes.to_a)
+    update_tool_attribute_values(tool, "TaDiRAH goals & methods", new_tadirah.to_a)
+
   end
 
   def update_value_if_needed(current_value, new_value)
@@ -108,7 +154,8 @@ class Stage
   def update_tool_single_values(tool, dirt_entry)
     tool.user_id = update_value_if_needed(tool.user_id, @tapor_user.id)
     tool.is_approved = true
-    tool.is_hidden = false;
+    tool.is_hidden = false
+    # tool.image_url = "/images/tools/missing.png"
 
     tool.name = update_value_if_needed(tool.name, 
       dirt_entry[:name]).strip
@@ -118,6 +165,7 @@ class Stage
       dirt_entry[:web_page])
     tool.creators_name = update_value_if_needed(tool.creators_name, 
       dirt_entry[:developer])
+
 
     today = Date.today
 
@@ -182,7 +230,6 @@ class Stage
     tool_licenses = get_tool_licenses(dirt_entry[:code_license])
     update_tool_single_values(tool, dirt_entry)
     update_tool_tags(tool, dirt_entry[:tags])
-    # puts tool.name + " <> " + tool_licenses.inspect
     update_tool_attribute_values(tool, 'Web usable', [dirt_entry[:platform]])
     update_tool_attribute_values(tool, 'Warning', [dirt_entry[:status]])    
     update_tool_attribute_values(tool, 'Type of license', tool_licenses)

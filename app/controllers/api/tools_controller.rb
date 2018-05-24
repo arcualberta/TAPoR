@@ -472,14 +472,14 @@ class Api::ToolsController < ApplicationController
 
 						# main tool content
 						save_tool = false;
-						@tool.name = safe_params[:name].strip;
-						@tool.detail = ActionController::Base.helpers.sanitize(safe_params[:detail]).strip;
-						@tool.url = safe_params[:url].strip
-						@tool.creators_name = safe_params[:creators_name].strip;
-						@tool.creators_email = safe_params[:creators_email].strip;
-						@tool.creators_url = safe_params[:creators_url].strip;	
-						@tool.repository = safe_params[:repository].strip	
-						@tool.recipes = safe_params[:recipes].strip			
+						@tool.name = safe_params[:name]&.strip;
+						@tool.detail = ActionController::Base.helpers.sanitize(safe_params[:detail])&.strip;
+						@tool.url = safe_params[:url]&.strip
+						@tool.creators_name = safe_params[:creators_name]&.strip;
+						@tool.creators_email = safe_params[:creators_email]&.strip;
+						@tool.creators_url = safe_params[:creators_url]&.strip;	
+						@tool.repository = safe_params[:repository]&.strip	
+						@tool.recipes = safe_params[:recipes]&.strip			
 						if current_user.is_admin?
 							@tool.is_approved = safe_params[:is_approved];
 						end
