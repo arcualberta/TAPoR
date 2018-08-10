@@ -1,9 +1,9 @@
-app.directive("comment", ['$sce', function($sce) {
+app.directive("comment", ['$sce', 'services', function($sce, services) {
 	return {
 		restrict : 'A',
 		template : [
-			'<a id="{{model.id}}"></a>',
-			'<div class="col-md-12">',
+			'<a ng-if="!model.is_hidden" id="{{model.id}}"></a>',
+			'<div ng-if="!model.is_hidden" class="col-md-12">',
 				'<div class="media">',
 					'<div class="media-left">',
 						'<img src="{{model.user.image_url}}" class="img-circle user-image-url">',
@@ -16,6 +16,7 @@ app.directive("comment", ['$sce', function($sce) {
 						'</div>',
 						'<div ng-if="user.is_admin">',
 							'<button class="btn btn-info" ng-click="toggle_pinned()">{{pin_button_text}} <span class="glyphicon glyphicon-pushpin"></button>',
+							'<button class="btn btn-danger" ng-click="delete()">Delete <span class="glyphicon glyphicon-trash"></button>',
 							'<button class="btn btn-primary" ng-click="toggle_editing()">{{edit_button_text}} <span class="glyphicon {{edit_button_icon_class}}"></button>',
 							'<button class="btn btn-danger" ng-click="cancel_editing()" ng-if="is_editing">Cancel <span class="glyphicon glyphicon-cancel"></button>',
 						'</div>',
@@ -30,6 +31,7 @@ app.directive("comment", ['$sce', function($sce) {
 		},
 		link : function(scope, elem, attrs) {
 			scope.is_editing = false;
+			// scope.is_hidden = false;
 			scope.edit_button_text = 'Edit';
 			scope.pin_button_text =  scope.model.is_pinned ? 'Remove pin' : 'Pin';
 			scope.edit_button_icon_class = 'glyphicon-edit';
@@ -54,14 +56,24 @@ app.directive("comment", ['$sce', function($sce) {
    			set_edit_button();
    		}
 
+   		scope.delete = function() {   			
+   			scope.model.is_hidden = true;
+   			services.comment.update(scope.model).then(
+   				function(data) {
+   							
+   				}
+   			)
+   			// scope.update(scope.model);
+   		}
+
    		var set_edit_button = function() {
    			scope.edit_button_text = "Edit";
-				scope.edit_button_icon_class = 'glyphicon-edit';
+			scope.edit_button_icon_class = 'glyphicon-edit';
    		}
 
    		var set_save_button = function() {
    			scope.edit_button_text = "Save";
-				scope.edit_button_icon_class = 'glyphicon-save';
+			scope.edit_button_icon_class = 'glyphicon-save';
    		}
 
 			scope.toggle_editing = function() {

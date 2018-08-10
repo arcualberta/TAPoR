@@ -1,6 +1,6 @@
 class Api::CommentsController < ApplicationController
 
-	before_action :set_comment, only: [:update]
+	before_action :set_comment, only: [:update, :destroy]
 
 	def index
 	# @tools = Tool.all
@@ -32,6 +32,22 @@ class Api::CommentsController < ApplicationController
 				format.json { render json: comment.errors, status: :unprocessable_entity}
 			end
 
+		end
+	end
+
+	def destroy
+		Comment.transaction do
+			begin
+				if current_user.is_admin?
+					@comment.update(is_hidden: true)
+					format.json { render json: @comment, status: :ok }
+				else
+					format.json { render json: @comment, status: :unauthorized }
+				end
+			rescue
+				format.json { render json: @comment.errors, status: :unprocessable_entity }
+				raise ActiveRecord::Rollback
+			end
 		end
 	end
 
