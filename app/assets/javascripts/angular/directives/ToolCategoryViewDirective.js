@@ -26,13 +26,19 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var intervalTimer = d3.interval( highlightRandomTool, 4000);
 				intervalTimer.stop();
 				
+				// XXX Hack for tools without type_of_analysis
+				attributeDataIndex[0] = {
+					color: 0,
+					toolInstances: 0
+				}
+
 				// map attributeIds to c20 colours
 				toolsByAnalysis.attribute_values.forEach(function(attribute, i){
 					attributeDataIndex[attribute.id] = {
-						color: i,
+						color: i + 1,
 						toolInstances: 0
 					}
-				})
+				})				
 
 				// toolInstances of item categories is needed to colour least common
 				toolsByAnalysis.tools.forEach(function(tool){
@@ -155,6 +161,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					.attr("id", "circle-group")
 
 				var circleIndexPadding = 0
+
+				// console.log(attributeDataIndex)
 
 				var circles = circleGroup.selectAll("circle")
 					.data(toolsByAnalysis.tools, function(d){d.tool_id})
@@ -335,7 +343,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					var d = circles.data()[index];
 					prevCircle = circles.nodes()[index]
 
-					console.log(d)
+					// console.log(d)
 					d3.select(prevCircle)
 						// .transition()
 						// .duration(50)
@@ -354,8 +362,13 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				}
 
+
+				// XXX Hack to recover from null imageUrl
 				var lazyThumb = function(imageUrl) {
-					return imageUrl.replace(".png", "-thumb.png")
+					if (imageUrl) {
+						return imageUrl.replace(".png", "-thumb.png")						
+					}
+					return "images/tools/missing-thumb.png";
 				}
 
 				var setToolDetailText = function(text) {
@@ -449,8 +462,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					var categoryHeight = getBBoxById("category-group").height
 					var circlesHeight = getBBoxById("circle-group").height
 
-					console.log(categoryHeight)
-					console.log(circlesHeight)
+					// console.log(categoryHeight)
+					// console.log(circlesHeight)
 
 					var svgHeight = circlesHeight > categoryHeight ? circlesHeight + 180 : categoryHeight + 200;
 
