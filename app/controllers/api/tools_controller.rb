@@ -450,45 +450,16 @@ class Api::ToolsController < ApplicationController
   			.group("tool_id")
   			.preload(:tool_attributes)
 
-
-
-  		# XXX Old start vvv
-
-		# tools = Tool
-		# 	.select("tool_id, name, detail, star_average, image_url, tool_attributes.id, GROUP_CONCAT(tool_attributes.attribute_value_id) AS attribute_value_ids")
-  # 		.joins(:tool_attributes)
-  # 		.where("tool_attributes.attribute_type_id = ?", attribute_type.id)
-  # 		.where("is_hidden = false AND is_approved = true")
-  # 		.group("tool_id")
-
-
-
-		# tools.each do |tool|
-		# 	tool.detail =  Nokogiri::HTML(tool.detail).text
-		# 	if tool.attribute_value_ids
-		# 		tool.attribute_value_ids = tool.attribute_value_ids.split(",")
-		# 	else
-		# 		tool.attribute_value_ids = []
-		# 	end
-		# end
-
-		# Cycle through tools that have analysis types and add them to the main tool list
-
-		# tools_type_of_analisys.each do |tool_type_of_analisys|
-		# 	# tool = tools.find tool_type_of_analisys.tool_id
-		# 	tool = tools.detect {|e| e.id == tool_type_of_analisys.tool_id}
-		# 	tool.attribute_value_ids = tool_type_of_analisys.attribute_value_ids.split(",")		
-		# end
-
-		# XXX Old end ^^^
-
 		# Cycle through all tools to clean up html
 
+		look_up_tools_type_of_analisys = Hash[tools_type_of_analisys.map {|x| [x.tool_id, x]}]
+
 		tools.each do |tool|
-			tool.detail =  Nokogiri::HTML(tool.detail).text
-			tool_analysis_type = tools_type_of_analisys.detect {|e| e.tool_id == tool.tool_id}
-			if tool_analysis_type
-				tool.attribute_value_ids = tool_analysis_type.attribute_value_ids.split(",")	
+			tool.detail =  Nokogiri::HTML(tool.detail).text			
+			# tool_analysis_type = false; #tools_type_of_analisys.detect {|e| e.tool_id == tool.tool_id}
+			if look_up_tools_type_of_analisys.key? tool.tool_id
+				current = look_up_tools_type_of_analisys[tool.tool_id]
+				tool.attribute_value_ids = current.attribute_value_ids.split(",")	
 			else 
 				tool.attribute_value_ids = []
 			end
