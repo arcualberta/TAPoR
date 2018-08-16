@@ -18,7 +18,6 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var radius = 7,
 					increaseRatio = 1.5,
 					itemArea = 20, 
-					c20 = d3.scaleOrdinal(d3.schemeCategory20),
 					attributeDataIndex = {},
 					highlitableTools = toolsByAnalysis.tools.map(function(tool, i){ return i;})
 
@@ -26,13 +25,38 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				var intervalTimer = d3.interval( highlightRandomTool, 4000);
 				intervalTimer.stop();
 				
-				// map attributeIds to c20 colours
-				toolsByAnalysis.attribute_values.forEach(function(attribute, i){
-					attributeDataIndex[attribute.id] = {
-						color: i,
+
+				// map attributeIds to colorScale colours
+
+				var sortedKeys = toolsByAnalysis.attribute_values.map(function(x) {
+					return x.id
+				})
+
+				sortedKeys.sort(function(a, b) {
+					return parseInt(a) > parseInt(b)
+				})
+
+				// add 1 to take into account the first color added manually at 0
+				var colorCount = sortedKeys.length + 1;
+				var colorScale1 = d3.scaleSequential()			
+					.domain([0, colorCount])
+					.interpolator(d3.interpolateRainbow);
+
+				// XXX Hack for tools without type_of_analysis
+				attributeDataIndex[0] = {
+					color: colorScale1(0),
+					toolInstances: 0
+				}
+
+
+				sortedKeys.forEach(function(attribute, i){
+					var currentIndex = i + 1;
+					attributeDataIndex[attribute] = {
+						color: colorScale1(currentIndex),
 						toolInstances: 0
 					}
-				})
+
+				})				
 
 				// toolInstances of item categories is needed to colour least common
 				toolsByAnalysis.tools.forEach(function(tool){
@@ -40,7 +64,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						attributeDataIndex[attributeId].toolInstances++
 					})
 				})
-
+				console.log(attributeDataIndex)
 				// define least common category for each tool
 
 				var getLeastCommonCategory = function(tool) {
@@ -156,13 +180,15 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				var circleIndexPadding = 0
 
+				// console.log(attributeDataIndex)
+
 				var circles = circleGroup.selectAll("circle")
 					.data(toolsByAnalysis.tools, function(d){d.tool_id})
 					.enter()
 					.append("circle")				
 					.attr("r", radius )
 					.attr("fill", function(d,i){ 
-						return c20( attributeDataIndex[d.leastCommonCategory].color )
+						return attributeDataIndex[d.leastCommonCategory].color;
 					})
 					.on("mouseover", function(d, i){
 						if (highlitableTools.indexOf(i) !== -1) {
@@ -335,7 +361,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					var d = circles.data()[index];
 					prevCircle = circles.nodes()[index]
 
-					console.log(d)
+					// console.log(d)
 					d3.select(prevCircle)
 						// .transition()
 						// .duration(50)
@@ -354,8 +380,13 @@ app.directive("toolCategoryView", ['$location', function($location) {
 
 				}
 
+
+				// XXX Hack to recover from null imageUrl
 				var lazyThumb = function(imageUrl) {
-					return imageUrl.replace(".png", "-thumb.png")
+					if (imageUrl) {
+						return imageUrl.replace(".png", "-thumb.png")						
+					}
+					return "images/tools/missing-thumb.png";
 				}
 
 				var setToolDetailText = function(text) {
@@ -449,8 +480,8 @@ app.directive("toolCategoryView", ['$location', function($location) {
 					var categoryHeight = getBBoxById("category-group").height
 					var circlesHeight = getBBoxById("circle-group").height
 
-					console.log(categoryHeight)
-					console.log(circlesHeight)
+					// console.log(categoryHeight)
+					// console.log(circlesHeight)
 
 					var svgHeight = circlesHeight > categoryHeight ? circlesHeight + 180 : categoryHeight + 200;
 

@@ -8,7 +8,7 @@ require 'nokogiri'
 include Magick
 
 class Api::ToolsController < ApplicationController
-	
+
 
 	# load_and_authorize_resource
 	before_action :set_tool, only: [:edit, :update, :destroy, :update_rating, :update_tags, :update_comments, :suggested, :update_suggested, :get_tags, :get_ratings, :update_ratings, :get_comments, :get_attributes]
@@ -16,10 +16,10 @@ class Api::ToolsController < ApplicationController
 	def index
 		params[:page] ||= 1;
 		params[:per_page] ||= 10;
-		
+
 		if not params[:query] or params[:query] == ""
 			query = "*"
-		else 
+		else
 			query = params[:query]
 			if query[-1, 1] != " "
 				query += "*"
@@ -27,10 +27,10 @@ class Api::ToolsController < ApplicationController
 		end
 
 		# XXX Check
-		
+
 
 		if params[:attribute_values] and params[:attribute_values].length > 0
-			params[:attribute_values].split(",").each do |value|				
+			params[:attribute_values].split(",").each do |value|
 				query += ' attribute_value_ids:-' + value + '-'
 			end
 		end
@@ -49,7 +49,7 @@ class Api::ToolsController < ApplicationController
 		end
 
 		if params[:tag_values] and params[:tag_values].length > 0
-			params[:tag_values].split(",").each do |value|				
+			params[:tag_values].split(",").each do |value|
 				query += ' tag_value_ids:-' + value + '-'
 			end
 		end
@@ -63,11 +63,11 @@ class Api::ToolsController < ApplicationController
 			elsif params[:order] == "date"
 				order[0] = :created_at
 			elsif params[:order] == "id"
-				order[0] = :id				
+				order[0] = :id
 			end
 		end
 
-		decending = false		
+		decending = false
 		if params[:sort] and params[:sort] == "desc"
 			decending = true
 		end
@@ -78,39 +78,39 @@ class Api::ToolsController < ApplicationController
 		docs.each do |doc|
 			tools.push (doc.attributes);
 		end
-				
+
 		respond_to do |format|
 			format.json {render json: tools, root: "tools", meta: {count: docs.hits, page_count: docs.hits/ params[:per_page].to_i + 1}, status: :ok}
 		end
 
 	end
 
-	def show 
+	def show
 		respond_to do |format|
-			@tool = Tool.find_by(id: params[:id]);	
+			@tool = Tool.find_by(id: params[:id]);
 			if not @tool.is_hidden
-				format.json { render json: @tool, status: :ok}			
-			else 
-				format.json {{status: :unauthorized}}			
+				format.json { render json: @tool, status: :ok}
+			else
+				format.json {{status: :unauthorized}}
 			end
 		end
 	end
 
 	def view
 		respond_to do |format|
-			if current_user 
+			if current_user
 				@tool_use = ToolUseMetric.create({
 					user_id: current_user[:id],
 					tool_id: params[:id]
-				});	
-				format.json { render json: @tool_use, status: :ok}			
+				});
+				format.json { render json: @tool_use, status: :ok}
 			else
 				format.json { {status: :unauthorized} }
 			end
 		end
 	end
 
-	
+
 	def update_suggested
 		respond_to do |format|
 			if current_user and current_user.is_admin?
@@ -149,7 +149,7 @@ class Api::ToolsController < ApplicationController
 			initialMetrics = ToolUseMetric.where(tool_id: params[:id]);
 			initialMetrics.each do |metric|
 				@nextMetric = ToolUseMetric.where("user_id = ? AND created_at > ? ", metric[:user_id], metric[:created_at]).take();
-				if @nextMetric					
+				if @nextMetric
 					tool = Tool.find(@nextMetric.tool_id);
 					if not tool.is_hidden
 						result.push(tool);
@@ -172,7 +172,7 @@ class Api::ToolsController < ApplicationController
 			featured_tools.each do |featured|
 				if not featured.tool.is_hidden and featured.tool.is_approved
 					featured.tool['detail'] = coder.decode(featured.tool['detail'])
-					tools.push(featured.tool)			
+					tools.push(featured.tool)
 				end
 			end
 		end
@@ -185,7 +185,7 @@ class Api::ToolsController < ApplicationController
 
 	def featured_edit
 		respond_to do |format|
-			
+
 			if current_user.is_admin?
 				FeaturedTool.destroy_all()
 				params[:tool_list_items].each_with_index do |item, index|
@@ -196,7 +196,7 @@ class Api::ToolsController < ApplicationController
 				end
 			end
 			format.json { render json: {status: "OK"}, status: :ok }
-			
+
 		end
 	end
 
@@ -206,8 +206,8 @@ class Api::ToolsController < ApplicationController
 				begin
 					if current_user.is_admin? or current_user[:id] == @tool[:user_id]
 						@tool.update(is_hidden: true);
-						@tool.tool_ratings.update_all(is_hidden: true)			
-						@tool.tool_tags.update_all(is_hidden: true)			
+						@tool.tool_ratings.update_all(is_hidden: true)
+						@tool.tool_tags.update_all(is_hidden: true)
 						format.json { render json: @tool, status: :ok }
 					else
 						format.json { render json: @tool, status: :unauthorized }
@@ -221,14 +221,14 @@ class Api::ToolsController < ApplicationController
 	end
 
 
-	def create		
+	def create
 
 		respond_to do |format|
 			Tool.transaction do
 				begin
 
 					@tool = Tool.create({
-						name: safe_params[:name].strip, 
+						name: safe_params[:name].strip,
 						url: safe_params[:url],
 						detail: safe_params[:detail].strip,
 						creators_name: safe_params[:creators_name].strip,
@@ -243,7 +243,7 @@ class Api::ToolsController < ApplicationController
 					});
 
 					save_code();
-					
+
 
 					if current_user.is_admin?
 						@tool.update(is_approved: safe_params[:is_approved]);
@@ -255,15 +255,15 @@ class Api::ToolsController < ApplicationController
 
 					# image
 
-					if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"						
+					if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"
 						@tool.image_url = save_image(params[:image_url])
 						@tool.save
 						XapianDb.reindex @tool
 					end
 
-					
 
-					
+
+
 					format.json { render json: @tool, status: :created }
 				rescue ActiveRecord::RecordInvalid
 					format.json { render json: @tool.errors, status: :unprocessable_entity }
@@ -271,7 +271,7 @@ class Api::ToolsController < ApplicationController
 				end
 			end
 		end
-	
+
 	end
 
 	def get_attributes
@@ -286,7 +286,7 @@ class Api::ToolsController < ApplicationController
 				attribute_values: [],
 				selected: []
 			}
-			
+
 			AttributeValue.where(attribute_type_id: response_type[:id]).each do |value|
 				response_value = {
 					id: value[:id],
@@ -294,15 +294,15 @@ class Api::ToolsController < ApplicationController
 					index: value[:index],
 				}
 
-				response_type[:attribute_values].push(response_value);			
+				response_type[:attribute_values].push(response_value);
 				if response_type[:is_multiple]
-					this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id], attribute_value_id: response_value[:id])	
+					this_model = @tool.tool_attributes.find_by(attribute_type_id: response_type[:id], attribute_value_id: response_value[:id])
 					if this_model
 						@value = AttributeValue.find(this_model.attribute_value_id);
 						response_type[:selected].push({
 							id: @value.id,
 						});
-					end				
+					end
 				end
 
 			end
@@ -313,18 +313,18 @@ class Api::ToolsController < ApplicationController
 				if this_model and this_model.attribute_value_id
 					@value = AttributeValue.find(this_model.attribute_value_id)
 					response_type[:selected] = [{
-						id: @value.id,						
+						id: @value.id,
 					}];
 				end
 			end
-			
+
 			response.push(response_type);
 
 		end
 
 		respond_to do |format|
-				format.json { render json: response, status: :ok}			
-		end		
+				format.json { render json: response, status: :ok}
+		end
 	end
 
 	def update_tags
@@ -339,10 +339,10 @@ class Api::ToolsController < ApplicationController
 			user: [],
 		}
 		sum_tags = {};
-		@tool.tool_tags.each do |tool_tag|								
+		@tool.tool_tags.each do |tool_tag|
 			if sum_tags.has_key?(tool_tag.tag.text)
 				sum_tags[tool_tag.tag.text][:weight] += 1;
-			else 
+			else
 				sum_tags[tool_tag.tag.text] = {
 					id: tool_tag.tag.id,
 					weight: 1
@@ -364,9 +364,9 @@ class Api::ToolsController < ApplicationController
 		end
 
 		respond_to do |format|
-			format.json { render json: response, status: :ok}			
+			format.json { render json: response, status: :ok}
 		end
-			
+
 	end
 
 	def update_ratings
@@ -384,8 +384,8 @@ class Api::ToolsController < ApplicationController
 			user_rating = @tool.tool_ratings.where(user_id: current_user[:id]).take()
 
 			if (user_rating and user_rating[:stars])
-				response[:user] = user_rating[:stars]				
-			else				
+				response[:user] = user_rating[:stars]
+			else
 				response[:user] = 0;
 			end
 		end
@@ -417,37 +417,59 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
+	def by_analysis2
+		tools = Tool.all.where(is_hidden: false).where(is_approved: true)
+
+		result = {
+			tools: tools
+		}
+
+		respond_to do |format|
+			format.json {render json: result, status: :ok}
+		end
+	end
+
 	def by_analysis
+
+		# XXX This call takes a lot of time and slows down the main page 
 
 		attribute_type = AttributeType.find_by(name: "Type of analysis")
 		attribute_values = AttributeValue
 			.select("id, name")
 			.where(attribute_type_id: attribute_type.id)
 			.sort_by { |att| att[:name] }
-		
 
-		tools = Tool
-			.select("tool_id, name, detail, star_average, image_url, tool_attributes.id, GROUP_CONCAT(tool_attributes.attribute_value_id) AS attribute_value_ids")
-  		.joins(:tool_attributes)
-  		.where("tool_attributes.attribute_type_id = ?", attribute_type.id)
-  		.where("is_hidden = false AND is_approved = true")
-  		.group("tool_id")
+		tools = Tool.all.select("id AS tool_id, name, detail, star_average, image_url, '' AS 'attribute_value_ids'")
+
+
+		tools_type_of_analisys = Tool
+			.select("tool_id, tool_attributes.id, GROUP_CONCAT(tool_attributes.attribute_value_id) AS 'attribute_value_ids'")
+			.where("is_hidden = false AND is_approved = true")
+  			.joins(:tool_attributes)
+  			.where("tool_attributes.attribute_type_id = ?", attribute_type.id)  		
+  			.group("tool_id")
+  			.preload(:tool_attributes)
+
+		# Cycle through all tools to clean up html
+
+		look_up_tools_type_of_analisys = Hash[tools_type_of_analisys.map {|x| [x.tool_id, x]}]
 
 		tools.each do |tool|
-			tool.detail =  Nokogiri::HTML(tool.detail).text
-			if tool.attribute_value_ids
-				tool.attribute_value_ids = tool.attribute_value_ids.split(",")
-			else
+			tool.detail =  Nokogiri::HTML(tool.detail).text			
+			# tool_analysis_type = false; #tools_type_of_analisys.detect {|e| e.tool_id == tool.tool_id}
+			if look_up_tools_type_of_analisys.key? tool.tool_id
+				current = look_up_tools_type_of_analisys[tool.tool_id]
+				tool.attribute_value_ids = current.attribute_value_ids.split(",")	
+			else 
 				tool.attribute_value_ids = []
 			end
 		end
+
 
 		result = {
 			attribute_values: attribute_values,
 			tools: tools
 		}
-
-
 
 		respond_to do |format|
 			format.json {render json: result, status: :ok}
@@ -477,18 +499,18 @@ class Api::ToolsController < ApplicationController
 						@tool.url = safe_params[:url]&.strip
 						@tool.creators_name = safe_params[:creators_name]&.strip;
 						@tool.creators_email = safe_params[:creators_email]&.strip;
-						@tool.creators_url = safe_params[:creators_url]&.strip;	
-						@tool.repository = safe_params[:repository]&.strip	
-						@tool.recipes = safe_params[:recipes]&.strip			
+						@tool.creators_url = safe_params[:creators_url]&.strip;
+						@tool.repository = safe_params[:repository]&.strip
+						@tool.recipes = safe_params[:recipes]&.strip
 						if current_user.is_admin?
 							@tool.is_approved = safe_params[:is_approved];
 						end
-						
+
 						if safe_params.length >0
 							@tool.last_updated = Time.now();
 						end
 
-						# @tool.save()			
+						# @tool.save()
 						# XapianDb.reindex @tool
 						save_tool = true;
 						# tags
@@ -503,14 +525,14 @@ class Api::ToolsController < ApplicationController
 						# attributes
 						save_attributes();
 
-						# code 
+						# code
 
 						save_code();
 
 						# XXX update tool
 						# image
 
-						if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"						
+						if params[:image_url] and params[:image_url] != "" and params[:image_url].include? "base64"
 							# remove old image
 							if @tool.image_url and File.exist?(File.join('public', @tool.image_url))
 								# XXX FIXME
@@ -526,12 +548,12 @@ class Api::ToolsController < ApplicationController
 						end
 
 						if save_tool
-							@tool.save()							
+							@tool.save()
 						end
 
 						# managed comments (changing pinned and hidden status)
 
-						if params[:managed_comments] and params[:managed_comments][:pinned]  
+						if params[:managed_comments] and params[:managed_comments][:pinned]
 							params[:managed_comments][:pinned].each do |this_comment|
 								@comment = Comment.find_by(id: this_comment[:id])
 								@comment.index = this_comment[:index];
@@ -560,7 +582,7 @@ class Api::ToolsController < ApplicationController
 					end
 				end
 			end
-		
+
 	end
 
 	def destroy
@@ -571,7 +593,7 @@ class Api::ToolsController < ApplicationController
 		# comments
 		# ratings
 		# tool list item
-		
+
 		# set to hidden
 		@tool.update({
 			is_hidden: true
@@ -582,7 +604,7 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
-	private 
+	private
 
 		def set_tool
 			@tool = Tool.find(params[:id])
@@ -633,13 +655,13 @@ class Api::ToolsController < ApplicationController
 
 		def process_update_rating()
 			@tool_rating = @tool.tool_ratings.find_or_create_by(user_id: current_user[:id]);
-			if params[:stars] == 0		
-				@tool_rating.destroy				
+			if params[:stars] == 0
+				@tool_rating.destroy
 			else
-				@tool_rating.update(stars: params[:stars]);				
+				@tool_rating.update(stars: params[:stars]);
 			end
-			@tool.star_average = @tool.tool_ratings.average("stars") || 0 
-			@tool.save()			
+			@tool.star_average = @tool.tool_ratings.average("stars") || 0
+			@tool.save()
 		end
 
 
@@ -649,14 +671,14 @@ class Api::ToolsController < ApplicationController
 					@user_tool_comment = @tool.comments.find_by user_id: current_user[:id]
 					if @user_tool_comment
 						@user_tool_comment.destroy()
-					end							
+					end
 				else
 					@comment = @tool.comments.find_or_create_by user_id: current_user[:id]
 					@comment.content = ActionController::Base.helpers.sanitize(params[:comments][0][:content]);
 					@comment.save
 				end
 			end
-		end		
+		end
 
 		def process_update_tags()
 			if params[:tags]
@@ -665,8 +687,8 @@ class Api::ToolsController < ApplicationController
 				tags.each do |tag|
 					@currentTag = Tag.find_or_create_by text: tag
 					tag_ids.push(@currentTag)
-				end	
-				
+				end
+
 				@tool_tags = @tool.tool_tags.where( user_id: current_user[:id])
 
 
@@ -693,8 +715,8 @@ class Api::ToolsController < ApplicationController
 					tag_ids.each do |tag_id|
 						if tool_tag.tag_id == tag_id.id
 							found = true
-							break					
-						end							
+							break
+						end
 					end
 					if !found
 						tool_tag.destroy()
@@ -703,7 +725,7 @@ class Api::ToolsController < ApplicationController
 			else
 				@tool.tool_tags.where( user_id: current_user[:id]).destroy_all();
 			end
-		end		
+		end
 
 		def save_code()
 			if params[:nature][0][:value] == 'code'
@@ -713,10 +735,10 @@ class Api::ToolsController < ApplicationController
 		end
 
 		def save_attributes()
-			tool_attributes = params[:tool_attributes]			
+			tool_attributes = params[:tool_attributes]
 			if tool_attributes
 				@tool.tool_attributes.destroy_all()
-				@tool.update(last_updated: Time.now())				
+				@tool.update(last_updated: Time.now())
 				tool_attributes.each do |attribute|
 					if attribute[:model] != nil
 						attribute[:model].each do |value|
@@ -724,13 +746,13 @@ class Api::ToolsController < ApplicationController
 							@tool.tool_attributes.create({
 								attribute_type_id: attribute[:id],
 								attribute_value_id: saved_value
-							})							
+							})
 						end
 					# else
 						# @tool.tool_attributes.create({
 						# 	attribute_type_id: attribute[:id],
 						# 	attribute_value_id: nil
-						# })							
+						# })
 					end
 				end
 			end
