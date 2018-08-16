@@ -21,6 +21,9 @@
 //= require angular-ui-ace/ui-ace
 //= require angular-ui-tinymce/src/tinymce
 //= require d3/d3.js
+//= require d3-scale-chromatic/d3-color.v1.min
+//= require d3-scale-chromatic/d3-interpolate.v1.min
+//= require d3-scale-chromatic/d3-scale-chromatic.v1.min
 //= require microplugin/src/microplugin
 //= require sifter/sifter
 //= require selectize/dist/js/selectize
