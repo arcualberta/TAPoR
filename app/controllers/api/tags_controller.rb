@@ -10,20 +10,7 @@ class Api::TagsController < ApplicationController
 
 	def index
 		respond_to do |format|
-			# format.json {render json: Tag.all}
-			response = [];
-
-			Tag.all.each do |tag|
-				weight = tag.tools.count;
-				if weight > 0
-					response.push({
-						text: tag[:text],
-						weight: weight,
-						id: tag[:id]
-					})
-				end
-			end
-
+			response = Tag.joins(:tool_tags).select("tags.id as id, tags.text, COUNT(*) AS weight").group('tags.id')
 			format.json {render json: response, status: :ok}
 		end
 	end
