@@ -417,18 +417,6 @@ class Api::ToolsController < ApplicationController
 		end
 	end
 
-	def by_analysis2
-		tools = Tool.all.where(is_hidden: false).where(is_approved: true)
-
-		result = {
-			tools: tools
-		}
-
-		respond_to do |format|
-			format.json {render json: result, status: :ok}
-		end
-	end
-
 	def by_analysis
 
 		# XXX This call takes a lot of time and slows down the main page 
