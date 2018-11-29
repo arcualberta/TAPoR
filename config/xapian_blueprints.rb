@@ -15,6 +15,8 @@ XapianDb::DocumentBlueprint.setup(:Tool) do |blueprint|
   blueprint.attribute :is_approved, weight: 1
   blueprint.attribute :created_at, as: :date
   blueprint.attribute :nature, as: :string, weight: 1
+  blueprint.ignore_if {is_approved == false}
+  blueprint.ignore_if {is_hidden == true}
 	# blueprint.attribute :tool_attributes, as: :json
 	blueprint.attribute :attribute_value_ids do
 		result = '-'
@@ -44,8 +46,7 @@ XapianDb::DocumentBlueprint.setup(:Tool) do |blueprint|
  		Tool.includes(:tool_attributes)
  	end
 
-  blueprint.ignore_if {is_approved == false}
-  blueprint.ignore_if {is_hidden == true}
+
 end
 
 XapianDb::DocumentBlueprint.setup(:ToolList) do |blueprint|

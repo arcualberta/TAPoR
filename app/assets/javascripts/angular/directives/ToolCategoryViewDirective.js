@@ -64,7 +64,7 @@ app.directive("toolCategoryView", ['$location', function($location) {
 						attributeDataIndex[attributeId].toolInstances++
 					})
 				})
-				console.log(attributeDataIndex)
+				// console.log(attributeDataIndex)
 				// define least common category for each tool
 
 				var getLeastCommonCategory = function(tool) {
