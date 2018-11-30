@@ -60,3 +60,11 @@ gem 'xapian_db', git: 'https://github.com/garaio/xapian_db.git'
 gem 'resque', '~> 1.25.2'
 gem 'htmlentities', '~> 4.3.4'
 gem 'nokogiri', '~> 1.8.2'
+gem "sprockets", ">= 2.12.5"
+gem "rack", ">= 1.6.11"
+gem "loofah", ">= 2.2.3"
+
+
+
+
+
