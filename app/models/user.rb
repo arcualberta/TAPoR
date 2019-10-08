@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 	
 	# enum role: [ :administrator, :user] unless instance_methods.include? :role
 	validates_presence_of :uid, :provider
-  validates_uniqueness_of :uid, :scope => :provider
+	validates_uniqueness_of :uid, :scope => :provider
 
 	devise :omniauthable, :omniauth_providers => [:google_oauth2, :twitter, :yahoo]
 	

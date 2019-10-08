@@ -245,7 +245,7 @@ DEPENDENCIES
   omniauth-google-oauth2 (~> 0.6.0)
   omniauth-oauth (~> 1.0.1)
   omniauth-twitter (~> 1.1.0)
-  omniauth-yahoo (~> 0.0.5)
+  omniauth-yahoo (~> 0.0.8)
   pry-byebug (~> 3.7.0)
   quiet_assets (~> 1.1.0)
   rack (>= 1.6.11)
