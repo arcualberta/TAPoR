@@ -384,9 +384,9 @@ app.directive("toolCategoryView", ['$location', function($location) {
 				// XXX Hack to recover from null imageUrl
 				var lazyThumb = function(imageUrl) {
 					if (imageUrl) {
-						return imageUrl.replace(".png", "-thumb.png")						
+						return imageUrl.replace(".jpg", "-thumb.jpg")						
 					}
-					return "images/tools/missing-thumb.png";
+					return "images/tools/missing-thumb.jpg";
 				}
 
 				var setToolDetailText = function(text) {

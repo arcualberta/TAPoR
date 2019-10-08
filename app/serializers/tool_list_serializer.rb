@@ -22,7 +22,7 @@ class ToolListSerializer < ActiveModel::Serializer
 
   	missing_content.tool = Tool.new({  		
   		name: "Content missing",
-  		image_url: "images/tools/missing.png",  		
+  		image_url: "images/tools/missing.jpg",  		
       star_average: 0
   	})
 

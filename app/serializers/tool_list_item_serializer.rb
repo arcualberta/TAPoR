@@ -9,7 +9,7 @@ class ToolListItemSerializer < ActiveModel::Serializer
       id: object.tool.id,
   		name: object.tool.name,
   		star_average: object.tool.star_average,
-  		thumb_url: object.tool.image_url ? object.tool.image_url.gsub(/\.png/, "-thumb.png") : ""
+  		thumb_url: object.tool.image_url ? object.tool.image_url.gsub(/\.jpg/, "-thumb.jpg") : ""
   		
   	}
   end
