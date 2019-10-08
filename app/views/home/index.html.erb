@@ -1,7 +1,7 @@
 <h1>TAPoR 3</h1>
 
-<%= link_to "Sign in with google", user_omniauth_authorize_path(:google_oauth2) %>
+<%= link_to "Sign in with google", user_google_oauth2_omniauth_authorize_path %>
 
-<%= link_to "Sign in with twitter", user_omniauth_authorize_path(:twitter) %>
+<%= link_to "Sign in with twitter", user_yahoo_omniauth_authorize_path %>
 
 <%= link_to 'Sign out', destroy_user_session_path %>
