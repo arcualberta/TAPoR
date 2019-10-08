@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.2.7.1'
+gem 'rails', '4.2.11.1'
 # gem 'rails', '4.2.1'
 # Use sqlite3 as the database for Active Record
 # gem 'sqlite3'
@@ -41,7 +41,7 @@ gem 'spring',        group: :development
 
 gem 'mysql2', '~> 0.3.16'
 gem 'figaro', '~> 1.0.0'
-gem 'devise', '~> 3.4.0'
+gem "devise", ">= 4.7.1"
 gem 'oauth', '~> 0.4.7'
 gem 'omniauth', '~> 1.3.2'
 gem 'omniauth-oauth', '~> 1.0.1'
@@ -61,12 +61,8 @@ gem 'xapian', '~> 1.2.18.2'
 gem 'xapian_db', '~> 1.3.7.3 '
 gem 'resque', '~> 1.25.2'
 gem 'htmlentities', '~> 4.3.4'
-gem 'nokogiri', '~> 1.8.2'
+gem "nokogiri", ">= 1.10.4"
 gem "sprockets", ">= 2.12.5"
 gem "rack", ">= 1.6.11"
 gem "loofah", ">= 2.2.3"
-
-
-
-
 
