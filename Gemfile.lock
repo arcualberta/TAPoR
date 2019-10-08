@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/garaio/xapian_db.git
-  revision: 965774c657b46f699a7b712359454d033967d032
-  specs:
-    xapian_db (1.3.7.3)
-      daemons (>= 1.0.10)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -47,12 +40,14 @@ GEM
       tzinfo (~> 1.1)
     arel (6.0.4)
     bcrypt (3.1.12)
+    better_errors (2.5.1)
+      coderay (>= 1.0.0)
+      erubi (>= 1.0.0)
+      rack (>= 0.9.0)
     builder (3.2.3)
-    byebug (3.5.1)
-      columnize (~> 0.8)
-      debugger-linecache (~> 1.2)
-      slop (~> 3.6)
+    byebug (11.0.1)
     cancancan (1.17.0)
+    coderay (1.1.2)
     coffee-rails (4.0.1)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -60,11 +55,9 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
-    columnize (0.9.0)
     concurrent-ruby (1.1.4)
     crass (1.0.4)
     daemons (1.3.1)
-    debugger-linecache (1.2.0)
     devise (3.4.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -72,6 +65,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    erubi (1.9.0)
     erubis (2.7.0)
     execjs (2.7.0)
     faraday (0.15.4)
@@ -99,6 +93,7 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    method_source (0.9.2)
     mini_mime (1.0.1)
     mini_portile2 (2.3.0)
     minitest (5.11.3)
@@ -135,6 +130,14 @@ GEM
     omniauth-yahoo (0.0.8)
       omniauth-oauth (~> 1.0)
     orm_adapter (0.5.0)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
+    pry-byebug (3.7.0)
+      byebug (~> 11.0)
+      pry (~> 0.10)
+    quiet_assets (1.1.0)
+      railties (>= 3.1, < 5.0)
     rack (1.6.11)
     rack-protection (1.5.5)
       rack
@@ -193,7 +196,6 @@ GEM
       rack (~> 1.5)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
-    slop (3.6.0)
     spring (2.0.2)
       activesupport (>= 4.2)
     sprockets (2.12.5)
@@ -222,13 +224,15 @@ GEM
       rack (>= 1.0)
     will_paginate (3.0.12)
     xapian (1.2.18.2)
+    xapian_db (1.3.7.3)
+      daemons (>= 1.0.10)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   active_model_serializers (~> 0.8.0)
-  byebug (~> 3.5.1)
+  better_errors (~> 2.5.1)
   cancancan (~> 1.9)
   coffee-rails (~> 4.0.0)
   devise (~> 3.4.0)
@@ -245,6 +249,8 @@ DEPENDENCIES
   omniauth-oauth (~> 1.0.1)
   omniauth-twitter (~> 1.1.0)
   omniauth-yahoo (~> 0.0.5)
+  pry-byebug (~> 3.7.0)
+  quiet_assets (~> 1.1.0)
   rack (>= 1.6.11)
   rails (= 4.2.7.1)
   request_store (~> 1.1.0)
@@ -259,7 +265,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   will_paginate (~> 3.0.7)
   xapian (~> 1.2.18.2)
-  xapian_db!
+  xapian_db (~> 1.3.7.3)
 
 BUNDLED WITH
-   1.16.1
+   1.17.3

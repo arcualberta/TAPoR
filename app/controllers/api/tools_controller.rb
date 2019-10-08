@@ -85,13 +85,14 @@ class Api::ToolsController < ApplicationController
 
 	end
 
-	def show
+	def show		
 		respond_to do |format|
 			@tool = Tool.find_by(id: params[:id]);
-			if not @tool.is_hidden
+
+			if not @tool.is_hidden or (current_user&.is_admin?)
 				format.json { render json: @tool, status: :ok}
 			else
-				format.json {{status: :unauthorized}}
+				format.json { render json: {}, status: :unauthorized }			
 			end
 		end
 	end
@@ -113,7 +114,7 @@ class Api::ToolsController < ApplicationController
 
 	def update_suggested
 		respond_to do |format|
-			if current_user and current_user.is_admin?
+			if current_user&.is_admin?
 				@tool.suggested_tools.destroy_all
 				if params[:suggested]
 					params[:suggested].each do |suggested|
@@ -186,7 +187,7 @@ class Api::ToolsController < ApplicationController
 	def featured_edit
 		respond_to do |format|
 
-			if current_user.is_admin?
+			if current_user&.is_admin?
 				FeaturedTool.destroy_all()
 				params[:tool_list_items].each_with_index do |item, index|
 					FeaturedTool.create({
@@ -204,7 +205,7 @@ class Api::ToolsController < ApplicationController
 		respond_to do |format|
 			Tool.transaction do
 				begin
-					if current_user.is_admin? or current_user[:id] == @tool[:user_id]
+					if current_user&.is_admin? or current_user[:id] == @tool[:user_id]
 						@tool.update(is_hidden: true);
 						@tool.tool_ratings.update_all(is_hidden: true)
 						@tool.tool_tags.update_all(is_hidden: true)
@@ -245,7 +246,7 @@ class Api::ToolsController < ApplicationController
 					save_code();
 
 
-					if current_user.is_admin?
+					if current_user&.is_admin?
 						@tool.update(is_approved: safe_params[:is_approved]);
 					end
 
@@ -490,7 +491,7 @@ class Api::ToolsController < ApplicationController
 						@tool.creators_url = safe_params[:creators_url]&.strip;
 						@tool.repository = safe_params[:repository]&.strip
 						@tool.recipes = safe_params[:recipes]&.strip
-						if current_user.is_admin?
+						if current_user&.is_admin?
 							@tool.is_approved = safe_params[:is_approved];
 						end
 
@@ -607,7 +608,7 @@ class Api::ToolsController < ApplicationController
 		protected
 
 		def save_image(base_image)
-			name = @tool.id.to_s + ".png"
+			name = @tool.id.to_s + ".jpg"
 			pathDirectory = (@tool.id / 500).to_i;
 			directory = "tools/" + pathDirectory.to_s + "/";
 			FileUtils::mkdir_p File.join("public", "images", directory)
@@ -616,7 +617,7 @@ class Api::ToolsController < ApplicationController
 			File.open(path, "wb") { |file| file.write( decoded ) }
 
 			image = ImageList.new(path.to_s);
-			image.format = "PNG";
+			image.format = "JPEG";
 
 			# resize
 			finalWidth = 550; # 900;
@@ -633,7 +634,7 @@ class Api::ToolsController < ApplicationController
 			# thumb
 			ratio = 0.5;
 			thumbnail = image.thumbnail(image.columns*ratio, image.rows*ratio);
-			thumbnailPath = File.join("public", "images", directory, @tool.id.to_s + "-thumb.png");
+			thumbnailPath = File.join("public", "images", directory, @tool.id.to_s + "-thumb.jpg");
 			thumbnail.write(thumbnailPath.to_s);
 			path = File.join("images", directory, name)
 

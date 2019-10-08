@@ -160,24 +160,24 @@ ActiveRecord::Schema.define(version: 20180426171901) do
   create_table "tools", force: :cascade do |t|
     t.integer  "user_id",           limit: 4
     t.string   "name",              limit: 255
-    t.text     "detail",            limit: 16777215
+    t.text     "detail",            limit: 65535
     t.string   "url",               limit: 255
-    t.boolean  "is_approved",                        default: false
+    t.boolean  "is_approved",                     default: false
     t.text     "creators_name",     limit: 65535
     t.string   "creators_email",    limit: 255
     t.string   "creators_url",      limit: 255
     t.string   "image_url",         limit: 255
-    t.float    "star_average",      limit: 24,       default: 0.0
-    t.boolean  "is_hidden",                          default: false
+    t.float    "star_average",      limit: 24,    default: 0.0
+    t.boolean  "is_hidden",                       default: false
     t.date     "last_updated"
     t.string   "documentation_url", limit: 255
-    t.text     "code",              limit: 16777215
+    t.text     "code",              limit: 65535
     t.string   "repository",        limit: 255
     t.integer  "language",          limit: 4
-    t.integer  "nature",            limit: 4,        default: 0
+    t.integer  "nature",            limit: 4,     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "recipes",           limit: 16777215,                 null: false
+    t.text     "recipes",           limit: 65535,                 null: false
   end
 
   add_index "tools", ["user_id"], name: "index_tools_on_user_id", using: :btree
