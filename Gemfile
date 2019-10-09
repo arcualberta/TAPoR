@@ -53,7 +53,7 @@ gem 'active_model_serializers', '~> 0.8.0'
 gem 'request_store', '~> 1.1.0'
 gem 'will_paginate', '~> 3.0.7'
 gem 'rmagick', '~> 2.15.4'
-gem 'better_errors', '~> 2.5.1', group: :development
+# gem 'better_errors', '~> 2.5.1', group: :development
 gem 'pry-byebug', '~> 3.7.0', group: :development
 gem 'quiet_assets', '~> 1.1.0', group: :development
 gem 'to_boolean', '~> 1.0.2'
