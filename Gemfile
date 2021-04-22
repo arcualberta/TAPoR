@@ -42,7 +42,7 @@ gem 'spring',        group: :development
 gem 'mysql2', '~> 0.3.16'
 gem 'figaro', '~> 1.0.0'
 gem "devise", ">= 4.7.1"
-gem 'oauth', '~> 0.4.7'
+gem 'oauth', '~> 0.5.5'
 gem 'omniauth', '~> 1.3.2'
 gem 'omniauth-oauth', '~> 1.0.1'
 gem 'omniauth-google-oauth2', '~> 0.6.0'
